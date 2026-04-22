@@ -26,7 +26,7 @@ import PhoneMockup from "@/components/PhoneMockup";
 import FadeIn from "@/components/FadeIn";
 import Counter from "@/components/Counter";
 import LiveScoreboard from "@/components/LiveScoreboard";
-import RealTalk from "@/components/RealTalk";
+import RealChat from "@/components/RealChat";
 import EmailCapture from "@/components/EmailCapture";
 import FoundersCircle from "@/components/FoundersCircle";
 
@@ -598,7 +598,7 @@ export default function HomePage() {
 
           <FadeIn delay={250}>
             <div className="mt-6">
-              <RealTalk />
+              <RealChat />
             </div>
           </FadeIn>
         </div>
