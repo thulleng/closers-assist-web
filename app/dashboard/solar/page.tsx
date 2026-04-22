@@ -53,8 +53,8 @@ export default function SolarDashboardPage() {
             Live preview using sample SunRise Energy data. Real accounts
             auto-generate from your CRM, permit tracker, and pay plan upload.
           </div>
-          <Link href="/pricing" className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover">
-            Get yours — start free →
+          <Link href="/#waitlist" className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover">
+            Join Waitlist
           </Link>
         </div>
       </section>

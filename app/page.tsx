@@ -14,6 +14,12 @@ import {
   Store,
   ArrowRight,
   CheckCircle2,
+  Bug,
+  Wind,
+  Landmark,
+  TrendingUp,
+  Users,
+  Radio,
 } from "lucide-react";
 import RoiCalculator from "@/components/RoiCalculator";
 import PhoneMockup from "@/components/PhoneMockup";
@@ -24,64 +30,41 @@ import RealTalk from "@/components/RealTalk";
 import EmailCapture from "@/components/EmailCapture";
 
 const industries = [
-  {
-    icon: Car,
-    name: "Auto",
-    copy: "Pay plan math, trade valuations, CXI tracking, follow-up scripts.",
-    href: "/industries/auto",
-    image:
-      "https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?w=800&q=80&auto=format&fit=crop",
-    live: true,
-  },
-  {
-    icon: HomeIcon,
-    name: "Real Estate",
-    copy: "Listing prep, buyer nurture, commission splits, open house follow-ups.",
-    href: "/industries/real-estate",
-    image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80&auto=format&fit=crop",
-  },
-  {
-    icon: Shield,
-    name: "Insurance",
-    copy: "Book of business, renewal tracking, cross-sell triggers, policy Q&A.",
-    href: "/industries/insurance",
-    image:
-      "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=800&q=80&auto=format&fit=crop",
-  },
-  {
-    icon: Sun,
-    name: "Solar",
-    copy: "Quote math, utility bill analysis, proposal scripts, objection handling.",
-    href: "/industries/solar",
-    image:
-      "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=800&q=80&auto=format&fit=crop",
-  },
-  {
-    icon: Monitor,
-    name: "SaaS",
-    copy: "Pipeline pulse, discovery questions, demo prep, procurement maze.",
-    href: "/industries/saas",
-    image:
-      "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80&auto=format&fit=crop",
-  },
-  {
-    icon: HeartPulse,
-    name: "Medical Devices",
-    copy: "Protocol knowledge, rep-surgeon scripts, territory planning.",
-    href: "/industries/medical",
-    image:
-      "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&q=80&auto=format&fit=crop",
-  },
-  {
-    icon: ShoppingBag,
-    name: "Retail (Big Ticket)",
-    copy: "Product specs, financing math, close-the-lap scripts.",
-    href: "/industries/retail",
-    image:
-      "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80&auto=format&fit=crop",
-  },
+  {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
+  {href:"/industries/real-estate",name:"Real Estate",icon:"Home",copy:"Listing prep, buyer nurture, commission splits, open house follow-ups.",live:true,image:"https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600"},
+  {href:"/industries/insurance",name:"Insurance",icon:"Shield",copy:"Book of business, renewal tracking, cross-sell triggers, policy Q&A.",live:true,image:"https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600"},
+  {href:"/industries/solar",name:"Solar",icon:"Sun",copy:"Quote math, utility bill analysis, proposal scripts, objection handling.",live:true,image:"https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600"},
+  {href:"/industries/saas",name:"SaaS",icon:"Monitor",copy:"Pipeline pulse, discovery questions, demo prep, procurement maze.",live:true,image:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600"},
+  {href:"/industries/medical",name:"Medical Devices",icon:"HeartPulse",copy:"Protocol knowledge, rep-surgeon scripts, territory planning.",live:true,image:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600"},
+  {href:"/industries/retail",name:"Retail (Big Ticket)",icon:"ShoppingBag",copy:"Product specs, financing math, close-the-lap scripts for furniture and appliances.",live:true,image:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600"},
+  {href:"/industries/pest-control",name:"Pest Control",icon:"Bug",copy:"Service plan objections, seasonal upsells, renewal retention scripts.",live:true,image:"/images/pest_control.jpg"},
+  {href:"/industries/hvac",name:"HVAC",icon:"Wind",copy:"System upgrade objections, service agreements, financing calculator.",live:true,image:"https://images.unsplash.com/photo-1732395805034-e0bf859665e5?w=600"},
+  {href:"/industries/roofing",name:"Roofing",icon:"Home",copy:"Insurance claim walkthroughs, repair-to-replace closer, storm territory playbook.",live:true,image:"https://images.unsplash.com/photo-1635424824849-1b09bdcc55b1?w=600"},
+  {href:"/industries/home-security",name:"Home Security",icon:"Shield",copy:"Competitor rebuttals, monitoring contract scripts, smart home upsell playbook.",live:true,image:"https://images.unsplash.com/photo-1558002038-1055907df827?w=600"},
+  {href:"/industries/mortgage",name:"Mortgage & Lending",icon:"Landmark",copy:"Rate objections, product explainers, pre-approval pipeline.",live:true,image:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600"},
+  {href:"/industries/financial-advisors",name:"Financial Advisors",icon:"TrendingUp",copy:"Fee objections, robo-advisor rebuttals, AUM consolidation scripts.",live:true,image:"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600"},
+  {href:"/industries/recruiting",name:"Recruiting & Staffing",icon:"Users",copy:"Fee objections, candidate prep, job order closer, counter-offer playbook.",live:true,image:"https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600"},
+  {href:"/industries/telecom",name:"Telecom & Cell Towers",icon:"Radio",copy:"Tower lease objections, enterprise deal coach, bandwidth upsell playbook.",live:true,image:"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600"},
 ];
+
+
+const iconMap: Record<string, React.ReactNode> = {
+  Car: <Car className="h-5 w-5" />,
+  Home: <HomeIcon className="h-5 w-5" />,
+  Shield: <Shield className="h-5 w-5" />,
+  Sun: <Sun className="h-5 w-5" />,
+  Monitor: <Monitor className="h-5 w-5" />,
+  HeartPulse: <HeartPulse className="h-5 w-5" />,
+  ShoppingBag: <ShoppingBag className="h-5 w-5" />,
+  Bug: <Bug className="h-5 w-5" />,
+  Wind: <Wind className="h-5 w-5" />,
+  Landmark: <Landmark className="h-5 w-5" />,
+  TrendingUp: <TrendingUp className="h-5 w-5" />,
+  Users: <Users className="h-5 w-5" />,
+  Radio: <Radio className="h-5 w-5" />,
+};
+
+
 
 const layers = [
   {
@@ -89,18 +72,21 @@ const layers = [
     tag: "LAYER 1",
     title: "Core Brain",
     body: "Closing fundamentals, objection handling, follow-up logic. Built by us. Gets smarter every week.",
+    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=80&auto=format&fit=crop",
   },
   {
     icon: Puzzle,
     tag: "LAYER 2",
     title: "Industry Pack",
     body: "Auto-loaded by role. Your world, your vocabulary, your math — from minute one.",
+    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80&auto=format&fit=crop",
   },
   {
     icon: UserCog,
     tag: "LAYER 3",
     title: "Your Layer",
     body: "Pay plan, scripts, brochures, CRM data, memory. Unlimited. Uncapped. Yours.",
+    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80&auto=format&fit=crop",
   },
 ];
 
@@ -123,7 +109,7 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    Built by a rep · Sun Toyota · Real money.
+                    Built by a working rep · Real floor. Real money.
                   </span>
                 </div>
               </FadeIn>
@@ -154,10 +140,10 @@ export default function HomePage() {
               <FadeIn delay={300}>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <Link
-                    href="/pricing"
+                    href="/#waitlist"
                     className="btn-loud group flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
                   >
-                    Start free — $9.99/mo after
+                    Join Waitlist
                     <ArrowRight
                       className="h-4 w-4 transition-transform group-hover:translate-x-1"
                       strokeWidth={2.5}
@@ -184,7 +170,7 @@ export default function HomePage() {
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    Beat last month or it&rsquo;s free
+                    No contracts. Cancel anytime.
                   </span>
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
@@ -832,7 +818,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 rounded-md bg-black/30 px-2.5 py-1.5">
                     <span className="text-[10px]">✓</span>
                     <span className="flex-1 text-[11px] text-white">
-                      Jinda Brown
+                      Jinda B.
                     </span>
                     <span className="font-mono text-[11px] font-bold text-gold-light">
                       +$2,500
@@ -841,7 +827,7 @@ export default function HomePage() {
                   <div className="flex items-center gap-2 rounded-md bg-black/30 px-2.5 py-1.5">
                     <span className="text-[10px]">✓</span>
                     <span className="flex-1 text-[11px] text-white">
-                      Idaliz Falcon
+                      Idaliz F.
                     </span>
                     <span className="font-mono text-[11px] font-bold text-gold-light">
                       +$200
@@ -905,12 +891,10 @@ export default function HomePage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeIn>
               <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-                <Image
-                  src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&auto=format&fit=crop"
-                  alt="Working late"
-                  fill
-                  className="object-cover"
-                  sizes="(min-width: 1024px) 50vw, 100vw"
+                <img
+                  src="/images/thul-founder.jpg"
+                  alt="Thul Leng at Sun Toyota, New Port Richey, Florida"
+                  className="absolute inset-0 h-full w-full object-cover object-right"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-pit via-pit/30 to-transparent" />
                 {/* Green corner glow */}
@@ -1203,11 +1187,11 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Seven doors. One brand.
+                  Fifteen doors. One brand.
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                One agent. Seven industries.
+                One agent. Fifteen industries.
                 <br />
                 <span className="text-shine font-black">Zero compromises.</span>
               </h2>
@@ -1222,19 +1206,14 @@ export default function HomePage() {
                   className="loud-card group block overflow-hidden rounded-2xl"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <Image
+                    <img
                       src={ind.image}
                       alt={ind.name}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-110"
-                      sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-pit via-pit/40 to-transparent" />
                     <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 bg-black/60 backdrop-blur shadow-[0_8px_20px_rgba(16,185,129,0.3)]">
-                      <ind.icon
-                        className="h-5 w-5 text-deal-light"
-                        strokeWidth={2.2}
-                      />
+                      {iconMap[ind.icon]}
                     </div>
                     {ind.live && (
                       <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-white shadow-[0_4px_16px_rgba(16,185,129,0.5)]"
@@ -1265,13 +1244,13 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
             <div className="mb-12 max-w-3xl">
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
-                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
-                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/10 px-3 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-[#F97316] shadow-[0_0_8px_#F97316]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#EA580C]">
                   How it&rsquo;s built
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-[#0A0A0F] md:text-6xl">
                 A brain. A playbook.{" "}
                 <span className="text-shine font-black">Your voice.</span>
               </h2>
@@ -1281,32 +1260,29 @@ export default function HomePage() {
           <div className="grid gap-4 md:grid-cols-3">
             {layers.map((layer, i) => (
               <FadeIn key={layer.title} delay={i * 100}>
-                <div className="loud-card group relative overflow-hidden rounded-2xl p-7">
-                  <div
-                    className="absolute -right-12 -top-12 h-40 w-40 rounded-full blur-3xl transition-opacity group-hover:opacity-80"
-                    style={{
-                      background:
-                        "radial-gradient(circle, rgba(16,185,129,0.25), transparent 70%)",
-                    }}
-                    aria-hidden
-                  />
-                  <div className="relative">
-                    <div
-                      className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
-                      style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05))" }}
-                    >
+                <div className="loud-card group relative overflow-hidden rounded-2xl">
+                  <div className="relative aspect-[16/10] overflow-hidden">
+                    <img
+                      src={layer.image}
+                      alt={layer.title}
+                      className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
+                    <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/40 bg-white/95 backdrop-blur shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
                       <layer.icon
-                        className="h-5 w-5 text-deal-light"
+                        className="h-5 w-5 text-[#EA580C]"
                         strokeWidth={2.2}
                       />
                     </div>
-                    <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                    <div className="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-[1.5px] text-[#0D9488] backdrop-blur">
                       {layer.tag}
                     </div>
-                    <h3 className="mb-2 text-xl font-bold text-white">
+                  </div>
+                  <div className="p-6">
+                    <h3 className="mb-2 text-xl font-black tracking-tight text-[#0A0A0F]">
                       {layer.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-ash">
+                    <p className="text-sm leading-relaxed text-[#475569]">
                       {layer.body}
                     </p>
                   </div>
@@ -1317,16 +1293,16 @@ export default function HomePage() {
 
           <FadeIn delay={400}>
             <div
-              className="mt-10 flex items-start gap-3 rounded-2xl border border-deal/40 p-6 backdrop-blur"
-              style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.04))" }}
+              className="mt-10 flex items-start gap-3 rounded-2xl border border-[#F97316]/30 p-6 backdrop-blur"
+              style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.08), rgba(20,184,166,0.06))" }}
             >
               <CheckCircle2
-                className="mt-0.5 h-5 w-5 flex-shrink-0 text-deal-light"
+                className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#EA580C]"
                 strokeWidth={2.5}
               />
-              <p className="text-[15px] leading-relaxed text-white">
+              <p className="text-[15px] leading-relaxed text-[#0A0A0F]">
                 Every tier gets full capability.{" "}
-                <span className="font-bold text-shine">
+                <span className="font-bold text-[#EA580C]">
                   Tiers only differ by scale.
                 </span>{" "}
                 No feature gating, ever.
@@ -1521,14 +1497,14 @@ export default function HomePage() {
                   Beat your last month or it&rsquo;s free.
                 </span>{" "}
                 <span className="text-ash">
-                  30-day refund. No questions, no clawbacks.
+                  No contracts. Cancel anytime.
                 </span>
               </p>
               <Link
-                href="/pricing"
+                href="/#waitlist"
                 className="btn-loud group inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 text-sm"
               >
-                See full pricing
+                Join Waitlist
                 <ArrowRight
                   className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
                   strokeWidth={2.5}
@@ -1573,8 +1549,8 @@ export default function HomePage() {
             </p>
           </FadeIn>
           <FadeIn delay={300}>
-            <div className="mx-auto mt-12 max-w-md">
-              <EmailCapture buttonText="Start free — $9.99/mo after" />
+            <div id="waitlist" className="mx-auto mt-12 max-w-md">
+              <EmailCapture buttonText="Join Waitlist" />
             </div>
           </FadeIn>
           <FadeIn delay={450}>

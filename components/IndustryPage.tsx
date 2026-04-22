@@ -83,10 +83,10 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
           <FadeIn delay={300}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
-                href="/pricing"
+                href="/#waitlist"
                 className="group inline-flex items-center gap-2 rounded-md bg-deal px-6 py-3.5 text-[15px] font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
               >
-                Start free for 14 days
+                Join Waitlist
                 <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   strokeWidth={2.5}
@@ -186,10 +186,10 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
               {data.integrations}
             </p>
             <Link
-              href="/pricing"
+              href="/#waitlist"
               className="group inline-flex items-center gap-2 rounded-md bg-deal px-7 py-3.5 text-base font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
             >
-              See full pricing
+              Join Waitlist
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
                 strokeWidth={2.5}

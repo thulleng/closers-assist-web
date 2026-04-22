@@ -53,8 +53,8 @@ export default function SaasDashboardPage() {
             Live preview using sample data. Real accounts auto-generate from
             Salesforce or HubSpot + your comp plan upload.
           </div>
-          <Link href="/pricing" className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover">
-            Get yours — start free →
+          <Link href="/#waitlist" className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover">
+            Join Waitlist
           </Link>
         </div>
       </section>

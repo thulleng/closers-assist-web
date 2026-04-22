@@ -100,10 +100,10 @@ export default function Nav() {
         </nav>
 
         <Link
-          href="/pricing"
+          href="/#waitlist"
           className="btn-loud rounded-xl px-5 py-2.5 text-sm"
         >
-          Start free
+          Join Waitlist
         </Link>
       </div>
     </header>

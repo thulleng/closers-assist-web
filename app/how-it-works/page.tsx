@@ -176,10 +176,10 @@ export default function HowItWorksPage() {
           <FadeIn delay={300}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
-                href="/pricing"
+                href="/#waitlist"
                 className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
               >
-                Start free — $9.99/mo after
+                Join Waitlist
                 <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   strokeWidth={2.5}
@@ -591,10 +591,10 @@ export default function HowItWorksPage() {
           </FadeIn>
           <FadeIn delay={300}>
             <Link
-              href="/pricing"
+              href="/#waitlist"
               className="btn-loud group mt-10 inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base"
             >
-              Start free — $9.99/mo after
+              Join Waitlist
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
                 strokeWidth={2.5}

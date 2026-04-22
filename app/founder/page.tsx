@@ -160,10 +160,10 @@ export default function FounderPage() {
       <FadeIn>
         <div className="mt-20 border-t border-iron pt-14 text-center">
           <Link
-            href="/pricing"
+            href="/#waitlist"
             className="group inline-flex items-center gap-2 rounded-md bg-deal px-7 py-3.5 text-base font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
           >
-            Join me
+            Join Waitlist
             <ArrowRight
               className="h-4 w-4 transition-transform group-hover:translate-x-1"
               strokeWidth={2.5}

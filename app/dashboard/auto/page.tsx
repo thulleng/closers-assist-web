@@ -66,10 +66,10 @@ export default function AutoDashboardPage() {
             and daily deal logs.
           </div>
           <Link
-            href="/pricing"
+            href="/#waitlist"
             className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover"
           >
-            Get yours — start free →
+            Join Waitlist
           </Link>
         </div>
       </section>
