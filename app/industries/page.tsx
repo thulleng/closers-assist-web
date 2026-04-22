@@ -15,6 +15,9 @@ import {
   TrendingUp,
   Users,
   Radio,
+  KeyRound,
+  ClipboardList,
+  Handshake,
   ArrowRight,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
@@ -22,7 +25,7 @@ import FadeIn from "@/components/FadeIn";
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "One agent. Fifteen industries. Zero compromises. Closers Assist for Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, Retail, Pest Control, HVAC, Roofing, Home Security, Mortgage, Financial Advisors, Recruiting, and Telecom.",
+    "One agent. Eighteen industries. Zero compromises. Closers Assist for Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, Retail, Pest Control, HVAC, Roofing, Home Security, Mortgage, Financial Advisors, Recruiting, Telecom, Rental, Project Manager, and Other Sales.",
 };
 
 const industries = [
@@ -161,6 +164,30 @@ const industries = [
     image:
       "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80&auto=format&fit=crop",
   },
+  {
+    icon: KeyRound,
+    name: "Rental",
+    copy: "Pricing disputes, damage deposit scripts, cancellation pushback, upsell plays, 5-star review asks.",
+    href: "/industries/rental",
+    live: true,
+    image: "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600",
+  },
+  {
+    icon: ClipboardList,
+    name: "Project Manager",
+    copy: "SOW defense, change order closer, budget objections, verbal-yes-to-signed-contract playbook.",
+    href: "/industries/project-manager",
+    live: true,
+    image: "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600",
+  },
+  {
+    icon: Handshake,
+    name: "Other Sales",
+    copy: "Universal objections: price, timing, think about it, decision-maker stalls, ghosting recovery.",
+    href: "/industries/other-sales",
+    live: true,
+    image: "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600",
+  },
 ];
 
 export default function IndustriesPage() {
@@ -177,7 +204,7 @@ export default function IndustriesPage() {
               </span>
             </div>
             <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-              One agent. Fifteen industries.
+              One agent. Eighteen industries.
               <br />
               <span className="text-shine font-black">Zero compromises.</span>
             </h1>

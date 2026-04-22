@@ -20,6 +20,9 @@ import {
   TrendingUp,
   Users,
   Radio,
+  KeyRound,
+  ClipboardList,
+  Handshake,
 } from "lucide-react";
 import RoiCalculator from "@/components/RoiCalculator";
 import PhoneMockup from "@/components/PhoneMockup";
@@ -46,6 +49,9 @@ const industries = [
   {href:"/industries/financial-advisors",name:"Financial Advisors",icon:"TrendingUp",copy:"Fee objections, robo-advisor rebuttals, AUM consolidation scripts.",live:true,image:"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600"},
   {href:"/industries/recruiting",name:"Recruiting & Staffing",icon:"Users",copy:"Fee objections, candidate prep, job order closer, counter-offer playbook.",live:true,image:"https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600"},
   {href:"/industries/telecom",name:"Telecom & Cell Towers",icon:"Radio",copy:"Tower lease objections, enterprise deal coach, bandwidth upsell playbook.",live:true,image:"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600"},
+  {href:"/industries/rental",name:"Rental",icon:"KeyRound",copy:"Pricing disputes, damage deposit scripts, cancellation pushback, 5-star review asks.",live:true,image:"https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600"},
+  {href:"/industries/project-manager",name:"Project Manager",icon:"ClipboardList",copy:"SOW defense, change order closer, budget objections, verbal-yes-to-signed-contract.",live:true,image:"https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600"},
+  {href:"/industries/other-sales",name:"Other Sales",icon:"Handshake",copy:"Universal objections: price, timing, think about it, decision-maker stalls, ghosting.",live:true,image:"https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600"},
 ];
 
 
@@ -63,6 +69,9 @@ const iconMap: Record<string, React.ReactNode> = {
   TrendingUp: <TrendingUp className="h-5 w-5" />,
   Users: <Users className="h-5 w-5" />,
   Radio: <Radio className="h-5 w-5" />,
+  KeyRound: <KeyRound className="h-5 w-5" />,
+  ClipboardList: <ClipboardList className="h-5 w-5" />,
+  Handshake: <Handshake className="h-5 w-5" />,
 };
 
 
@@ -481,7 +490,7 @@ export default function HomePage() {
               <div className="grid grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    15
+                    18
                   </div>
                   <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Industries
