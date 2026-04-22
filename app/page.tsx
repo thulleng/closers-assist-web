@@ -73,21 +73,21 @@ const layers = [
     tag: "LAYER 1",
     title: "Core Brain",
     body: "Closing fundamentals, objection handling, follow-up logic. Built by us. Gets smarter every week.",
-    image: "https://images.unsplash.com/photo-1559757148-5c350d0d3c56?w=1200&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600",
   },
   {
     icon: Puzzle,
     tag: "LAYER 2",
     title: "Industry Pack",
     body: "Auto-loaded by role. Your world, your vocabulary, your math — from minute one.",
-    image: "https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1200&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600",
   },
   {
     icon: UserCog,
     tag: "LAYER 3",
     title: "Your Layer",
     body: "Pay plan, scripts, brochures, CRM data, memory. Unlimited. Uncapped. Yours.",
-    image: "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80&auto=format&fit=crop",
+    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600",
   },
 ];
 
@@ -1251,7 +1251,7 @@ export default function HomePage() {
                   How it&rsquo;s built
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-[#0A0A0F] md:text-6xl">
+              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
                 A brain. A playbook.{" "}
                 <span className="text-shine font-black">Your voice.</span>
               </h2>
@@ -1280,10 +1280,10 @@ export default function HomePage() {
                     </div>
                   </div>
                   <div className="p-6">
-                    <h3 className="mb-2 text-xl font-black tracking-tight text-[#0A0A0F]">
+                    <h3 className="mb-2 text-xl font-black tracking-tight text-white">
                       {layer.title}
                     </h3>
-                    <p className="text-sm leading-relaxed text-[#475569]">
+                    <p className="text-sm leading-relaxed text-gray-300">
                       {layer.body}
                     </p>
                   </div>
