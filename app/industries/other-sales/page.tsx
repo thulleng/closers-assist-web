@@ -39,16 +39,12 @@ export default function OtherSalesPage() {
         <div className="hero-vignette -z-10" />
 
         <div className="mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-          <FadeIn>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
               <Handshake className="h-3.5 w-3.5 text-deal" strokeWidth={2} />
               <span className="text-xs font-medium tracking-wide text-deal">
                 For All Closers
               </span>
             </div>
-          </FadeIn>
-
-          <FadeIn delay={100}>
             <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-bone md:text-7xl">
               Every objection.
               <br />
@@ -56,17 +52,11 @@ export default function OtherSalesPage() {
               <br />
               <span className="text-deal">Every close.</span>
             </h1>
-          </FadeIn>
-
-          <FadeIn delay={200}>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
               The universal sales playbook. Industry-agnostic closing
               fundamentals for anyone who sells — price objections, timing
               stalls, decision-maker runaround, and ghosting recovery.
             </p>
-          </FadeIn>
-
-          <FadeIn delay={300}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
                 href="/#waitlist"
@@ -85,7 +75,6 @@ export default function OtherSalesPage() {
                 Try it now →
               </Link>
             </div>
-          </FadeIn>
         </div>
       </section>
 

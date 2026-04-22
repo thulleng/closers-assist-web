@@ -59,47 +59,39 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
         <div className="hero-glow -z-10" />
 
         <div className="mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-          <FadeIn>
-            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
-              <Icon className="h-3.5 w-3.5 text-deal" strokeWidth={2} />
-              <span className="text-xs font-medium tracking-wide text-deal">
-                {data.eyebrow}
-              </span>
-            </div>
-          </FadeIn>
+          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
+            <Icon className="h-3.5 w-3.5 text-deal" strokeWidth={2} />
+            <span className="text-xs font-medium tracking-wide text-deal">
+              {data.eyebrow}
+            </span>
+          </div>
 
-          <FadeIn delay={100}>
-            <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-bone md:text-7xl">
-              {data.headline}
-            </h1>
-          </FadeIn>
+          <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-bone md:text-7xl">
+            {data.headline}
+          </h1>
 
-          <FadeIn delay={200}>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
-              {data.sub}
-            </p>
-          </FadeIn>
+          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
+            {data.sub}
+          </p>
 
-          <FadeIn delay={300}>
-            <div className="mt-9 flex flex-wrap items-center gap-3">
-              <Link
-                href="/#waitlist"
-                className="group inline-flex items-center gap-2 rounded-md bg-deal px-6 py-3.5 text-[15px] font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
-              >
-                Join Waitlist
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  strokeWidth={2.5}
-                />
-              </Link>
-              <Link
-                href="/how-it-works"
-                className="rounded-md border border-iron bg-pit/60 px-6 py-3.5 text-[15px] font-medium text-bone backdrop-blur transition-colors hover:border-ash"
-              >
-                See how it works
-              </Link>
-            </div>
-          </FadeIn>
+          <div className="mt-9 flex flex-wrap items-center gap-3">
+            <Link
+              href="/#waitlist"
+              className="group inline-flex items-center gap-2 rounded-md bg-deal px-6 py-3.5 text-[15px] font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
+            >
+              Join Waitlist
+              <ArrowRight
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                strokeWidth={2.5}
+              />
+            </Link>
+            <Link
+              href="/how-it-works"
+              className="rounded-md border border-iron bg-pit/60 px-6 py-3.5 text-[15px] font-medium text-bone backdrop-blur transition-colors hover:border-ash"
+            >
+              See how it works
+            </Link>
+          </div>
         </div>
       </section>
 

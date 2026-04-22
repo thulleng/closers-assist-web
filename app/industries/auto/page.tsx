@@ -39,16 +39,12 @@ export default function AutoPage() {
         <div className="hero-vignette -z-10" />
 
         <div className="mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-          <FadeIn>
             <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
               <Car className="h-3.5 w-3.5 text-deal" strokeWidth={2} />
               <span className="text-xs font-medium tracking-wide text-deal">
                 For Auto Closers
               </span>
             </div>
-          </FadeIn>
-
-          <FadeIn delay={100}>
             <h1 className="font-display text-4xl font-extrabold leading-[1.05] tracking-tight text-bone md:text-7xl">
               Know every pay plan.
               <br />
@@ -56,17 +52,11 @@ export default function AutoPage() {
               <br />
               <span className="text-deal">Ranked every month.</span>
             </h1>
-          </FadeIn>
-
-          <FadeIn delay={200}>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
               Built on the showroom floor by a working Toyota rep. Knows your
               mini structure, unit math, volume bonuses, and CXI math. Loaded
               with Star Safety System and TSS 4.0 out of the box.
             </p>
-          </FadeIn>
-
-          <FadeIn delay={300}>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
                 href="/#waitlist"
@@ -85,7 +75,6 @@ export default function AutoPage() {
                 See how it works
               </Link>
             </div>
-          </FadeIn>
         </div>
       </section>
 
