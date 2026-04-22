@@ -9,7 +9,7 @@ const BOTTOM_NAV = [
   { href: "/industries", label: "Industries", icon: Layers },
   { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pricing", label: "Pricing", icon: DollarSign },
-  { href: "/how-it-works", label: "More", icon: Menu },
+  { href: "/founder", label: "More", icon: Menu },
 ];
 
 export default function BottomNav() {
