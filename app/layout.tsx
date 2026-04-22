@@ -87,7 +87,7 @@ export default function RootLayout({
     >
       <body className="bg-pit text-bone font-sans antialiased">
         <Nav />
-        <main className="min-h-screen pb-16 md:pb-0">{children}</main>
+        <main className="min-h-screen pb-[60px] md:pb-0">{children}</main>
         <Footer />
         <BottomNav />
       </body>
