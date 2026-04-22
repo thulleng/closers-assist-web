@@ -123,7 +123,7 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    Built by a working rep · Real floor. Real money.
+                    Built by a rep · Sun Toyota · Real money.
                   </span>
                 </div>
               </FadeIn>
