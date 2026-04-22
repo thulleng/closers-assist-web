@@ -59,10 +59,10 @@ export default function AutoPage() {
             </p>
             <div className="mt-9 flex flex-wrap items-center gap-3">
               <Link
-                href="/#waitlist"
+                href="/pricing"
                 className="group inline-flex items-center gap-2 rounded-md bg-deal px-6 py-3.5 text-[15px] font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
               >
-                Join Waitlist
+                Get Started
                 <ArrowRight
                   className="h-4 w-4 transition-transform group-hover:translate-x-1"
                   strokeWidth={2.5}
@@ -173,10 +173,10 @@ export default function AutoPage() {
               integration fees.
             </p>
             <Link
-              href="/#waitlist"
+              href="/pricing"
               className="group inline-flex items-center gap-2 rounded-md bg-deal px-7 py-3.5 text-base font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
             >
-              Join Waitlist
+              Get Started
               <ArrowRight
                 className="h-4 w-4 transition-transform group-hover:translate-x-1"
                 strokeWidth={2.5}

@@ -29,10 +29,10 @@ export default function ComingSoon({
       <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash">{body}</p>
       <div className="mt-10 flex flex-wrap items-center gap-3">
         <Link
-          href="/#waitlist"
+          href="/pricing"
           className="rounded-md bg-deal px-6 py-3 text-[15px] font-medium text-pit transition-colors hover:bg-deal-hover"
         >
-          Join Waitlist →
+          Get Started →
         </Link>
         <Link
           href={backHref}

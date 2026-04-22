@@ -5,7 +5,7 @@ import { ArrowRight } from "lucide-react";
 
 export default function EmailCapture({
   placeholder = "your@email.com",
-  buttonText = "Join Waitlist",
+  buttonText = "Get Started",
   className = "",
 }: {
   placeholder?: string;

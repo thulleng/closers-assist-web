@@ -113,11 +113,11 @@ export default function BottomNav() {
 
           {/* CTA */}
           <Link
-            href="/#waitlist"
+            href="/pricing"
             className="btn-loud mt-4 flex w-full items-center justify-center gap-2 rounded-xl py-3 text-[14px]"
             onClick={() => setDrawerOpen(false)}
           >
-            Join Waitlist
+            Get Started
             <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
           </Link>
         </div>

@@ -20,7 +20,7 @@ const TIERS = [
     seats: 1,
     tagline: "For the solo closer who wants to make more money this month.",
     cta: "Get Started",
-    href: "/#waitlist",
+    href: "/pricing",
     priceId: "price_1TP9nMJzG6xU26F9ii7RlgCf",
     features: [
       "Everything your agent can do — no feature gating",
@@ -40,7 +40,7 @@ const TIERS = [
     seats: 25,
     tagline: "For the sales manager rolling it out to the whole team.",
     cta: "Get Started",
-    href: "/#waitlist",
+    href: "/pricing",
     priceId: "price_1TP9oGJzG6xU26F9N8yjczSE",
     features: [
       "Everything in Starter — for up to 25 reps",

@@ -498,10 +498,10 @@ export default function MarketplacePage() {
                 />
               </a>
               <Link
-                href="/#waitlist"
+                href="/pricing"
                 className="btn-ghost rounded-xl px-8 py-4 text-base font-semibold"
               >
-                Join Waitlist
+                Get Started
               </Link>
             </div>
           </FadeIn>

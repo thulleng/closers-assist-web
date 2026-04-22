@@ -138,10 +138,10 @@ export default function RoiCalculator() {
       </p>
 
       <Link
-        href="/#waitlist"
+        href="/pricing"
         className="group mt-5 flex w-full items-center justify-center gap-2 rounded-md bg-deal py-3 text-center text-[15px] font-medium text-pit transition-colors hover:bg-deal-hover"
       >
-        Join Waitlist
+        Get Started
         <ArrowRight
           className="h-4 w-4 transition-transform group-hover:translate-x-1"
           strokeWidth={2.5}

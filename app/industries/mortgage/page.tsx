@@ -25,8 +25,8 @@ export default function MortgagePage() {
             Your AI-powered sales agent built for mortgage and lending reps — handle rate objections, explain complex products clearly, and guide borrowers from application to close.
           </p>
           <div className="flex flex-wrap gap-4">
-            <Link href="/#waitlist" className="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-lg transition-all hover:scale-105 shadow-lg shadow-red-500/25">
-              Join Waitlist
+            <Link href="/pricing" className="bg-red-500 hover:bg-red-600 text-white font-bold px-8 py-4 rounded-lg transition-all hover:scale-105 shadow-lg shadow-red-500/25">
+              Get Started
             </Link>
             <Link href="/how-it-works" className="border border-zinc-700 hover:border-zinc-500 text-zinc-300 font-semibold px-8 py-4 rounded-lg transition-all">
               See How It Works
@@ -97,7 +97,7 @@ export default function MortgagePage() {
         <div className="max-w-3xl mx-auto text-center">
           <h2 className="text-4xl font-black tracking-tight mb-4">Stop losing borrowers to the rate race.</h2>
           <p className="text-zinc-400 text-lg mb-8">Join thousands of Mortgage & Lending reps closing more with their own AI agent. Less than $10/month. Cancel anytime.</p>
-          <Link href="/#waitlist" className="bg-red-500 hover:bg-red-600 text-white font-bold px-10 py-5 rounded-lg text-lg transition-all hover:scale-105 shadow-lg shadow-red-500/25 inline-block">
+          <Link href="/pricing" className="bg-red-500 hover:bg-red-600 text-white font-bold px-10 py-5 rounded-lg text-lg transition-all hover:scale-105 shadow-lg shadow-red-500/25 inline-block">
             Get Your Agent — Free 14 Days
           </Link>
         </div>

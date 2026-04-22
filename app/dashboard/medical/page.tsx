@@ -53,8 +53,8 @@ export default function MedicalDashboardPage() {
             Live preview using sample ortho territory data. Real accounts
             auto-generate from Veeva + your comp plan upload.
           </div>
-          <Link href="/#waitlist" className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover">
-            Join Waitlist
+          <Link href="/pricing" className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover">
+            Get Started
           </Link>
         </div>
       </section>
