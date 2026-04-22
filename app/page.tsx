@@ -150,7 +150,7 @@ export default function HomePage() {
               <div>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                    Get Started
+                    Get Started →
                   </Link>
                   <Link
                     href="/how-it-works"
