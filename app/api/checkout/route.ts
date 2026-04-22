@@ -1,9 +1,11 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
-});
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
+  return new Stripe(key, { apiVersion: "2026-03-25.dahlia" });
+}
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,6 +15,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "priceId required" }, { status: 400 });
     }
 
+    const stripe = getStripe();
     const origin = req.headers.get("origin") ?? "https://closersassist.com";
 
     const session = await stripe.checkout.sessions.create({

@@ -1,12 +1,11 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-  apiVersion: "2026-03-25.dahlia",
-});
-
-// Disable body parsing — Stripe needs the raw body to verify signature
-export const config = { api: { bodyParser: false } };
+function getStripe() {
+  const key = process.env.STRIPE_SECRET_KEY;
+  if (!key) throw new Error("STRIPE_SECRET_KEY is not set");
+  return new Stripe(key, { apiVersion: "2026-03-25.dahlia" });
+}
 
 export async function POST(req: NextRequest) {
   const sig = req.headers.get("stripe-signature");
@@ -15,6 +14,7 @@ export async function POST(req: NextRequest) {
   let event: Stripe.Event;
 
   try {
+    const stripe = getStripe();
     const body = await req.text();
 
     if (webhookSecret && sig) {
@@ -24,8 +24,8 @@ export async function POST(req: NextRequest) {
       event = JSON.parse(body) as Stripe.Event;
     }
   } catch (err) {
-    console.error("Webhook signature verification failed:", err);
-    return NextResponse.json({ error: "Invalid signature" }, { status: 400 });
+    console.error("Webhook error:", err);
+    return NextResponse.json({ error: "Webhook error" }, { status: 400 });
   }
 
   switch (event.type) {
