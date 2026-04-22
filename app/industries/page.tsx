@@ -9,6 +9,12 @@ import {
   Monitor,
   HeartPulse,
   ShoppingBag,
+  Bug,
+  Wind,
+  Landmark,
+  TrendingUp,
+  Users,
+  Radio,
   ArrowRight,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
@@ -16,7 +22,7 @@ import FadeIn from "@/components/FadeIn";
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "One agent. Seven industries. Zero compromises. Closers Assist for Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, and Retail.",
+    "One agent. Fifteen industries. Zero compromises. Closers Assist for Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, Retail, Pest Control, HVAC, Roofing, Home Security, Mortgage, Financial Advisors, Recruiting, and Telecom.",
 };
 
 const industries = [
@@ -27,7 +33,7 @@ const industries = [
     href: "/industries/auto",
     live: true,
     image:
-      "https://images.unsplash.com/photo-1567449303183-ae0d6ed1498e?w=800&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80&auto=format&fit=crop",
   },
   {
     icon: HomeIcon,
@@ -36,7 +42,7 @@ const industries = [
     href: "/industries/real-estate",
     live: true,
     image:
-      "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=800&q=80&auto=format&fit=crop",
+      "https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800&q=80&auto=format&fit=crop",
   },
   {
     icon: Shield,
@@ -83,6 +89,78 @@ const industries = [
     image:
       "https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&q=80&auto=format&fit=crop",
   },
+  {
+    icon: Bug,
+    name: "Pest Control",
+    copy: "Service plan objections, seasonal upsells, renewal retention scripts.",
+    href: "/industries/pest-control",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: Wind,
+    name: "HVAC",
+    copy: "System upgrade objections, service agreements, financing calculator.",
+    href: "/industries/hvac",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1732395805034-e0bf859665e5?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: HomeIcon,
+    name: "Roofing",
+    copy: "Insurance claim walkthroughs, repair-to-replace closer, storm territory playbook.",
+    href: "/industries/roofing",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1635424824849-1b09bdcc55b1?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: Shield,
+    name: "Home Security",
+    copy: "Competitor rebuttals, monitoring contract scripts, smart home upsell playbook.",
+    href: "/industries/home-security",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: Landmark,
+    name: "Mortgage & Lending",
+    copy: "Rate objections, product explainers, pre-approval pipeline.",
+    href: "/industries/mortgage",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: TrendingUp,
+    name: "Financial Advisors",
+    copy: "Fee objections, robo-advisor rebuttals, AUM consolidation scripts.",
+    href: "/industries/financial-advisors",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: Users,
+    name: "Recruiting & Staffing",
+    copy: "Fee objections, candidate prep, job order closer, counter-offer playbook.",
+    href: "/industries/recruiting",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&auto=format&fit=crop",
+  },
+  {
+    icon: Radio,
+    name: "Telecom & Cell Towers",
+    copy: "Tower lease objections, enterprise deal coach, bandwidth upsell playbook.",
+    href: "/industries/telecom",
+    live: true,
+    image:
+      "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80&auto=format&fit=crop",
+  },
 ];
 
 export default function IndustriesPage() {
@@ -99,7 +177,7 @@ export default function IndustriesPage() {
               </span>
             </div>
             <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-              One agent. Seven industries.
+              One agent. Fifteen industries.
               <br />
               <span className="text-shine font-black">Zero compromises.</span>
             </h1>

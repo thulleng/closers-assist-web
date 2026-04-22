@@ -100,7 +100,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/industries" className="font-semibold text-deal-light transition-colors hover:text-white">
-                  All 7 industries →
+                  All 15 industries →
                 </Link>
               </li>
             </ul>

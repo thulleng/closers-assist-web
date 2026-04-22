@@ -109,7 +109,7 @@ export default function DashboardHubPage() {
           >
             <p className="text-[15px] leading-relaxed text-white">
               <span className="font-bold text-shine">
-                All 7 verticals live.
+                All 15 verticals live.
               </span>{" "}
               Each dashboard auto-generates from the rep&rsquo;s pay plan
               upload and deal data — no setup beyond a one-time connection.

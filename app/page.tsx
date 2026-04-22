@@ -28,6 +28,7 @@ import Counter from "@/components/Counter";
 import LiveScoreboard from "@/components/LiveScoreboard";
 import RealTalk from "@/components/RealTalk";
 import EmailCapture from "@/components/EmailCapture";
+import FoundersCircle from "@/components/FoundersCircle";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -480,7 +481,7 @@ export default function HomePage() {
               <div className="grid grid-cols-3 gap-6">
                 <div className="text-center">
                   <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    7
+                    15
                   </div>
                   <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Industries
@@ -1514,6 +1515,9 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* 7.5 — FOUNDERS CIRCLE */}
+      <FoundersCircle formspreeId="PLACEHOLDER" />
 
       {/* 8 — FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">

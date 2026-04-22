@@ -1,4 +1,4 @@
-// Shared dashboard types — used across all 7 vertical dashboards.
+// Shared dashboard types — used across all 15 vertical dashboards.
 // Each vertical extends or specializes these as needed.
 
 export type DealType = {
