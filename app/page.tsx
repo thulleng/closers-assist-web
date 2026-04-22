@@ -596,7 +596,7 @@ export default function HomePage() {
                         APRIL
                       </div>
                       <div className="font-display text-lg font-black text-shine">
-                        $4,900
+                        $31,400
                       </div>
                     </div>
                   </div>
@@ -818,10 +818,10 @@ export default function HomePage() {
                     Commission stacked
                   </div>
                   <div className="font-display text-[44px] font-black leading-none tracking-[-0.03em] text-mega-amber">
-                    $4,900
+                    $31,400
                   </div>
                   <div className="mt-1 text-[10px] text-white/70">
-                    4.5 units · 10 deals total
+                    18.5 units · 32 deals total
                   </div>
                 </div>
                 <div className="relative space-y-1.5">
@@ -1011,7 +1011,7 @@ export default function HomePage() {
                   Take home
                 </div>
                 <div className="font-display text-[72px] font-black leading-none tracking-[-0.03em] text-ash md:text-[96px]">
-                  $2,100
+                  $4,200
                 </div>
                 <div className="mt-6 grid grid-cols-3 gap-3 border-t border-white/5 pt-5">
                   <div>
@@ -1019,7 +1019,7 @@ export default function HomePage() {
                       Units
                     </div>
                     <div className="font-display text-2xl font-black text-ash">
-                      2.0
+                      3.5
                     </div>
                   </div>
                   <div>
@@ -1027,7 +1027,7 @@ export default function HomePage() {
                       Deals
                     </div>
                     <div className="font-display text-2xl font-black text-ash">
-                      5
+                      8
                     </div>
                   </div>
                   <div>
@@ -1035,7 +1035,7 @@ export default function HomePage() {
                       CXI
                     </div>
                     <div className="font-display text-2xl font-black text-ash">
-                      4.7
+                      4.8
                     </div>
                   </div>
                 </div>
@@ -1138,11 +1138,11 @@ export default function HomePage() {
                   Take home
                 </div>
                 <div className="relative font-display text-[72px] font-black leading-none tracking-[-0.03em] text-mega md:text-[96px]">
-                  $4,900
+                  $31,400
                 </div>
                 <div className="relative mt-2 inline-flex items-center gap-1.5 rounded-full bg-gold/20 px-2.5 py-1 text-[11px] font-bold text-gold-light">
                   <span>↑</span>
-                  +$2,800 &middot; +133%
+                  +$27,200 &middot; +648%
                 </div>
                 <div className="relative mt-6 grid grid-cols-3 gap-3 border-t border-white/15 pt-5">
                   <div>
@@ -1150,7 +1150,7 @@ export default function HomePage() {
                       Units
                     </div>
                     <div className="font-display text-2xl font-black text-white">
-                      4.5
+                      18.5
                     </div>
                   </div>
                   <div>
@@ -1158,7 +1158,7 @@ export default function HomePage() {
                       Deals
                     </div>
                     <div className="font-display text-2xl font-black text-white">
-                      10
+                      32
                     </div>
                   </div>
                   <div>
