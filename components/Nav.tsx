@@ -55,7 +55,7 @@ export default function Nav() {
               priority
             />
           </div>
-          <span className="hidden font-display text-sm font-black tracking-wide text-white sm:inline">
+          <span className="font-display text-sm font-black tracking-wide text-white">
             CLOSERS <span className="text-shine">ASSIST</span>
           </span>
         </Link>
