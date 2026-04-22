@@ -103,7 +103,7 @@ export default function HomePage() {
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr,1fr]">
             {/* LEFT COLUMN — copy */}
             <div>
-              <FadeIn>
+              <div>
                 <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-gradient-to-r from-deal/20 to-gold/15 px-3.5 py-1.5 backdrop-blur">
                   <span className="relative flex h-2 w-2">
                     <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
@@ -113,9 +113,9 @@ export default function HomePage() {
                     Built by a working rep · Real floor. Real money.
                   </span>
                 </div>
-              </FadeIn>
+              </div>
 
-              <FadeIn delay={100}>
+              <div>
                 <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
                   Close like it&rsquo;s
                   <br />
@@ -125,9 +125,9 @@ export default function HomePage() {
                     Every. Single. Day.
                   </span>
                 </h1>
-              </FadeIn>
+              </div>
 
-              <FadeIn delay={200}>
+              <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
                   The AI agent built on the showroom floor. Knows your pay
                   plan, your scripts, your customers.
@@ -136,9 +136,9 @@ export default function HomePage() {
                     $29.99/month. One closed deal pays for 10 years.
                   </span>
                 </p>
-              </FadeIn>
+              </div>
 
-              <FadeIn delay={300}>
+              <div>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
                   <Link
                     href="/#waitlist"
@@ -181,11 +181,11 @@ export default function HomePage() {
                     Cancel in 1 click
                   </span>
                 </div>
-              </FadeIn>
+              </div>
             </div>
 
             {/* RIGHT COLUMN — 3D money card visual */}
-            <FadeIn delay={200}>
+            <div>
               <div className="relative mx-auto h-[620px] w-full max-w-[380px]">
                 {/* Ambient green glow behind phone */}
                 <div
@@ -469,11 +469,11 @@ export default function HomePage() {
                   REAL UI &middot; Thul&rsquo;s floor &middot; Sun Toyota
                 </div>
               </div>
-            </FadeIn>
+            </div>
           </div>
 
           {/* HUGE stat strip — the math closers can't argue with */}
-          <FadeIn delay={500}>
+          <div>
             <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-8 backdrop-blur">
               <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
                 The math closers can&rsquo;t argue with
@@ -505,7 +505,7 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-          </FadeIn>
+          </div>
         </div>
       </section>
 
