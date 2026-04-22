@@ -21,7 +21,7 @@ const TIERS = [
     tagline: "For the solo closer who wants to make more money this month.",
     cta: "Get Started",
     href: "/#waitlist",
-    priceId: "price_1TP7JxJzG6xU26F9Qz3Du3ei",
+    priceId: "price_1TP9nMJzG6xU26F9ii7RlgCf",
     features: [
       "Everything your agent can do — no feature gating",
       "Unlimited uploads, skills, instructions, memory",
@@ -41,7 +41,7 @@ const TIERS = [
     tagline: "For the sales manager rolling it out to the whole team.",
     cta: "Get Started",
     href: "/#waitlist",
-    priceId: "price_1TP7KkJzG6xU26F9uXTsqvLH",
+    priceId: "price_1TP9oGJzG6xU26F9N8yjczSE",
     features: [
       "Everything in Starter — for up to 25 reps",
       "Team dashboard — units, leaderboards, CXI tracking",
