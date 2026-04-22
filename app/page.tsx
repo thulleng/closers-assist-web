@@ -149,15 +149,8 @@ export default function HomePage() {
 
               <div>
                 <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link
-                    href="/#waitlist"
-                    className="btn-loud group flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
-                  >
-                    Join Waitlist
-                    <ArrowRight
-                      className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                      strokeWidth={2.5}
-                    />
+                  <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
+                    Get Started
                   </Link>
                   <Link
                     href="/how-it-works"
@@ -1510,15 +1503,8 @@ export default function HomePage() {
                   No contracts. Cancel anytime.
                 </span>
               </p>
-              <Link
-                href="/#waitlist"
-                className="btn-loud group inline-flex items-center gap-1.5 rounded-xl px-5 py-2.5 text-sm"
-              >
-                Join Waitlist
-                <ArrowRight
-                  className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5"
-                  strokeWidth={2.5}
-                />
+              <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
+                Get Started
               </Link>
             </div>
           </FadeIn>
@@ -1595,15 +1581,8 @@ export default function HomePage() {
 
           <FadeIn delay={200}>
             <div className="mt-10 text-center">
-              <Link
-                href="/#waitlist"
-                className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
-              >
-                Join Waitlist
-                <ArrowRight
-                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                  strokeWidth={2.5}
-                />
+              <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
+                Get Started
               </Link>
               <p className="mt-4 text-sm text-muted">
                 14-day free trial. No credit card required.
@@ -1651,7 +1630,7 @@ export default function HomePage() {
           </FadeIn>
           <FadeIn delay={300}>
             <div id="waitlist" className="mx-auto mt-12 max-w-md">
-              <EmailCapture buttonText="Join Waitlist" />
+              <EmailCapture buttonText="Get Started" />
             </div>
           </FadeIn>
           <FadeIn delay={450}>
