@@ -42,8 +42,8 @@ export default function FounderPage() {
 
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
               <Image
-                src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80&auto=format&fit=crop"
-                alt="Working late"
+                src="/images/thul-founder.jpg"
+                alt="Thul Leng at Sun Toyota, New Port Richey, Florida"
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, 100vw"
