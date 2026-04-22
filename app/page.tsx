@@ -1525,6 +1525,94 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 7.25 — COMPARISON TABLE */}
+      <section className="relative overflow-hidden border-t border-iron loud-bg-alt">
+        <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
+          <FadeIn>
+            <div className="mb-12 max-w-3xl">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  Head to head
+                </span>
+              </div>
+              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-5xl">
+                Your CRM tracks deals.{" "}
+                <span className="text-deal">We close them.</span>
+              </h2>
+              <p className="mt-4 text-lg leading-relaxed text-ash">
+                Everything else was built for managers. This was built for the
+                rep on the floor.
+              </p>
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={100}>
+            <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur">
+              {/* Header row */}
+              <div className="grid grid-cols-4 border-b border-iron">
+                <div className="p-4 text-xs font-medium uppercase tracking-widest text-muted" />
+                <div className="border-l border-iron p-4 text-center text-sm text-ash">
+                  Your CRM
+                </div>
+                <div className="border-l border-iron p-4 text-center text-sm text-ash">
+                  Generic AI
+                </div>
+                <div className="border-l border-iron bg-deal/5 p-4 text-center">
+                  <span className="font-display text-sm font-bold text-deal">
+                    CLOSERS ASSIST
+                  </span>
+                </div>
+              </div>
+
+              {/* Data rows */}
+              {[
+                "Knows your pay plan",
+                "Word-for-word scripts",
+                "Built for live deals",
+                "Industry-specific objections",
+                "Remembers your customers",
+                "Under $30/mo",
+              ].map((row, i) => (
+                <div
+                  key={row}
+                  className={`grid grid-cols-4 ${i < 5 ? "border-b border-iron" : ""}`}
+                >
+                  <div className="p-4 text-sm text-bone">{row}</div>
+                  <div className="flex items-center justify-center border-l border-iron p-4 text-lg">
+                    ❌
+                  </div>
+                  <div className="flex items-center justify-center border-l border-iron p-4 text-lg">
+                    ❌
+                  </div>
+                  <div className="flex items-center justify-center border-l border-iron bg-deal/5 p-4 text-lg">
+                    <span className="text-deal">✅</span>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+
+          <FadeIn delay={200}>
+            <div className="mt-10 text-center">
+              <Link
+                href="/#waitlist"
+                className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
+              >
+                Join Waitlist
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  strokeWidth={2.5}
+                />
+              </Link>
+              <p className="mt-4 text-sm text-muted">
+                14-day free trial. No credit card required.
+              </p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* 7.5 — FOUNDERS CIRCLE */}
       <FoundersCircle formspreeId="mwvargdv" />
 
