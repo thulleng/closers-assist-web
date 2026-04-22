@@ -68,8 +68,14 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    const SLUG_MAP: Record<string, string> = {
+      auto: "automotive",
+      "project-manager": "project_manager",
+      "other-sales": "other_sales",
+    };
+    const normalizedIndustry = SLUG_MAP[industry] ?? industry;
     const systemPrompt =
-      SYSTEM_PROMPTS[industry] ?? SYSTEM_PROMPTS["default"];
+      SYSTEM_PROMPTS[normalizedIndustry] ?? SYSTEM_PROMPTS["default"];
 
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
