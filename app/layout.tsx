@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
+import BottomNav from "@/components/BottomNav";
 import "./globals.css";
 
 const inter = Inter({
@@ -86,8 +87,9 @@ export default function RootLayout({
     >
       <body className="bg-pit text-bone font-sans antialiased">
         <Nav />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen pb-16 md:pb-0">{children}</main>
         <Footer />
+        <BottomNav />
       </body>
     </html>
   );
