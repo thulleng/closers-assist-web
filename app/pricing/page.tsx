@@ -19,8 +19,9 @@ const TIERS = [
     unit: "rep",
     seats: 1,
     tagline: "For the solo closer who wants to make more money this month.",
-    cta: "Join Waitlist",
+    cta: "Get Started",
     href: "/#waitlist",
+    priceId: "price_1TP7JxJzG6xU26F9Qz3Du3ei",
     features: [
       "Everything your agent can do — no feature gating",
       "Unlimited uploads, skills, instructions, memory",
@@ -38,8 +39,9 @@ const TIERS = [
     unit: "team",
     seats: 25,
     tagline: "For the sales manager rolling it out to the whole team.",
-    cta: "Join Waitlist",
+    cta: "Get Started",
     href: "/#waitlist",
+    priceId: "price_1TP7KkJzG6xU26F9uXTsqvLH",
     features: [
       "Everything in Starter — for up to 25 reps",
       "Team dashboard — units, leaderboards, CXI tracking",
@@ -106,9 +108,20 @@ const FAQ = [
   },
 ];
 
+async function startCheckout(priceId: string) {
+  const res = await fetch("/api/checkout", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ priceId }),
+  });
+  const data = await res.json();
+  if (data.url) window.location.href = data.url;
+}
+
 export default function PricingPage() {
   const [billing, setBilling] = useState<Billing>("monthly");
   const [selectedBuyer, setSelectedBuyer] = useState<Buyer | null>(null);
+  const [loadingTier, setLoadingTier] = useState<string | null>(null);
 
   const selectedTier = selectedBuyer ? BUYER_TO_TIER[selectedBuyer] : null;
 
@@ -314,16 +327,34 @@ export default function PricingPage() {
                 </ul>
 
                 {/* CTA */}
-                <Link
-                  href={tier.href}
-                  className={`block rounded-md py-3 text-center text-sm font-medium transition-colors ${
-                    highlight
-                      ? "bg-deal text-pit hover:bg-deal-hover"
-                      : "border border-iron text-bone hover:border-ash"
-                  }`}
-                >
-                  {tier.cta}
-                </Link>
+                {"priceId" in tier ? (
+                  <button
+                    onClick={async () => {
+                      setLoadingTier(tier.id);
+                      await startCheckout((tier as { priceId: string }).priceId);
+                      setLoadingTier(null);
+                    }}
+                    disabled={loadingTier === tier.id}
+                    className={`block w-full rounded-md py-3 text-center text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${
+                      highlight
+                        ? "bg-deal text-pit hover:bg-deal-hover"
+                        : "border border-iron text-bone hover:border-ash"
+                    }`}
+                  >
+                    {loadingTier === tier.id ? "Redirecting…" : tier.cta}
+                  </button>
+                ) : (
+                  <Link
+                    href={tier.href}
+                    className={`block rounded-md py-3 text-center text-sm font-medium transition-colors ${
+                      highlight
+                        ? "bg-deal text-pit hover:bg-deal-hover"
+                        : "border border-iron text-bone hover:border-ash"
+                    }`}
+                  >
+                    {tier.cta}
+                  </Link>
+                )}
               </div>
             );
           })}
