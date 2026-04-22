@@ -7,6 +7,8 @@ type Props = {
   delay?: number;
   className?: string;
   as?: "div" | "section" | "article" | "span";
+  /** Skip animation entirely — renders visible immediately, no observer */
+  instant?: boolean;
 };
 
 export default function FadeIn({
@@ -14,18 +16,28 @@ export default function FadeIn({
   delay = 0,
   className = "",
   as: Component = "div",
+  instant = false,
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  // Start visible — content is readable immediately, animation is progressive enhancement
   const [visible, setVisible] = useState(true);
   const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
-    // On mount, reset to hidden so we can animate in
-    setVisible(false);
+    // Skip animation for instant elements or elements already in the viewport
+    if (instant) return;
 
     const el = ref.current;
     if (!el) return;
+
+    // If the element is already in the viewport on mount, don't animate
+    const rect = el.getBoundingClientRect();
+    if (rect.top < window.innerHeight && rect.bottom > 0) {
+      return;
+    }
+
+    // Below the fold — hide and observe
+    setVisible(false);
+    setAnimated(true);
 
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -34,21 +46,26 @@ export default function FadeIn({
           observer.disconnect();
         }
       },
-      { threshold: 0.05, rootMargin: "0px 0px 0px 0px" }
+      { threshold: 0.05 }
     );
 
     observer.observe(el);
-    setAnimated(true);
     return () => observer.disconnect();
-  }, [delay]);
+  }, [delay, instant]);
+
+  if (instant) {
+    return (
+      <Component className={className}>
+        {children}
+      </Component>
+    );
+  }
 
   return (
     <Component
       ref={ref as React.RefObject<HTMLDivElement>}
       className={`${animated ? "transition-all duration-700 ease-out" : ""} ${
-        visible
-          ? "translate-y-0 opacity-100"
-          : "translate-y-4 opacity-0"
+        visible ? "translate-y-0 opacity-100" : "translate-y-4 opacity-0"
       } ${className}`}
     >
       {children}
