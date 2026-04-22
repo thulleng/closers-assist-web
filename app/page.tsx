@@ -1517,7 +1517,7 @@ export default function HomePage() {
       </section>
 
       {/* 7.5 — FOUNDERS CIRCLE */}
-      <FoundersCircle formspreeId="PLACEHOLDER" />
+      <FoundersCircle formspreeId="mwvargdv" />
 
       {/* 8 — FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">
