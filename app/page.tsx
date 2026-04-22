@@ -132,7 +132,7 @@ export default function HomePage() {
                   plan, your scripts, your customers.
                   <br />
                   <span className="mt-2 inline-block font-semibold text-gold-light">
-                    $9.99/month. One closed deal pays for 10 years.
+                    $29.99/month. One closed deal pays for 10 years.
                   </span>
                 </p>
               </FadeIn>
@@ -488,7 +488,7 @@ export default function HomePage() {
                 </div>
                 <div className="border-x border-white/10 text-center">
                   <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    $9.99
+                    $29.99
                   </div>
                   <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Per rep / mo
@@ -1424,27 +1424,27 @@ export default function HomePage() {
             {[
               {
                 name: "Starter",
-                price: "$9.99",
+                price: "$29.99",
                 unit: "/ mo",
                 seats: "1 rep",
                 detail: "For the solo closer who wants to make more money this month.",
               },
               {
                 name: "Pro",
-                price: "$199.99",
+                price: "$624.75",
                 unit: "/ mo",
                 seats: "Up to 25 reps",
                 detail:
-                  "For the manager rolling it out to the team. Works out to $8/rep.",
+                  "For the manager rolling it out to the team. Works out to $24.99/rep.",
                 featured: true,
               },
               {
                 name: "Elite",
-                price: "$499.99",
-                unit: "/ mo",
-                seats: "Up to 100 reps",
+                price: "Custom",
+                unit: "",
+                seats: "100+ reps",
                 detail:
-                  "For the dealership. Works out to $5/rep at full team.",
+                  "For the dealership. Starting at $19.99/rep — contact for your rate.",
               },
             ].map((p, i) => (
               <FadeIn key={p.name} delay={i * 80}>

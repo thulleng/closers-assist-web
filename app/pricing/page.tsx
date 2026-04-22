@@ -14,13 +14,13 @@ const TIERS = [
     id: "starter",
     name: "Starter",
     buyer: "solo" as Buyer,
-    monthly: 9.99,
-    annual: 7.99,
+    monthly: 29.99,
+    annual: 23.99,
     unit: "rep",
     seats: 1,
     tagline: "For the solo closer who wants to make more money this month.",
-    cta: "Start 14-day free trial",
-    href: "/pricing",
+    cta: "Join Waitlist",
+    href: "/#waitlist",
     features: [
       "Everything your agent can do — no feature gating",
       "Unlimited uploads, skills, instructions, memory",
@@ -33,13 +33,13 @@ const TIERS = [
     id: "pro",
     name: "Pro",
     buyer: "team" as Buyer,
-    monthly: 199.99,
-    annual: 159.99,
+    monthly: 624.75,
+    annual: 499.75,
     unit: "team",
     seats: 25,
     tagline: "For the sales manager rolling it out to the whole team.",
-    cta: "Start 14-day free trial",
-    href: "/pricing",
+    cta: "Join Waitlist",
+    href: "/#waitlist",
     features: [
       "Everything in Starter — for up to 25 reps",
       "Team dashboard — units, leaderboards, CXI tracking",
@@ -52,8 +52,8 @@ const TIERS = [
     id: "elite",
     name: "Elite",
     buyer: "dealership" as Buyer,
-    monthly: 499.99,
-    annual: 399.99,
+    monthly: 0,
+    annual: 0,
     unit: "team",
     seats: 100,
     tagline: "For the dealership, brokerage, or agency rolling out at scale.",
@@ -78,11 +78,11 @@ const BUYER_TO_TIER: Record<Buyer, string> = {
 const FAQ = [
   {
     q: "How does billing actually work?",
-    a: "Starter is billed per rep per month ($9.99 each). Pro and Elite are flat team rates — $199.99 covers up to 25 reps, $499.99 covers up to 100. One invoice, not 25 or 100. The bigger your team, the less each rep costs — that's how it should work.",
+    a: "Starter is billed per rep per month ($29.99 each). Pro is $24.99/rep/mo billed as a flat team rate — $624.75/mo covers up to 25 reps on one invoice. Elite is custom pricing — contact us for your rate.",
   },
   {
     q: "What if my team is bigger than 25 but smaller than 100?",
-    a: "You go straight to Elite. Simple. No tier-jumping math to figure out. 26 reps pays $499.99 just like 99 reps does.",
+    a: "You go to Elite — custom pricing, one conversation. Email thul@closersassist.com and we'll build your rate.",
   },
   {
     q: "What if I have more than 100 reps?",
@@ -260,10 +260,18 @@ export default function PricingPage() {
 
                 {/* Price */}
                 <div className="mb-1 flex items-baseline gap-1">
-                  <span className="font-mono text-4xl font-medium text-bone">
-                    ${price.toFixed(2)}
-                  </span>
-                  <span className="text-sm text-ash">/ month</span>
+                  {tier.id === "elite" ? (
+                    <span className="font-mono text-4xl font-medium text-bone">
+                      Custom
+                    </span>
+                  ) : (
+                    <>
+                      <span className="font-mono text-4xl font-medium text-bone">
+                        ${price.toFixed(2)}
+                      </span>
+                      <span className="text-sm text-ash">/ month</span>
+                    </>
+                  )}
                 </div>
 
                 {/* Per-rep math */}
@@ -279,7 +287,7 @@ export default function PricingPage() {
                 )}
                 {tier.id === "elite" && (
                   <div className="mb-1 font-mono text-xs text-muted">
-                    Flat team rate — works out to ${(price / 100).toFixed(2)}/rep at 100 reps
+                    Starting at $19.99/rep/mo — contact us for your rate
                   </div>
                 )}
 
@@ -338,21 +346,21 @@ export default function PricingPage() {
             <div className="loud-card rounded-lg p-5">
               <div className="mb-1 text-xs text-ash">Starter (1 rep)</div>
               <div className="font-mono text-2xl font-medium text-bone">
-                $9.99
+                $29.99
               </div>
               <div className="mt-1 font-mono text-xs text-muted">per rep</div>
             </div>
             <div className="rounded-lg border border-deal/40 bg-pit p-5">
               <div className="mb-1 text-xs text-ash">Pro (25 reps)</div>
               <div className="font-mono text-2xl font-medium text-deal">
-                $8.00
+                $24.99
               </div>
               <div className="mt-1 font-mono text-xs text-muted">per rep</div>
             </div>
             <div className="rounded-lg border border-deal/40 bg-pit p-5">
-              <div className="mb-1 text-xs text-ash">Elite (100 reps)</div>
+              <div className="mb-1 text-xs text-ash">Elite (100+ reps)</div>
               <div className="font-mono text-2xl font-medium text-deal">
-                $5.00
+                $19.99
               </div>
               <div className="mt-1 font-mono text-xs text-muted">per rep</div>
             </div>

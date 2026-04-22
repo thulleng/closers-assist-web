@@ -4,7 +4,7 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
-const STARTER_PRICE = 9.99;
+const STARTER_PRICE = 29.99;
 
 export default function RoiCalculator() {
   const [commission, setCommission] = useState(500);
@@ -50,7 +50,7 @@ export default function RoiCalculator() {
             Starter plan
           </div>
           <div className="mt-1 font-mono text-2xl font-medium text-bone">
-            $9.99<span className="text-sm text-ash">/mo</span>
+            $29.99<span className="text-sm text-ash">/mo</span>
           </div>
         </div>
         <div className="text-right">
@@ -149,7 +149,7 @@ export default function RoiCalculator() {
       </Link>
 
       <p className="mt-3 text-center text-[11px] text-muted">
-        Team pricing starts at $199.99/mo for up to 25 reps.{" "}
+        Team pricing starts at $624.75/mo for up to 25 reps.{" "}
         <Link
           href="/pricing"
           className="text-ash transition-colors hover:text-deal"

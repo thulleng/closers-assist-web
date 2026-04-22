@@ -177,7 +177,7 @@ export default function AutoPage() {
         <div className="mx-auto max-w-4xl px-6 py-20 text-center md:py-24">
           <FadeIn>
             <h2 className="mb-3 font-display text-3xl font-extrabold leading-tight tracking-tight text-bone md:text-5xl">
-              <span className="font-mono">$9.99</span> per rep, per month.
+              <span className="font-mono">$29.99</span> per rep, per month.
             </h2>
             <p className="mb-10 text-lg leading-relaxed text-ash">
               Works with Reynolds, CDK, VinSolutions, DealerSocket, Elead. No

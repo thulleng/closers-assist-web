@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     template: "%s · Closers Assist",
   },
   description:
-    "Car. Home. Policy. Panel. Plan. One AI agent, every industry, zero restrictions. Built by a working rep — not a SaaS company. $9.99/rep/mo.",
+    "Car. Home. Policy. Panel. Plan. One AI agent, every industry, zero restrictions. Built by a working rep — not a SaaS company. $29.99/rep/mo.",
   metadataBase: new URL("https://closersassist.com"),
   manifest: "/manifest.json",
   icons: {
