@@ -1197,11 +1197,11 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Fifteen doors. One brand.
+                  Eighteen doors. One brand.
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                One agent. Fifteen industries.
+                One agent. Eighteen industries.
                 <br />
                 <span className="text-shine font-black">Zero compromises.</span>
               </h2>
