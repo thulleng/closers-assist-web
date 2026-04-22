@@ -158,6 +158,7 @@ export default function RealChat({ industry = "automotive" }: { industry?: strin
           <button
             onClick={() => sendMessage(input)}
             disabled={!input.trim() || streaming}
+            aria-label="Send message"
             className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-deal text-pit transition-all hover:bg-deal-hover disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <ArrowUp className="h-4 w-4" strokeWidth={2.5} />

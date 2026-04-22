@@ -16,9 +16,14 @@ export default function FadeIn({
   as: Component = "div",
 }: Props) {
   const ref = useRef<HTMLDivElement>(null);
-  const [visible, setVisible] = useState(false);
+  // Start visible — content is readable immediately, animation is progressive enhancement
+  const [visible, setVisible] = useState(true);
+  const [animated, setAnimated] = useState(false);
 
   useEffect(() => {
+    // On mount, reset to hidden so we can animate in
+    setVisible(false);
+
     const el = ref.current;
     if (!el) return;
 
@@ -29,17 +34,18 @@ export default function FadeIn({
           observer.disconnect();
         }
       },
-      { threshold: 0.1, rootMargin: "0px 0px -80px 0px" }
+      { threshold: 0.05, rootMargin: "0px 0px 0px 0px" }
     );
 
     observer.observe(el);
+    setAnimated(true);
     return () => observer.disconnect();
   }, [delay]);
 
   return (
     <Component
       ref={ref as React.RefObject<HTMLDivElement>}
-      className={`transition-all duration-700 ease-out ${
+      className={`${animated ? "transition-all duration-700 ease-out" : ""} ${
         visible
           ? "translate-y-0 opacity-100"
           : "translate-y-4 opacity-0"
