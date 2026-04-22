@@ -108,20 +108,29 @@ const FAQ = [
   },
 ];
 
-async function startCheckout(priceId: string) {
-  const res = await fetch("/api/checkout", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ priceId }),
-  });
-  const data = await res.json();
-  if (data.url) window.location.href = data.url;
+async function startCheckout(priceId: string): Promise<string | null> {
+  try {
+    const res = await fetch("/api/checkout", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ priceId }),
+    });
+    const data = await res.json();
+    if (data.url) {
+      window.location.href = data.url;
+      return null;
+    }
+    return data.error ?? "Checkout unavailable. Try again.";
+  } catch {
+    return "Network error. Check your connection and try again.";
+  }
 }
 
 export default function PricingPage() {
   const [billing, setBilling] = useState<Billing>("monthly");
   const [selectedBuyer, setSelectedBuyer] = useState<Buyer | null>(null);
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
+  const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
   const selectedTier = selectedBuyer ? BUYER_TO_TIER[selectedBuyer] : null;
 
@@ -331,8 +340,10 @@ export default function PricingPage() {
                   <button
                     onClick={async () => {
                       setLoadingTier(tier.id);
-                      await startCheckout((tier as { priceId: string }).priceId);
+                      setCheckoutError(null);
+                      const err = await startCheckout((tier as { priceId: string }).priceId);
                       setLoadingTier(null);
+                      if (err) setCheckoutError(err);
                     }}
                     disabled={loadingTier === tier.id}
                     className={`block w-full rounded-md py-3 text-center text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${
@@ -359,6 +370,9 @@ export default function PricingPage() {
             );
           })}
         </div>
+        {checkoutError && (
+          <p className="mt-4 text-center text-sm text-red-400">{checkoutError}</p>
+        )}
       </section>
 
       {/* PER-REP COMPARISON STRIP */}
