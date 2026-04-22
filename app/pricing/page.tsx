@@ -2,9 +2,8 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Shield, Check, User, Users, Building2 } from "lucide-react";
+import { Shield, Check, User, Users, Building2, ArrowRight } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
-import EmailCapture from "@/components/EmailCapture";
 
 type Billing = "monthly" | "annual";
 type Buyer = "solo" | "team" | "dealership";
@@ -236,7 +235,7 @@ export default function PricingPage() {
       </section>
 
       {/* TIERS */}
-      <section className="mx-auto max-w-7xl px-6 pb-10">
+      <section id="plans" className="mx-auto max-w-7xl px-6 pb-10">
         <div className="grid gap-4 md:grid-cols-3">
           {TIERS.map((tier) => {
             const price = billing === "annual" ? tier.annual : tier.monthly;
@@ -478,7 +477,7 @@ export default function PricingPage() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
               </span>
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                Early access — launching soon
+                Now live
               </span>
             </div>
             <h2 className="font-display text-4xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-6xl">
@@ -492,15 +491,13 @@ export default function PricingPage() {
           </FadeIn>
 
           <FadeIn delay={200}>
-            <div className="mx-auto mt-10 max-w-md">
-              <EmailCapture
-                placeholder="your@email.com"
-                buttonText="Get early access →"
-              />
+            <div className="mt-10">
+              <Link href="#plans" className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg">
+                Get Started — $29.99/mo
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </Link>
+              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. Beat your last month or it&rsquo;s free.</p>
             </div>
-            <p className="mt-4 text-sm text-muted">
-              No credit card. Cancel in one click. Beat your last month or it&rsquo;s free.
-            </p>
           </FadeIn>
         </div>
       </section>
