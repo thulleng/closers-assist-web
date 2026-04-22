@@ -1597,29 +1597,10 @@ export default function HomePage() {
 
       {/* 8 — FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">
-        <div className="grid-pattern" />
-        {/* Giant green orb */}
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -z-10 h-[600px] w-[900px] -translate-x-1/2 -translate-y-1/2 rounded-full opacity-80 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(16, 185, 129, 0.35) 0%, transparent 60%)",
-          }}
-        />
-        {/* Gold accent orb */}
-        <div
-          className="pointer-events-none absolute bottom-0 right-0 -z-10 h-[300px] w-[500px] rounded-full opacity-50 blur-3xl"
-          style={{
-            background:
-              "radial-gradient(circle, rgba(251, 191, 36, 0.3) 0%, transparent 60%)",
-          }}
-        />
-
         <div className="relative mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
           <FadeIn>
             <h2 className="font-display text-5xl font-black leading-[0.95] tracking-[-0.03em] text-white md:text-7xl">
-              Your CRM is a graveyard.
-              <br />
+              Your CRM is a graveyard.<br />
               <span className="text-shine font-black">This isn&rsquo;t.</span>
             </h2>
           </FadeIn>
@@ -1629,15 +1610,13 @@ export default function HomePage() {
             </p>
           </FadeIn>
           <FadeIn delay={300}>
-            <div id="waitlist" className="mx-auto mt-12 max-w-md">
-              <EmailCapture buttonText="Get Started" />
+            <div className="mt-10">
+              <Link href="/pricing" className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg">
+                Get Started — $29.99/mo
+                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+              </Link>
+              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. Beat your last month or it&rsquo;s free.</p>
             </div>
-          </FadeIn>
-          <FadeIn delay={450}>
-            <p className="mt-5 text-sm text-muted">
-              No credit card. Cancel in one click. Built by a rep who sells
-              cars five days a week.
-            </p>
           </FadeIn>
         </div>
       </section>
