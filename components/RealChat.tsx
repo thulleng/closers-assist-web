@@ -19,11 +19,13 @@ export default function RealChat({ industry = "automotive" }: { industry?: strin
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = chatContainerRef.current;
+    if (!container) return;
+    container.scrollTop = container.scrollHeight;
   }, [messages]);
 
   const sendMessage = async (text: string) => {
@@ -95,7 +97,7 @@ export default function RealChat({ industry = "automotive" }: { industry?: strin
   return (
     <div className="flex h-[540px] flex-col overflow-hidden rounded-2xl border border-iron bg-pit">
       {/* Messages */}
-      <div className="flex-1 overflow-y-auto px-5 py-5 space-y-4 scroll-smooth">
+      <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-5 py-5 space-y-4">
         {isEmpty && (
           <div className="flex h-full flex-col items-center justify-center gap-6 text-center">
             <div>
@@ -138,7 +140,6 @@ export default function RealChat({ industry = "automotive" }: { industry?: strin
             </div>
           </div>
         ))}
-        <div ref={bottomRef} />
       </div>
 
       {/* Input */}
