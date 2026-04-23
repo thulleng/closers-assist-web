@@ -16,9 +16,13 @@ interface OnboardingData {
   storeName: string;
   yearsInSales: string;
   title: string;
-  commissionType: string;
-  monthlyGoal: string;
-  avgDeal: string;
+  // Pay plan
+  draw: string;
+  split: string;
+  mini: string;
+  volThreshold: string;
+  volBonus: string;
+  csiBonus: string;
   firstGoal: string;
 }
 
@@ -29,9 +33,12 @@ const EMPTY: OnboardingData = {
   storeName: "",
   yearsInSales: "",
   title: "",
-  commissionType: "",
-  monthlyGoal: "",
-  avgDeal: "",
+  draw: "",
+  split: "",
+  mini: "",
+  volThreshold: "",
+  volBonus: "",
+  csiBonus: "",
   firstGoal: "",
 };
 
@@ -348,24 +355,123 @@ function Step2Role({ data, update }: {
 
 // ─── Step 3 — Pay Plan ────────────────────────────────────────────────────────
 
+const AVG_FRONT = 1200; // assumed avg front gross per deal for the preview
+
+function calcPayPlan(data: OnboardingData, units = 5) {
+  const draw         = parseFloat(data.draw)         || 0;
+  const split        = parseFloat(data.split)        || 0;
+  const mini         = parseFloat(data.mini)         || 0;
+  const volThreshold = parseFloat(data.volThreshold) || 0;
+  const volBonus     = parseFloat(data.volBonus)     || 0;
+  const csiBonus     = parseFloat(data.csiBonus)     || 0;
+
+  const perDeal      = Math.max(mini, AVG_FRONT * (split / 100));
+  const rawComm      = perDeal * units;
+  const commission   = Math.max(draw, rawComm);
+  const volEarned    = volThreshold > 0 && units >= volThreshold ? volBonus : 0;
+  const total        = commission + volEarned + csiBonus;
+
+  return { commission, volEarned, csiBonus, total };
+}
+
+function PayPlanPreview({ data }: { data: OnboardingData }) {
+  const hasAny = data.draw || data.split || data.mini || data.volBonus || data.csiBonus;
+  const { commission, volEarned, csiBonus, total } = calcPayPlan(data, 5);
+  const fmt = (n: number) => "$" + Math.round(n).toLocaleString();
+
+  return (
+    <div className={`rounded-2xl border transition-all duration-300 overflow-hidden ${hasAny ? "border-deal/40 bg-deal/5" : "border-iron bg-slate/50"}`}>
+      <div className="px-5 py-4 border-b border-white/6 flex items-center justify-between">
+        <span className="font-mono text-[10px] font-semibold uppercase tracking-[1.5px] text-ash">
+          Estimated: 5-unit month
+        </span>
+        {hasAny && <span className="text-[10px] text-muted">~${AVG_FRONT.toLocaleString()} avg front</span>}
+      </div>
+      <div className="px-5 py-4 space-y-2.5">
+        <div className="flex justify-between text-sm">
+          <span className="text-ash">Commission</span>
+          <span className={`font-mono font-medium ${hasAny ? "text-bone" : "text-muted"}`}>
+            {hasAny ? fmt(commission) : "—"}
+          </span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-ash">Volume Bonus</span>
+          <span className={`font-mono font-medium ${volEarned > 0 ? "text-deal" : "text-muted"}`}>
+            {hasAny ? fmt(volEarned) : "—"}
+          </span>
+        </div>
+        <div className="flex justify-between text-sm">
+          <span className="text-ash">CSI / CXI Bonus</span>
+          <span className={`font-mono font-medium ${csiBonus > 0 ? "text-gold-light" : "text-muted"}`}>
+            {hasAny ? fmt(csiBonus) : "—"}
+          </span>
+        </div>
+        <div className="h-px bg-white/8 my-1" />
+        <div className="flex justify-between">
+          <span className="text-sm font-semibold text-white">Total</span>
+          <span className={`font-mono text-lg font-bold ${hasAny ? "text-deal" : "text-muted"}`}>
+            {hasAny ? fmt(total) : "$0"}
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
+
 function Step3PayPlan({ data, update }: {
   data: OnboardingData;
   update: (k: keyof OnboardingData, v: string) => void;
 }) {
+  const inputCls =
+    "w-full rounded-xl border border-white/20 bg-white/[0.08] px-4 py-3.5 text-white placeholder:text-ash text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all";
+
   return (
-    <div className="space-y-6">
-      <div>
-        <FieldLabel>Commission structure</FieldLabel>
-        <PillGrid options={COMMISSION_TYPES} value={data.commissionType} onChange={(v) => update("commissionType", v)} cols={2} />
+    <div className="space-y-4">
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <FieldLabel>Monthly Draw ($)</FieldLabel>
+          <input type="number" min="0" value={data.draw} onChange={(e) => update("draw", e.target.value)}
+            placeholder="0" className={inputCls} />
+        </div>
+        <div>
+          <FieldLabel>Commission Split (%)</FieldLabel>
+          <input type="number" min="0" max="100" value={data.split} onChange={(e) => update("split", e.target.value)}
+            placeholder="25" className={inputCls} />
+        </div>
       </div>
-      <div>
-        <FieldLabel>Monthly unit goal</FieldLabel>
-        <TextInput value={data.monthlyGoal} onChange={(v) => update("monthlyGoal", v)} placeholder="e.g. 15" />
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <FieldLabel>Mini / Flat Rate ($)</FieldLabel>
+          <input type="number" min="0" value={data.mini} onChange={(e) => update("mini", e.target.value)}
+            placeholder="200" className={inputCls} />
+        </div>
+        <div>
+          <FieldLabel>Volume Bonus Threshold (units)</FieldLabel>
+          <input type="number" min="0" value={data.volThreshold} onChange={(e) => update("volThreshold", e.target.value)}
+            placeholder="10" className={inputCls} />
+        </div>
       </div>
-      <div>
-        <FieldLabel>Average deal value ($)</FieldLabel>
-        <TextInput value={data.avgDeal} onChange={(v) => update("avgDeal", v)} placeholder="e.g. 35000" />
-        <p className="mt-2 text-xs text-muted">Used for commission projections — editable anytime.</p>
+
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <FieldLabel>Volume Bonus Amount ($)</FieldLabel>
+          <input type="number" min="0" value={data.volBonus} onChange={(e) => update("volBonus", e.target.value)}
+            placeholder="500" className={inputCls} />
+        </div>
+        <div>
+          <FieldLabel>CSI / CXI Bonus ($)</FieldLabel>
+          <input type="number" min="0" value={data.csiBonus} onChange={(e) => update("csiBonus", e.target.value)}
+            placeholder="300" className={inputCls} />
+        </div>
+      </div>
+
+      {/* Live preview */}
+      <div className="pt-2">
+        <PayPlanPreview data={data} />
+        <p className="mt-2 text-center text-xs text-muted">
+          Assumes ~$1,200 avg front gross · updates as you type
+        </p>
       </div>
     </div>
   );
@@ -430,7 +536,7 @@ export default function OnboardingPage() {
   function canAdvance() {
     if (step === 0) return data.industry !== "";
     if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.storeName.trim() !== "" && data.title.trim() !== "";
-    if (step === 2) return data.commissionType !== "" && data.monthlyGoal.trim() !== "";
+    if (step === 2) return true; // all pay plan fields optional
     if (step === 3) return data.firstGoal !== "";
     return true;
   }
@@ -456,8 +562,8 @@ export default function OnboardingPage() {
       sub: "Takes 60 seconds. Makes your agent 10x more useful.",
     },
     2: {
-      title: "Tell me your pay plan.",
-      sub: "This is how the agent does commission math in real time — right on the floor.",
+      title: "How do you get paid?",
+      sub: "Your agent uses this to calculate your real commission on every deal — instantly.",
     },
     3: {
       title: "What do you want first?",
@@ -530,8 +636,8 @@ export default function OnboardingPage() {
           {/* Navigation — hidden on step 0 (auto-advances on card tap) */}
           {step > 0 && (
             <div className="mt-8">
-              {/* Full-width Next → on step 2 */}
-              {step === 1 ? (
+              {/* Steps 2 and 3 (index 1 and 2): full-width Next → with Back below */}
+              {(step === 1 || step === 2) ? (
                 <div className="space-y-3">
                   <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
                     className={`btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-4 text-base font-bold transition-all ${
@@ -540,11 +646,21 @@ export default function OnboardingPage() {
                   >
                     Next <ArrowRight size={17} />
                   </button>
-                  <button type="button" onClick={() => setStep((s) => s - 1)}
-                    className="w-full flex items-center justify-center gap-2 text-sm text-ash hover:text-bone transition-colors py-2"
-                  >
-                    <ArrowLeft size={15} /> Back
-                  </button>
+                  <div className="flex items-center justify-between">
+                    <button type="button" onClick={() => setStep((s) => s - 1)}
+                      className="flex items-center gap-1.5 text-sm text-ash hover:text-bone transition-colors py-2"
+                    >
+                      <ArrowLeft size={15} /> Back
+                    </button>
+                    {/* Skip only on pay plan step (index 2) */}
+                    {step === 2 && (
+                      <button type="button" onClick={handleNext}
+                        className="text-sm text-ash hover:text-bone transition-colors py-2 underline underline-offset-2"
+                      >
+                        Skip for now →
+                      </button>
+                    )}
+                  </div>
                 </div>
               ) : (
                 <div className="flex items-center justify-between">
