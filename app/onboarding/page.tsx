@@ -10,37 +10,36 @@ const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], display: "swap" 
 
 // ─── Types ───────────────────────────────────────────────────────────────────
 
+// Form state — all strings for controlled inputs
 interface OnboardingData {
   industry: string;
   firstName: string;
   lastName: string;
-  storeName: string;
+  company: string;
   yearsInSales: string;
   title: string;
-  // Pay plan
+  // Pay plan (stored as strings in form, serialised as numbers on save)
   draw: string;
-  split: string;
-  mini: string;
-  volThreshold: string;
-  volBonus: string;
-  csiBonus: string;
-  firstGoal: string;
+  commissionSplit: string;
+  miniFlat: string;
+  volumeThreshold: string;
+  volumeBonus: string;
+  cxiBonus: string;
 }
 
 const EMPTY: OnboardingData = {
   industry: "",
   firstName: "",
   lastName: "",
-  storeName: "",
+  company: "",
   yearsInSales: "",
   title: "",
   draw: "",
-  split: "",
-  mini: "",
-  volThreshold: "",
-  volBonus: "",
-  csiBonus: "",
-  firstGoal: "",
+  commissionSplit: "",
+  miniFlat: "",
+  volumeThreshold: "",
+  volumeBonus: "",
+  cxiBonus: "",
 };
 
 const STORAGE_KEY = "ca_onboarding";
@@ -446,8 +445,8 @@ function Step2Role({ data, update }: {
           <FieldLabel>Company / Dealership *</FieldLabel>
           <input
             type="text"
-            value={data.storeName}
-            onChange={(e) => update("storeName", e.target.value)}
+            value={data.company}
+            onChange={(e) => update("company", e.target.value)}
             placeholder="Sun Toyota"
             className={inputCls}
           />
@@ -488,25 +487,25 @@ function Step2Role({ data, update }: {
 const AVG_FRONT = 1200; // assumed avg front gross per deal for the preview
 
 function calcPayPlan(data: OnboardingData, units = 5) {
-  const draw         = parseFloat(data.draw)         || 0;
-  const split        = parseFloat(data.split)        || 0;
-  const mini         = parseFloat(data.mini)         || 0;
-  const volThreshold = parseFloat(data.volThreshold) || 0;
-  const volBonus     = parseFloat(data.volBonus)     || 0;
-  const csiBonus     = parseFloat(data.csiBonus)     || 0;
+  const draw            = parseFloat(data.draw)            || 0;
+  const commissionSplit = parseFloat(data.commissionSplit) || 0;
+  const miniFlat        = parseFloat(data.miniFlat)        || 0;
+  const volumeThreshold = parseFloat(data.volumeThreshold) || 0;
+  const volumeBonus     = parseFloat(data.volumeBonus)     || 0;
+  const cxiBonus        = parseFloat(data.cxiBonus)        || 0;
 
-  const perDeal      = Math.max(mini, AVG_FRONT * (split / 100));
-  const rawComm      = perDeal * units;
-  const commission   = Math.max(draw, rawComm);
-  const volEarned    = volThreshold > 0 && units >= volThreshold ? volBonus : 0;
-  const total        = commission + volEarned + csiBonus;
+  const perDeal    = Math.max(miniFlat, AVG_FRONT * (commissionSplit / 100));
+  const rawComm    = perDeal * units;
+  const commission = Math.max(draw, rawComm);
+  const volEarned  = volumeThreshold > 0 && units >= volumeThreshold ? volumeBonus : 0;
+  const total      = commission + volEarned + cxiBonus;
 
-  return { commission, volEarned, csiBonus, total };
+  return { commission, volEarned, cxiBonus, total };
 }
 
 function PayPlanPreview({ data }: { data: OnboardingData }) {
-  const hasAny = data.draw || data.split || data.mini || data.volBonus || data.csiBonus;
-  const { commission, volEarned, csiBonus, total } = calcPayPlan(data, 5);
+  const hasAny = data.draw || data.commissionSplit || data.miniFlat || data.volumeBonus || data.cxiBonus;
+  const { commission, volEarned, cxiBonus, total } = calcPayPlan(data, 5);
   const fmt = (n: number) => "$" + Math.round(n).toLocaleString();
 
   return (
@@ -532,8 +531,8 @@ function PayPlanPreview({ data }: { data: OnboardingData }) {
         </div>
         <div className="flex justify-between text-sm">
           <span className="text-ash">CSI / CXI Bonus</span>
-          <span className={`font-mono font-medium ${csiBonus > 0 ? "text-gold-light" : "text-muted"}`}>
-            {hasAny ? fmt(csiBonus) : "—"}
+          <span className={`font-mono font-medium ${cxiBonus > 0 ? "text-gold-light" : "text-muted"}`}>
+            {hasAny ? fmt(cxiBonus) : "—"}
           </span>
         </div>
         <div className="h-px bg-white/8 my-1" />
@@ -565,7 +564,7 @@ function Step3PayPlan({ data, update }: {
         </div>
         <div>
           <FieldLabel>Commission Split (%)</FieldLabel>
-          <input type="number" min="0" max="100" value={data.split} onChange={(e) => update("split", e.target.value)}
+          <input type="number" min="0" max="100" value={data.commissionSplit} onChange={(e) => update("commissionSplit", e.target.value)}
             placeholder="25" className={inputCls} />
         </div>
       </div>
@@ -573,12 +572,12 @@ function Step3PayPlan({ data, update }: {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <FieldLabel>Mini / Flat Rate ($)</FieldLabel>
-          <input type="number" min="0" value={data.mini} onChange={(e) => update("mini", e.target.value)}
+          <input type="number" min="0" value={data.miniFlat} onChange={(e) => update("miniFlat", e.target.value)}
             placeholder="200" className={inputCls} />
         </div>
         <div>
           <FieldLabel>Volume Bonus Threshold (units)</FieldLabel>
-          <input type="number" min="0" value={data.volThreshold} onChange={(e) => update("volThreshold", e.target.value)}
+          <input type="number" min="0" value={data.volumeThreshold} onChange={(e) => update("volumeThreshold", e.target.value)}
             placeholder="10" className={inputCls} />
         </div>
       </div>
@@ -586,12 +585,12 @@ function Step3PayPlan({ data, update }: {
       <div className="grid grid-cols-2 gap-3">
         <div>
           <FieldLabel>Volume Bonus Amount ($)</FieldLabel>
-          <input type="number" min="0" value={data.volBonus} onChange={(e) => update("volBonus", e.target.value)}
+          <input type="number" min="0" value={data.volumeBonus} onChange={(e) => update("volumeBonus", e.target.value)}
             placeholder="500" className={inputCls} />
         </div>
         <div>
           <FieldLabel>CSI / CXI Bonus ($)</FieldLabel>
-          <input type="number" min="0" value={data.csiBonus} onChange={(e) => update("csiBonus", e.target.value)}
+          <input type="number" min="0" value={data.cxiBonus} onChange={(e) => update("cxiBonus", e.target.value)}
             placeholder="300" className={inputCls} />
         </div>
       </div>
@@ -663,7 +662,7 @@ export default function OnboardingPage() {
 
   function canAdvance() {
     if (step === 0) return data.industry !== "";
-    if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.storeName.trim() !== "" && data.title.trim() !== "";
+    if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.company.trim() !== "" && data.title.trim() !== "";
     if (step === 2) return true; // all pay plan fields optional
     if (step === 3) return true; // step 4 has its own finish button
     return true;
@@ -680,7 +679,29 @@ export default function OnboardingPage() {
 
   function handleFinish() {
     setCompleting(true);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    // Resolve human-readable industry label
+    const industryLabel =
+      ALL_INDUSTRIES.find((i) => i.value === data.industry)?.label ?? data.industry;
+
+    // Write exact schema — numeric fields as numbers, metadata fields added
+    const payload = {
+      industry:         data.industry,
+      industryLabel,
+      firstName:        data.firstName,
+      lastName:         data.lastName,
+      company:          data.company,
+      yearsInSales:     data.yearsInSales,
+      title:            data.title,
+      draw:             parseFloat(data.draw)            || 0,
+      commissionSplit:  parseFloat(data.commissionSplit) || 0,
+      miniFlat:         parseFloat(data.miniFlat)        || 0,
+      volumeThreshold:  parseFloat(data.volumeThreshold) || 0,
+      volumeBonus:      parseFloat(data.volumeBonus)     || 0,
+      cxiBonus:         parseFloat(data.cxiBonus)        || 0,
+      completedAt:      new Date().toISOString(),
+    };
+
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
     router.push(getDashboard(data.industry));
   }
 
