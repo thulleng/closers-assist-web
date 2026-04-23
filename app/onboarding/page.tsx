@@ -12,11 +12,10 @@ const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], display: "swap" 
 interface OnboardingData {
   industry: string;
   firstName: string;
-  role: string;
+  lastName: string;
   storeName: string;
-  city: string;
-  state: string;
-  crm: string;
+  yearsInSales: string;
+  title: string;
   commissionType: string;
   monthlyGoal: string;
   avgDeal: string;
@@ -26,11 +25,10 @@ interface OnboardingData {
 const EMPTY: OnboardingData = {
   industry: "",
   firstName: "",
-  role: "",
+  lastName: "",
   storeName: "",
-  city: "",
-  state: "",
-  crm: "",
+  yearsInSales: "",
+  title: "",
   commissionType: "",
   monthlyGoal: "",
   avgDeal: "",
@@ -267,53 +265,82 @@ function Step1Industry({ value, onPick }: { value: string; onPick: (v: string) =
   );
 }
 
-// ─── Step 2 — You ─────────────────────────────────────────────────────────────
+// ─── Step 2 — Your Role ───────────────────────────────────────────────────────
 
-function Step2You({ data, update }: {
+const YEARS_OPTIONS = ["<1", "1–3", "3–5", "5–10", "10+"];
+
+function Step2Role({ data, update }: {
   data: OnboardingData;
   update: (k: keyof OnboardingData, v: string) => void;
 }) {
+  const inputCls =
+    "w-full rounded-xl border border-white/20 bg-white/[0.08] px-4 py-3.5 text-white placeholder:text-ash text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all";
+
   return (
-    <div className="space-y-6">
-      <div>
-        <FieldLabel>First name</FieldLabel>
-        <TextInput value={data.firstName} onChange={(v) => update("firstName", v)} placeholder="e.g. Thul" autoFocus />
-      </div>
-      <div>
-        <FieldLabel>Your role</FieldLabel>
-        <PillGrid options={ROLES} value={data.role} onChange={(v) => update("role", v)} cols={2} />
-      </div>
-      <div>
-        <FieldLabel>Store / company name</FieldLabel>
-        <TextInput value={data.storeName} onChange={(v) => update("storeName", v)} placeholder="e.g. Sun Toyota" />
-      </div>
+    <div className="space-y-4">
+      {/* First Name / Last Name */}
       <div className="grid grid-cols-2 gap-3">
         <div>
-          <FieldLabel>City</FieldLabel>
-          <TextInput value={data.city} onChange={(v) => update("city", v)} placeholder="Tampa" />
+          <FieldLabel>First Name *</FieldLabel>
+          <input
+            type="text"
+            value={data.firstName}
+            onChange={(e) => update("firstName", e.target.value)}
+            placeholder="Thul"
+            autoFocus
+            className={inputCls}
+          />
         </div>
         <div>
-          <FieldLabel>State</FieldLabel>
-          <TextInput value={data.state} onChange={(v) => update("state", v)} placeholder="FL" />
+          <FieldLabel>Last Name *</FieldLabel>
+          <input
+            type="text"
+            value={data.lastName}
+            onChange={(e) => update("lastName", e.target.value)}
+            placeholder="Nguyen"
+            className={inputCls}
+          />
         </div>
       </div>
-      <div>
-        <FieldLabel>CRM</FieldLabel>
-        <div className="grid grid-cols-2 gap-2.5">
-          {CRMS.map((crm) => {
-            const active = data.crm === crm;
-            return (
-              <button key={crm} type="button" onClick={() => update("crm", crm)}
-                className={`rounded-xl border px-4 py-3 text-sm font-medium text-left transition-all ${
-                  active ? "border-deal bg-deal/10 text-deal" : "border-iron bg-slate text-ash hover:border-white/25 hover:text-bone"
-                }`}
-              >
-                {active && <span className="mr-1.5">✓</span>}
-                {crm}
-              </button>
-            );
-          })}
+
+      {/* Company / Years in Sales */}
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <FieldLabel>Company / Dealership *</FieldLabel>
+          <input
+            type="text"
+            value={data.storeName}
+            onChange={(e) => update("storeName", e.target.value)}
+            placeholder="Sun Toyota"
+            className={inputCls}
+          />
         </div>
+        <div>
+          <FieldLabel>Years in Sales</FieldLabel>
+          <select
+            value={data.yearsInSales}
+            onChange={(e) => update("yearsInSales", e.target.value)}
+            className={`${inputCls} cursor-pointer appearance-none`}
+            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 16px center" }}
+          >
+            <option value="" disabled className="bg-slate">Select…</option>
+            {YEARS_OPTIONS.map((y) => (
+              <option key={y} value={y} className="bg-slate text-white">{y} years</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Your Title */}
+      <div>
+        <FieldLabel>Your Title *</FieldLabel>
+        <input
+          type="text"
+          value={data.title}
+          onChange={(e) => update("title", e.target.value)}
+          placeholder="e.g. Sales Rep, Finance Manager, Sales Manager"
+          className={inputCls}
+        />
       </div>
     </div>
   );
@@ -402,7 +429,7 @@ export default function OnboardingPage() {
 
   function canAdvance() {
     if (step === 0) return data.industry !== "";
-    if (step === 1) return data.firstName.trim() !== "" && data.role !== "";
+    if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.storeName.trim() !== "" && data.title.trim() !== "";
     if (step === 2) return data.commissionType !== "" && data.monthlyGoal.trim() !== "";
     if (step === 3) return data.firstGoal !== "";
     return true;
@@ -425,8 +452,8 @@ export default function OnboardingPage() {
       sub: "Your agent auto-loads the vocabulary, scripts, and pay plan math for your world.",
     },
     1: {
-      title: data.firstName ? `Nice to meet you, ${data.firstName}.` : "Tell me about yourself.",
-      sub: "Quick basics so your agent speaks your language from day one.",
+      title: "Tell us about your floor.",
+      sub: "Takes 60 seconds. Makes your agent 10x more useful.",
     },
     2: {
       title: "Tell me your pay plan.",
@@ -440,7 +467,7 @@ export default function OnboardingPage() {
 
   const stepContent: Record<number, React.ReactNode> = {
     0: <Step1Industry value={data.industry} onPick={handleIndustryPick} />,
-    1: <Step2You data={data} update={update} />,
+    1: <Step2Role data={data} update={update} />,
     2: <Step3PayPlan data={data} update={update} />,
     3: <Step4Goal data={data} update={update} />,
   };
@@ -500,29 +527,47 @@ export default function OnboardingPage() {
             {stepContent[step]}
           </div>
 
-          {/* Navigation — hidden on step 1 (auto-advances) */}
+          {/* Navigation — hidden on step 0 (auto-advances on card tap) */}
           {step > 0 && (
-            <div className="flex items-center justify-between mt-10">
-              <button type="button" onClick={() => setStep((s) => s - 1)}
-                className="flex items-center gap-2 text-sm text-ash hover:text-bone transition-colors"
-              >
-                <ArrowLeft size={16} />
-                Back
-              </button>
-
-              <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
-                className={`btn-loud flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold transition-all ${
-                  !canAdvance() || completing ? "opacity-40 cursor-not-allowed" : ""
-                }`}
-              >
-                {completing ? (
-                  <><Zap size={16} className="animate-pulse" /> Setting up your agent...</>
-                ) : isLastStep ? (
-                  <><Zap size={16} /> Launch my agent</>
-                ) : (
-                  <>Continue <ArrowRight size={16} /></>
-                )}
-              </button>
+            <div className="mt-8">
+              {/* Full-width Next → on step 2 */}
+              {step === 1 ? (
+                <div className="space-y-3">
+                  <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
+                    className={`btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-4 text-base font-bold transition-all ${
+                      !canAdvance() || completing ? "opacity-40 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    Next <ArrowRight size={17} />
+                  </button>
+                  <button type="button" onClick={() => setStep((s) => s - 1)}
+                    className="w-full flex items-center justify-center gap-2 text-sm text-ash hover:text-bone transition-colors py-2"
+                  >
+                    <ArrowLeft size={15} /> Back
+                  </button>
+                </div>
+              ) : (
+                <div className="flex items-center justify-between">
+                  <button type="button" onClick={() => setStep((s) => s - 1)}
+                    className="flex items-center gap-2 text-sm text-ash hover:text-bone transition-colors"
+                  >
+                    <ArrowLeft size={16} /> Back
+                  </button>
+                  <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
+                    className={`btn-loud flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold transition-all ${
+                      !canAdvance() || completing ? "opacity-40 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {completing ? (
+                      <><Zap size={16} className="animate-pulse" /> Setting up your agent...</>
+                    ) : isLastStep ? (
+                      <><Zap size={16} /> Launch my agent</>
+                    ) : (
+                      <>Continue <ArrowRight size={16} /></>
+                    )}
+                  </button>
+                </div>
+              )}
             </div>
           )}
 
