@@ -54,18 +54,43 @@ const STEPS = [
 // ─── Industry → dashboard route ───────────────────────────────────────────────
 
 const INDUSTRY_DASHBOARD: Record<string, string> = {
-  "auto":         "/dashboard/auto",
-  "real-estate":  "/dashboard/real-estate",
-  "insurance":    "/dashboard/insurance",
-  "solar":        "/dashboard/solar",
-  "saas":         "/dashboard/saas",
-  "medical":      "/dashboard/medical",
-  "retail":       "/dashboard/retail",
+  "auto":                "/dashboard/auto",
+  "real-estate":         "/dashboard/real-estate",
+  "insurance":           "/dashboard/insurance",
+  "solar":               "/dashboard/solar",
+  "saas":                "/dashboard/saas",
+  "medical":             "/dashboard/medical",
+  "retail":              "/dashboard/retail",
 };
 
 function getDashboard(industry: string) {
   return INDUSTRY_DASHBOARD[industry] ?? "/dashboard/auto";
 }
+
+// ─── Industry data ────────────────────────────────────────────────────────────
+
+const ALL_INDUSTRIES = [
+  { value: "auto",               icon: "🚗", label: "Automotive",          desc: "Pay plan math, trade valuations, CXI tracking, scripts." },
+  { value: "real-estate",        icon: "🏠", label: "Real Estate",          desc: "Listing prep, buyer nurture, commission splits." },
+  { value: "insurance",          icon: "🛡️", label: "Insurance",            desc: "Book of business, renewals, cross-sell triggers." },
+  { value: "solar",              icon: "☀️", label: "Solar",                desc: "Quote math, utility bill analysis, proposal scripts." },
+  { value: "saas",               icon: "💻", label: "SaaS",                 desc: "Pipeline pulse, discovery questions, demo prep." },
+  { value: "medical",            icon: "🏥", label: "Medical Devices",      desc: "Protocol knowledge, rep-surgeon scripts, territory planning." },
+  { value: "retail",             icon: "🛋️", label: "Retail (Big Ticket)",  desc: "Product specs, financing math, close-the-lap scripts." },
+  { value: "pest-control",       icon: "🐛", label: "Pest Control",         desc: "Service plan objections, seasonal upsells, renewals." },
+  { value: "hvac",               icon: "❄️", label: "HVAC",                 desc: "System upgrades, service agreements, financing." },
+  { value: "roofing",            icon: "🏚️", label: "Roofing",              desc: "Insurance claims, repair-to-replace, storm territory." },
+  { value: "home-security",      icon: "🔒", label: "Home Security",        desc: "Competitor rebuttals, monitoring contracts, smart home." },
+  { value: "mortgage",           icon: "🏦", label: "Mortgage & Lending",   desc: "Rate objections, product explainers, pre-approval pipeline." },
+  { value: "financial-advisors", icon: "📈", label: "Financial Advisors",   desc: "Fee objections, robo-advisor rebuttals, AUM consolidation." },
+  { value: "recruiting",         icon: "👥", label: "Recruiting & Staffing", desc: "Fee objections, candidate prep, counter-offer playbook." },
+  { value: "telecom",            icon: "📡", label: "Telecom & Cell Towers", desc: "Tower leases, enterprise deals, bandwidth upsells." },
+  { value: "rental",             icon: "🔑", label: "Rental",               desc: "Pricing disputes, damage scripts, cancellation pushback." },
+  { value: "project-manager",    icon: "📋", label: "Project Manager",      desc: "SOW defense, change orders, budget objections." },
+  { value: "other-sales",        icon: "🤝", label: "Other Sales",          desc: "Universal objections: price, timing, think about it, ghosting." },
+];
+
+const FEATURED_INDUSTRIES = ALL_INDUSTRIES.slice(0, 5);
 
 // ─── Industry starter prompts ─────────────────────────────────────────────────
 
@@ -82,17 +107,17 @@ const INDUSTRY_STARTERS: Record<string, string[]> = {
     "Write a follow-up text for a client who ghosted after their third showing",
     "How do I handle a lowball offer without losing the client?",
   ],
-  "solar": [
-    "Homeowner says they'll wait until prices drop — what's my play?",
-    "Calculate my commission on a $28K system with a $2K dealer fee",
-    "Write a follow-up text for a homeowner who went cold after the proposal",
-    "How do I overcome 'I need to talk to my spouse'?",
-  ],
   "insurance": [
     "Prospect says their current rate is lower — what's my play?",
     "Calculate my commission: $1,200 annual premium at 15% first-year",
     "Write a follow-up text for a lead who went cold after the quote call",
     "How do I handle 'I already have coverage' without being pushy?",
+  ],
+  "solar": [
+    "Homeowner says they'll wait until prices drop — what's my play?",
+    "Calculate my commission on a $28K system with a $2K dealer fee",
+    "Write a follow-up text for a homeowner who went cold after the proposal",
+    "How do I overcome 'I need to talk to my spouse'?",
   ],
   "saas": [
     "Prospect says they'll revisit next quarter — what's my play?",
@@ -106,110 +131,79 @@ const INDUSTRY_STARTERS: Record<string, string[]> = {
     "Write a follow-up email for a surgeon who went cold after the trial",
     "How do I get past the gatekeeper to reach the decision maker?",
   ],
-  "mortgage": [
-    "Borrower says they'll wait for rates to drop — what's my play?",
-    "Calculate my commission: $380K loan at 1.2 points origination",
-    "Write a follow-up text for a pre-approval client who went quiet",
-    "How do I handle 'I'm also talking to three other lenders'?",
-  ],
   "retail": [
     "Customer says they can get it cheaper online — what's my play?",
     "How do I upsell without making the customer feel pressured?",
     "Write a follow-up message for a customer who left without buying",
     "What's the best way to handle a return that becomes a new sale?",
   ],
-  "home-services": [
-    "Homeowner says my quote is too high — what's my play?",
-    "Calculate my commission on a $12K HVAC install at 8%",
-    "Write a follow-up text for a lead who went cold after the estimate",
-    "How do I handle 'I need to get other quotes'?",
+  "pest-control": [
+    "Customer says they'll think about it after one treatment — what's my play?",
+    "How do I upsell from a one-time treatment to an annual service plan?",
+    "Write a follow-up text for a homeowner who got a quote but went cold",
+    "How do I handle 'I can just buy the spray at Home Depot'?",
   ],
-  "telecom": [
-    "Customer wants to cancel — what's my retention play?",
-    "Calculate my commission: $85/mo plan with $200 activation bonus",
-    "Write a follow-up text for a prospect who was interested but went quiet",
-    "How do I upsell from a base plan to a premium bundle?",
+  "hvac": [
+    "Homeowner says the system still works and they don't want to replace it — what's my play?",
+    "Calculate my commission on a $9,500 system install at 8%",
+    "Write a follow-up for a lead who went cold after the estimate",
+    "How do I close a service agreement after completing a repair?",
   ],
-  "staffing": [
-    "Client says they'll hire directly — what's my play?",
-    "Calculate my commission: $90K placement at 18% contingency",
-    "Write a follow-up email for a hiring manager who went cold",
-    "How do I handle 'your rates are higher than the other agency'?",
+  "roofing": [
+    "Homeowner says they'll wait until after hurricane season — what's my play?",
+    "How do I walk a customer through an insurance claim without overstepping?",
+    "Write a follow-up for a storm-damage lead who hasn't responded",
+    "How do I handle 'the other company quoted me $3K less'?",
   ],
-  "finance": [
+  "home-security": [
+    "Customer says ADT is cheaper — what's my play?",
+    "How do I explain monitoring contract terms without losing the customer?",
+    "Write a follow-up text for a homeowner who was interested but went quiet",
+    "How do I upsell smart home integration on a base security package?",
+  ],
+  "mortgage": [
+    "Borrower says they'll wait for rates to drop — what's my play?",
+    "Calculate my commission: $380K loan at 1.2 points origination",
+    "Write a follow-up text for a pre-approval client who went quiet",
+    "How do I handle 'I'm also talking to three other lenders'?",
+  ],
+  "financial-advisors": [
     "Prospect says they're happy with their current advisor — what's my play?",
     "Calculate my commission: $250K AUM at 1% advisory fee",
     "Write a follow-up for a prospect who ghosted after the discovery call",
-    "How do I handle objections about market volatility?",
+    "How do I rebut 'I'll just use a robo-advisor'?",
   ],
-  "travel": [
-    "Guest says they found a cheaper rate online — what's my play?",
-    "Calculate my commission on a $6K group booking at 10%",
-    "Write a follow-up for a couple who went quiet after the proposal",
-    "How do I upsell a room upgrade without feeling pushy?",
+  "recruiting": [
+    "Client says they'll hire directly to avoid the fee — what's my play?",
+    "Calculate my commission: $90K placement at 18% contingency",
+    "Write a follow-up email for a hiring manager who went cold",
+    "How do I handle a candidate who's weighing a counter-offer?",
   ],
-  "legal": [
-    "Prospect says they'll handle it themselves — what's my play?",
-    "Walk me through how to structure a contingency fee conversation",
-    "Write a follow-up for a potential client who went cold after the consult",
-    "How do I handle 'another firm quoted me less'?",
+  "telecom": [
+    "Business owner says their current provider is good enough — what's my play?",
+    "How do I structure a tower lease conversation with a landowner?",
+    "Write a follow-up for an enterprise prospect who went quiet after the proposal",
+    "How do I upsell from a basic plan to a dedicated bandwidth solution?",
   ],
-  "education": [
-    "Student says they can't afford the program — what's my play?",
-    "Calculate my commission: $8,500 enrollment at 12%",
-    "Write a follow-up for a prospect who went quiet after the info session",
-    "How do I overcome 'I need to think about it' on an enrollment call?",
+  "rental": [
+    "Tenant says the rent is too high compared to similar units — what's my play?",
+    "How do I handle a dispute about a damage charge without escalating?",
+    "Write a message for a tenant who wants to break their lease early",
+    "How do I re-sign a tenant who's thinking about leaving?",
   ],
-  "fitness": [
-    "Prospect says they're not ready to commit — what's my play?",
-    "Calculate my commission: $1,200 annual membership at 15%",
-    "Write a follow-up text for a trial member who didn't convert",
-    "How do I handle 'I can just work out at home'?",
+  "project-manager": [
+    "Client wants to add scope without adjusting the budget — what's my play?",
+    "How do I defend a SOW line item being challenged in a review?",
+    "Write a message pushing back on a deadline change that affects delivery",
+    "How do I handle stakeholders who keep changing requirements mid-sprint?",
   ],
-  "restaurant": [
-    "How do I upsell dessert without being pushy?",
-    "Guest is upset about wait time — what's my play to save the experience?",
-    "Write a follow-up message for a large party booking that went quiet",
-    "How do I turn a complaint into a loyal customer?",
-  ],
-  "other": [
+  "other-sales": [
     "Customer says my price is too high — what's my play?",
-    "How do I calculate my commission on a typical deal?",
+    "Customer says 'I need to think about it' — how do I keep the deal alive?",
     "Write a follow-up message for a prospect who went cold",
-    "What's the best way to handle objections without being pushy?",
+    "How do I handle ghosting after what felt like a solid meeting?",
   ],
 };
-
-// ─── Industry data ────────────────────────────────────────────────────────────
-
-const FEATURED_INDUSTRIES = [
-  { value: "auto",        icon: "🚗", label: "Automotive",   desc: "Units, tiers, front/back gross, CXI" },
-  { value: "real-estate", icon: "🏠", label: "Real Estate",  desc: "Commissions, splits, GCI, pipeline" },
-  { value: "solar",       icon: "☀️", label: "Solar",        desc: "Installs, ESAT, dealer fees, adders" },
-  { value: "insurance",   icon: "🛡️", label: "Insurance",    desc: "Policies, premium, retention, bonus" },
-  { value: "saas",        icon: "💻", label: "SaaS",         desc: "ARR, churn, expansion, quota attainment" },
-];
-
-const ALL_INDUSTRIES = [
-  { value: "auto",         icon: "🚗", label: "Automotive" },
-  { value: "real-estate",  icon: "🏠", label: "Real Estate" },
-  { value: "solar",        icon: "☀️", label: "Solar" },
-  { value: "insurance",    icon: "🛡️", label: "Insurance" },
-  { value: "saas",         icon: "💻", label: "SaaS / Tech" },
-  { value: "medical",      icon: "🏥", label: "Medical / Healthcare" },
-  { value: "mortgage",     icon: "🏦", label: "Mortgage & Lending" },
-  { value: "finance",      icon: "💹", label: "Financial Services" },
-  { value: "retail",       icon: "🛍️", label: "Retail" },
-  { value: "home-services",icon: "🔧", label: "Home Services" },
-  { value: "telecom",      icon: "📡", label: "Telecommunications" },
-  { value: "staffing",     icon: "👥", label: "Staffing & Recruiting" },
-  { value: "travel",       icon: "✈️", label: "Travel & Hospitality" },
-  { value: "legal",        icon: "⚖️", label: "Legal Services" },
-  { value: "education",    icon: "📚", label: "Education" },
-  { value: "fitness",      icon: "💪", label: "Fitness & Wellness" },
-  { value: "restaurant",   icon: "🍽️", label: "Restaurant & Food" },
-  { value: "other",        icon: "⚡", label: "Other" },
-];
 
 // ─── Option sets ──────────────────────────────────────────────────────────────
 
@@ -389,7 +383,7 @@ function Step1Industry({ value, onPick }: { value: string; onPick: (v: string) =
           <span style={{ fontSize: 40, lineHeight: 1 }}>➕</span>
           <div>
             <div className="font-bold text-base text-white">More →</div>
-            <div className="text-xs text-ash mt-0.5">13 more industries</div>
+            <div className="text-xs text-ash mt-0.5">13 more verticals</div>
           </div>
         </button>
       </div>
