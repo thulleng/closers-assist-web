@@ -4,6 +4,7 @@ import { useState, useEffect, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { Syne } from "next/font/google";
 import { ArrowRight, ArrowLeft, Check, Zap, X } from "lucide-react";
+import RealChat from "@/components/RealChat";
 
 const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], display: "swap" });
 
@@ -48,8 +49,137 @@ const STEPS = [
   { id: 1, label: "Industry" },
   { id: 2, label: "You" },
   { id: 3, label: "Pay Plan" },
-  { id: 4, label: "First Goal" },
+  { id: 4, label: "Go Live" },
 ];
+
+// ─── Industry → dashboard route ───────────────────────────────────────────────
+
+const INDUSTRY_DASHBOARD: Record<string, string> = {
+  "auto":         "/dashboard/auto",
+  "real-estate":  "/dashboard/real-estate",
+  "insurance":    "/dashboard/insurance",
+  "solar":        "/dashboard/solar",
+  "saas":         "/dashboard/saas",
+  "medical":      "/dashboard/medical",
+  "retail":       "/dashboard/retail",
+};
+
+function getDashboard(industry: string) {
+  return INDUSTRY_DASHBOARD[industry] ?? "/dashboard/auto";
+}
+
+// ─── Industry starter prompts ─────────────────────────────────────────────────
+
+const INDUSTRY_STARTERS: Record<string, string[]> = {
+  "auto": [
+    "Customer says $499/mo is too high — what's my play?",
+    "Calculate my commission: $800 front, $400 back, 25% split",
+    "Write a follow-up text for a customer who ghosted after a test drive",
+    "What's the best way to T.O. without losing the customer?",
+  ],
+  "real-estate": [
+    "Buyer says the market is too hot and wants to wait — what's my play?",
+    "Calculate my commission: $450K sale, 3% buyer side, 30% referral split",
+    "Write a follow-up text for a client who ghosted after their third showing",
+    "How do I handle a lowball offer without losing the client?",
+  ],
+  "solar": [
+    "Homeowner says they'll wait until prices drop — what's my play?",
+    "Calculate my commission on a $28K system with a $2K dealer fee",
+    "Write a follow-up text for a homeowner who went cold after the proposal",
+    "How do I overcome 'I need to talk to my spouse'?",
+  ],
+  "insurance": [
+    "Prospect says their current rate is lower — what's my play?",
+    "Calculate my commission: $1,200 annual premium at 15% first-year",
+    "Write a follow-up text for a lead who went cold after the quote call",
+    "How do I handle 'I already have coverage' without being pushy?",
+  ],
+  "saas": [
+    "Prospect says they'll revisit next quarter — what's my play?",
+    "Calculate my commission: $24K ACV at 8% with a 60-day close",
+    "Write a follow-up email for a champion who went silent after the demo",
+    "How do I navigate a multi-stakeholder deal without losing momentum?",
+  ],
+  "medical": [
+    "Provider says they're locked into their current vendor — what's my play?",
+    "Calculate my commission: $80K device sale at 6% with quarterly quota",
+    "Write a follow-up email for a surgeon who went cold after the trial",
+    "How do I get past the gatekeeper to reach the decision maker?",
+  ],
+  "mortgage": [
+    "Borrower says they'll wait for rates to drop — what's my play?",
+    "Calculate my commission: $380K loan at 1.2 points origination",
+    "Write a follow-up text for a pre-approval client who went quiet",
+    "How do I handle 'I'm also talking to three other lenders'?",
+  ],
+  "retail": [
+    "Customer says they can get it cheaper online — what's my play?",
+    "How do I upsell without making the customer feel pressured?",
+    "Write a follow-up message for a customer who left without buying",
+    "What's the best way to handle a return that becomes a new sale?",
+  ],
+  "home-services": [
+    "Homeowner says my quote is too high — what's my play?",
+    "Calculate my commission on a $12K HVAC install at 8%",
+    "Write a follow-up text for a lead who went cold after the estimate",
+    "How do I handle 'I need to get other quotes'?",
+  ],
+  "telecom": [
+    "Customer wants to cancel — what's my retention play?",
+    "Calculate my commission: $85/mo plan with $200 activation bonus",
+    "Write a follow-up text for a prospect who was interested but went quiet",
+    "How do I upsell from a base plan to a premium bundle?",
+  ],
+  "staffing": [
+    "Client says they'll hire directly — what's my play?",
+    "Calculate my commission: $90K placement at 18% contingency",
+    "Write a follow-up email for a hiring manager who went cold",
+    "How do I handle 'your rates are higher than the other agency'?",
+  ],
+  "finance": [
+    "Prospect says they're happy with their current advisor — what's my play?",
+    "Calculate my commission: $250K AUM at 1% advisory fee",
+    "Write a follow-up for a prospect who ghosted after the discovery call",
+    "How do I handle objections about market volatility?",
+  ],
+  "travel": [
+    "Guest says they found a cheaper rate online — what's my play?",
+    "Calculate my commission on a $6K group booking at 10%",
+    "Write a follow-up for a couple who went quiet after the proposal",
+    "How do I upsell a room upgrade without feeling pushy?",
+  ],
+  "legal": [
+    "Prospect says they'll handle it themselves — what's my play?",
+    "Walk me through how to structure a contingency fee conversation",
+    "Write a follow-up for a potential client who went cold after the consult",
+    "How do I handle 'another firm quoted me less'?",
+  ],
+  "education": [
+    "Student says they can't afford the program — what's my play?",
+    "Calculate my commission: $8,500 enrollment at 12%",
+    "Write a follow-up for a prospect who went quiet after the info session",
+    "How do I overcome 'I need to think about it' on an enrollment call?",
+  ],
+  "fitness": [
+    "Prospect says they're not ready to commit — what's my play?",
+    "Calculate my commission: $1,200 annual membership at 15%",
+    "Write a follow-up text for a trial member who didn't convert",
+    "How do I handle 'I can just work out at home'?",
+  ],
+  "restaurant": [
+    "How do I upsell dessert without being pushy?",
+    "Guest is upset about wait time — what's my play to save the experience?",
+    "Write a follow-up message for a large party booking that went quiet",
+    "How do I turn a complaint into a loyal customer?",
+  ],
+  "other": [
+    "Customer says my price is too high — what's my play?",
+    "How do I calculate my commission on a typical deal?",
+    "Write a follow-up message for a prospect who went cold",
+    "What's the best way to handle objections without being pushy?",
+  ],
+};
 
 // ─── Industry data ────────────────────────────────────────────────────────────
 
@@ -477,27 +607,25 @@ function Step3PayPlan({ data, update }: {
   );
 }
 
-// ─── Step 4 — First Goal ──────────────────────────────────────────────────────
+// ─── Step 4 — Go Live ────────────────────────────────────────────────────────
 
-function Step4Goal({ data, update }: {
+function Step4GoLive({ data, onFinish }: {
   data: OnboardingData;
-  update: (k: keyof OnboardingData, v: string) => void;
+  onFinish: () => void;
 }) {
+  const starters = INDUSTRY_STARTERS[data.industry] ?? INDUSTRY_STARTERS["other"];
+
   return (
-    <div className="space-y-3">
-      {GOALS.map((goal) => {
-        const active = data.firstGoal === goal.value;
-        return (
-          <button key={goal.value} type="button" onClick={() => update("firstGoal", goal.value)}
-            className={`w-full rounded-xl border px-5 py-4 text-left transition-all ${
-              active ? "border-deal bg-deal/10" : "border-iron bg-slate hover:border-white/20"
-            }`}
-          >
-            <div className={`font-semibold text-base mb-0.5 ${active ? "text-deal" : "text-bone"}`}>{goal.label}</div>
-            <div className="text-sm text-ash">{goal.sub}</div>
-          </button>
-        );
-      })}
+    <div className="space-y-5">
+      <RealChat industry={data.industry || "automotive"} starters={starters} />
+
+      <button
+        type="button"
+        onClick={onFinish}
+        className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-4 text-base font-bold"
+      >
+        Go to my Dashboard <ArrowRight size={17} />
+      </button>
     </div>
   );
 }
@@ -537,19 +665,23 @@ export default function OnboardingPage() {
     if (step === 0) return data.industry !== "";
     if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.storeName.trim() !== "" && data.title.trim() !== "";
     if (step === 2) return true; // all pay plan fields optional
-    if (step === 3) return data.firstGoal !== "";
+    if (step === 3) return true; // step 4 has its own finish button
     return true;
   }
 
   function handleNext() {
     if (!canAdvance()) return;
     if (isLastStep) {
-      setCompleting(true);
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-      router.push("/dashboard/auto");
+      handleFinish();
     } else {
       setStep((s) => s + 1);
     }
+  }
+
+  function handleFinish() {
+    setCompleting(true);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+    router.push(getDashboard(data.industry));
   }
 
   const headings: Record<number, { title: string; sub: string }> = {
@@ -566,8 +698,8 @@ export default function OnboardingPage() {
       sub: "Your agent uses this to calculate your real commission on every deal — instantly.",
     },
     3: {
-      title: "What do you want first?",
-      sub: "Pick one focus. You can change this anytime in settings.",
+      title: "Your agent is ready.",
+      sub: "Ask anything. It knows your industry, your pay plan, your scripts.",
     },
   };
 
@@ -575,7 +707,7 @@ export default function OnboardingPage() {
     0: <Step1Industry value={data.industry} onPick={handleIndustryPick} />,
     1: <Step2Role data={data} update={update} />,
     2: <Step3PayPlan data={data} update={update} />,
-    3: <Step4Goal data={data} update={update} />,
+    3: <Step4GoLive data={data} onFinish={handleFinish} />,
   };
 
   return (
@@ -616,7 +748,7 @@ export default function OnboardingPage() {
 
       {/* Content */}
       <div className="flex flex-1 items-start justify-center px-6 pt-8 pb-20">
-        <div className="w-full max-w-lg">
+        <div className={`w-full ${step === 3 ? "max-w-2xl" : "max-w-lg"}`}>
           {/* Heading */}
           <div className="mb-8">
             <h1
@@ -633,8 +765,8 @@ export default function OnboardingPage() {
             {stepContent[step]}
           </div>
 
-          {/* Navigation — hidden on step 0 (auto-advances on card tap) */}
-          {step > 0 && (
+          {/* Navigation — hidden on step 0 (auto-advances) and step 4 (has its own CTA) */}
+          {step > 0 && step < 3 && (
             <div className="mt-8">
               {/* Steps 2 and 3 (index 1 and 2): full-width Next → with Back below */}
               {(step === 1 || step === 2) ? (

@@ -8,14 +8,21 @@ type Message = {
   content: string;
 };
 
-const STARTERS = [
+const DEFAULT_STARTERS = [
   "How do I handle a customer who says 'I need to think about it'?",
   "What's the best way to T.O. without losing the customer?",
   "Calculate my commission: $800 front, $400 back, 25% split",
   "Write me a follow-up text for a customer who ghosted after a test drive",
 ];
 
-export default function RealChat({ industry = "automotive" }: { industry?: string }) {
+export default function RealChat({
+  industry = "automotive",
+  starters,
+}: {
+  industry?: string;
+  starters?: string[];
+}) {
+  const STARTERS = starters ?? DEFAULT_STARTERS;
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
