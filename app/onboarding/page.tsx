@@ -664,6 +664,9 @@ export default function OnboardingPage() {
 
   function handleNext() {
     if (!canAdvance()) return;
+    // Persist on every step transition
+    console.log("Saving onboarding data:", data);
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
     if (isLastStep) {
       handleFinish();
     } else {
