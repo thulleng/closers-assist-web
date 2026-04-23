@@ -47,9 +47,9 @@ const STORAGE_KEY = "ca_onboarding";
 
 const STEPS = [
   { id: 1, label: "Industry" },
-  { id: 2, label: "You" },
+  { id: 2, label: "Your Role" },
   { id: 3, label: "Pay Plan" },
-  { id: 4, label: "Go Live" },
+  { id: 4, label: "First Question" },
 ];
 
 // ─── Industry → dashboard route ───────────────────────────────────────────────
@@ -718,28 +718,31 @@ export default function OnboardingPage() {
       </div>
 
       {/* Step indicators */}
-      <div className="flex items-center justify-center gap-2 pt-8 pb-2 px-6">
+      <div className="flex items-center justify-center pt-8 pb-2 px-6">
         {STEPS.map((s, i) => {
           const done    = i < step;
           const current = i === step;
           return (
-            <div key={s.id} className="flex items-center gap-2">
-              <div className="flex flex-col items-center gap-1">
-                <div className={`flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold transition-all duration-300 ${
-                  done    ? "bg-deal text-white" :
-                  current ? "border-2 border-deal text-deal bg-deal/10" :
-                            "border border-white/15 text-muted bg-white/[0.04]"
+            <div key={s.id} className="flex items-center">
+              {/* Dot + label */}
+              <div className="flex flex-col items-center gap-1.5">
+                <div className={`flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all duration-300 ${
+                  done    ? "border-deal bg-deal" :
+                  current ? "border-deal bg-deal" :
+                            "border-iron bg-transparent"
                 }`}>
-                  {done ? <Check size={14} strokeWidth={3} /> : s.id}
+                  {done && <Check size={9} strokeWidth={3.5} className="text-white" />}
                 </div>
-                <span className={`text-[10px] font-medium tracking-wider uppercase ${
+                <span className={`text-[10px] font-medium tracking-wide whitespace-nowrap transition-colors duration-300 ${
                   current ? "text-deal" : done ? "text-deal/60" : "text-muted"
                 }`}>
                   {s.label}
                 </span>
               </div>
+
+              {/* Connecting line */}
               {i < STEPS.length - 1 && (
-                <div className={`mb-4 h-px w-10 sm:w-16 transition-all duration-500 ${done ? "bg-deal/50" : "bg-white/10"}`} />
+                <div className={`mb-4 h-px w-12 sm:w-20 transition-all duration-500 ${done ? "bg-deal/50" : "bg-iron"}`} />
               )}
             </div>
           );
