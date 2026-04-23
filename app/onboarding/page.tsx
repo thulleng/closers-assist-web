@@ -344,7 +344,7 @@ function Step1Industry({ value, onPick }: { value: string; onPick: (v: string) =
 
   return (
     <>
-      <div className="grid grid-cols-2 gap-3">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
         {FEATURED_INDUSTRIES.map((ind) => {
           const active = value === ind.value;
           return (
