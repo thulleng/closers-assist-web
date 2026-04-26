@@ -74,7 +74,7 @@ export default function Nav() {
             Industries
           </Link>
           <Link
-            href="/dashboard"
+            href="/dashboard/auto"
             className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
           >
             Dashboard

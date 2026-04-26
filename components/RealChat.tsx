@@ -1,11 +1,15 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { ArrowUp } from "lucide-react";
+import { ArrowUp, Paperclip, X } from "lucide-react";
+
+type TextContent = { type: "text"; text: string };
+type ImageContent = { type: "image"; source: { type: "base64"; media_type: string; data: string } };
+type MessageContent = string | (TextContent | ImageContent)[];
 
 type Message = {
   role: "user" | "assistant";
-  content: string;
+  content: MessageContent;
 };
 
 const DEFAULT_STARTERS = [
@@ -26,8 +30,11 @@ export default function RealChat({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
+  const [imagePreview, setImagePreview] = useState<string | null>(null);   // data URL for preview
+  const [imageContent, setImageContent] = useState<ImageContent | null>(null); // Anthropic format
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     const container = chatContainerRef.current;
@@ -35,14 +42,46 @@ export default function RealChat({
     container.scrollTop = container.scrollHeight;
   }, [messages]);
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const dataUrl = ev.target?.result as string;
+      // dataUrl format: "data:image/jpeg;base64,<data>"
+      const [meta, data] = dataUrl.split(",");
+      const mediaType = meta.match(/:(.*?);/)?.[1] ?? "image/jpeg";
+      setImagePreview(dataUrl);
+      setImageContent({ type: "image", source: { type: "base64", media_type: mediaType, data } });
+    };
+    reader.readAsDataURL(file);
+    // Reset so the same file can be re-selected
+    e.target.value = "";
+  };
+
+  const clearImage = () => {
+    setImagePreview(null);
+    setImageContent(null);
+  };
+
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
-    if (!trimmed || streaming) return;
+    if ((!trimmed && !imageContent) || streaming) return;
 
-    const userMessage: Message = { role: "user", content: trimmed };
+    // Build content: plain string if no image, content array if image present
+    const content: MessageContent = imageContent
+      ? [
+          ...(trimmed ? [{ type: "text" as const, text: trimmed }] : []),
+          imageContent,
+        ]
+      : trimmed;
+
+    const userMessage: Message = { role: "user", content };
     const nextMessages = [...messages, userMessage];
     setMessages(nextMessages);
     setInput("");
+    clearImage();
     setStreaming(true);
 
     // Add empty assistant message that we'll stream into
@@ -99,6 +138,22 @@ export default function RealChat({
     }
   };
 
+  // Helper to extract plain text for display in the chat bubble
+  const displayText = (content: MessageContent): string => {
+    if (typeof content === "string") return content;
+    return content.filter((c): c is TextContent => c.type === "text").map((c) => c.text).join(" ");
+  };
+
+  const hasImage = (content: MessageContent): boolean =>
+    Array.isArray(content) && content.some((c) => c.type === "image");
+
+  const imageDataUrl = (content: MessageContent): string | null => {
+    if (!Array.isArray(content)) return null;
+    const img = content.find((c): c is ImageContent => c.type === "image");
+    if (!img) return null;
+    return `data:${img.source.media_type};base64,${img.source.data}`;
+  };
+
   const isEmpty = messages.length === 0;
 
   return (
@@ -136,7 +191,16 @@ export default function RealChat({
                   : "bg-slate text-bone rounded-bl-sm border border-iron"
               }`}
             >
-              {msg.content}
+              {/* Inline image thumbnail for user messages */}
+              {msg.role === "user" && hasImage(msg.content) && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  src={imageDataUrl(msg.content)!}
+                  alt="Attached"
+                  className="mb-2 max-h-48 rounded-lg object-contain"
+                />
+              )}
+              {typeof msg.content === "string" ? msg.content : displayText(msg.content)}
               {msg.role === "assistant" && msg.content === "" && streaming && (
                 <span className="inline-flex gap-1 items-center">
                   <span className="h-1.5 w-1.5 rounded-full bg-ash animate-bounce [animation-delay:0ms]" />
@@ -151,7 +215,49 @@ export default function RealChat({
 
       {/* Input */}
       <div className="border-t border-iron px-4 py-3">
+        {/* Image preview */}
+        {imagePreview && (
+          <div className="mb-2 inline-flex items-start gap-2">
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={imagePreview}
+                alt="Preview"
+                className="h-16 w-16 rounded-lg object-cover border border-iron"
+              />
+              <button
+                type="button"
+                onClick={clearImage}
+                aria-label="Remove image"
+                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-slate border border-iron text-ash hover:text-bone transition-colors"
+              >
+                <X className="h-3 w-3" strokeWidth={2.5} />
+              </button>
+            </div>
+          </div>
+        )}
+
         <div className="flex items-end gap-2">
+          {/* Hidden file input */}
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/jpeg,image/png,image/gif,image/webp"
+            className="hidden"
+            onChange={handleFileChange}
+          />
+
+          {/* Paperclip button */}
+          <button
+            type="button"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={streaming}
+            aria-label="Attach image"
+            className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-iron bg-slate text-ash transition-all hover:border-white/25 hover:text-bone disabled:opacity-30 disabled:cursor-not-allowed"
+          >
+            <Paperclip className="h-4 w-4" strokeWidth={2} />
+          </button>
+
           <textarea
             ref={textareaRef}
             rows={1}
@@ -165,7 +271,7 @@ export default function RealChat({
           />
           <button
             onClick={() => sendMessage(input)}
-            disabled={!input.trim() || streaming}
+            disabled={(!input.trim() && !imageContent) || streaming}
             aria-label="Send message"
             className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-deal text-pit transition-all hover:bg-deal-hover disabled:opacity-30 disabled:cursor-not-allowed"
           >

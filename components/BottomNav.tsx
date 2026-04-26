@@ -20,7 +20,7 @@ import {
 const BOTTOM_NAV = [
   { href: "/", label: "Home", icon: Home },
   { href: "/industries", label: "Industries", icon: Layers },
-  { href: "/dashboard", label: "Dashboard", icon: LayoutDashboard },
+  { href: "/dashboard/auto", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pricing", label: "Pricing", icon: DollarSign },
 ];
 

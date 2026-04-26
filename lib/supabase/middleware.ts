@@ -35,9 +35,16 @@ export async function updateSession(request: NextRequest) {
   } = await supabase.auth.getUser();
 
   const { pathname } = request.nextUrl;
+
+  // Authenticated users hitting the homepage or login page → send to dashboard
+  const isAuthPage = pathname === "/" || pathname === "/login";
+  if (isAuthPage && user) {
+    return NextResponse.redirect(new URL("/dashboard/auto", request.url));
+  }
+
+  // Unauthenticated users hitting protected routes → send to login
   const isProtected =
     pathname.startsWith("/dashboard") || pathname.startsWith("/onboarding");
-
   if (isProtected && !user) {
     const loginUrl = new URL("/login", request.url);
     loginUrl.searchParams.set("next", pathname);

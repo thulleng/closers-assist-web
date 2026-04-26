@@ -94,13 +94,13 @@ export default function HowItWorksPage() {
 
       {/* 4 STEPS */}
       <section className="relative overflow-hidden loud-bg-alt">
-        <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
-          <div className="space-y-6">
+        <div className="relative mx-auto max-w-5xl px-6 py-12 md:py-16">
+          <div className="space-y-3">
             {steps.map((step, i) => {
               const Icon = step.icon;
               return (
-                <FadeIn key={step.number} delay={i * 100}>
-                  <div className="loud-card group relative overflow-hidden rounded-2xl p-8">
+                <FadeIn key={step.number} delay={i * 60}>
+                  <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
                     {/* Ambient glow */}
                     <div
                       className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl transition-opacity group-hover:opacity-80"

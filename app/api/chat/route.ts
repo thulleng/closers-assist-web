@@ -107,16 +107,38 @@ function buildPersonalizedPrompt(
   return `${intro.join("\n")}\n\n---\n\n${industryBasePrompt}`;
 }
 
-type ChatMessage = { role: string; content: string };
+type TextBlock  = { type: "text"; text: string };
+type ImageBlock = { type: "image"; source: { type: "base64"; media_type: string; data: string } };
+type ContentBlock = TextBlock | ImageBlock;
+type MessageContent = string | ContentBlock[];
+
+type ChatMessage = { role: string; content: MessageContent };
+
+/** Extract plain text from a message for memory persistence */
+function textOf(content: MessageContent): string {
+  if (typeof content === "string") return content;
+  return content
+    .filter((b): b is TextBlock => b.type === "text")
+    .map((b) => b.text)
+    .join(" ");
+}
+
+/** Dedup key — images are just counted, not hashed (they're large) */
+function dedupKey(msg: ChatMessage): string {
+  if (typeof msg.content === "string") return `${msg.role}:${msg.content}`;
+  const text = textOf(msg.content);
+  const imgCount = msg.content.filter((b) => b.type === "image").length;
+  return `${msg.role}:${text}:img${imgCount}`;
+}
 
 function mergeMessages(memory: ChatMessage[], current: ChatMessage[]): ChatMessage[] {
   // Combine memory (persistent history) with current session messages.
-  // Deduplicate exact role+content matches so overlapping turns aren't sent twice.
+  // Deduplicate on role+text+image-count so overlapping turns aren't sent twice.
   const seen = new Set<string>();
   const deduped: ChatMessage[] = [];
 
   for (const msg of [...memory, ...current]) {
-    const key = `${msg.role}:${msg.content}`;
+    const key = dedupKey(msg);
     if (!seen.has(key)) {
       seen.add(key);
       deduped.push(msg);
@@ -202,7 +224,8 @@ export async function POST(req: NextRequest) {
           system: systemPrompt,
           messages: contextMessages.map((m: ChatMessage) => ({
             role: m.role as "user" | "assistant",
-            content: m.content,
+            // Pass content as-is — Anthropic SDK accepts both string and content block arrays
+            content: m.content as Parameters<typeof client.messages.stream>[0]["messages"][number]["content"],
           })),
         });
 
@@ -222,7 +245,8 @@ export async function POST(req: NextRequest) {
             {
               user_id:  user.id,
               role:     "user",
-              content:  lastUserMessage.content,
+              // Persist only text — images are not stored in memory
+              content:  textOf(lastUserMessage.content),
               industry: normalizedIndustry,
             },
             {

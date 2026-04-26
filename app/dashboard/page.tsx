@@ -10,6 +10,17 @@ import {
   ShoppingBag,
   ArrowRight,
   LayoutDashboard,
+  Wind,
+  HardHat,
+  Bug,
+  Lock,
+  Landmark,
+  TrendingUp,
+  Users,
+  Radio,
+  KeyRound,
+  ClipboardList,
+  Handshake,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 
@@ -20,55 +31,24 @@ export const metadata: Metadata = {
 };
 
 const verticals = [
-  {
-    slug: "auto",
-    icon: Car,
-    name: "Auto",
-    example: "Units · Tier · Gross · Take home",
-    live: true,
-  },
-  {
-    slug: "real-estate",
-    icon: HomeIcon,
-    name: "Real Estate",
-    example: "Closings · Split · GCI · Net",
-    live: true,
-  },
-  {
-    slug: "insurance",
-    icon: Shield,
-    name: "Insurance",
-    example: "NB policies · Retention · Premium · Take home",
-    live: true,
-  },
-  {
-    slug: "solar",
-    icon: Sun,
-    name: "Solar",
-    example: "Deals · kW · Redline · Paid",
-    live: true,
-  },
-  {
-    slug: "saas",
-    icon: Monitor,
-    name: "SaaS",
-    example: "ARR · Quota · Commission · Take home",
-    live: true,
-  },
-  {
-    slug: "medical",
-    icon: HeartPulse,
-    name: "Medical Devices",
-    example: "Cases · Quota · Revenue · Comm",
-    live: true,
-  },
-  {
-    slug: "retail",
-    icon: ShoppingBag,
-    name: "Retail",
-    example: "Tickets · Attach · GP · Take home",
-    live: true,
-  },
+  { slug: "auto",               icon: Car,           name: "Automotive",         example: "Units · Tier · Gross · Take home",            live: true  },
+  { slug: "real-estate",        icon: HomeIcon,      name: "Real Estate",        example: "Closings · Split · GCI · Net",                 live: true  },
+  { slug: "insurance",          icon: Shield,        name: "Insurance",          example: "NB policies · Retention · Premium · Take home", live: true  },
+  { slug: "solar",              icon: Sun,           name: "Solar",              example: "Deals · kW · Redline · Paid",                  live: true  },
+  { slug: "saas",               icon: Monitor,       name: "SaaS",               example: "ARR · Quota · Commission · Take home",          live: true  },
+  { slug: "medical",            icon: HeartPulse,    name: "Medical Devices",    example: "Cases · Quota · Revenue · Comm",               live: true  },
+  { slug: "retail",             icon: ShoppingBag,   name: "Retail",             example: "Tickets · Attach · GP · Take home",            live: true  },
+  { slug: "hvac",               icon: Wind,          name: "HVAC",               example: "Installs · Service agreements · Comm",          live: false },
+  { slug: "roofing",            icon: HardHat,       name: "Roofing",            example: "Jobs · Insurance claims · Gross · Paid",       live: false },
+  { slug: "pest-control",       icon: Bug,           name: "Pest Control",       example: "Accounts · Renewals · Upsells · Take home",    live: false },
+  { slug: "home-security",      icon: Lock,          name: "Home Security",      example: "Installs · Monitoring contracts · Comm",       live: false },
+  { slug: "mortgage",           icon: Landmark,      name: "Mortgage & Lending", example: "Loans · Volume · Points · Take home",          live: false },
+  { slug: "financial-advisors", icon: TrendingUp,    name: "Financial Advisors", example: "AUM · Fee income · New clients · Net",         live: false },
+  { slug: "recruiting",         icon: Users,         name: "Recruiting",         example: "Placements · Fees · Pipeline · Take home",     live: false },
+  { slug: "telecom",            icon: Radio,         name: "Telecom",            example: "Accounts · MRR · Comm · Quota",                live: false },
+  { slug: "rental",             icon: KeyRound,      name: "Rental",             example: "Bookings · ADR · Revenue · Take home",         live: false },
+  { slug: "project-manager",    icon: ClipboardList, name: "Project Manager",    example: "SOW · Change orders · Margin · Billed",        live: false },
+  { slug: "other-sales",        icon: Handshake,     name: "Other Sales",        example: "Deals · Pipeline · Commission · Take home",    live: false },
 ];
 
 export default function DashboardHubPage() {
@@ -103,19 +83,40 @@ export default function DashboardHubPage() {
         </FadeIn>
 
         <FadeIn delay={100}>
-          <div
-            className="mb-10 rounded-2xl border border-deal/40 p-5 md:p-6 backdrop-blur"
-            style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.12), rgba(16,185,129,0.03))" }}
+          {/* Talk to Your Agent CTA */}
+          <Link
+            href="/dashboard/auto"
+            className="mb-6 flex w-full items-center justify-between gap-4 rounded-2xl border border-deal/50 p-5 md:p-6 transition-all hover:border-deal hover:shadow-[0_0_32px_rgba(16,185,129,0.2)] group"
+            style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.04))" }}
           >
-            <p className="text-[15px] leading-relaxed text-white">
-              <span className="font-bold text-shine">
-                All 18 verticals live.
-              </span>{" "}
-              Each dashboard auto-generates from the rep&rsquo;s pay plan
-              upload and deal data — no setup beyond a one-time connection.
+            <div className="flex items-center gap-4">
+              <div
+                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
+                style={{ background: "linear-gradient(135deg, #10B981, #059669)" }}
+              >
+                <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
+                </svg>
+              </div>
+              <div>
+                <div className="text-base font-bold text-white">Talk to Your Agent</div>
+                <div className="text-sm text-ash">Ask anything — objections, pay math, scripts, follow-ups.</div>
+              </div>
+            </div>
+            <ArrowRight className="h-5 w-5 flex-shrink-0 text-deal transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+          </Link>
+
+          {/* Info banner */}
+          <div
+            className="mb-10 rounded-2xl border border-white/10 p-5 md:p-6"
+            style={{ background: "rgba(255,255,255,0.03)" }}
+          >
+            <p className="text-[14px] leading-relaxed text-ash">
+              <span className="font-semibold text-bone">All 18 verticals supported.</span>{" "}
+              Pick your industry below — your dashboard and agent auto-load the right scripts, pay plan math, and objection plays.
             </p>
-        </div>
-      </FadeIn>
+          </div>
+        </FadeIn>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {verticals.map((v, i) => (
