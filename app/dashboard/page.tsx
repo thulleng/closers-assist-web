@@ -119,24 +119,16 @@ export default function DashboardHubPage() {
         </FadeIn>
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {verticals.map((v, i) => (
-          <FadeIn key={v.slug} delay={i * 50}>
-            <Link
-              href={v.live ? `/dashboard/${v.slug}` : "#"}
-              className={`loud-card group flex h-full flex-col rounded-2xl p-6 ${
-                v.live ? "" : "cursor-not-allowed opacity-60"
-              }`}
-              {...(v.live ? {} : { onClick: (e) => e.preventDefault() })}
-            >
+        {verticals.map((v, i) => {
+          const cardClass = `loud-card group flex h-full flex-col rounded-2xl p-6`;
+          const inner = (
+            <>
               <div className="mb-4 flex items-start justify-between">
                 <div
                   className="flex h-12 w-12 items-center justify-center rounded-xl shadow-[0_8px_20px_rgba(16,185,129,0.25)]"
                   style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05))" }}
                 >
-                  <v.icon
-                    className="h-5 w-5 text-deal-light"
-                    strokeWidth={2.2}
-                  />
+                  <v.icon className="h-5 w-5 text-deal-light" strokeWidth={2.2} />
                 </div>
                 {v.live ? (
                   <span
@@ -152,18 +144,10 @@ export default function DashboardHubPage() {
                   </span>
                 )}
               </div>
-              <h3
-                className={`mb-1 text-lg font-bold ${
-                  v.live ? "text-white" : "text-ash/70"
-                }`}
-              >
+              <h3 className={`mb-1 text-lg font-bold ${v.live ? "text-white" : "text-ash/70"}`}>
                 {v.name}
               </h3>
-              <p
-                className={`flex-1 font-mono text-xs ${
-                  v.live ? "text-ash" : "text-muted"
-                }`}
-              >
+              <p className={`flex-1 font-mono text-xs ${v.live ? "text-ash" : "text-muted"}`}>
                 {v.example}
               </p>
               {v.live && (
@@ -172,9 +156,22 @@ export default function DashboardHubPage() {
                   <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
                 </div>
               )}
-            </Link>
-          </FadeIn>
-        ))}
+            </>
+          );
+          return (
+            <FadeIn key={v.slug} delay={i * 50}>
+              {v.live ? (
+                <Link href={`/dashboard/${v.slug}`} className={cardClass}>
+                  {inner}
+                </Link>
+              ) : (
+                <div className={`${cardClass} cursor-not-allowed opacity-60`}>
+                  {inner}
+                </div>
+              )}
+            </FadeIn>
+          );
+        })}
       </div>
       </div>
     </section>
