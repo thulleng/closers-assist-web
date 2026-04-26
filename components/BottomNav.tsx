@@ -13,7 +13,6 @@ import {
   ArrowRight,
   BookOpen,
   User,
-  Zap,
   Store,
 } from "lucide-react";
 
@@ -36,12 +35,6 @@ const DRAWER_LINKS = [
     label: "Founder",
     subtitle: "Built by a working rep.",
     icon: User,
-  },
-  {
-    href: "/blog",
-    label: "Blog",
-    subtitle: "Plays, scripts, and field notes.",
-    icon: Zap,
   },
   {
     href: "/skills-marketplace",

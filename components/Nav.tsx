@@ -91,12 +91,6 @@ export default function Nav() {
           >
             Founder
           </Link>
-          <Link
-            href="/blog"
-            className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
-          >
-            Blog
-          </Link>
         </nav>
 
         <Link
