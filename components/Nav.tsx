@@ -93,12 +93,20 @@ export default function Nav() {
           </Link>
         </nav>
 
-        <Link
-          href="/pricing"
-          className="btn-loud rounded-xl px-5 py-2.5 text-sm"
-        >
-          Get Started
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link
+            href="/login"
+            className="text-sm font-medium text-ash transition-colors hover:text-bone"
+          >
+            Sign In
+          </Link>
+          <Link
+            href="/pricing"
+            className="btn-loud rounded-xl px-5 py-2.5 text-sm"
+          >
+            Get Started
+          </Link>
+        </div>
       </div>
     </header>
   );

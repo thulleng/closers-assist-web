@@ -61,9 +61,9 @@ function LoginForm() {
 
   return (
     <div className="rounded-2xl border border-iron bg-slate p-8">
-      <h1 className="text-2xl font-bold text-bone mb-1">Sign in to Closers Assist</h1>
+      <h1 className="text-2xl font-bold text-bone mb-1">Sign in or create your account</h1>
       <p className="text-sm text-ash mb-8">
-        Enter your email and we&apos;ll send you a magic link — no password needed.
+        Enter your email — we&apos;ll send you a magic link. New users are set up automatically.
       </p>
 
       <form onSubmit={handleSubmit} className="space-y-4">
