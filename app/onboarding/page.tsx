@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { Syne } from "next/font/google";
 import { ArrowRight, ArrowLeft, Check, Zap, X } from "lucide-react";
 import RealChat from "@/components/RealChat";
+import { createClient } from "@/lib/supabase/client";
 
 const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], display: "swap" });
 
@@ -25,6 +26,11 @@ interface OnboardingData {
   volumeThreshold: string;
   volumeBonus: string;
   cxiBonus: string;
+  // Agent customization
+  agentName: string;
+  coachingStyle: string;
+  agentFocus: string;
+  customGoal: string;
 }
 
 const EMPTY: OnboardingData = {
@@ -40,6 +46,10 @@ const EMPTY: OnboardingData = {
   volumeThreshold: "",
   volumeBonus: "",
   cxiBonus: "",
+  agentName: "Closer",
+  coachingStyle: "",
+  agentFocus: "",
+  customGoal: "",
 };
 
 const STORAGE_KEY = "ca_onboarding";
@@ -48,7 +58,8 @@ const STEPS = [
   { id: 1, label: "Industry" },
   { id: 2, label: "Your Role" },
   { id: 3, label: "Pay Plan" },
-  { id: 4, label: "First Question" },
+  { id: 4, label: "Your Agent" },
+  { id: 5, label: "Go Live" },
 ];
 
 // ─── Industry → dashboard route ───────────────────────────────────────────────
@@ -228,6 +239,21 @@ const GOALS = [
   { value: "pay-plan",   label: "💰  Know my pay plan math",  sub: "Real-time commission calc on every deal" },
   { value: "follow-up",  label: "📲  Follow up dead leads",   sub: "AI-drafted texts that actually get replies" },
   { value: "all",        label: "🔥  All of the above",        sub: "Let the agent decide based on the moment" },
+];
+
+const COACHING_STYLES = [
+  { value: "direct",      label: "Direct & blunt" },
+  { value: "motivating",  label: "Motivating & energetic" },
+  { value: "analytical",  label: "Calm & analytical" },
+  { value: "mentor",      label: "Mentor-style" },
+];
+
+const FOCUS_OPTIONS = [
+  { value: "closing-rate",        label: "Closing rate" },
+  { value: "follow-up",           label: "Follow-up discipline" },
+  { value: "objection-handling",  label: "Objection handling" },
+  { value: "product-knowledge",   label: "Product knowledge" },
+  { value: "prospecting",         label: "Prospecting" },
 ];
 
 // ─── Shared field components ───────────────────────────────────────────────────
@@ -600,6 +626,57 @@ function Step3PayPlan({ data, update }: {
   );
 }
 
+// ─── Step 3.5 — Customize Your Agent ─────────────────────────────────────────
+
+function Step3AgentCustomize({ data, update }: {
+  data: OnboardingData;
+  update: (k: keyof OnboardingData, v: string) => void;
+}) {
+  const inputCls =
+    "w-full rounded-xl border border-white/20 bg-white/[0.08] px-4 py-3.5 text-white placeholder:text-ash text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all";
+
+  return (
+    <div className="space-y-6">
+      {/* Agent Name */}
+      <div>
+        <FieldLabel>Agent Name</FieldLabel>
+        <input
+          type="text"
+          value={data.agentName}
+          onChange={(e) => update("agentName", e.target.value)}
+          placeholder="Closer"
+          className={inputCls}
+        />
+        <p className="mt-1.5 text-xs text-muted">What your AI calls itself in conversations.</p>
+      </div>
+
+      {/* Coaching Style */}
+      <div>
+        <FieldLabel>Coaching Style</FieldLabel>
+        <PillGrid options={COACHING_STYLES} value={data.coachingStyle} onChange={(v) => update("coachingStyle", v)} cols={2} />
+      </div>
+
+      {/* Primary Focus */}
+      <div>
+        <FieldLabel>Primary Focus</FieldLabel>
+        <PillGrid options={FOCUS_OPTIONS} value={data.agentFocus} onChange={(v) => update("agentFocus", v)} cols={2} />
+      </div>
+
+      {/* #1 Goal */}
+      <div>
+        <FieldLabel>My #1 Goal This Month</FieldLabel>
+        <input
+          type="text"
+          value={data.customGoal}
+          onChange={(e) => update("customGoal", e.target.value)}
+          placeholder="e.g. Hit 15 units, Break my personal record"
+          className={inputCls}
+        />
+      </div>
+    </div>
+  );
+}
+
 // ─── Step 4 — Go Live ────────────────────────────────────────────────────────
 
 function Step4GoLive({ data, onFinish }: {
@@ -658,7 +735,8 @@ export default function OnboardingPage() {
     if (step === 0) return data.industry !== "";
     if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.company.trim() !== "" && data.title.trim() !== "";
     if (step === 2) return true; // all pay plan fields optional
-    if (step === 3) return true; // step 4 has its own finish button
+    if (step === 3) return true; // all agent customization fields optional
+    if (step === 4) return true; // go live has its own finish button
     return true;
   }
 
@@ -674,13 +752,13 @@ export default function OnboardingPage() {
     }
   }
 
-  function handleFinish() {
+  async function handleFinish() {
     setCompleting(true);
-    // Resolve human-readable industry label
+
     const industryLabel =
       ALL_INDUSTRIES.find((i) => i.value === data.industry)?.label ?? data.industry;
 
-    // Write exact schema — numeric fields as numbers, metadata fields added
+    // localStorage fallback cache — always written regardless of Supabase result
     const payload = {
       industry:         data.industry,
       industryLabel,
@@ -695,10 +773,47 @@ export default function OnboardingPage() {
       volumeThreshold:  parseFloat(data.volumeThreshold) || 0,
       volumeBonus:      parseFloat(data.volumeBonus)     || 0,
       cxiBonus:         parseFloat(data.cxiBonus)        || 0,
+      agentName:        data.agentName || "Closer",
+      coachingStyle:    data.coachingStyle,
+      agentFocus:       data.agentFocus,
+      customGoal:       data.customGoal,
       completedAt:      new Date().toISOString(),
     };
-
     localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
+
+    // Persist to Supabase — requires UNIQUE constraint on agent_profiles.user_id
+    try {
+      const supabase = createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+
+      if (user) {
+        await supabase.from("agent_profiles").upsert(
+          {
+            user_id:            user.id,
+            first_name:         data.firstName,
+            last_name:          data.lastName,
+            company:            data.company,
+            title:              data.title,
+            industry:           data.industry,
+            draw:               parseFloat(data.draw)            || 0,
+            commission_pct:     parseFloat(data.commissionSplit) || 0,
+            mini_flat:          parseFloat(data.miniFlat)        || 0,
+            volume_bonus:       parseFloat(data.volumeBonus)     || 0,
+            cxi_bonus:          parseFloat(data.cxiBonus)        || 0,
+            agent_name:         data.agentName || "Closer",
+            coaching_style:     data.coachingStyle || "direct",
+            agent_focus:        data.agentFocus || "closing rate",
+            custom_goals:       data.customGoal,
+            updated_at:         new Date().toISOString(),
+          },
+          { onConflict: "user_id" }
+        );
+      }
+    } catch (err) {
+      // Non-fatal — localStorage cache is still valid, user can proceed
+      console.error("Supabase upsert failed:", err);
+    }
+
     router.push(getDashboard(data.industry));
   }
 
@@ -716,6 +831,10 @@ export default function OnboardingPage() {
       sub: "Your agent uses this to calculate your real commission on every deal — instantly.",
     },
     3: {
+      title: "Customize your agent.",
+      sub: "Set the tone, focus, and goal so every response feels like it was built for you.",
+    },
+    4: {
       title: "Your agent is ready.",
       sub: "Ask anything. It knows your industry, your pay plan, your scripts.",
     },
@@ -725,7 +844,8 @@ export default function OnboardingPage() {
     0: <Step1Industry value={data.industry} onPick={handleIndustryPick} />,
     1: <Step2Role data={data} update={update} />,
     2: <Step3PayPlan data={data} update={update} />,
-    3: <Step4GoLive data={data} onFinish={handleFinish} />,
+    3: <Step3AgentCustomize data={data} update={update} />,
+    4: <Step4GoLive data={data} onFinish={handleFinish} />,
   };
 
   return (
@@ -769,7 +889,7 @@ export default function OnboardingPage() {
 
       {/* Content */}
       <div className="flex flex-1 items-start justify-center px-6 pt-8 pb-20">
-        <div className={`w-full ${step === 3 ? "max-w-2xl" : "max-w-lg"}`}>
+        <div className={`w-full ${step === 4 ? "max-w-2xl" : "max-w-lg"}`}>
           {/* Heading */}
           <div className="mb-8">
             <h1
@@ -787,10 +907,10 @@ export default function OnboardingPage() {
           </div>
 
           {/* Navigation — hidden on step 0 (auto-advances) and step 4 (has its own CTA) */}
-          {step > 0 && step < 3 && (
+          {step > 0 && step < 4 && (
             <div className="mt-8">
-              {/* Steps 2 and 3 (index 1 and 2): full-width Next → with Back below */}
-              {(step === 1 || step === 2) ? (
+              {/* Steps 1–3 (index 1, 2, 3): full-width Next → with Back below */}
+              {(step === 1 || step === 2 || step === 3) ? (
                 <div className="space-y-3">
                   <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
                     className={`btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-4 text-base font-bold transition-all ${
@@ -805,8 +925,8 @@ export default function OnboardingPage() {
                     >
                       <ArrowLeft size={15} /> Back
                     </button>
-                    {/* Skip only on pay plan step (index 2) */}
-                    {step === 2 && (
+                    {/* Skip on pay plan (index 2) and agent customization (index 3) */}
+                    {(step === 2 || step === 3) && (
                       <button type="button" onClick={handleNext}
                         className="text-sm text-ash hover:text-bone transition-colors py-2 underline underline-offset-2"
                       >

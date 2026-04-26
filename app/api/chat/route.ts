@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 const client = new Anthropic();
 
@@ -57,6 +58,75 @@ Help agents overcome objections, explain coverage clearly, and close more polici
 Be direct, practical, and zero fluff. The person talking to you is between customers. Give them what they need right now.`,
 };
 
+function buildPersonalizedPrompt(
+  profile: Record<string, unknown>,
+  industryBasePrompt: string
+): string {
+  const agentName     = (profile.agent_name    as string) || "Closer";
+  const firstName     = (profile.first_name    as string) || "";
+  const lastName      = (profile.last_name     as string) || "";
+  const fullName      = [firstName, lastName].filter(Boolean).join(" ");
+  const title         = (profile.title         as string) || "";
+  const company       = (profile.company       as string) || "";
+  const industry      = (profile.industry      as string) || "";
+  const yearsInSales  = (profile.years_in_sales as string) || "";
+  const coachingStyle = (profile.coaching_style as string) || "direct";
+  const agentFocus    = (profile.agent_focus   as string) || "closing rate";
+  const customGoals   = (profile.custom_goals  as string) || "";
+
+  const intro: string[] = [];
+
+  // Identity
+  intro.push(`You are ${agentName}, an AI sales coach.`);
+
+  // Who you're working with
+  const who = [
+    fullName,
+    title   ? `a ${title}`             : "",
+    company ? `at ${company}`          : "",
+    industry ? `in the ${industry} industry` : "",
+    yearsInSales ? `with ${yearsInSales} years of experience` : "",
+  ].filter(Boolean).join(" ");
+  if (who) intro.push(`You are working with ${who}.`);
+
+  // Style + focus
+  intro.push(`Your coaching style is ${coachingStyle}. Your primary focus is ${agentFocus}.`);
+
+  // Goal
+  if (customGoals) intro.push(`Their goal this month: ${customGoals}.`);
+
+  // Pay plan
+  const payParts: string[] = [];
+  if (profile.draw)           payParts.push(`$${profile.draw} draw`);
+  if (profile.commission_pct) payParts.push(`${profile.commission_pct}% commission`);
+  if (profile.mini_flat)      payParts.push(`$${profile.mini_flat} mini/flat`);
+  if (profile.volume_bonus)   payParts.push(`$${profile.volume_bonus} volume bonus`);
+  if (profile.cxi_bonus)      payParts.push(`$${profile.cxi_bonus} CXI bonus`);
+  if (payParts.length) intro.push(`Pay plan: ${payParts.join(", ")}.`);
+
+  return `${intro.join("\n")}\n\n---\n\n${industryBasePrompt}`;
+}
+
+type ChatMessage = { role: string; content: string };
+
+function mergeMessages(memory: ChatMessage[], current: ChatMessage[]): ChatMessage[] {
+  // Combine memory (persistent history) with current session messages.
+  // Deduplicate exact role+content matches so overlapping turns aren't sent twice.
+  const seen = new Set<string>();
+  const deduped: ChatMessage[] = [];
+
+  for (const msg of [...memory, ...current]) {
+    const key = `${msg.role}:${msg.content}`;
+    if (!seen.has(key)) {
+      seen.add(key);
+      deduped.push(msg);
+    }
+  }
+
+  // Keep the last 20 to stay well within token limits
+  return deduped.slice(-20);
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { messages, industry = "automotive" } = await req.json();
@@ -68,23 +138,69 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // ── 1. Auth + data fetch ──────────────────────────────────────────────────
+
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+
+    let profileData: Record<string, unknown> | null = null;
+    let memoryMessages: ChatMessage[] = [];
+
+    if (user) {
+      const [profileResult, memoryResult] = await Promise.all([
+        supabase
+          .from("agent_profiles")
+          .select("first_name, last_name, company, title, years_in_sales, industry, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, agent_name, coaching_style, agent_focus, custom_goals")
+          .eq("user_id", user.id)
+          .single(),
+        supabase
+          .from("agent_memory")
+          .select("role, content")
+          .eq("user_id", user.id)
+          .order("created_at", { ascending: false })
+          .limit(20),
+      ]);
+
+      if (profileResult.data) {
+        profileData = profileResult.data as Record<string, unknown>;
+      }
+
+      if (memoryResult.data) {
+        // DB returns newest-first; reverse to chronological for the model
+        memoryMessages = (memoryResult.data as ChatMessage[]).reverse();
+      }
+    }
+
+    // ── 2. Build system prompt + context messages ─────────────────────────────
+
     const SLUG_MAP: Record<string, string> = {
       auto: "automotive",
       "project-manager": "project_manager",
       "other-sales": "other_sales",
     };
     const normalizedIndustry = SLUG_MAP[industry] ?? industry;
-    const systemPrompt =
-      SYSTEM_PROMPTS[normalizedIndustry] ?? SYSTEM_PROMPTS["default"];
+    const basePrompt = SYSTEM_PROMPTS[normalizedIndustry] ?? SYSTEM_PROMPTS["default"];
+    const systemPrompt = profileData
+      ? buildPersonalizedPrompt(profileData, basePrompt)
+      : basePrompt;
+
+    const contextMessages = mergeMessages(memoryMessages, messages);
+
+    // The last user message is what we'll persist after the response
+    const lastUserMessage = [...messages].reverse().find((m: ChatMessage) => m.role === "user");
+
+    // ── 3. Stream response ────────────────────────────────────────────────────
 
     const encoder = new TextEncoder();
+    let assistantResponse = "";
+
     const stream = new ReadableStream({
       async start(controller) {
         const anthropicStream = await client.messages.stream({
           model: "claude-sonnet-4-6",
           max_tokens: 1024,
           system: systemPrompt,
-          messages: messages.slice(-10).map((m: { role: string; content: string }) => ({
+          messages: contextMessages.map((m: ChatMessage) => ({
             role: m.role as "user" | "assistant",
             content: m.content,
           })),
@@ -95,8 +211,27 @@ export async function POST(req: NextRequest) {
             chunk.type === "content_block_delta" &&
             chunk.delta.type === "text_delta"
           ) {
+            assistantResponse += chunk.delta.text;
             controller.enqueue(encoder.encode(chunk.delta.text));
           }
+        }
+
+        // ── 4. Save turn to agent_memory ──────────────────────────────────────
+        if (user && lastUserMessage && assistantResponse) {
+          await supabase.from("agent_memory").insert([
+            {
+              user_id:  user.id,
+              role:     "user",
+              content:  lastUserMessage.content,
+              industry: normalizedIndustry,
+            },
+            {
+              user_id:  user.id,
+              role:     "assistant",
+              content:  assistantResponse,
+              industry: normalizedIndustry,
+            },
+          ]);
         }
 
         controller.close();
