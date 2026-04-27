@@ -196,10 +196,6 @@ export async function POST(req: NextRequest) {
       }
     }
 
-    console.log("[DEBUG] Loaded memoryMessages count:", memoryMessages.length);
-    console.log("[DEBUG] First memory:", memoryMessages[0]);
-    console.log("[DEBUG] Last memory:", memoryMessages[memoryMessages.length - 1]);
-
     // ── 2. Build system prompt + context messages ─────────────────────────────
 
     const SLUG_MAP: Record<string, string> = {
@@ -214,8 +210,6 @@ export async function POST(req: NextRequest) {
       : basePrompt;
 
     const contextMessages = mergeMessages(memoryMessages, messages);
-    console.log("[DEBUG] contextMessages count after merge:", contextMessages.length);
-    console.log("[DEBUG] contextMessages roles:", contextMessages.map(m => m.role));
 
     // The last user message is what we'll persist after the response
     const lastUserMessage = [...messages].reverse().find((m: ChatMessage) => m.role === "user");
@@ -227,9 +221,6 @@ export async function POST(req: NextRequest) {
 
     const stream = new ReadableStream({
       async start(controller) {
-        console.log("[DEBUG] System prompt length:", systemPrompt.length);
-        console.log("[DEBUG] System prompt preview (last 500 chars):", systemPrompt.slice(-500));
-        console.log("[DEBUG] Messages being sent count:", messages.length);
         const anthropicStream = await client.messages.stream({
           model: "claude-sonnet-4-6",
           max_tokens: 1024,
