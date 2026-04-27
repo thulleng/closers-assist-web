@@ -3,10 +3,13 @@
 import Link from "next/link";
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { useUser } from "@/lib/hooks/useUser";
+import UserMenu from "@/components/UserMenu";
 
 export default function Nav() {
   const [hidden, setHidden] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const { user, loading } = useUser();
 
   useEffect(() => {
     let lastY = 0;
@@ -94,18 +97,24 @@ export default function Nav() {
         </nav>
 
         <div className="flex items-center gap-3">
-          <Link
-            href="/login"
-            className="text-sm font-medium text-ash transition-colors hover:text-bone"
-          >
-            Sign In
-          </Link>
-          <Link
-            href="/pricing"
-            className="btn-loud rounded-xl px-5 py-2.5 text-sm"
-          >
-            Get Started
-          </Link>
+          {!loading && user ? (
+            <UserMenu />
+          ) : (
+            <>
+              <Link
+                href="/login"
+                className="text-sm font-medium text-ash transition-colors hover:text-bone"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/pricing"
+                className="btn-loud rounded-xl px-5 py-2.5 text-sm"
+              >
+                Get Started
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </header>
