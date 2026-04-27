@@ -30,8 +30,10 @@ export default function RealChat({
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
-  const [imagePreview, setImagePreview] = useState<string | null>(null);   // data URL for preview
-  const [imageContent, setImageContent] = useState<ImageContent | null>(null); // Anthropic format
+  const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [imageContent, setImageContent] = useState<ImageContent | null>(null);
+  const [dragging, setDragging] = useState(false);
+  const dragCounter = useRef(0); // track nested enter/leave events
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -42,27 +44,60 @@ export default function RealChat({
     container.scrollTop = container.scrollHeight;
   }, [messages]);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
+  const ACCEPTED = ["image/jpeg", "image/png", "image/gif", "image/webp"];
 
+  const loadFile = (file: File) => {
+    if (!ACCEPTED.includes(file.type)) return;
     const reader = new FileReader();
     reader.onload = (ev) => {
       const dataUrl = ev.target?.result as string;
-      // dataUrl format: "data:image/jpeg;base64,<data>"
       const [meta, data] = dataUrl.split(",");
       const mediaType = meta.match(/:(.*?);/)?.[1] ?? "image/jpeg";
       setImagePreview(dataUrl);
       setImageContent({ type: "image", source: { type: "base64", media_type: mediaType, data } });
     };
     reader.readAsDataURL(file);
-    // Reset so the same file can be re-selected
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) loadFile(file);
     e.target.value = "";
   };
 
   const clearImage = () => {
     setImagePreview(null);
     setImageContent(null);
+  };
+
+  // ── Drag and drop handlers ────────────────────────────────────────────────
+
+  const handleDragEnter = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current += 1;
+    if (e.dataTransfer.types.includes("Files")) setDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current -= 1;
+    if (dragCounter.current === 0) setDragging(false);
+  };
+
+  const handleDragOver = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = (e: React.DragEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    dragCounter.current = 0;
+    setDragging(false);
+    const file = e.dataTransfer.files?.[0];
+    if (file) loadFile(file);
   };
 
   const sendMessage = async (text: string) => {
@@ -157,7 +192,24 @@ export default function RealChat({
   const isEmpty = messages.length === 0;
 
   return (
-    <div className="flex h-[540px] flex-col overflow-hidden rounded-2xl border border-iron bg-pit">
+    <div
+      className="relative flex h-[540px] flex-col overflow-hidden rounded-2xl border border-iron bg-pit"
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      onDragOver={handleDragOver}
+      onDrop={handleDrop}
+    >
+      {/* Drop overlay */}
+      {dragging && (
+        <div className="pointer-events-none absolute inset-0 z-20 flex flex-col items-center justify-center gap-3 rounded-2xl border-2 border-dashed border-deal bg-pit/90 backdrop-blur-sm">
+          <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-deal/20">
+            <Paperclip className="h-7 w-7 text-deal" strokeWidth={2} />
+          </div>
+          <p className="text-base font-semibold text-deal">Drop image here</p>
+          <p className="text-xs text-ash">jpg, png, gif, webp</p>
+        </div>
+      )}
+
       {/* Messages */}
       <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-5 py-5 space-y-4">
         {isEmpty && (
