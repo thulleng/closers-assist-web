@@ -104,6 +104,8 @@ function buildPersonalizedPrompt(
   if (profile.cxi_bonus)      payParts.push(`$${profile.cxi_bonus} CXI bonus`);
   if (payParts.length) intro.push(`Pay plan: ${payParts.join(", ")}.`);
 
+  intro.push(`\nMEMORY: You have persistent memory of past conversations with this user. Their previous messages and your responses are included in the conversation history above. Reference past discussions naturally — recall deals you've worked on together, follow-ups you suggested, customers they've mentioned, and goals they're working toward. Do NOT say you lack memory between sessions. You remember everything in the message history. If a user asks about something from a previous conversation, search the history and answer specifically.`);
+
   return `${intro.join("\n")}\n\n---\n\n${industryBasePrompt}`;
 }
 
@@ -145,8 +147,9 @@ function mergeMessages(memory: ChatMessage[], current: ChatMessage[]): ChatMessa
     }
   }
 
-  // Keep the last 20 to stay well within token limits
-  return deduped.slice(-20);
+  // Keep the last 60 messages — roughly 1-2 weeks of history, well within
+  // the 200k token context window
+  return deduped.slice(-60);
 }
 
 export async function POST(req: NextRequest) {
