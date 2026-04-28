@@ -103,88 +103,411 @@ const layers = [
 export default function HomePage() {
   return (
     <>
-      {/* 1 — HERO — Cinematic AI theme */}
-      <section
-        className="relative flex min-h-screen flex-col items-center justify-center overflow-hidden"
-        style={{ background: "#0a0a0a" }}
-      >
-        {/* Radial red glow behind headline */}
-        <div
-          className="pointer-events-none absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[800px] rounded-full blur-[120px]"
-          style={{ background: "radial-gradient(ellipse, rgba(220,38,38,0.18) 0%, transparent 70%)" }}
-          aria-hidden
-        />
+      {/* 1 — HERO — LOUD rebuild with 3D money card */}
+      <section className="relative overflow-hidden loud-bg">
+        <div className="grid-pattern" />
+        <div className="grain" />
 
-        {/* Animated grid / circuit overlay */}
-        <div
-          className="pointer-events-none absolute inset-0 opacity-[0.06]"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(220,38,38,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(220,38,38,0.6) 1px, transparent 1px)",
-            backgroundSize: "60px 60px",
-          }}
-          aria-hidden
-        />
-        {/* Subtle vignette over grid */}
-        <div
-          className="pointer-events-none absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at center, transparent 30%, #0a0a0a 80%)" }}
-          aria-hidden
-        />
+        <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
+          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr,1fr]">
+            {/* LEFT COLUMN — copy */}
+            <div>
+              <div>
+                <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-gradient-to-r from-deal/20 to-gold/15 px-3.5 py-1.5 backdrop-blur">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                    Built by a working rep · Real floor. Real money.
+                  </span>
+                </div>
+              </div>
 
-        {/* Hero content */}
-        <div className="relative z-10 mx-auto max-w-5xl px-6 py-24 text-center">
-          {/* Eyebrow badge */}
-          <div className="mb-8 inline-flex items-center gap-2 rounded-full border border-red-800/50 bg-red-950/40 px-4 py-1.5 backdrop-blur">
-            <span className="relative flex h-2 w-2">
-              <span className="absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75 pulse-ring" />
-              <span className="relative inline-flex h-2 w-2 rounded-full bg-red-500" />
-            </span>
-            <span className="text-[11px] font-bold uppercase tracking-[2px] text-red-400">
-              AI Sales Agent · Live on the Floor
-            </span>
+              <div>
+                <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
+                  Close like it&rsquo;s
+                  <br />
+                  the last day.
+                  <br />
+                  <span className="text-shine font-black">
+                    Every. Single. Day.
+                  </span>
+                </h1>
+              </div>
+
+              <div>
+                <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
+                  The AI agent built on the showroom floor. Knows your pay
+                  plan, your scripts, your customers.
+                  <br />
+                  <span className="mt-2 inline-block font-semibold text-gold-light">
+                    $29.99/month. One closed deal pays for 10 years.
+                  </span>
+                </p>
+              </div>
+
+              <div>
+                <div className="mt-8 flex flex-wrap items-center gap-3">
+                  <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
+                    Get Started →
+                  </Link>
+                  <Link
+                    href="/how-it-works"
+                    className="btn-ghost flex items-center gap-2 rounded-xl px-6 py-4 text-[15px] font-semibold"
+                  >
+                    <span className="text-gold-light">▶</span> Watch it close
+                    a deal (90s)
+                  </Link>
+                </div>
+                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2
+                      className="h-3.5 w-3.5 text-deal"
+                      strokeWidth={2.5}
+                    />
+                    No credit card
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2
+                      className="h-3.5 w-3.5 text-deal"
+                      strokeWidth={2.5}
+                    />
+                    No contracts. Cancel anytime.
+                  </span>
+                  <span className="flex items-center gap-1.5">
+                    <CheckCircle2
+                      className="h-3.5 w-3.5 text-deal"
+                      strokeWidth={2.5}
+                    />
+                    Cancel in 1 click
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT COLUMN — 3D money card visual */}
+            <div>
+              <div className="relative mx-auto h-[620px] w-full max-w-[380px]">
+                {/* Ambient green glow behind phone */}
+                <div
+                  className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(16,185,129,0.35) 0%, transparent 60%)",
+                  }}
+                  aria-hidden
+                />
+                {/* Gold glow behind phone (secondary) */}
+                <div
+                  className="absolute right-0 top-20 h-[200px] w-[200px] rounded-full blur-3xl opacity-60"
+                  style={{
+                    background:
+                      "radial-gradient(circle, rgba(251,191,36,0.4) 0%, transparent 70%)",
+                  }}
+                  aria-hidden
+                />
+
+                {/* Rotating orbit ring */}
+                <div
+                  className="absolute left-1/2 top-1/2 h-[580px] w-[580px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed border-deal/20 spin-slower"
+                  aria-hidden
+                />
+
+                {/* Floating coins around phone */}
+                <div
+                  className="absolute -left-2 top-24 z-20 flex h-14 w-14 items-center justify-center rounded-full font-black text-[20px] text-[#422006] float-up"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)",
+                    boxShadow:
+                      "0 10px 30px rgba(251,191,36,0.5), inset 0 2px 4px rgba(255,255,255,0.4)",
+                  }}
+                  aria-hidden
+                >
+                  $
+                </div>
+                <div
+                  className="absolute -right-4 top-48 z-20 flex h-10 w-10 items-center justify-center rounded-full font-black text-[14px] text-[#422006] float-down"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FBBF24 0%, #D97706 100%)",
+                    boxShadow:
+                      "0 8px 20px rgba(251,191,36,0.4), inset 0 2px 4px rgba(255,255,255,0.4)",
+                  }}
+                  aria-hidden
+                >
+                  $
+                </div>
+                <div
+                  className="absolute -right-6 bottom-40 z-20 flex h-12 w-12 items-center justify-center rounded-full font-black text-[16px] text-[#422006] float-side"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)",
+                    boxShadow:
+                      "0 8px 24px rgba(251,191,36,0.45), inset 0 2px 4px rgba(255,255,255,0.4)",
+                  }}
+                  aria-hidden
+                >
+                  $
+                </div>
+
+                {/* iPhone mockup */}
+                <div
+                  className="relative mx-auto h-[620px] w-[300px] rounded-[52px] p-[10px]"
+                  style={{
+                    background:
+                      "linear-gradient(180deg, #1a1a1e 0%, #0a0a0b 50%, #1a1a1e 100%)",
+                    boxShadow:
+                      "0 40px 100px rgba(0,0,0,0.6), 0 0 0 1.5px rgba(255,255,255,0.1), inset 0 1px 0 rgba(255,255,255,0.08)",
+                  }}
+                >
+                  {/* Phone inner screen */}
+                  <div
+                    className="relative h-full w-full overflow-hidden rounded-[42px]"
+                    style={{ background: "#050506" }}
+                  >
+                    {/* Notch */}
+                    <div
+                      className="absolute left-1/2 top-0 z-30 h-[26px] w-[110px] -translate-x-1/2 rounded-b-[18px]"
+                      style={{ background: "#000" }}
+                      aria-hidden
+                    />
+
+                    {/* Status bar */}
+                    <div className="relative z-20 flex items-center justify-between px-7 pt-3 text-[11px] font-semibold text-white">
+                      <span>9:41</span>
+                      <span className="flex items-center gap-1">
+                        <span className="text-[9px]">●●●●</span>
+                        <span className="text-[10px]">5G</span>
+                        <span
+                          className="ml-1 inline-block h-2.5 w-5 rounded-[3px] border border-white/80 pr-0.5"
+                          aria-hidden
+                        >
+                          <span className="block h-full w-4/5 rounded-[1px] bg-white" />
+                        </span>
+                      </span>
+                    </div>
+
+                    {/* App header */}
+                    <div className="relative z-10 mt-6 flex items-center gap-2.5 border-b border-white/5 px-4 pb-3">
+                      <div
+                        className="flex h-9 w-9 items-center justify-center rounded-lg font-display text-[11px] font-black text-white"
+                        style={{
+                          background:
+                            "linear-gradient(135deg, #10B981, #059669)",
+                          boxShadow: "0 4px 12px rgba(16,185,129,0.4)",
+                        }}
+                      >
+                        CA
+                      </div>
+                      <div className="flex-1">
+                        <div className="flex items-center gap-1.5 text-[13px] font-bold text-white">
+                          Closers Assist
+                          <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-deal">
+                            <svg
+                              viewBox="0 0 10 10"
+                              className="h-2 w-2 text-white"
+                              fill="none"
+                              stroke="currentColor"
+                              strokeWidth="3"
+                            >
+                              <path d="M2 5L4 7L8 3" strokeLinecap="round" />
+                            </svg>
+                          </span>
+                        </div>
+                        <div className="flex items-center gap-1 text-[10px] text-ash">
+                          <span className="h-1.5 w-1.5 rounded-full bg-deal pulse-ring" />
+                          Live · Typing...
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Chat messages */}
+                    <div className="space-y-2.5 px-3.5 pt-3.5">
+                      {/* User message */}
+                      <div className="flex justify-end">
+                        <div
+                          className="max-w-[75%] rounded-[18px] rounded-tr-[4px] px-3.5 py-2 text-[12px] text-white shadow-sm"
+                          style={{
+                            background:
+                              "linear-gradient(135deg, #10B981, #059669)",
+                          }}
+                        >
+                          Customer says $499/mo is too high on the RAV4 XLE.
+                        </div>
+                      </div>
+
+                      {/* Agent typing response */}
+                      <div className="flex">
+                        <div className="max-w-[82%] space-y-1.5">
+                          <div className="rounded-[18px] rounded-tl-[4px] bg-white/8 px-3.5 py-2 text-[11px] text-white/90 backdrop-blur">
+                            Pulling pay plan, lease incentives, and RAV4 XLE
+                            residual math...
+                          </div>
+                          <div className="rounded-[18px] rounded-tl-[4px] bg-white/8 px-3.5 py-2.5 text-[11px] text-white backdrop-blur">
+                            <div className="mb-1.5 text-[9px] font-bold uppercase tracking-wider text-deal-light">
+                              3 plays for you
+                            </div>
+                            <div className="space-y-1.5">
+                              <div className="flex items-center gap-2 rounded-md border-l-2 border-deal bg-white/5 py-1 pl-2">
+                                <span className="flex-1 text-[10.5px]">
+                                  <span className="font-bold">
+                                    Reframe to weekly cost
+                                  </span>
+                                  <br />
+                                  <span className="text-white/70">
+                                    $115/wk. Less than a tank.
+                                  </span>
+                                </span>
+                                <span className="font-mono text-[9px] font-bold text-deal-light">
+                                  78%
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 rounded-md border-l-2 border-deal/60 bg-white/5 py-1 pl-2">
+                                <span className="flex-1 text-[10.5px]">
+                                  <span className="font-bold">
+                                    Drop to 36mo
+                                  </span>
+                                  <br />
+                                  <span className="text-white/70">
+                                    $449/mo. Same residual.
+                                  </span>
+                                </span>
+                                <span className="font-mono text-[9px] font-bold text-deal-light">
+                                  71%
+                                </span>
+                              </div>
+                              <div className="flex items-center gap-2 rounded-md border-l-2 border-deal/40 bg-white/5 py-1 pl-2">
+                                <span className="flex-1 text-[10.5px]">
+                                  <span className="font-bold">
+                                    Pivot: Hybrid
+                                  </span>
+                                  <br />
+                                  <span className="text-white/70">
+                                    +$20 saves $110/mo gas.
+                                  </span>
+                                </span>
+                                <span className="font-mono text-[9px] font-bold text-deal-light">
+                                  64%
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Live commission ticker pinned at bottom */}
+                    <div
+                      className="absolute bottom-4 left-3 right-3 z-20 overflow-hidden rounded-2xl backdrop-blur-md"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, rgba(16,185,129,0.3), rgba(16,185,129,0.1))",
+                        border: "1px solid rgba(16,185,129,0.4)",
+                        boxShadow:
+                          "0 20px 40px rgba(16,185,129,0.3), inset 0 1px 0 rgba(255,255,255,0.15)",
+                      }}
+                    >
+                      <div className="flex items-center gap-2.5 px-3.5 py-3">
+                        <div className="flex h-9 w-9 flex-shrink-0 items-center justify-center rounded-full bg-deal text-xl font-black text-white shadow-[0_4px_12px_rgba(16,185,129,0.5)]">
+                          ✓
+                        </div>
+                        <div className="flex-1">
+                          <div className="text-[9px] font-bold uppercase tracking-wider text-deal-light">
+                            Deal closed · Just now
+                          </div>
+                          <div className="text-[13px] font-bold text-white">
+                            RAV4 XLE &middot; $499/mo
+                          </div>
+                        </div>
+                        <div className="text-right">
+                          <div className="font-mono text-[9px] text-white/70">
+                            +COMM
+                          </div>
+                          <div className="font-display text-base font-black text-white">
+                            $2,500
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating "closed" notification badge */}
+                <div
+                  className="absolute -right-6 top-6 z-30 rounded-2xl px-3 py-2 text-[10px] font-bold text-white shadow-[0_12px_32px_rgba(16,185,129,0.5)] float-up"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #10B981, #059669)",
+                  }}
+                >
+                  <div className="text-[8px] font-bold uppercase tracking-wider text-white/80">
+                    ✓ Closed
+                  </div>
+                  <div className="font-display text-sm font-black">
+                    +$2,500
+                  </div>
+                </div>
+
+                {/* Floating "5.0 CXI" badge */}
+                <div
+                  className="absolute -left-6 bottom-28 z-30 rounded-2xl px-3 py-2 text-[10px] font-bold text-white shadow-[0_12px_32px_rgba(251,191,36,0.45)] float-down"
+                  style={{
+                    background:
+                      "linear-gradient(135deg, #FBBF24, #D97706)",
+                  }}
+                >
+                  <div className="text-[8px] font-bold uppercase tracking-wider text-[#422006]">
+                    ★ CXI
+                  </div>
+                  <div className="font-display text-sm font-black text-[#422006]">
+                    5.0
+                  </div>
+                </div>
+
+                {/* Real data badge */}
+                <div className="absolute -bottom-4 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-lg border border-deal/30 bg-black/80 px-3 py-1.5 text-[10px] font-semibold text-deal-light backdrop-blur">
+                  REAL UI &middot; Thul&rsquo;s floor &middot; Sun Toyota
+                </div>
+              </div>
+            </div>
           </div>
 
-          {/* Main headline */}
-          <h1 className="font-black tracking-tight">
-            <span className="block text-7xl leading-[0.92] text-white md:text-9xl">
-              CLOSE MORE.
-            </span>
-            <span
-              className="block text-7xl leading-[0.92] md:text-9xl"
-              style={{ color: "#dc2626" }}
-            >
-              AI Sales Coach.
-            </span>
-          </h1>
-
-          {/* Subheadline */}
-          <p className="mx-auto mt-8 max-w-2xl text-lg leading-relaxed text-gray-400 md:text-xl">
-            Your personal AI sales agent. Trained on your industry.
-            Remembers every deal.
-          </p>
-
-          {/* CTA buttons */}
-          <div className="mt-10 flex flex-wrap items-center justify-center gap-4">
-            <Link
-              href="/pricing"
-              className="rounded-xl px-8 py-4 text-[15px] font-bold text-white transition-opacity hover:opacity-90"
-              style={{ background: "#dc2626" }}
-            >
-              Get Started Free
-            </Link>
-            <Link
-              href="/how-it-works"
-              className="rounded-xl border border-white/30 px-8 py-4 text-[15px] font-bold text-white backdrop-blur transition-colors hover:border-white/60 hover:bg-white/5"
-            >
-              See It In Action
-            </Link>
+          {/* HUGE stat strip — the math closers can't argue with */}
+          <div>
+            <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-8 backdrop-blur">
+              <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
+                The math closers can&rsquo;t argue with
+              </div>
+              <div className="grid grid-cols-3 gap-6">
+                <div className="text-center">
+                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
+                    18
+                  </div>
+                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                    Industries
+                  </div>
+                </div>
+                <div className="border-x border-white/10 text-center">
+                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
+                    $29.99
+                  </div>
+                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                    Per rep / mo
+                  </div>
+                </div>
+                <div className="text-center">
+                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
+                    &lt;3s
+                  </div>
+                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                    Question to play
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-
-          {/* Stat strip */}
-          <p className="mt-10 text-sm uppercase tracking-widest text-gray-500">
-            18 Industries &nbsp;·&nbsp; $0 Setup &nbsp;·&nbsp; &lt;3s to Deploy
-          </p>
         </div>
       </section>
 
