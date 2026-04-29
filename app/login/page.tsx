@@ -71,17 +71,15 @@ function LoginForm() {
     setLoading(true);
 
     const supabase = createClient();
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        emailRedirectTo: `${location.origin}/auth/callback?next=${encodeURIComponent(next)}`,
-      },
-    });
+    const { data, error } = await supabase.auth.signUp({ email, password });
 
     if (error) {
       setError(friendlyError(error.message));
+    } else if (data.session) {
+      // Email confirmation is disabled in Supabase dashboard — session is live immediately
+      router.push("/onboarding");
     } else {
+      // Confirmation still enabled — prompt user to check email
       setSuccess("Account created! Check your email to confirm, then come back to sign in.");
     }
 
