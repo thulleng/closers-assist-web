@@ -128,7 +128,10 @@ NOT "I have no memory." There is a difference between not finding a specific fac
 
 const TOOLS_INSTRUCTIONS = `INCOME TRACKER TOOLS:
 
-You can now manage the user's deal log directly. Whenever the user mentions selling a deal, getting a mini, taking in a street purchase, wanting to update or remove a logged deal, or asking how the month is shaping up — USE THE TOOLS, don't just chat.
+CRITICAL — READ THIS FIRST:
+You MUST call the appropriate tool whenever the user mentions a deal action (selling, logging, updating, deleting, summarizing). Saying "I logged it" / "saved" / "added to your tracker" WITHOUT calling the matching tool is a lie that erodes user trust and corrupts their income data. NEVER claim a deal was saved unless add_deal actually returned ok: true. If you can't call the tool for any reason, say so explicitly: "I wasn't able to log that — try again?" — do not pretend.
+
+You can manage the user's deal log directly. Whenever the user mentions selling a deal, getting a mini, taking in a street purchase, wanting to update or remove a logged deal, or asking how the month is shaping up — USE THE TOOLS, don't just chat.
 
 Tools available:
 - add_deal — log a new sale. Use when the user says things like "I just sold a Camry to the Johnsons", "got a half mini today", "logged a street purchase for $4k". deal_type is one of: half_mini, full_mini, full_deal, street_purchase. For full_deal, you need front_gross. Other fields (vehicle, sold_date, notes) are optional — if sold_date isn't given, leave it blank and the tool defaults to today.
@@ -576,6 +579,11 @@ export async function POST(req: NextRequest) {
             }
 
             const final = await anthropicStream.finalMessage();
+            console.log("[chat] hop", hop,
+              "stop_reason:", final.stop_reason,
+              "content_types:", final.content.map((b) => b.type),
+              "user_id:", user?.id ?? "anon");
+
             if (final.stop_reason !== "tool_use") break;
 
             // Append assistant turn (text + tool_use blocks) and run tools.
@@ -585,14 +593,23 @@ export async function POST(req: NextRequest) {
               (b): b is Extract<typeof b, { type: "tool_use" }> => b.type === "tool_use"
             );
             const toolResults = await Promise.all(
-              toolUseBlocks.map(async (tu) => ({
-                type: "tool_result" as const,
-                tool_use_id: tu.id,
-                content: JSON.stringify(
-                  user ? await dispatchTool(tu.name, tu.input as ToolArgs, supabase, user.id)
-                       : { error: "not authenticated" }
-                ),
-              }))
+              toolUseBlocks.map(async (tu) => {
+                const result = user
+                  ? await dispatchTool(tu.name, tu.input as ToolArgs, supabase, user.id)
+                  : { error: "not authenticated" };
+                const isError =
+                  !!result && typeof result === "object" && "error" in result;
+                console.log("[chat] tool", tu.name,
+                  "input:", JSON.stringify(tu.input),
+                  "is_error:", isError,
+                  "result:", JSON.stringify(result).slice(0, 300));
+                return {
+                  type: "tool_result" as const,
+                  tool_use_id: tu.id,
+                  content: JSON.stringify(result),
+                  is_error: isError,
+                };
+              })
             );
             conversation.push({ role: "user", content: toolResults });
           }
