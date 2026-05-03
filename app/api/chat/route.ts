@@ -180,10 +180,10 @@ export async function POST(req: NextRequest) {
           .single(),
         supabase
           .from("agent_memory")
-          .select("role, content")
+          .select("role, content, created_at")
           .eq("user_id", user.id)
           .order("created_at", { ascending: false })
-          .limit(20),
+          .limit(100),
       ]);
 
       if (profileResult.data) {
@@ -191,8 +191,15 @@ export async function POST(req: NextRequest) {
       }
 
       if (memoryResult.data) {
-        // DB returns newest-first; reverse to chronological for the model
-        memoryMessages = (memoryResult.data as ChatMessage[]).reverse();
+        // DB returns newest-first; sort chronologically (oldest first) for the model
+        const rows = memoryResult.data as (ChatMessage & { created_at?: string })[];
+        memoryMessages = [...rows]
+          .sort((a, b) => {
+            const ta = a.created_at ? new Date(a.created_at).getTime() : 0;
+            const tb = b.created_at ? new Date(b.created_at).getTime() : 0;
+            return ta - tb;
+          })
+          .map(({ role, content }) => ({ role, content }));
       }
     }
 
@@ -205,9 +212,24 @@ export async function POST(req: NextRequest) {
     };
     const normalizedIndustry = SLUG_MAP[industry] ?? industry;
     const basePrompt = SYSTEM_PROMPTS[normalizedIndustry] ?? SYSTEM_PROMPTS["default"];
-    const systemPrompt = profileData
+    const personalizedPrompt = profileData
       ? buildPersonalizedPrompt(profileData, basePrompt)
       : basePrompt;
+
+    const now = new Date();
+    const dateLine = `Today's date is ${now.toLocaleDateString("en-US", {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+      timeZone: "America/New_York",
+    })} (${now.toLocaleTimeString("en-US", {
+      hour: "numeric",
+      minute: "2-digit",
+      timeZoneName: "short",
+      timeZone: "America/New_York",
+    })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
+    const systemPrompt = `${dateLine}\n\n${personalizedPrompt}`;
 
     const contextMessages = mergeMessages(memoryMessages, messages);
 
