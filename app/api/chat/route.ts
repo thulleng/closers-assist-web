@@ -547,12 +547,21 @@ export async function POST(req: NextRequest) {
     const encoder = new TextEncoder();
     let assistantResponse = "";
 
-    type StreamMsgs = Parameters<typeof client.messages.stream>[0]["messages"];
+    type StreamParams = Parameters<typeof client.messages.stream>[0];
+    type StreamMsgs   = StreamParams["messages"];
 
     const conversation: StreamMsgs = contextMessages.map((m: ChatMessage) => ({
       role: m.role as "user" | "assistant",
       content: m.content as StreamMsgs[number]["content"],
     }));
+
+    // Detect deal-tracker intent so we can explicitly bias the model toward tool use.
+    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|summary|this month|last month|logged?|track(?:er)?|units?)\b/i;
+    const lastUserText = lastUserMessage ? textOf(lastUserMessage.content) : "";
+    const dealTriggered = DEAL_TRIGGER_RE.test(lastUserText);
+    console.log("[chat] tools count:", TOOL_DEFINITIONS.length,
+      "deal_triggered:", dealTriggered,
+      "last_user:", lastUserText.slice(0, 120));
 
     const stream = new ReadableStream({
       async start(controller) {
@@ -560,13 +569,25 @@ export async function POST(req: NextRequest) {
           // Tool loop — run streams until stop_reason is no longer "tool_use".
           // Cap at 5 hops to prevent runaway loops.
           for (let hop = 0; hop < 5; hop++) {
-            const anthropicStream = client.messages.stream({
+            const streamParams: StreamParams = {
               model: "claude-sonnet-4-6",
               max_tokens: 1024,
               system: systemPrompt,
               tools: TOOL_DEFINITIONS,
               messages: conversation,
-            });
+            };
+            // First hop only: when the user is clearly talking about deals,
+            // pass tool_choice explicitly. (Anthropic defaults to "auto" when
+            // tools are provided, but setting it explicitly verifies in logs
+            // that the request shape is correct.)
+            if (hop === 0 && dealTriggered) {
+              streamParams.tool_choice = { type: "auto" };
+            }
+            console.log("[chat] hop", hop,
+              "tools count:", TOOL_DEFINITIONS.length,
+              "tool_choice:", streamParams.tool_choice ?? "default-auto");
+
+            const anthropicStream = client.messages.stream(streamParams);
 
             for await (const chunk of anthropicStream) {
               if (
