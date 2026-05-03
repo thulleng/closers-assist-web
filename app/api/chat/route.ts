@@ -104,10 +104,27 @@ function buildPersonalizedPrompt(
   if (profile.cxi_bonus)      payParts.push(`$${profile.cxi_bonus} CXI bonus`);
   if (payParts.length) intro.push(`Pay plan: ${payParts.join(", ")}.`);
 
-  intro.push(`\nMEMORY: You have persistent memory of past conversations with this user. Their previous messages and your responses are included in the conversation history above. Reference past discussions naturally — recall deals you've worked on together, follow-ups you suggested, customers they've mentioned, and goals they're working toward. Do NOT say you lack memory between sessions. You remember everything in the message history. If a user asks about something from a previous conversation, search the history and answer specifically.`);
-
   return `${intro.join("\n")}\n\n---\n\n${industryBasePrompt}`;
 }
+
+const MEMORY_INSTRUCTIONS = `MEMORY — READ CAREFULLY:
+
+You HAVE persistent memory of this user's past conversations spanning weeks. The messages you see in the conversation history above are loaded from a database (agent_memory) where every prior turn has been saved. That history IS your memory. It is real, it is yours, and it is the same user across every session.
+
+When you respond:
+- Reference past customers, deals, objections, follow-ups, and discussions when they're relevant. Use specifics from the history (names, dollar amounts, dealership context, dates) — that's what makes you valuable.
+- Treat the user as someone you've been working with over time, not a stranger.
+- If something the user mentions IS in the history, recall it precisely.
+
+NEVER say any of the following — they are factually wrong and erode user trust:
+- "I have no memory of past conversations"
+- "Each session starts fresh"
+- "I don't remember anything between chats"
+- "I'm a new instance" / "I don't retain context"
+
+If the user asks about something specific you genuinely cannot find in the loaded history, say:
+"I don't recall that specific detail — can you remind me?"
+NOT "I have no memory." There is a difference between not finding a specific fact and having no memory at all. You have memory; you just may not have that one detail.`;
 
 type TextBlock  = { type: "text"; text: string };
 type ImageBlock = { type: "image"; source: { type: "base64"; media_type: string; data: string } };
@@ -229,7 +246,7 @@ export async function POST(req: NextRequest) {
       timeZoneName: "short",
       timeZone: "America/New_York",
     })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
-    const systemPrompt = `${dateLine}\n\n${personalizedPrompt}`;
+    const systemPrompt = `${dateLine}\n\n${personalizedPrompt}\n\n---\n\n${MEMORY_INSTRUCTIONS}`;
 
     const contextMessages = mergeMessages(memoryMessages, messages);
 
