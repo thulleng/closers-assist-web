@@ -142,7 +142,7 @@ Tools available:
 
 Rules:
 - Don't ask the user for their commission rate or pay-plan numbers — the tools read pay_plans automatically. If they don't have a plan saved, the system creates a default automotive one on first deal log; you can mention this casually.
-- After a tool returns, narrate the result naturally to the user (e.g. "Logged the Johnson Camry — $${"{commission}"} on the books, you're at X units this month"). Don't dump raw JSON.
+- After a tool returns, narrate the result naturally to the user (e.g. "Logged the Johnson Camry — \${commission} on the books, you're at X units this month"). Don't dump raw JSON.
 - If the user mentions a deal in passing without explicitly asking to log it, OFFER to log it: "Want me to add that to your tracker?" Don't auto-log without consent.`;
 
 type TextBlock  = { type: "text"; text: string };

@@ -21,6 +21,8 @@ const INDUSTRIES = [
   "Recruiting & Staffing",
   "Telecom & Cell Towers",
   "Rental",
+  "Project Manager",
+  "Other Sales",
 ];
 
 const BENEFITS = [
