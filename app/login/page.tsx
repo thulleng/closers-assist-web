@@ -57,11 +57,13 @@ function LoginForm() {
 
     if (error) {
       setError(friendlyError(error.message));
+      setLoading(false);
     } else {
-      router.push(next);
+      // Hard navigation so the Supabase session cookie is sent with the request
+      // to /dashboard/* — soft router.push races the cookie write and middleware
+      // bounces the user back to /login.
+      window.location.href = next;
     }
-
-    setLoading(false);
   }
 
   // ── Sign up ──────────────────────────────────────────────────────────────
@@ -75,15 +77,16 @@ function LoginForm() {
 
     if (error) {
       setError(friendlyError(error.message));
+      setLoading(false);
     } else if (data.session) {
-      // Email confirmation is disabled in Supabase dashboard — session is live immediately
-      router.push("/onboarding");
+      // Email confirmation is disabled in Supabase dashboard — session is live immediately.
+      // Hard navigation so the session cookie is sent with the request to /onboarding.
+      window.location.href = "/onboarding";
     } else {
       // Confirmation still enabled — prompt user to check email
       setSuccess("Account created! Check your email to confirm, then come back to sign in.");
+      setLoading(false);
     }
-
-    setLoading(false);
   }
 
   // ── Magic link ───────────────────────────────────────────────────────────
