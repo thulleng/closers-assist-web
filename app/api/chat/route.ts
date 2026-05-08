@@ -555,12 +555,23 @@ export async function POST(req: NextRequest) {
       content: m.content as StreamMsgs[number]["content"],
     }));
 
-    // Detect deal-tracker intent so we can explicitly bias the model toward tool use.
-    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|summary|this month|last month|logged?|track(?:er)?|units?)\b/i;
+    // Detect deal-tracker intent so we can FORCE add_deal when the user is
+    // unambiguously logging a sale. Two-gate heuristic:
+    //   1. DEAL_TRIGGER_RE matches deal-language (broad — catches verb-led
+    //      phrasings like "closed the Smiths", "rolled the Tundra",
+    //      "wrote up a RAV4", "out the door").
+    //   2. QUESTION_RE suppresses advice-seeking ("how do I close...?"),
+    //      where forcing add_deal would hallucinate args.
+    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|summary|this month|last month|logged?|track(?:er)?|units?|closed|delivered|wrote up|wrote one up|writing up|write[- ]up|rolled|signed|out the door)\b/i;
+    const QUESTION_RE = /\?\s*$|^\s*(how|what|why|when|where|which|should|can|do|does|did|is|are|any tips|tips for|advice for)\b/i;
     const lastUserText = lastUserMessage ? textOf(lastUserMessage.content) : "";
     const dealTriggered = DEAL_TRIGGER_RE.test(lastUserText);
+    const isQuestion = QUESTION_RE.test(lastUserText);
+    const forceAddDeal = dealTriggered && !isQuestion;
     console.log("[chat] tools count:", TOOL_DEFINITIONS.length,
       "deal_triggered:", dealTriggered,
+      "is_question:", isQuestion,
+      "force_add_deal:", forceAddDeal,
       "last_user:", lastUserText.slice(0, 120));
 
     const stream = new ReadableStream({
@@ -576,12 +587,15 @@ export async function POST(req: NextRequest) {
               tools: TOOL_DEFINITIONS,
               messages: conversation,
             };
-            // First hop only: when the user is clearly talking about deals,
-            // pass tool_choice explicitly. (Anthropic defaults to "auto" when
-            // tools are provided, but setting it explicitly verifies in logs
-            // that the request shape is correct.)
-            if (hop === 0 && dealTriggered) {
-              streamParams.tool_choice = { type: "auto" };
+            // First hop only: when the user has unambiguously described a
+            // logged-worthy action (deal-language present, not phrased as a
+            // question), FORCE the model to call add_deal. Without this,
+            // the model narrates "logged the Camry" in plain text without
+            // emitting a tool_use block — silently corrupting income data.
+            // Other hops, and ambiguous phrasings, fall through to SDK default
+            // (auto), where the model picks based on the system prompt.
+            if (hop === 0 && forceAddDeal) {
+              streamParams.tool_choice = { type: "tool", name: "add_deal" };
             }
             console.log("[chat] hop", hop,
               "tools count:", TOOL_DEFINITIONS.length,
