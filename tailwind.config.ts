@@ -29,6 +29,12 @@ const config: Config = {
         },
         warn: "#F59E0B",
         alert: "#E11D2E",
+        // Futuristic AI accents
+        void: "#020203",
+        "neon-green": "#00FF88",
+        "neon-cyan": "#00E5FF",
+        "neon-purple": "#7B2FFF",
+        "glass-white": "rgba(255, 255, 255, 0.08)",
       },
       fontFamily: {
         sans: ["var(--font-inter)", "system-ui", "sans-serif"],
@@ -39,6 +45,48 @@ const config: Config = {
         md: "8px",
         lg: "12px",
         xl: "16px",
+      },
+      keyframes: {
+        "pulse-neon": {
+          "0%, 100%": {
+            opacity: "1",
+            filter: "drop-shadow(0 0 6px currentColor)",
+          },
+          "50%": {
+            opacity: "0.6",
+            filter: "drop-shadow(0 0 20px currentColor)",
+          },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0px)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        "grid-scroll": {
+          "0%": { transform: "translate(0, 0)" },
+          "100%": { transform: "translate(48px, 48px)" },
+        },
+        "scan-line": {
+          "0%": { transform: "translateY(-100%)" },
+          "100%": { transform: "translateY(100vh)" },
+        },
+        glitch: {
+          "0%, 100%": { transform: "translate(0)" },
+          "20%": { transform: "translate(-2px, 1px)" },
+          "40%": { transform: "translate(2px, -1px)" },
+          "60%": { transform: "translate(-1px, -1px)" },
+          "80%": { transform: "translate(1px, 1px)" },
+        },
+      },
+      animation: {
+        "pulse-neon": "pulse-neon 2s ease-in-out infinite",
+        float: "float 3.5s ease-in-out infinite",
+        "grid-scroll": "grid-scroll 20s linear infinite",
+        "scan-line": "scan-line 3s linear infinite",
+        glitch: "glitch 0.3s ease-in-out infinite",
+      },
+      backgroundImage: {
+        "ai-gradient":
+          "radial-gradient(ellipse 1000px 600px at 20% 0%, rgba(0, 255, 136, 0.12) 0%, transparent 55%), radial-gradient(ellipse 800px 500px at 80% 100%, rgba(123, 47, 255, 0.1) 0%, transparent 55%), radial-gradient(circle 500px at 50% 50%, rgba(0, 229, 255, 0.06) 0%, transparent 55%)",
       },
     },
   },

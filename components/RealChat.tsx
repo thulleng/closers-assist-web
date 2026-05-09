@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
 import { ArrowUp, Paperclip, X } from "lucide-react";
 
 type TextContent = { type: "text"; text: string };
@@ -27,6 +28,7 @@ export default function RealChat({
   starters?: string[];
 }) {
   const STARTERS = starters ?? DEFAULT_STARTERS;
+  const router = useRouter();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
@@ -163,6 +165,7 @@ export default function RealChat({
       });
     } finally {
       setStreaming(false);
+      router.refresh();
     }
   };
 

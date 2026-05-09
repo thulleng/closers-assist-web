@@ -3,6 +3,9 @@ import Link from "next/link";
 import { ArrowLeft, Car, Download, Settings2 } from "lucide-react";
 import Dashboard from "@/components/Dashboard";
 import { autoDashboardSample } from "@/lib/dashboard-data-auto";
+import { buildAutoDashboard } from "@/lib/dashboard-data-auto-live";
+import { createClient } from "@/lib/supabase/server";
+import type { DashboardData } from "@/lib/dashboard-types";
 
 export const metadata: Metadata = {
   title: "Auto Dashboard",
@@ -10,7 +13,42 @@ export const metadata: Metadata = {
     "Live sales dashboard for auto closers. Units, tier progress, earnings breakdown, next milestones — updated daily.",
 };
 
-export default function AutoDashboardPage() {
+export const dynamic = "force-dynamic";
+
+async function loadDashboardData(): Promise<DashboardData> {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) return autoDashboardSample;
+
+  const now = new Date();
+  const start = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), 1)).toISOString().slice(0, 10);
+  const end   = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth() + 1, 1)).toISOString().slice(0, 10);
+
+  const [dealsResult, planResult, profileResult] = await Promise.all([
+    supabase
+      .from("deals")
+      .select("id, customer_name, vehicle, deal_type, front_gross, commission, units, sold_date, notes")
+      .eq("user_id", user.id)
+      .gte("sold_date", start).lt("sold_date", end)
+      .order("sold_date", { ascending: true }),
+    supabase
+      .from("pay_plans")
+      .select("commission_rate, monthly_draw, half_mini_amount, full_mini_amount, street_purchase_amount, volume_bonuses, cxi_threshold, cxi_bonus, review_bonus")
+      .eq("user_id", user.id)
+      .maybeSingle(),
+    supabase
+      .from("agent_profiles")
+      .select("first_name, last_name, company")
+      .eq("user_id", user.id)
+      .maybeSingle(),
+  ]);
+
+  if (!planResult.data) return autoDashboardSample;
+  return buildAutoDashboard(dealsResult.data ?? [], planResult.data, profileResult.data ?? null);
+}
+
+export default async function AutoDashboardPage() {
+  const data = await loadDashboardData();
   return (
     <>
       {/* Subtle top bar */}
@@ -52,7 +90,7 @@ export default function AutoDashboardPage() {
       </section>
 
       {/* Dashboard itself */}
-      <Dashboard data={autoDashboardSample} />
+      <Dashboard data={data} />
 
       {/* Footer CTA strip */}
       <section className="mx-auto max-w-[480px] px-4 pb-20">
