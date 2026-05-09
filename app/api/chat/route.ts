@@ -557,10 +557,22 @@ export async function POST(req: NextRequest) {
     type StreamParams = Parameters<typeof client.messages.stream>[0];
     type StreamMsgs   = StreamParams["messages"];
 
-    const conversation: StreamMsgs = contextMessages.map((m: ChatMessage) => ({
-      role: m.role as "user" | "assistant",
-      content: m.content as StreamMsgs[number]["content"],
-    }));
+    const conversation: StreamMsgs = contextMessages
+      .map((m: ChatMessage) => ({
+        role: m.role as "user" | "assistant",
+        content: m.content as StreamMsgs[number]["content"],
+      }))
+      .filter((m) => {
+        // DeepSeek rejects messages with empty content — strip them
+        if (typeof m.content === "string") return m.content.trim().length > 0;
+        if (Array.isArray(m.content)) {
+          return m.content.some((b) => {
+            if (b.type === "text") return (b.text ?? "").trim().length > 0;
+            return true; // image blocks are non-empty
+          });
+        }
+        return false;
+      });
 
     // Detect deal-tracker intent so we can FORCE add_deal when the user is
     // unambiguously logging a sale. Two-gate heuristic:
