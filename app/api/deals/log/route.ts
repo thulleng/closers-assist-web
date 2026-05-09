@@ -90,11 +90,65 @@ export async function POST(req: NextRequest) {
   }
 }
 
-// ── GET: health check ───────────────────────────────────────────────────────
+// ── GET: lookup user by email (for admin integration) ────────────────────────
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   if (!API_SECRET) {
     return NextResponse.json({ status: "not configured", reason: "CLOSERS_API_SECRET not set" });
   }
+
+  const { searchParams } = new URL(req.url);
+  const secret = searchParams.get("secret");
+  const email = searchParams.get("email");
+
+  if (!secret || secret !== API_SECRET) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+  }
+
+  // Lookup user by email
+  if (email) {
+    try {
+      const supabase = createAdminClient();
+      const { data, error } = await supabase
+        .from("agent_profiles")
+        .select("user_id, first_name, last_name, email")
+        .or(`email.eq.${email}`)
+        .limit(1);
+
+      if (error) {
+        return NextResponse.json({ error: error.message }, { status: 500 });
+      }
+
+      if (!data || data.length === 0) {
+        // Try auth.users
+        const { data: authData, error: authError } = await supabase.auth.admin.listUsers();
+        if (!authError && authData) {
+          const user = authData.users.find(
+            (u) => u.email?.toLowerCase() === email.toLowerCase()
+          );
+          if (user) {
+            return NextResponse.json({
+              found: true,
+              user_id: user.id,
+              email: user.email,
+            });
+          }
+        }
+        return NextResponse.json({ found: false, reason: "User not found" });
+      }
+
+      return NextResponse.json({
+        found: true,
+        user_id: data[0].user_id,
+        profile: data[0],
+      });
+    } catch (err) {
+      return NextResponse.json(
+        { error: err instanceof Error ? err.message : "Internal error" },
+        { status: 500 }
+      );
+    }
+  }
+
   return NextResponse.json({ status: "ready" });
 }
