@@ -474,21 +474,19 @@ async function buildMemoryProfile(
   // 0. Persisted facts from trained memory
   if (supabase && userId) {
     try {
-      const { data: profile } = await supabase
-        .from("agent_profiles")
-        .select("memory_profile")
+      const { data: facts } = await supabase
+        .from("agent_memory")
+        .select("content")
         .eq("user_id", userId)
-        .maybeSingle();
+        .eq("role", "fact")
+        .order("created_at", { ascending: false })
+        .limit(30);
 
-      const persisted = (profile?.memory_profile as Record<string, string[]>) ?? {};
-      const allFacts = Object.entries(persisted).flatMap(([cat, facts]) =>
-        (facts as string[]).map((f) => `[${cat}] ${f}`)
-      );
-
-      if (allFacts.length > 0) {
-        parts.push(`Learned facts (from past conversations):\n${allFacts.map((f) => `- ${f}`).join("\n")}`);
+      if (facts && facts.length > 0) {
+        const factLines = facts.map((f: { content: string }) => `- ${f.content}`);
+        parts.push(`Learned facts (from past conversations):\n${factLines.join("\n")}`);
       }
-    } catch { /* ignore — profile query is nice-to-have */ }
+    } catch { /* ignore — facts query is nice-to-have */ }
   }
 
   // 1. Identity from profile
@@ -688,24 +686,26 @@ async function dispatchTool(
       const fact = args.fact as string;
       if (!fact?.trim()) return { error: "fact is required" };
 
-      // Load existing profile, append fact, save back
-      const { data: profile } = await supabase
-        .from("agent_profiles")
-        .select("memory_profile")
-        .eq("user_id", userId)
-        .maybeSingle();
-
-      const existing = (profile?.memory_profile as Record<string, string[]>) ?? {};
-      const categoryFacts = [...(existing[category] ?? []), fact.trim()];
-      // Keep last 20 facts per category
-      const trimmed = { ...existing, [category]: categoryFacts.slice(-20) };
-
+      // Store as a special memory row with role="fact"
       const { error } = await supabase
-        .from("agent_profiles")
-        .upsert({ user_id: userId, memory_profile: trimmed }, { onConflict: "user_id" });
+        .from("agent_memory")
+        .insert({
+          user_id: userId,
+          role: "fact",
+          content: `[${category}] ${fact.trim()}`,
+          industry: "system",
+        });
 
       if (error) return { error: error.message };
-      return { ok: true, saved: fact, category, total_facts: Object.values(trimmed).flat().length };
+
+      // Count existing facts
+      const { count } = await supabase
+        .from("agent_memory")
+        .select("*", { count: "exact", head: true })
+        .eq("user_id", userId)
+        .eq("role", "fact");
+
+      return { ok: true, saved: fact, category, total_facts: count ?? 1 };
     }
 
     return { error: `unknown tool: ${name}` };
@@ -744,6 +744,7 @@ export async function POST(req: NextRequest) {
           .from("agent_memory")
           .select("role, content, created_at")
           .eq("user_id", user.id)
+          .neq("role", "fact")
           .order("created_at", { ascending: false })
           .limit(100),
       ]);
