@@ -189,24 +189,21 @@ function buildPersonalizedPrompt(
   return `${intro.join("\n")}\n\n---\n\n${industryBasePrompt}`;
 }
 
-const MEMORY_INSTRUCTIONS = `MEMORY — READ CAREFULLY:
+const MEMORY_INSTRUCTIONS = `HOW TO TALK TO THIS PERSON:
 
-You HAVE persistent memory of this user's past conversations spanning weeks. The messages you see in the conversation history above are loaded from a database (agent_memory) where every prior turn has been saved. That history IS your memory. It is real, it is yours, and it is the same user across every session.
+You know them. The history above IS your memory — every deal they've told you about, every objection you've helped them handle, every follow-up you've written together. The memory profile above tells you who they are. The conversation history shows you what you've discussed.
 
-When you respond:
-- Reference past customers, deals, objections, follow-ups, and discussions when they're relevant. Use specifics from the history (names, dollar amounts, dealership context, dates) — that's what makes you valuable.
-- Treat the user as someone you've been working with over time, not a stranger.
-- If something the user mentions IS in the history, recall it precisely.
+Talk like someone who's been in their corner for weeks:
+- Greet them by name naturally — not like a chatbot, like a coach who just walked onto the lot
+- Reference specific deals, customers, and situations from your history: "How'd the Cunningham deal close?" not "Have you sold any cars recently?"
+- Call back to past advice you gave: "Last time we talked about payment objections — did the 'total cost of ownership' angle work?"
+- Notice patterns: "Three minis this week. Last month you were here too before you turned it around."
+- Celebrate wins: "That $4k gross on Cunningham — that's your best deal this month."
+- Push them when they're slacking: "You're $1 above draw with 7 units to bonus. What's the play today?"
 
-NEVER say any of the following — they are factually wrong and erode user trust:
-- "I have no memory of past conversations"
-- "Each session starts fresh"
-- "I don't remember anything between chats"
-- "I'm a new instance" / "I don't retain context"
+Voice: Direct, warm, familiar. Like a veteran closer who's been mentoring them for months. Not a customer service agent. Not an AI assistant. A partner.
 
-If the user asks about something specific you genuinely cannot find in the loaded history, say:
-"I don't recall that specific detail — can you remind me?"
-NOT "I have no memory." There is a difference between not finding a specific fact and having no memory at all. You have memory; you just may not have that one detail.`;
+If you genuinely don't know something from the history, say "Refresh me on that" — never say "I have no memory" or "I don't remember." You have memory. You just might not have that one detail.`;
 
 const TOOLS_INSTRUCTIONS = `INCOME TRACKER TOOLS:
 
@@ -453,6 +450,72 @@ ${recentDeals || "none"}`;
     return ""; // fail silently — context is a nice-to-have
   }
 }
+async function buildMemoryProfile(
+  profileData: Record<string, unknown> | null,
+  monthlyContext: string,
+  memoryMessages: ChatMessage[]
+): Promise<string> {
+  const parts: string[] = [];
+
+  // 1. Identity from profile
+  if (profileData) {
+    const name = [profileData.first_name, profileData.last_name].filter(Boolean).join(" ") || "the rep";
+    const title = profileData.title || "";
+    const company = profileData.company || "";
+    const years = profileData.years_in_sales || "";
+    const style = profileData.coaching_style || "";
+    const focus = profileData.agent_focus || "";
+    const goals = profileData.custom_goals || "";
+
+    parts.push(`You are working with ${name}${title ? `, ${title}` : ""}${company ? ` at ${company}` : ""}${years ? `, ${years} years in sales` : ""}.`);
+
+    if (style || focus) {
+      parts.push(`Their style is ${style || "direct"}. Their primary focus is ${focus || "closing rate"}.`);
+    }
+    if (goals) {
+      parts.push(`Their stated goal: ${goals}.`);
+    }
+  }
+
+  // 2. Relationship context from conversation history
+  if (memoryMessages.length > 0) {
+    const pastTurns = memoryMessages.filter((m) => m.role === "user").length;
+    const recentTopics = new Set<string>();
+    const topicPattern = /\b(objection|script|commission|follow.?up|T\.?O\.?|desk|mini|deal|customer|bonus|CXI|review|text|email)\b/gi;
+
+    for (const msg of memoryMessages.slice(-30)) {
+      if (msg.role === "user" && typeof msg.content === "string") {
+        const matches = msg.content.match(topicPattern);
+        if (matches) matches.forEach((t) => recentTopics.add(t.toLowerCase()));
+      }
+    }
+
+    parts.push(`You've had ${pastTurns} conversations. Common topics: ${[...recentTopics].slice(0, 8).join(", ") || "sales strategy"}.`);
+    parts.push(`This is an ongoing relationship — talk like you know them. Reference past discussions naturally. Never reintroduce yourself.`);
+  } else {
+    parts.push(`This appears to be your first conversation. Welcome them warmly and establish the relationship.`);
+  }
+
+  // 3. Current numbers (extracted from monthly context)
+  if (monthlyContext && !monthlyContext.includes("No deals logged")) {
+    // Extract key stats from the monthly context string
+    const unitMatch = monthlyContext.match(/([\d.]+)\s*units/);
+    const commMatch = monthlyContext.match(/\$([\d,]+)\s*commission/);
+    const bonusMatch = monthlyContext.match(/Next bonus:\s*(.+)/);
+
+    if (unitMatch || commMatch) {
+      const stats: string[] = [];
+      if (unitMatch) stats.push(`${unitMatch[1]} units`);
+      if (commMatch) stats.push(`$${commMatch[1]} commission`);
+      if (bonusMatch) stats.push(bonusMatch[1]);
+      parts.push(`Month to date: ${stats.join(", ")}.`);
+    }
+  }
+
+  return parts.length > 0
+    ? `WHO YOU'RE TALKING TO (use this proactively — reference it without being asked):\n${parts.join("\n")}`
+    : "";
+}
 async function dispatchTool(
   name: string,
   args: ToolArgs,
@@ -661,6 +724,11 @@ export async function POST(req: NextRequest) {
       ? await buildMonthlyContext(supabase, user.id)
       : "";
 
+    // Build memory profile — who the agent is talking to
+    const memoryProfile = user
+      ? await buildMemoryProfile(profileData, monthlyContext, memoryMessages)
+      : "";
+
     const now = new Date();
     const dateLine = `Today's date is ${now.toLocaleDateString("en-US", {
       weekday: "long",
@@ -674,7 +742,7 @@ export async function POST(req: NextRequest) {
       timeZoneName: "short",
       timeZone: "America/New_York",
     })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
-    const systemPrompt = [dateLine, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
+    const systemPrompt = [dateLine, memoryProfile, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
       .filter(Boolean)
       .join("\n\n---\n\n");
 
