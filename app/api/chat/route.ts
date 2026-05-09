@@ -394,6 +394,18 @@ const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
       },
     },
   },
+  {
+    name: "remember_fact",
+    description: "Save a fact about the user to their persistent memory profile. Use when the user explicitly asks you to remember something, shares a preference, states a goal, or reveals something personal.",
+    input_schema: {
+      type: "object",
+      properties: {
+        category: { type: "string", enum: ["preference", "goal", "personal", "style", "pattern", "other"], description: "Category of the fact." },
+        fact: { type: "string", description: "The fact to remember." },
+      },
+      required: ["category", "fact"],
+    },
+  },
 ];
 
 type ToolArgs = Record<string, unknown>;
@@ -453,9 +465,31 @@ ${recentDeals || "none"}`;
 async function buildMemoryProfile(
   profileData: Record<string, unknown> | null,
   monthlyContext: string,
-  memoryMessages: ChatMessage[]
+  memoryMessages: ChatMessage[],
+  supabase: SupabaseRouteClient | null,
+  userId: string | null
 ): Promise<string> {
   const parts: string[] = [];
+
+  // 0. Persisted facts from trained memory
+  if (supabase && userId) {
+    try {
+      const { data: profile } = await supabase
+        .from("agent_profiles")
+        .select("memory_profile")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      const persisted = (profile?.memory_profile as Record<string, string[]>) ?? {};
+      const allFacts = Object.entries(persisted).flatMap(([cat, facts]) =>
+        (facts as string[]).map((f) => `[${cat}] ${f}`)
+      );
+
+      if (allFacts.length > 0) {
+        parts.push(`Learned facts (from past conversations):\n${allFacts.map((f) => `- ${f}`).join("\n")}`);
+      }
+    } catch { /* ignore — profile query is nice-to-have */ }
+  }
 
   // 1. Identity from profile
   if (profileData) {
@@ -649,6 +683,31 @@ async function dispatchTool(
       };
     }
 
+    if (name === "remember_fact") {
+      const category = args.category as string;
+      const fact = args.fact as string;
+      if (!fact?.trim()) return { error: "fact is required" };
+
+      // Load existing profile, append fact, save back
+      const { data: profile } = await supabase
+        .from("agent_profiles")
+        .select("memory_profile")
+        .eq("user_id", userId)
+        .maybeSingle();
+
+      const existing = (profile?.memory_profile as Record<string, string[]>) ?? {};
+      const categoryFacts = [...(existing[category] ?? []), fact.trim()];
+      // Keep last 20 facts per category
+      const trimmed = { ...existing, [category]: categoryFacts.slice(-20) };
+
+      const { error } = await supabase
+        .from("agent_profiles")
+        .upsert({ user_id: userId, memory_profile: trimmed }, { onConflict: "user_id" });
+
+      if (error) return { error: error.message };
+      return { ok: true, saved: fact, category, total_facts: Object.values(trimmed).flat().length };
+    }
+
     return { error: `unknown tool: ${name}` };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
@@ -726,7 +785,7 @@ export async function POST(req: NextRequest) {
 
     // Build memory profile — who the agent is talking to
     const memoryProfile = user
-      ? await buildMemoryProfile(profileData, monthlyContext, memoryMessages)
+      ? await buildMemoryProfile(profileData, monthlyContext, memoryMessages, supabase, user.id)
       : "";
 
     const now = new Date();
