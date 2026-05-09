@@ -854,8 +854,8 @@ export async function POST(req: NextRequest) {
     //      "wrote up a RAV4", "out the door").
     //   2. QUESTION_RE suppresses advice-seeking ("how do I close...?"),
     //      where forcing add_deal would hallucinate args.
-    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|summary|this month|last month|logged?|track(?:er)?|units?|closed|delivered|wrote up|wrote one up|writing up|write[- ]up|rolled|signed|out the door)\b/i;
-    const QUESTION_RE = /\?\s*$|^\s*(how|what|why|when|where|which|should|can|do|does|did|is|are|any tips|tips for|advice for)\b/i;
+    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|logged?|units?|closed|delivered|wrote up|wrote one up|writing up|write[- ]up|rolled|signed|out the door)\b/i;
+    const QUESTION_RE = /[?]\s*$|^\s*(how|what|why|when|where|which|should|can|do|does|did|is|are|any tips|tips for|advice for|show me|display)\b/i;
     const lastUserText = lastUserMessage ? textOf(lastUserMessage.content) : "";
     const dealTriggered = DEAL_TRIGGER_RE.test(lastUserText);
     const isQuestion = QUESTION_RE.test(lastUserText);
