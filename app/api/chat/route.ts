@@ -868,7 +868,7 @@ export async function POST(req: NextRequest) {
 
     // DeepSeek doesn't support vision — route to Claude when images are attached
     const activeClient = hasImages ? claude : deepseek;
-    const activeModel = hasImages ? "claude-3-5-sonnet-20241022" : "deepseek-v4-pro";
+    const activeModel = hasImages ? "claude-sonnet-4-20250514" : "deepseek-v4-pro";
 
     console.log("[chat] has_images:", hasImages, "model:", activeModel);
 
