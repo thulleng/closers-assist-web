@@ -4,11 +4,14 @@ import { createClient } from "@/lib/supabase/server";
 
 // DeepSeek V4 Pro via Anthropic-compatible endpoint
 // Requires DEEPSEEK_API_KEY in production (Vercel env)
-const client = new Anthropic({
-  apiKey: process.env.DEEPSEEK_API_KEY ?? process.env.ANTHROPIC_API_KEY ?? "",
-  baseURL: process.env.DEEPSEEK_API_KEY
-    ? "https://api.deepseek.com/anthropic"
-    : undefined, // fallback to default Anthropic if no DeepSeek key
+const deepseek = new Anthropic({
+  apiKey: process.env.DEEPSEEK_API_KEY ?? "",
+  baseURL: "https://api.deepseek.com/anthropic",
+});
+
+// Claude via native Anthropic — used when images are attached (DeepSeek doesn't support vision)
+const claude = new Anthropic({
+  apiKey: process.env.ANTHROPIC_API_KEY ?? "",
 });
 
 const REASONING_FRAMEWORK = `HOW YOU OPERATE — INTERNAL PROCESS:
@@ -816,7 +819,7 @@ export async function POST(req: NextRequest) {
     const encoder = new TextEncoder();
     let assistantResponse = "";
 
-    type StreamParams = Parameters<typeof client.messages.stream>[0];
+    type StreamParams = Parameters<typeof deepseek.messages.stream>[0];
     type StreamMsgs   = StreamParams["messages"];
 
     const conversation: StreamMsgs = contextMessages
@@ -855,6 +858,20 @@ export async function POST(req: NextRequest) {
       "force_add_deal:", forceAddDeal,
       "last_user:", lastUserText.slice(0, 120));
 
+    // ── Detect if any message contains images ─────────────────────────────────
+    const hasImages = conversation.some((m) => {
+      if (typeof m.content === "string") return false;
+      return Array.isArray(m.content) && m.content.some((b: unknown) =>
+        (b as { type?: string })?.type === "image"
+      );
+    });
+
+    // DeepSeek doesn't support vision — route to Claude when images are attached
+    const activeClient = hasImages ? claude : deepseek;
+    const activeModel = hasImages ? "claude-sonnet-4-20250514" : "deepseek-v4-pro";
+
+    console.log("[chat] has_images:", hasImages, "model:", activeModel);
+
     const stream = new ReadableStream({
       async start(controller) {
         try {
@@ -862,10 +879,10 @@ export async function POST(req: NextRequest) {
           // Cap at 5 hops to prevent runaway loops.
           for (let hop = 0; hop < 5; hop++) {
             const streamParams: StreamParams = {
-              model: "deepseek-v4-pro",
+              model: activeModel,
               max_tokens: 1024,
               system: systemPrompt,
-              tools: TOOL_DEFINITIONS,
+              tools: hasImages ? undefined : TOOL_DEFINITIONS, // Claude tool format differs
               messages: conversation,
             };
             // First hop only: when the user has unambiguously described a
@@ -882,7 +899,7 @@ export async function POST(req: NextRequest) {
               "tools count:", TOOL_DEFINITIONS.length,
               "tool_choice:", streamParams.tool_choice ?? "default-auto");
 
-            const anthropicStream = client.messages.stream(streamParams);
+            const anthropicStream = activeClient.messages.stream(streamParams);
 
             for await (const chunk of anthropicStream) {
               if (
