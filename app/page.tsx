@@ -104,7 +104,7 @@ export default function HomePage() {
   return (
     <>
       {/* 1 — HERO — LOUD rebuild with 3D money card */}
-      <section className="relative overflow-hidden loud-bg">
+      <section className="relative overflow-hidden loud-bg bg-ai-gradient">
         <div className="grid-pattern" />
         <div className="grain" />
 

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RealEstateDashboardPage() {
   return (
     <>
-      <section className="border-b border-iron bg-slate">
+      <section className="border-b border-white/5 bg-black/40 backdrop-blur-md">
         <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
           <Link
             href="/dashboard"
@@ -24,22 +24,22 @@ export default function RealEstateDashboardPage() {
           </Link>
           <div className="flex items-center gap-2">
             <div className="hidden items-center gap-2 sm:flex">
-              <HomeIcon className="h-4 w-4 text-deal" strokeWidth={2} />
-              <span className="font-mono text-xs font-medium uppercase tracking-widest text-deal">
+              <HomeIcon className="h-4 w-4 text-neon-green" strokeWidth={2} />
+              <span className="font-mono text-xs font-medium uppercase tracking-widest text-neon-green">
                 Real Estate
               </span>
             </div>
-            <div className="mx-2 h-4 w-px bg-iron hidden sm:block" />
+            <div className="mx-2 h-4 w-px bg-white/10 hidden sm:block" />
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 rounded-md border border-iron px-3 py-1.5 text-xs font-medium text-ash transition-colors hover:border-ash hover:text-bone"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-ash transition-all hover:border-white/20 hover:text-bone hover:bg-white/10"
             >
               <Download className="h-3.5 w-3.5" strokeWidth={2} />
               Export
             </button>
             <button
               type="button"
-              className="inline-flex items-center gap-1.5 rounded-md border border-iron px-3 py-1.5 text-xs font-medium text-ash transition-colors hover:border-ash hover:text-bone"
+              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-ash transition-all hover:border-white/20 hover:text-bone hover:bg-white/10"
             >
               <Settings2 className="h-3.5 w-3.5" strokeWidth={2} />
               Commission plan
@@ -51,8 +51,8 @@ export default function RealEstateDashboardPage() {
       <Dashboard data={realEstateDashboardSample} />
 
       <section className="mx-auto max-w-[480px] px-4 pb-20">
-        <div className="rounded-xl border border-iron bg-slate p-5">
-          <div className="mb-1 font-mono text-[10px] font-medium uppercase tracking-[1.5px] text-deal">
+        <div className="glass-panel p-5 text-center">
+          <div className="mb-1 font-mono text-[10px] font-medium uppercase tracking-[1.5px] text-neon-green">
             DEMO DASHBOARD
           </div>
           <div className="mb-3 text-[15px] text-bone">
@@ -61,7 +61,7 @@ export default function RealEstateDashboardPage() {
           </div>
           <Link
             href="/pricing"
-            className="inline-flex items-center gap-2 rounded-md bg-deal px-5 py-2.5 text-sm font-medium text-pit transition-colors hover:bg-deal-hover"
+            className="btn-loud inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm"
           >
             Get Started
           </Link>

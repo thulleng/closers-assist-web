@@ -21,6 +21,7 @@ import {
   KeyRound,
   ClipboardList,
   Handshake,
+  Zap,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 
@@ -58,9 +59,9 @@ export default function DashboardHubPage() {
       <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
         <FadeIn>
           <div className="mb-12 max-w-3xl">
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
-              <LayoutDashboard className="h-3.5 w-3.5 text-deal-light" strokeWidth={2.2} />
-              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full glass-panel px-3.5 py-1.5">
+              <LayoutDashboard className="h-3.5 w-3.5 text-neon-green" strokeWidth={2.2} />
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-neon-green">
                 Sales Dashboard
               </span>
             </div>
@@ -86,31 +87,29 @@ export default function DashboardHubPage() {
           {/* Talk to Your Agent CTA */}
           <Link
             href="/dashboard/auto"
-            className="mb-6 flex w-full items-center justify-between gap-4 rounded-2xl border border-deal/50 p-5 md:p-6 transition-all hover:border-deal hover:shadow-[0_0_32px_rgba(16,185,129,0.2)] group"
-            style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(16,185,129,0.04))" }}
+            className="mb-6 flex w-full items-center justify-between gap-4 rounded-2xl p-5 md:p-6 transition-all group neon-border"
+            style={{ background: "linear-gradient(135deg, rgba(0,255,136,0.12), rgba(0,255,136,0.03))" }}
           >
             <div className="flex items-center gap-4">
               <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
-                style={{ background: "linear-gradient(135deg, #10B981, #059669)" }}
+                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl"
+                style={{
+                  background: "linear-gradient(135deg, #00FF88, #10B981)",
+                  boxShadow: "0 0 24px rgba(0,255,136,0.4), 0 8px 24px rgba(16,185,129,0.3)",
+                }}
               >
-                <svg className="h-6 w-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.2}>
-                  <path strokeLinecap="round" strokeLinejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
-                </svg>
+                <Zap className="h-6 w-6 text-pit" strokeWidth={2.2} />
               </div>
               <div>
                 <div className="text-base font-bold text-white">Talk to Your Agent</div>
                 <div className="text-sm text-ash">Ask anything — objections, pay math, scripts, follow-ups.</div>
               </div>
             </div>
-            <ArrowRight className="h-5 w-5 flex-shrink-0 text-deal transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
+            <ArrowRight className="h-5 w-5 flex-shrink-0 text-neon-green transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
           </Link>
 
           {/* Info banner */}
-          <div
-            className="mb-10 rounded-2xl border border-white/10 p-5 md:p-6"
-            style={{ background: "rgba(255,255,255,0.03)" }}
-          >
+          <div className="mb-10 glass-panel p-5 md:p-6">
             <p className="text-[14px] leading-relaxed text-ash">
               <span className="font-semibold text-bone">All 18 verticals supported.</span>{" "}
               Pick your industry below — your dashboard and agent auto-load the right scripts, pay plan math, and objection plays.
@@ -120,26 +119,36 @@ export default function DashboardHubPage() {
 
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {verticals.map((v, i) => {
-          const cardClass = `loud-card group flex h-full flex-col rounded-2xl p-6`;
+          const cardClass = `glass-panel group flex h-full flex-col p-6 transition-all ${
+            v.live ? "hover:border-neon-green/50 hover:shadow-[0_0_24px_rgba(0,255,136,0.15)]" : ""
+          }`;
           const inner = (
             <>
               <div className="mb-4 flex items-start justify-between">
                 <div
-                  className="flex h-12 w-12 items-center justify-center rounded-xl shadow-[0_8px_20px_rgba(16,185,129,0.25)]"
-                  style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05))" }}
+                  className="flex h-12 w-12 items-center justify-center rounded-xl"
+                  style={{
+                    background: v.live
+                      ? "linear-gradient(135deg, rgba(0,255,136,0.18), rgba(0,255,136,0.04))"
+                      : "linear-gradient(135deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02))",
+                    boxShadow: v.live ? "0 0 16px rgba(0,255,136,0.15)" : "none",
+                  }}
                 >
-                  <v.icon className="h-5 w-5 text-deal-light" strokeWidth={2.2} />
+                  <v.icon className={`h-5 w-5 ${v.live ? "text-neon-green" : "text-muted"}`} strokeWidth={2.2} />
                 </div>
                 {v.live ? (
                   <span
-                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-white shadow-[0_4px_12px_rgba(16,185,129,0.4)]"
-                    style={{ background: "linear-gradient(135deg, #10B981, #059669)" }}
+                    className="inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-pit"
+                    style={{
+                      background: "linear-gradient(135deg, #00FF88, #10B981)",
+                      boxShadow: "0 0 16px rgba(0,255,136,0.35), 0 4px 12px rgba(16,185,129,0.3)",
+                    }}
                   >
-                    <span className="h-1.5 w-1.5 rounded-full bg-white" />
+                    <span className="h-1.5 w-1.5 rounded-full bg-pit" />
                     Live
                   </span>
                 ) : (
-                  <span className="rounded-full bg-white/10 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-ash">
+                  <span className="rounded-full bg-white/5 px-3 py-1 font-mono text-[10px] font-bold uppercase tracking-widest text-muted">
                     Soon
                   </span>
                 )}
@@ -151,7 +160,7 @@ export default function DashboardHubPage() {
                 {v.example}
               </p>
               {v.live && (
-                <div className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-deal-light transition-all group-hover:gap-2">
+                <div className="mt-4 inline-flex items-center gap-1 text-sm font-bold text-neon-green transition-all group-hover:gap-2">
                   Open {v.name} dashboard
                   <ArrowRight className="h-3.5 w-3.5" strokeWidth={2.5} />
                 </div>
@@ -165,7 +174,7 @@ export default function DashboardHubPage() {
                   {inner}
                 </Link>
               ) : (
-                <div className={`${cardClass} cursor-not-allowed opacity-60`}>
+                <div className={`${cardClass} cursor-not-allowed opacity-50`}>
                   {inner}
                 </div>
               )}
