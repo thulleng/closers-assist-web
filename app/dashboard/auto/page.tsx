@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Car, Download, Settings2 } from "lucide-react";
-import Dashboard from "@/components/Dashboard";
+import IncomeTracker from "@/components/IncomeTracker";
 import { autoDashboardSample } from "@/lib/dashboard-data-auto";
 import { buildAutoDashboard } from "@/lib/dashboard-data-auto-live";
 import { createClient } from "@/lib/supabase/server";
@@ -90,7 +90,7 @@ export default async function AutoDashboardPage() {
       </section>
 
       {/* Dashboard itself */}
-      <Dashboard data={data} />
+      <IncomeTracker data={data} />
 
       {/* Footer CTA strip */}
       <section className="mx-auto max-w-[480px] px-4 pb-20">
