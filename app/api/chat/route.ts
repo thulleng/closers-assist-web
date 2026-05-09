@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { preprocessMedia } from "./media";
 
 // DeepSeek V4 Pro via Anthropic-compatible endpoint
 // Requires DEEPSEEK_API_KEY in production (Vercel env)
@@ -811,6 +812,13 @@ export async function POST(req: NextRequest) {
 
     const contextMessages = mergeMessages(memoryMessages, messages);
 
+    // ── Pre-process audio/video uploads ──────────────────────────────────────
+    // Transcribe audio via Deepgram, extract video frames via ffmpeg + Claude Vision.
+    // This runs before the stream so the model sees clean text, not raw media.
+    const processedMessages = await preprocessMedia(
+      contextMessages as { role: string; content: any[] }[]
+    );
+
     // The last user message is what we'll persist after the response
     const lastUserMessage = [...messages].reverse().find((m: ChatMessage) => m.role === "user");
 
@@ -822,8 +830,8 @@ export async function POST(req: NextRequest) {
     type StreamParams = Parameters<typeof deepseek.messages.stream>[0];
     type StreamMsgs   = StreamParams["messages"];
 
-    const conversation: StreamMsgs = contextMessages
-      .map((m: ChatMessage) => ({
+    const conversation: StreamMsgs = processedMessages
+      .map((m) => ({
         role: m.role as "user" | "assistant",
         content: m.content as StreamMsgs[number]["content"],
       }))
