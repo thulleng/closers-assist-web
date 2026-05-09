@@ -2,7 +2,14 @@ import Anthropic from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-const client = new Anthropic();
+// DeepSeek V4 Pro via Anthropic-compatible endpoint
+// Requires DEEPSEEK_API_KEY in production (Vercel env)
+const client = new Anthropic({
+  apiKey: process.env.DEEPSEEK_API_KEY ?? process.env.ANTHROPIC_API_KEY ?? "",
+  baseURL: process.env.DEEPSEEK_API_KEY
+    ? "https://api.deepseek.com/anthropic"
+    : undefined, // fallback to default Anthropic if no DeepSeek key
+});
 
 const SYSTEM_PROMPTS: Record<string, string> = {
   automotive: `You are Closers Assist — an AI sales agent built specifically for automotive closers. You were built by Thul Leng, a working Toyota salesperson at Sun Toyota in New Port Richey, Florida. You were built on the floor, between real customers, to solve real problems.
@@ -581,7 +588,7 @@ export async function POST(req: NextRequest) {
           // Cap at 5 hops to prevent runaway loops.
           for (let hop = 0; hop < 5; hop++) {
             const streamParams: StreamParams = {
-              model: "claude-sonnet-4-6",
+              model: "deepseek-v4-pro",
               max_tokens: 1024,
               system: systemPrompt,
               tools: TOOL_DEFINITIONS,
