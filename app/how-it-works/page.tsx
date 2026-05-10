@@ -8,6 +8,7 @@ import {
   TrendingUp,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import AIAvatar from "@/components/AIAvatar";
 
 export const metadata: Metadata = {
   title: "How It Works",
@@ -49,45 +50,66 @@ const steps = [
 export default function HowItWorksPage() {
   return (
     <>
-      {/* HERO */}
+      {/* HERO — with AI avatar visual */}
       <section className="relative overflow-hidden loud-bg">
         <div className="grid-pattern" />
+        
+        {/* Background image — AI robotic hand reaching toward digital network */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.22] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
-            <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-              How it works
-            </span>
-          </div>
+          <div className="grid gap-12 md:grid-cols-[1fr,auto] md:items-center">
+            {/* Left — copy */}
+            <div>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  How it works
+                </span>
+              </div>
 
-          <h1 className="font-display text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-white md:text-[72px]">
-            Four steps.
-            <br />
-            <span className="text-shine font-black">Ready to close.</span>
-          </h1>
+              <h1 className="font-display text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-white md:text-[72px]">
+                Four steps.
+                <br />
+                <span className="text-shine font-black">Ready to close.</span>
+              </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
-            No onboarding call. No setup wizard. No data entry. Pick your
-            industry, load your profile, and put it to work the same day.
-          </p>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
+                No onboarding call. No setup wizard. No data entry. Pick your
+                industry, load your profile, and put it to work the same day.
+              </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Link
-              href="/pricing"
-              className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
-            >
-              Get Started
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2.5}
-              />
-            </Link>
-            <Link
-              href="/industries"
-              className="btn-ghost rounded-xl px-6 py-4 text-[15px] font-semibold"
-            >
-              Browse industries
-            </Link>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/pricing"
+                  className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
+                >
+                  Get Started
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    strokeWidth={2.5}
+                  />
+                </Link>
+                <Link
+                  href="/industries"
+                  className="btn-ghost rounded-xl px-6 py-4 text-[15px] font-semibold"
+                >
+                  Browse industries
+                </Link>
+              </div>
+            </div>
+
+            {/* Right — AI Avatar visual */}
+            <div className="flex-shrink-0 flex justify-center mt-6 md:mt-0">
+              <AIAvatar variant="holo" size={200} accentColor="mixed" />
+            </div>
           </div>
         </div>
       </section>

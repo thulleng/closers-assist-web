@@ -32,6 +32,9 @@ import LiveScoreboard from "@/components/LiveScoreboard";
 import RealChat from "@/components/RealChat";
 import EmailCapture from "@/components/EmailCapture";
 import FoundersCircle from "@/components/FoundersCircle";
+import HeroVisual from "@/components/HeroVisual";
+import FloatingParticles from "@/components/FloatingParticles";
+import TiltCard from "@/components/TiltCard";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -107,6 +110,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg bg-ai-gradient">
         <div className="grid-pattern" />
         <div className="grain" />
+        <FloatingParticles />
 
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr,1fr]">
@@ -186,9 +190,14 @@ export default function HomePage() {
               </div>
             </div>
 
-            {/* RIGHT COLUMN — 3D money card visual */}
+            {/* RIGHT COLUMN — 3D money card visual + AI core */}
             <div>
               <div className="relative mx-auto h-[620px] w-full max-w-[380px]">
+                {/* AI Core visual — layered behind the phone */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-90">
+                  <HeroVisual size={420} />
+                </div>
+
                 {/* Ambient green glow behind phone */}
                 <div
                   className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
@@ -476,32 +485,28 @@ export default function HomePage() {
 
           {/* HUGE stat strip — the math closers can't argue with */}
           <div>
-            <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-8 backdrop-blur">
+            <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-5 sm:p-8 backdrop-blur">
               <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
                 The math closers can&rsquo;t argue with
               </div>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-3 sm:gap-6">
                 <div className="text-center">
-                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    18
-                  </div>
-                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                  <Counter to={18} duration={2000} className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]" />
+                  <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Industries
                   </div>
                 </div>
                 <div className="border-x border-white/10 text-center">
-                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    $29.99
-                  </div>
-                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                  <Counter to={29.99} decimals={2} prefix="$" duration={2200} className="font-display text-[22px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[34px] md:text-[48px] lg:text-[72px]" />
+                  <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Per rep / mo
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
+                  <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]">
                     &lt;3s
                   </div>
-                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                  <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Question to play
                   </div>
                 </div>
@@ -1451,6 +1456,7 @@ export default function HomePage() {
               },
             ].map((p, i) => (
               <FadeIn key={p.name} delay={i * 80}>
+                <TiltCard maxTilt={6} scale={1.02}>
                 <div
                   className={`loud-card rounded-2xl p-7 ${
                     p.featured
@@ -1477,6 +1483,7 @@ export default function HomePage() {
                     {p.detail}
                   </p>
                 </div>
+                </TiltCard>
               </FadeIn>
             ))}
           </div>

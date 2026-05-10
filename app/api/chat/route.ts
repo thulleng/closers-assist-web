@@ -815,8 +815,17 @@ export async function POST(req: NextRequest) {
     // ── Pre-process audio/video uploads ──────────────────────────────────────
     // Transcribe audio via Deepgram, extract video frames via ffmpeg + Claude Vision.
     // This runs before the stream so the model sees clean text, not raw media.
+    //
+    // Normalize string content → [{type:"text", text:...}] first.
+    // preprocessMedia expects array-shaped content blocks.
+    const normalizedMessages = contextMessages.map((m) => {
+      if (typeof m.content === "string") {
+        return { role: m.role, content: [{ type: "text" as const, text: m.content }] };
+      }
+      return m;
+    });
     const processedMessages = await preprocessMedia(
-      contextMessages as { role: string; content: any[] }[]
+      normalizedMessages as { role: string; content: any[] }[]
     );
 
     // The last user message is what we'll persist after the response
@@ -831,13 +840,19 @@ export async function POST(req: NextRequest) {
     type StreamMsgs   = StreamParams["messages"];
 
     const conversation: StreamMsgs = processedMessages
-      .map((m) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content as StreamMsgs[number]["content"],
-      }))
+      .map((m) => {
+        let content = m.content;
+        // DeepSeek requires ContentBlockParam[] — convert plain strings
+        if (typeof content === "string") {
+          content = [{ type: "text" as const, text: content }];
+        }
+        console.log("[chat] msg role:", m.role, "content_type:", typeof content, "is_array:", Array.isArray(content), "preview:", JSON.stringify(content).slice(0, 120));
+        return {
+          role: m.role as "user" | "assistant",
+          content: content as StreamMsgs[number]["content"],
+        };
+      })
       .filter((m) => {
-        // DeepSeek rejects messages with empty content — strip them
-        if (typeof m.content === "string") return m.content.trim().length > 0;
         if (Array.isArray(m.content)) {
           return m.content.some((b) => {
             if (b.type === "text") return (b.text ?? "").trim().length > 0;
@@ -955,8 +970,9 @@ export async function POST(req: NextRequest) {
             conversation.push({ role: "user", content: toolResults });
           }
         } catch (err) {
-          console.error("Stream/tool loop error:", err);
-          controller.enqueue(encoder.encode("\n\n[error: response interrupted]"));
+          const msg = err instanceof Error ? err.message : String(err);
+          console.error("Stream/tool loop error:", msg, err);
+          controller.enqueue(encoder.encode(`\n\n[error: ${msg}]`));
         }
 
         // ── 4. Save turn to agent_memory ──────────────────────────────────────

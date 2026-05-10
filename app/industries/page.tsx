@@ -21,6 +21,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import GlobeVisual from "@/components/GlobeVisual";
 
 export const metadata: Metadata = {
   title: "Industries",
@@ -194,6 +195,17 @@ export default function IndustriesPage() {
   return (
     <section className="relative overflow-hidden loud-bg">
       <div className="grid-pattern opacity-50" />
+      
+      {/* Background — AI robotic hand digital network */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-[0.18] pointer-events-none"
+        style={{
+          backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
       <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
         <FadeIn>
           <div className="mb-14 max-w-3xl">
@@ -203,15 +215,23 @@ export default function IndustriesPage() {
                 Industries
               </span>
             </div>
-            <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-              One agent. Eighteen industries.
-              <br />
-              <span className="text-shine font-black">Zero compromises.</span>
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
-              A closer is a closer. The industry is the wrapper. Pick yours —
-              Closers Assist auto-loads your world the second you sign up.
-            </p>
+
+            <div className="grid gap-10 lg:grid-cols-[1fr,auto] lg:items-center">
+              <div>
+                <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
+                  One agent. Eighteen industries.
+                  <br />
+                  <span className="text-shine font-black">Zero compromises.</span>
+                </h1>
+                <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
+                  A closer is a closer. The industry is the wrapper. Pick yours —
+                  Closers Assist auto-loads your world the second you sign up.
+                </p>
+              </div>
+              <div className="flex-shrink-0 flex justify-center mt-6 lg:mt-0">
+                <GlobeVisual size={180} accentColor="mixed" />
+              </div>
+            </div>
           </div>
         </FadeIn>
 

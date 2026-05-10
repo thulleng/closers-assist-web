@@ -4,6 +4,8 @@ import { useState } from "react";
 import Link from "next/link";
 import { Shield, Check, User, Users, Building2, ArrowRight } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import TiltCard from "@/components/TiltCard";
+import DealFlowVisual from "@/components/DealFlowVisual";
 
 type Billing = "monthly" | "annual";
 type Buyer = "solo" | "team" | "dealership";
@@ -135,29 +137,50 @@ export default function PricingPage() {
 
   return (
     <>
-      {/* HERO */}
+      {/* HERO — with deal flow visual */}
       <section className="relative overflow-hidden loud-bg">
         <div className="grid-pattern opacity-50" />
-        <div className="relative mx-auto max-w-7xl px-6 pb-12 pt-20 text-center">
-          <div className="mb-3 inline-flex items-center justify-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
-            <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
-            <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-              Pricing
-            </span>
+        
+        {/* Background — AI robotic hand digital network */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.20] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=1600&q=80&auto=format&fit=crop)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        
+        <div className="relative mx-auto max-w-7xl px-6 pb-12 pt-20">
+          <div className="grid gap-10 md:grid-cols-[1fr,auto] md:items-center">
+            {/* Left — copy */}
+            <div className="text-center md:text-left">
+              <div className="mb-3 inline-flex items-center justify-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5 md:justify-start">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  Pricing
+                </span>
+              </div>
+              <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
+                Pick the plan that
+                <br />
+                <span className="text-shine font-black">fits your floor.</span>
+              </h1>
+              <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl md:mx-0">
+                One extra deal covers your subscription for years.{" "}
+                <span className="font-semibold text-gold-light">
+                  No feature gating.
+                </span>{" "}
+                Every tier ships the same full agent — tiers differ by team size
+                and support, never by capability.
+              </p>
+            </div>
+
+            {/* Right — Deal flow visual */}
+            <div className="flex-shrink-0 mx-auto mt-6 md:mt-0">
+              <DealFlowVisual size={320} />
+            </div>
           </div>
-          <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-            Pick the plan that
-            <br />
-            <span className="text-shine font-black">fits your floor.</span>
-          </h1>
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
-            One extra deal covers your subscription for years.{" "}
-            <span className="font-semibold text-gold-light">
-              No feature gating.
-            </span>{" "}
-            Every tier ships the same full agent — tiers differ by team size
-            and support, never by capability.
-          </p>
         </div>
       </section>
 
@@ -244,9 +267,9 @@ export default function PricingPage() {
             const highlight = isRecommended || isDefaultFeatured;
 
             return (
+              <TiltCard key={tier.id} maxTilt={8} scale={1.03} className="flex flex-col rounded-2xl">
               <div
-                key={tier.id}
-                className={`relative flex flex-col rounded-2xl bg-slate p-7 transition-all ${
+                className={`relative flex flex-col rounded-2xl bg-slate p-7 ${
                   highlight
                     ? "border-2 border-deal"
                     : "border border-iron"
@@ -366,6 +389,7 @@ export default function PricingPage() {
                   </Link>
                 )}
               </div>
+              </TiltCard>
             );
           })}
         </div>
@@ -373,7 +397,6 @@ export default function PricingPage() {
           <p className="mt-4 text-center text-sm text-red-400">{checkoutError}</p>
         )}
       </section>
-
       {/* PER-REP COMPARISON STRIP */}
       <section className="mx-auto max-w-5xl px-6 pb-16">
         <div className="loud-card rounded-2xl p-7">

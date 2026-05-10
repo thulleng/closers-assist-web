@@ -4,6 +4,8 @@ import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Zap } from "lucide-react";
+import NeuralBackground from "@/components/NeuralBackground";
+import AIAvatar from "@/components/AIAvatar";
 
 const INPUT_CLS =
   "w-full rounded-xl border border-iron bg-pit px-4 py-3 text-sm text-bone placeholder:text-muted focus:border-deal/60 focus:outline-none transition-colors";
@@ -337,8 +339,15 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-16">
-      <div className="w-full max-w-md">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-16 overflow-hidden loud-bg">
+      <NeuralBackground density={12} color="green" opacity={0.05} />
+      
+      <div className="relative w-full max-w-md z-10">
+        {/* AI Avatar visual anchor */}
+        <div className="flex justify-center mb-6">
+          <AIAvatar variant="circuit" size={80} className="sm:scale-100" accentColor="green" />
+        </div>
+
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-10">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-deal">
