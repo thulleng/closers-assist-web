@@ -6,6 +6,10 @@ import {
   UserCog,
   Zap,
   TrendingUp,
+  MessageCircle,
+  Monitor,
+  Smartphone,
+  Send,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import AIAvatar from "@/components/AIAvatar";
@@ -220,6 +224,91 @@ export default function HowItWorksPage() {
                 </div>
                 <div className="mt-2 text-sm text-ash">
                   Setup cost. Works day one.
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* HOW TO CHAT */}
+      <section className="border-t border-white/5 loud-bg-alt">
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          <FadeIn>
+            <div className="text-center mb-10">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
+                <MessageCircle className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  Chat anywhere
+                </span>
+              </div>
+              <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
+                Your agent goes{" "}
+                <span className="text-shine font-black">where you go.</span>
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-base text-ash">
+                No new tab. No login every time. Your agent is always one tap away — on the lot, at the desk, or on your phone between customers.
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {/* Web */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
+                    <Monitor className="h-7 w-7 text-deal" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Web dashboard</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Sign in once. The chat widget stays with you on every page — objections, follow-ups, deal logging, all without leaving the dashboard.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+                    <span className="text-[11px] font-semibold text-deal-light">Always logged in</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
+                    <Smartphone className="h-7 w-7 text-deal" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Phone — same experience</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Pull it up on the lot between customers. Full chat, deal logging, scripts — everything works on mobile. No app to download.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+                    <span className="text-[11px] font-semibold text-deal-light">No app install</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Telegram */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden border border-gold/20 bg-gold/[0.03]">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(251,191,36,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10">
+                    <Send className="h-7 w-7 text-gold" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Telegram — coming soon</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Text your agent like you&rsquo;d text your sales manager. Type &ldquo;sold a Camry&rdquo; and it logs the deal. Ask for a script and it fires back instantly.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gold/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_6px_#FBBF24]" />
+                    <span className="text-[11px] font-semibold text-gold-light">Coming soon</span>
+                  </div>
                 </div>
               </div>
             </div>

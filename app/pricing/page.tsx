@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Shield, Check, User, Users, Building2, ArrowRight } from "lucide-react";
+import { Shield, Check, User, Users, Building2, ArrowRight, X } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import TiltCard from "@/components/TiltCard";
 import DealFlowVisual from "@/components/DealFlowVisual";
@@ -180,6 +180,89 @@ export default function PricingPage() {
             <div className="flex-shrink-0 mx-auto mt-6 md:mt-0">
               <DealFlowVisual size={320} />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* VS FREE AI — why $29.99 when ChatGPT is free? */}
+      <section className="relative overflow-hidden loud-bg-alt border-b border-white/5">
+        <div className="grid-pattern opacity-40" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-[0.08] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        <div className="relative mx-auto max-w-5xl px-6 py-20">
+          {/* Headline */}
+          <div className="text-center mb-12">
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                The real difference
+              </span>
+            </div>
+            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
+              Why $29.99 when ChatGPT
+              <br />
+              <span className="text-shine-amber font-black">is free?</span>
+            </h2>
+            <p className="mx-auto mt-4 max-w-xl text-base text-ash">
+              Free AI gives you generic answers. ClosersAssist gives you the
+              exact script, your actual numbers, and a partner who remembers
+              every deal you&rsquo;ve closed.
+            </p>
+          </div>
+
+          {/* Comparison rows */}
+          <div className="space-y-1">
+            {[
+              { feat: "Knows your actual pay plan", us: "Calculates your commission on every deal. Draw, bonuses, tier breaks — all live.", them: "Has no idea what a 'mini' is, let alone your split." },
+              { feat: "Tracks units to bonus in real time", us: "You're 2 units from $500 — it tells you without being asked.", them: "Can't count your deals. Every conversation starts from zero." },
+              { feat: "Remembers every deal, every month", us: "References the Johnson deal from March. Spots patterns. Never forgets.", them: "Amnesia. New chat, blank slate. No memory across sessions." },
+              { feat: "Speaks your industry fluently", us: "Minis, T.O.s, CXI, clawbacks, cap rates — 18 industries, real vocabulary.", them: "Generic LinkedIn advice. You'd spend half the chat explaining your job." },
+              { feat: "Logs deals with one sentence", us: "\"Just sold a Camry to the Smiths\" → deal logged, commission calculated, tracker updated.", them: "Can write you a nice summary. Can't save a deal to a database." },
+              { feat: "Calls you out when you're slacking", us: "\"Three minis this week. Last month you turned it around — what's the play today?\"", them: "Agrees with everything you say. Never pushes back." },
+              { feat: "Your data stays yours", us: "Never trains on your pay plan, deal history, or customer names. Export anytime.", them: "Your conversations train their models. Read the fine print." },
+              { feat: "Built by a working closer", us: "Built on the floor at Sun Toyota by someone who lives off commission.", them: "Built by engineers in San Francisco who've never worked a Saturday on the lot." },
+              { feat: "Chat anywhere, instantly", us: "Web, phone, soon Telegram. Always logged in. Always knows who you are.", them: "Browser tab. Login walls. Context lost when you switch devices." },
+            ].map((row, i) => (
+              <div
+                key={row.feat}
+                className={`group grid grid-cols-[1fr,1fr,1fr] gap-4 rounded-xl p-5 transition-colors ${
+                  i % 2 === 0 ? "bg-white/[0.03]" : "bg-white/[0.01]"
+                } hover:bg-white/[0.06]`}
+              >
+                {/* Feature name */}
+                <div className="text-sm font-semibold text-bone self-center">
+                  {row.feat}
+                </div>
+
+                {/* ClosersAssist */}
+                <div className="flex items-start gap-2.5">
+                  <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                  <span className="text-sm text-ash leading-relaxed">{row.us}</span>
+                </div>
+
+                {/* Free AI */}
+                <div className="flex items-start gap-2.5">
+                  <X className="mt-0.5 h-4 w-4 flex-shrink-0 text-ash/40" strokeWidth={2} />
+                  <span className="text-sm text-muted leading-relaxed">{row.them}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Bottom punchline */}
+          <div className="mt-10 text-center">
+            <p className="text-lg font-semibold text-bone">
+              One extra deal covers your subscription{" "}
+              <span className="text-gold-light">for 10 years.</span>
+            </p>
+            <p className="mt-1 text-sm text-ash">
+              Free AI costs you deals you don&rsquo;t even know you&rsquo;re losing.
+            </p>
           </div>
         </div>
       </section>
