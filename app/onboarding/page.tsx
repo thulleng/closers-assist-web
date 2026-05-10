@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { Syne } from "next/font/google";
 import { ArrowRight, ArrowLeft, Check, Zap, X } from "lucide-react";
 import RealChat from "@/components/RealChat";
+import NeuralBackground from "@/components/NeuralBackground";
+import AIAvatar from "@/components/AIAvatar";
 import { createClient } from "@/lib/supabase/client";
 
 const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], display: "swap" });
@@ -849,7 +851,17 @@ export default function OnboardingPage() {
   };
 
   return (
-    <div className="min-h-screen bg-pit flex flex-col">
+    <div className="relative min-h-screen flex flex-col overflow-hidden loud-bg">
+      <NeuralBackground density={14} color="green" opacity={0.05} />
+      <div className="grid-pattern opacity-30" />
+      {/* Floating orbs */}
+      <div className="absolute top-[15%] left-[5%] w-[300px] h-[300px] rounded-full blur-[120px] pointer-events-none opacity-50"
+        style={{ background: "radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 60%)" }} />
+      <div className="absolute bottom-[20%] right-[3%] w-[250px] h-[250px] rounded-full blur-[100px] pointer-events-none opacity-40"
+        style={{ background: "radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 60%)" }} />
+
+      <div className="relative z-10">
+
       {/* Progress bar */}
       <div className="h-1 w-full bg-white/5">
         <div className="h-full bg-deal transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
@@ -973,6 +985,7 @@ export default function OnboardingPage() {
           )}
         </div>
       </div>
+      </div>{/* close z-10 */}
     </div>
   );
 }

@@ -79,7 +79,10 @@ export default function OtherSalesPage() {
       </section>
 
       {/* DAY ONE FEATURES */}
-      <section className="border-t border-iron bg-slate">
+      <section className="relative overflow-hidden border-t border-iron loud-bg-alt">
+        {/* Floating orb */}
+        <div className="absolute top-[10%] right-[5%] w-[300px] h-[300px] rounded-full blur-[120px] pointer-events-none opacity-30"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 60%)" }} />
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
             <h2 className="mb-12 max-w-3xl font-display text-3xl font-extrabold leading-[1.1] tracking-tight text-bone md:text-5xl">
@@ -161,7 +164,14 @@ export default function OtherSalesPage() {
       </section>
 
       {/* PRICING STRIP */}
-      <section className="border-t border-iron bg-slate">
+      <section className="relative overflow-hidden border-t border-iron loud-bg-alt">
+        <div className="absolute inset-0 bg-cover bg-center opacity-[0.08] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
         <div className="mx-auto max-w-4xl px-6 py-20 text-center md:py-24">
           <FadeIn>
             <h2 className="mb-3 font-display text-3xl font-extrabold leading-tight tracking-tight text-bone md:text-5xl">

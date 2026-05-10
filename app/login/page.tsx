@@ -340,7 +340,7 @@ function LoginForm() {
 export default function LoginPage() {
   return (
     <div className="relative min-h-screen flex items-center justify-center px-4 py-16 overflow-hidden loud-bg">
-      <NeuralBackground density={12} color="green" opacity={0.05} />
+      <NeuralBackground density={18} color="green" opacity={0.06} />
       
       <div className="relative w-full max-w-md z-10">
         {/* AI Avatar visual anchor */}

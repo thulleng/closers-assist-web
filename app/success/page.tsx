@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { CheckCircle2, ArrowRight } from "lucide-react";
+import NeuralBackground from "@/components/NeuralBackground";
+import AIAvatar from "@/components/AIAvatar";
 
 export const metadata: Metadata = {
   title: "You're in — Closers Assist",
@@ -11,8 +13,14 @@ export default function SuccessPage() {
   return (
     <div className="relative flex min-h-[80vh] items-center justify-center overflow-hidden loud-bg">
       <div className="grid-pattern opacity-30" />
+      <NeuralBackground density={12} color="green" opacity={0.05} />
 
-      <div className="relative mx-auto max-w-lg px-6 py-24 text-center">
+      <div className="relative mx-auto max-w-lg px-6 py-24 text-center z-10">
+        {/* AI Avatar */}
+        <div className="mb-6 flex justify-center">
+          <AIAvatar variant="circuit" size={64} accentColor="green" />
+        </div>
+
         {/* Icon */}
         <div className="mb-8 flex justify-center">
           <div className="flex h-20 w-20 items-center justify-center rounded-full border border-deal/40 bg-deal/10 shadow-[0_0_40px_rgba(16,185,129,0.3)]">
@@ -34,7 +42,7 @@ export default function SuccessPage() {
         <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
           <Link
             href="/dashboard"
-            className="group inline-flex items-center gap-2 rounded-md bg-deal px-7 py-3.5 text-[15px] font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
+            className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-[15px]"
           >
             Go to Dashboard
             <ArrowRight
@@ -44,7 +52,7 @@ export default function SuccessPage() {
           </Link>
           <Link
             href="/"
-            className="rounded-md border border-iron bg-pit/60 px-7 py-3.5 text-[15px] font-medium text-bone backdrop-blur transition-colors hover:border-ash"
+            className="btn-ghost rounded-xl px-7 py-3.5 text-[15px] font-semibold"
           >
             Back to home
           </Link>
