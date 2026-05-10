@@ -216,7 +216,7 @@ export default function PricingPage() {
           </div>
 
           {/* Comparison rows */}
-          <div className="space-y-1">
+          <div className="space-y-2">
             {[
               { feat: "Knows your actual pay plan", us: "Calculates your commission on every deal. Draw, bonuses, tier breaks — all live.", them: "Has no idea what a 'mini' is, let alone your split." },
               { feat: "Tracks units to bonus in real time", us: "You're 2 units from $500 — it tells you without being asked.", them: "Can't count your deals. Every conversation starts from zero." },
@@ -230,24 +230,23 @@ export default function PricingPage() {
             ].map((row, i) => (
               <div
                 key={row.feat}
-                className={`group grid grid-cols-[1fr,1fr,1fr] gap-4 rounded-xl p-5 transition-colors ${
-                  i % 2 === 0 ? "bg-white/[0.03]" : "bg-white/[0.01]"
-                } hover:bg-white/[0.06]`}
+                className="group grid grid-cols-[auto,1fr,1fr] gap-0 rounded-xl border border-white/5 bg-white/[0.02] transition-all duration-300 hover:border-deal/30 hover:bg-white/[0.05] hover:shadow-[inset_0_0_40px_rgba(16,185,129,0.04)]"
               >
-                {/* Feature name */}
-                <div className="text-sm font-semibold text-bone self-center">
-                  {row.feat}
+                {/* === OUR COLUMN — ClosersAssist === */}
+                <div className="flex items-start gap-3 rounded-l-xl p-5 transition-colors duration-300 bg-deal/[0.03] group-hover:bg-deal/[0.06]">
+                  {/* Glowing check circle */}
+                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-deal/20 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
+                    <Check className="h-3.5 w-3.5 text-deal" strokeWidth={3} />
+                  </div>
+                  <span className="text-sm text-bone leading-relaxed">{row.us}</span>
                 </div>
 
-                {/* ClosersAssist */}
-                <div className="flex items-start gap-2.5">
-                  <Check className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                  <span className="text-sm text-ash leading-relaxed">{row.us}</span>
-                </div>
-
-                {/* Free AI */}
-                <div className="flex items-start gap-2.5">
-                  <X className="mt-0.5 h-4 w-4 flex-shrink-0 text-ash/40" strokeWidth={2} />
+                {/* === THEIR COLUMN — Free AI === */}
+                <div className="flex items-start gap-3 rounded-r-xl p-5 opacity-60 group-hover:opacity-50 transition-opacity duration-300">
+                  {/* Dim X circle */}
+                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white/5">
+                    <X className="h-3.5 w-3.5 text-ash/30" strokeWidth={2} />
+                  </div>
                   <span className="text-sm text-muted leading-relaxed">{row.them}</span>
                 </div>
               </div>
