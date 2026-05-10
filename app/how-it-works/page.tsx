@@ -114,6 +114,25 @@ export default function HowItWorksPage() {
         </div>
       </section>
 
+      {/* === VISUAL BRIDGE: persistent bg across mid-sections === */}
+      <div className="relative overflow-hidden loud-bg-alt">
+        {/* Background image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.12] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        {/* Floating orbs */}
+        <div className="absolute top-[5%] right-[3%] w-[280px] h-[280px] rounded-full blur-[100px] pointer-events-none opacity-50"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 60%)" }} />
+        <div className="absolute bottom-[15%] left-[5%] w-[220px] h-[220px] rounded-full blur-[100px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 60%)" }} />
+
+      <div className="relative">
+
       {/* 4 STEPS */}
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="relative mx-auto max-w-5xl px-6 py-12 md:py-16">
@@ -207,6 +226,7 @@ export default function HowItWorksPage() {
           </FadeIn>
         </div>
       </section>
+      </div></div>{/* close visual bridge */}
 
       {/* FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">

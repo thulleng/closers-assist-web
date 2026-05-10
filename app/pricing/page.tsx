@@ -184,8 +184,26 @@ export default function PricingPage() {
         </div>
       </section>
 
+      {/* === VISUAL BRIDGE: persistent bg across mid-sections === */}
+      <div className="relative overflow-hidden loud-bg-alt">
+        {/* Background image — spans all mid-sections */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.12] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80&auto=format&fit=crop)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        {/* Floating orbs for depth */}
+        <div className="absolute top-[10%] left-[5%] w-[300px] h-[300px] rounded-full blur-[100px] pointer-events-none opacity-60"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 60%)" }} />
+        <div className="absolute bottom-[30%] right-[3%] w-[250px] h-[250px] rounded-full blur-[100px] pointer-events-none opacity-50"
+          style={{ background: "radial-gradient(circle, rgba(251,191,36,0.08) 0%, transparent 60%)" }} />
+
+      <div className="relative">
       {/* BUYER SELECTOR */}
-      <section className="mx-auto max-w-4xl px-6 pb-10">
+      <section className="mx-auto max-w-4xl px-6 pt-10 pb-10">
         <p className="mb-4 text-center text-sm text-ash">
           Tell us who you are — we&rsquo;ll highlight your plan.
         </p>
@@ -481,6 +499,7 @@ export default function PricingPage() {
           ))}
         </div>
       </section>
+      </div></div>{/* close visual bridge */}
 
       {/* FINAL CTA + WAITLIST */}
       <section className="relative overflow-hidden loud-bg">
