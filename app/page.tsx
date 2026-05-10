@@ -14,6 +14,8 @@ import {
   Store,
   ArrowRight,
   CheckCircle2,
+  Check,
+  X,
   Bug,
   Wind,
   Landmark,
@@ -1520,6 +1522,19 @@ export default function HomePage() {
 
       {/* 7.25 — COMPARISON TABLE */}
       <section className="relative overflow-hidden border-t border-iron loud-bg-alt">
+        {/* Background image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.10] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80&auto=format&fit=crop)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        {/* Floating orb */}
+        <div className="absolute top-[20%] right-[5%] w-[350px] h-[350px] rounded-full blur-[120px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 60%)" }} />
+
         <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
           <FadeIn>
             <div className="mb-12 max-w-3xl">
@@ -1543,15 +1558,15 @@ export default function HomePage() {
           <FadeIn delay={100}>
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur">
               {/* Header row */}
-              <div className="grid grid-cols-4 border-b border-iron">
-                <div className="p-4 text-xs font-medium uppercase tracking-widest text-muted" />
-                <div className="border-l border-iron p-4 text-center text-sm text-ash">
-                  Your CRM
+              <div className="grid grid-cols-4 border-b border-iron bg-white/[0.03]">
+                <div className="p-5 text-xs font-medium uppercase tracking-widest text-muted" />
+                <div className="border-l border-iron p-5 text-center">
+                  <span className="text-sm font-semibold text-ash">Your CRM</span>
                 </div>
-                <div className="border-l border-iron p-4 text-center text-sm text-ash">
-                  Generic AI
+                <div className="border-l border-iron p-5 text-center">
+                  <span className="text-sm font-semibold text-ash">Generic AI</span>
                 </div>
-                <div className="border-l border-iron bg-deal/5 p-4 text-center">
+                <div className="border-l border-iron bg-deal/[0.06] p-5 text-center">
                   <span className="font-display text-sm font-bold text-deal">
                     CLOSERS ASSIST
                   </span>
@@ -1569,17 +1584,19 @@ export default function HomePage() {
               ].map((row, i) => (
                 <div
                   key={row}
-                  className={`grid grid-cols-4 ${i < 5 ? "border-b border-iron" : ""}`}
+                  className={`grid grid-cols-4 transition-colors hover:bg-white/[0.02] ${
+                    i < 5 ? "border-b border-iron" : ""
+                  }`}
                 >
-                  <div className="p-4 text-sm text-bone">{row}</div>
-                  <div className="flex items-center justify-center border-l border-iron p-4 text-lg">
-                    ❌
+                  <div className="p-5 text-sm font-medium text-bone">{row}</div>
+                  <div className="flex items-center justify-center border-l border-iron p-5">
+                    <X className="h-5 w-5 text-red-400/60" strokeWidth={2} />
                   </div>
-                  <div className="flex items-center justify-center border-l border-iron p-4 text-lg">
-                    ❌
+                  <div className="flex items-center justify-center border-l border-iron p-5">
+                    <X className="h-5 w-5 text-red-400/60" strokeWidth={2} />
                   </div>
-                  <div className="flex items-center justify-center border-l border-iron bg-deal/5 p-4 text-lg">
-                    <span className="text-deal">✅</span>
+                  <div className="flex items-center justify-center border-l border-iron bg-deal/[0.06] p-5">
+                    <Check className="h-5 w-5 text-deal" strokeWidth={2.5} />
                   </div>
                 </div>
               ))}
