@@ -310,6 +310,7 @@ summary {
   transition: border-color 300ms ease, box-shadow 300ms ease;
 }
 .neon-border:hover {
+  animation-play-state: paused;
   border-color: rgba(0, 255, 136, 0.8);
   box-shadow: 0 0 36px rgba(0, 255, 136, 0.45);
 }

@@ -100,7 +100,7 @@ const industries = [
     href: "/industries/pest-control",
     live: true,
     image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
+      "/images/pest_control.jpg",
   },
   {
     icon: Wind,
