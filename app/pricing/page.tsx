@@ -203,15 +203,11 @@ export default function PricingPage() {
                 The real difference
               </span>
             </div>
-            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
-              Why $29.99 when ChatGPT
-              <br />
-              <span className="text-shine-amber font-black">is free?</span>
+            <h2 className="font-display text-xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
+              Why $29.99 when ChatGPT is free?
             </h2>
-            <p className="mx-auto mt-4 max-w-xl text-base text-ash">
-              Free AI gives you generic answers. ClosersAssist gives you the
-              exact script, your actual numbers, and a partner who remembers
-              every deal you&rsquo;ve closed.
+            <p className="mx-auto mt-4 max-w-sm text-sm text-ash sm:max-w-xl sm:text-base md:max-w-2xl">
+              Free AI gives you generic answers. ClosersAssist gives you the exact script, your actual numbers, and a partner who remembers every deal.
             </p>
           </div>
 

@@ -625,12 +625,9 @@ export default function HomePage() {
                   The deal board
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
                 Every deal.
-                <br />
-                <span className="text-shine font-black">
-                  Every stage. Every dollar.
-                </span>
+                <span className="text-shine font-black"> Every stage. Every dollar.</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-ash md:text-xl">
                 Watch deals flow from objection to close. Your pipeline,
@@ -938,10 +935,9 @@ export default function HomePage() {
                     Built on the floor
                   </span>
                 </div>
-                <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+                <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
                   Built on the sales floor.
-                  <br />
-                  <span className="text-shine">Not in a boardroom.</span>
+                  <span className="text-shine"> Not in a boardroom.</span>
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
                   My name is Thul. I sell Toyotas at Sun Toyota in Florida. I
@@ -1200,10 +1196,9 @@ export default function HomePage() {
                   Eighteen doors. One brand.
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
                 One agent. Eighteen industries.
-                <br />
-                <span className="text-shine font-black">Zero compromises.</span>
+                <span className="text-shine font-black"> Zero compromises.</span>
               </h2>
             </div>
           </FadeIn>
@@ -1260,9 +1255,9 @@ export default function HomePage() {
                   How it&rsquo;s built
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                A brain. A playbook.{" "}
-                <span className="text-shine font-black">Your voice.</span>
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
+                A brain. A playbook.
+                <span className="text-shine font-black"> Your voice.</span>
               </h2>
             </div>
           </FadeIn>
@@ -1544,9 +1539,9 @@ export default function HomePage() {
                   Head to head
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-5xl">
-                Your CRM tracks deals.{" "}
-                <span className="text-deal">We close them.</span>
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
+                Your CRM tracks deals.
+                <span className="text-deal"> We close them.</span>
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ash">
                 Everything else was built for managers. This was built for the
