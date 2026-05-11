@@ -916,7 +916,9 @@ export async function POST(req: NextRequest) {
             // Other hops, and ambiguous phrasings, fall through to SDK default
             // (auto), where the model picks based on the system prompt.
             if (hop === 0 && forceAddDeal) {
-              streamParams.tool_choice = { type: "tool", name: "add_deal" };
+              // DeepSeek doesn't support { type: "tool", name: "..." } —
+              // use { type: "any" } to force a tool call without naming one.
+              streamParams.tool_choice = { type: "any" };
             }
             console.log("[chat] hop", hop,
               "tools count:", TOOL_DEFINITIONS.length,
