@@ -518,6 +518,41 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* TUTORIAL VIDEO */} 
+      <section className="relative overflow-hidden loud-bg">
+        <div className="grid-pattern opacity-40" />
+        <div className="relative mx-auto max-w-5xl px-6 py-16 md:py-20">
+          <FadeIn>
+            <div className="mb-8 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  Watch the walkthrough
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                See exactly how it works
+                <span className="text-shine font-black"> in 2 minutes.</span>
+              </h2>
+            </div>
+            <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
+              <video
+                src="/tutorial.mp4"
+                controls
+                poster="/images/thul-founder.jpg"
+                className="w-full"
+                preload="metadata"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <p className="mt-4 text-center text-sm text-ash">
+              From sign-up to your first closed deal — everything you need in under 2 minutes.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* 1.5 — LIVE SCOREBOARD + FOUNDER PROOF (the new heat) */}
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="grid-pattern opacity-50" />
