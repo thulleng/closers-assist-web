@@ -539,7 +539,7 @@ export default function HomePage() {
               <video
                 src="/tutorial.mp4"
                 controls
-                poster="/images/thul-founder.jpg"
+                poster="/images/video-poster.jpg"
                 className="w-full"
                 preload="metadata"
               >
