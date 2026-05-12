@@ -37,7 +37,7 @@ const DRAWER_LINKS = [
     icon: User,
   },
   {
-    href: "/skills-marketplace",
+    href: "/marketplace",
     label: "Skills Marketplace",
     subtitle: "Add-ons for your agent.",
     icon: Store,
