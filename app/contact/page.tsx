@@ -107,7 +107,7 @@ export default function ContactPage() {
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
               <p className="mt-4 text-sm text-muted">
-                No credit card. Cancel anytime. Beat your last month or it&rsquo;s free.
+                No credit card. Cancel anytime. 14-day free trial.
               </p>
             </div>
           </FadeIn>

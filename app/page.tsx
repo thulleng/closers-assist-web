@@ -39,6 +39,7 @@ import FloatingParticles from "@/components/FloatingParticles";
 import TiltCard from "@/components/TiltCard";
 import MobileCTABar from "@/components/MobileCTABar";
 import WaitlistCounter from "@/components/WaitlistCounter";
+import NewsletterSection from "@/components/NewsletterSection";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -156,19 +157,13 @@ export default function HomePage() {
               </div>
 
               <div>
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                    Get Started →
-                  </Link>
-                  <Link
-                    href="/how-it-works"
-                    className="btn-ghost flex items-center gap-2 rounded-xl px-6 py-4 text-[15px] font-semibold"
-                  >
-                    <span className="text-gold-light">▶</span> Watch it close
-                    a deal (90s)
-                  </Link>
+                <div className="mt-8 max-w-md">
+                  <EmailCapture
+                    placeholder="your@email.com"
+                    buttonText="Try It Free"
+                  />
                 </div>
-                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
                       className="h-3.5 w-3.5 text-deal"
@@ -190,6 +185,12 @@ export default function HomePage() {
                     />
                     Cancel in 1 click
                   </span>
+                  <Link
+                    href="#tutorial"
+                    className="text-gold-light hover:underline"
+                  >
+                    ▶ Watch it close a deal (90s)
+                  </Link>
                 </div>
               </div>
 
@@ -526,7 +527,7 @@ export default function HomePage() {
       </section>
 
       {/* TUTORIAL VIDEO */} 
-      <section className="relative overflow-hidden loud-bg">
+      <section id="tutorial" className="relative overflow-hidden loud-bg">
         <div className="grid-pattern opacity-40" />
         <div className="relative mx-auto max-w-5xl px-6 py-16 md:py-20">
           <FadeIn>
@@ -539,12 +540,12 @@ export default function HomePage() {
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
                 See exactly how it works
-                <span className="text-shine font-black"> in 2 minutes.</span>
+                <span className="text-shine font-black"> in 90 seconds.</span>
               </h2>
             </div>
             <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
               <video
-                src="/tutorial.mp4"
+                src="/demo-90s.mp4"
                 controls
                 poster="/images/video-poster.jpg"
                 className="w-full"
@@ -554,7 +555,7 @@ export default function HomePage() {
               </video>
             </div>
             <p className="mt-4 text-center text-sm text-ash">
-              From sign-up to your first closed deal — everything you need in under 2 minutes.
+              From sign-up to your first closed deal — everything you need in 90 seconds.
             </p>
           </FadeIn>
         </div>
@@ -1472,12 +1473,12 @@ export default function HomePage() {
                 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#EA580C]"
                 strokeWidth={2.5}
               />
-              <p className="text-[15px] leading-relaxed text-[#0A0A0F]">
-                Every tier gets full capability.{" "}
-                <span className="font-bold text-[#EA580C]">
-                  Tiers only differ by scale.
-                </span>{" "}
-                No feature gating, ever.
+              <p className="text-[15px] leading-relaxed text-white/90">
+                  Every tier gets full capability.{" "}
+                  <span className="font-bold text-[#F97316]">
+                    Tiers only differ by scale.
+                  </span>{" "}
+                  No feature gating, ever.
               </p>
             </div>
           </FadeIn>
@@ -1668,7 +1669,7 @@ export default function HomePage() {
               </div>
               <p className="flex-1 text-[15px] text-white">
                 <span className="font-bold text-shine">
-                  Beat your last month or it&rsquo;s free.
+14-day free trial. Cancel anytime.
                 </span>{" "}
                 <span className="text-ash">
                   No contracts. Cancel anytime.
@@ -1778,6 +1779,9 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 7.4 — NEWSLETTER: From the Floor */}
+      <NewsletterSection />
+
       {/* 7.5 — FOUNDERS CIRCLE */}
       <FoundersCircle formspreeId="mwvargdv" />
 
@@ -1796,12 +1800,12 @@ export default function HomePage() {
             </p>
           </FadeIn>
           <FadeIn delay={300}>
-            <div className="mt-10">
-              <Link href="/pricing" className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg">
-                Get Started — $29.99/mo
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-              </Link>
-              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. Beat your last month or it&rsquo;s free.</p>
+            <div className="mt-10 max-w-md mx-auto">
+              <EmailCapture
+                placeholder="your@email.com"
+                buttonText="Start Closing More Deals"
+              />
+              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>
           </FadeIn>
         </div>

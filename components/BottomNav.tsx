@@ -14,6 +14,7 @@ import {
   BookOpen,
   User,
   Store,
+  Gift,
 } from "lucide-react";
 
 const BOTTOM_NAV = [
@@ -41,6 +42,12 @@ const DRAWER_LINKS = [
     label: "Skills Marketplace",
     subtitle: "Add-ons for your agent.",
     icon: Store,
+  },
+  {
+    href: "/referral",
+    label: "Refer & Earn",
+    subtitle: "$10 credit per signup. Free month at 5.",
+    icon: Gift,
   },
 ];
 

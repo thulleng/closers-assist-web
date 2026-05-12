@@ -23,10 +23,13 @@ export default function TelegramPage() {
           <div className="grid gap-12 md:grid-cols-2 md:items-center">
             {/* Left — copy */}
             <FadeIn>
-              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#0088cc]/30 bg-[#0088cc]/10 px-3.5 py-1.5">
-                <MessageCircle className="h-3.5 w-3.5 text-[#0088cc]" strokeWidth={2.5} />
-                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#0088cc]">
-                  Coming to Telegram
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/20 px-3.5 py-1.5 backdrop-blur">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  LIVE on Telegram
                 </span>
               </div>
 
@@ -37,31 +40,24 @@ export default function TelegramPage() {
               </h1>
 
               <p className="mt-6 max-w-lg text-lg leading-relaxed text-ash">
-                Same agent. Same memory. Same pay plan math. Now on Telegram —
+                Same agent. Same memory. Same pay plan math. Now live on Telegram —
                 the app you already have open between customers.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-4">
-                <Link
-                  href="/pricing"
-                  className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
-                >
-                  Get early access
-                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-                </Link>
                 <a
-                  href="https://t.me/Max_CreditRepair_bot"
+                  href="https://t.me/ClosersAssistBot"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 rounded-xl border border-[#0088cc]/30 bg-[#0088cc]/10 px-8 py-5 text-lg font-semibold text-[#0088cc] transition-all hover:bg-[#0088cc]/20"
+                  className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
                 >
-                  <MessageCircle className="h-5 w-5" strokeWidth={2} />
-                  Try a demo bot
+                  Open in Telegram
+                  <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
                 </a>
               </div>
 
               <p className="mt-4 text-sm text-muted">
-                Powered by the same Claude Haiku engine. Web + Telegram — one agent, every platform.
+                Search <span className="font-mono text-deal-light">@ClosersAssistBot</span> on Telegram. Same Claude engine. Web + Telegram — one agent.
               </p>
             </FadeIn>
 
@@ -224,21 +220,23 @@ export default function TelegramPage() {
         <div className="relative mx-auto max-w-3xl px-6 py-20 text-center">
           <FadeIn>
             <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-              Web today.
+              Web + Telegram.
               <br />
-              <span className="text-shine font-black">Telegram soon.</span>
+              <span className="text-shine font-black">One agent. One price.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-lg text-ash">
-              Early access users get Telegram first. Same price. Same agent. Just more places.
+              Open Telegram now. Your agent is already there — same memory, same pay plan, same plays.
             </p>
             <div className="mt-8">
-              <Link
-                href="/pricing"
+              <a
+                href="https://t.me/ClosersAssistBot"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
               >
-                Get Started — $29.99/mo
+                Try It Now — Free
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-              </Link>
+              </a>
             </div>
           </FadeIn>
         </div>

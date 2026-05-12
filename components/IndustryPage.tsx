@@ -96,8 +96,9 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
       </section>
 
       {/* DAY ONE */}
-      <section className="border-t border-iron bg-slate">
-        <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
+      <section className="relative overflow-hidden border-t border-white/5 loud-bg-alt">
+        <div className="grid-pattern opacity-40" />
+        <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
             <h2 className="mb-12 max-w-3xl font-display text-3xl font-extrabold leading-[1.1] tracking-tight text-bone md:text-5xl">
               What {data.name.toLowerCase()} closers get{" "}
@@ -121,7 +122,7 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
       </section>
 
       {/* SCENARIO */}
-      <section className="border-t border-iron">
+      <section className="relative overflow-hidden border-t border-white/5 loud-bg-alt">
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeIn>
@@ -168,8 +169,9 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
       </section>
 
       {/* PRICING STRIP */}
-      <section className="border-t border-iron bg-slate">
-        <div className="mx-auto max-w-4xl px-6 py-20 text-center md:py-24">
+      <section className="relative overflow-hidden border-t border-white/5 loud-bg">
+        <div className="grid-pattern opacity-40" />
+        <div className="relative mx-auto max-w-4xl px-6 py-20 text-center md:py-24">
           <FadeIn>
             <h2 className="mb-3 font-display text-3xl font-extrabold leading-tight tracking-tight text-bone md:text-5xl">
               <span className="font-mono">$29.99</span> per rep, per month.

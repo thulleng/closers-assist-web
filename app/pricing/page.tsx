@@ -541,7 +541,7 @@ export default function PricingPage() {
           </div>
           <div>
             <h3 className="mb-1 text-xl font-medium text-bone">
-              Beat your last month or it&rsquo;s free.
+14-day free trial. Cancel anytime.
             </h3>
             <p className="text-sm leading-relaxed text-ash">
               Use Closers Assist for 30 days. If your commission check
@@ -618,7 +618,7 @@ export default function PricingPage() {
                 Get Started — $29.99/mo
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </Link>
-              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. Beat your last month or it&rsquo;s free.</p>
+              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>
           </FadeIn>
         </div>
