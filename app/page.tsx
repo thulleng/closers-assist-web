@@ -639,6 +639,71 @@ export default function HomePage() {
                 </div>
               </div>
             </FadeIn>
+
+            {/* Beta user testimonials — 3 personas */}
+            <FadeIn delay={200}>
+              <div className="mt-8 grid gap-5 md:grid-cols-3">
+                {/* Alex M. — Insurance */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                  <div className="relative">
+                    <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                    <p className="text-sm leading-relaxed text-ash">
+                      The objection killer alone is worth it. Customer said my rate was too high — agent gave me three plays ranked by close %. Closed him 20 minutes later.
+                    </p>
+                    <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">AM</div>
+                      <div>
+                        <div className="text-[12px] font-bold text-white">Alex M.</div>
+                        <div className="text-[10px] text-muted">Insurance Agent · Tampa, FL</div>
+                      </div>
+                      <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Sarah K. — Real Estate */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                  <div className="relative">
+                    <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                    <p className="text-sm leading-relaxed text-ash">
+                      I used to spend Sunday nights writing follow-ups. Now I paste the name and it writes three versions. My reply rate doubled in two weeks.
+                    </p>
+                    <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">SK</div>
+                      <div>
+                        <div className="text-[12px] font-bold text-white">Sarah K.</div>
+                        <div className="text-[10px] text-muted">Real Estate Agent · Miami, FL</div>
+                      </div>
+                      <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* David R. — Solar */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                  <div className="relative">
+                    <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                    <p className="text-sm leading-relaxed text-ash">
+                      I don&rsquo;t do math in my head on a kitchen table anymore. I tell the agent the system size and it spits out the commission, dealer fee, and monthly. Done.
+                    </p>
+                    <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">DR</div>
+                      <div>
+                        <div className="text-[12px] font-bold text-white">David R.</div>
+                        <div className="text-[10px] text-muted">Solar Sales · Orlando, FL</div>
+                      </div>
+                      <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
           </div>
 
           <FadeIn delay={250}>
