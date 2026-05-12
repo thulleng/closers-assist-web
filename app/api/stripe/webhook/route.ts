@@ -47,34 +47,17 @@ export async function POST(req: NextRequest) {
         const customerId = session.customer as string;
         const email = session.customer_details?.email;
 
-        // Fetch subscription details from Stripe for period dates
-        let periodStart = null;
-        let periodEnd = null;
-        let status = "active";
-
-        if (subscriptionId) {
-          try {
-            const stripe = getStripe();
-            const sub = await stripe.subscriptions.retrieve(subscriptionId);
-            periodStart = new Date(sub.current_period_start * 1000).toISOString();
-            periodEnd = new Date(sub.current_period_end * 1000).toISOString();
-            status = sub.status;
-          } catch (e) {
-            console.warn("Could not fetch subscription details:", e);
-          }
-        }
-
         const { error: upsertError } = await supabase
           .from("subscriptions")
           .upsert(
             {
               stripe_subscription_id: subscriptionId,
               stripe_customer_id: customerId,
-              price_id: (session.line_items?.data?.[0]?.price as any)?.id || null,
+              price_id: null,
               customer_email: email || null,
-              status,
-              current_period_start: periodStart,
-              current_period_end: periodEnd,
+              status: "active",
+              current_period_start: null,
+              current_period_end: null,
               updated_at: new Date().toISOString(),
             },
             { onConflict: "stripe_subscription_id" }
