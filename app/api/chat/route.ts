@@ -797,7 +797,19 @@ export async function POST(req: NextRequest) {
     // ── 1. Auth + data fetch ──────────────────────────────────────────────────
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+
+    // Support both Bearer token (mobile) and cookie (web) auth
+    const authHeader = req.headers.get("authorization");
+    let user = null;
+
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.slice(7);
+      const { data } = await supabase.auth.getUser(token);
+      user = data.user ?? null;
+    } else {
+      const { data } = await supabase.auth.getUser();
+      user = data.user ?? null;
+    }
 
     let profileData: Record<string, unknown> | null = null;
     let memoryMessages: ChatMessage[] = [];
