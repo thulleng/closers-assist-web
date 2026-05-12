@@ -493,6 +493,30 @@ async function buildMemoryProfile(
     } catch { /* ignore — facts query is nice-to-have */ }
   }
 
+  // 0b. Recent session summaries — what happened last time
+  if (supabase && userId) {
+    try {
+      const { data: summaries } = await supabase
+        .from("agent_memory")
+        .select("content, created_at")
+        .eq("user_id", userId)
+        .eq("role", "summary")
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+      if (summaries && summaries.length > 0) {
+        const summaryLines = summaries.map(
+          (s: { content: string; created_at: string }) => {
+            const d = new Date(s.created_at);
+            const label = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+            return `[${label}] ${s.content}`;
+          }
+        );
+        parts.push(`Recent session summaries:\n${summaryLines.join("\n")}`);
+      }
+    } catch { /* ignore */ }
+  }
+
   // 1. Identity from profile
   if (profileData) {
     const name = [profileData.first_name, profileData.last_name].filter(Boolean).join(" ") || "the rep";
@@ -551,6 +575,47 @@ async function buildMemoryProfile(
   return parts.length > 0
     ? `WHO YOU'RE TALKING TO (use this proactively — reference it without being asked):\n${parts.join("\n")}`
     : "";
+}
+
+/**
+ * Synthesize a completed conversation session into a compressed summary.
+ * Runs when >1 hour has passed since the last message — treats the prior
+ * messages as a "closed session" and stores a 2-3 line summary for future recall.
+ */
+async function synthesizeSession(
+  supabase: SupabaseRouteClient,
+  userId: string,
+  messages: ChatMessage[]
+): Promise<string | null> {
+  if (messages.length < 4) return null;
+
+  const conversationText = messages
+    .map((m) => `${m.role}: ${typeof m.content === "string" ? m.content.slice(0, 400) : "[non-text]"}`)
+    .join("\n");
+
+  try {
+    const summary = await claude.messages.create({
+      model: "claude-haiku-4-5-20251001",
+      max_tokens: 250,
+      system:
+        "Summarize this sales coaching conversation in 2-3 sentences. Include: what was discussed, any deals logged (names, amounts), decisions made, goals mentioned, and the user's mood or state. Be specific with numbers and names. No fluff. Write like a colleague leaving a sticky note for the next shift.",
+      messages: [{ role: "user", content: conversationText }],
+    });
+
+    const text =
+      summary.content[0]?.type === "text" ? summary.content[0].text : null;
+    if (!text || text.length < 10) return null;
+
+    await supabase.from("agent_memory").insert({
+      user_id: userId,
+      role: "summary",
+      content: text,
+    });
+
+    return text;
+  } catch {
+    return null; // synthesis is best-effort — never block the chat for it
+  }
 }
 async function dispatchTool(
   name: string,
@@ -738,6 +803,54 @@ export async function POST(req: NextRequest) {
     let memoryMessages: ChatMessage[] = [];
 
     if (user) {
+      // ── Session boundary detection — synthesize previous session if stale ────
+      const { data: lastMsg } = await supabase
+        .from("agent_memory")
+        .select("created_at")
+        .eq("user_id", user.id)
+        .neq("role", "fact")
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (lastMsg?.[0]?.created_at) {
+        const lastTime = new Date(lastMsg[0].created_at).getTime();
+        const hoursSince = (Date.now() - lastTime) / (1000 * 60 * 60);
+
+        if (hoursSince > 1) {
+          // Find the last summary timestamp to avoid re-synthesizing
+          const { data: lastSummary } = await supabase
+            .from("agent_memory")
+            .select("created_at")
+            .eq("user_id", user.id)
+            .eq("role", "summary")
+            .order("created_at", { ascending: false })
+            .limit(1);
+
+          const cutoff = lastSummary?.[0]?.created_at
+            ? new Date(lastSummary[0].created_at).getTime()
+            : 0;
+
+          // Grab unsynthesized messages
+          const { data: staleMessages } = await supabase
+            .from("agent_memory")
+            .select("role, content, created_at")
+            .eq("user_id", user.id)
+            .neq("role", "fact")
+            .neq("role", "summary")
+            .gt("created_at", new Date(cutoff).toISOString())
+            .order("created_at", { ascending: true })
+            .limit(80);
+
+          if (staleMessages && staleMessages.length >= 4) {
+            const msgs = staleMessages.map((m) => ({
+              role: m.role as "user" | "assistant",
+              content: m.content,
+            }));
+            await synthesizeSession(supabase, user.id, msgs);
+          }
+        }
+      }
+
       const [profileResult, memoryResult] = await Promise.all([
         supabase
           .from("agent_profiles")
