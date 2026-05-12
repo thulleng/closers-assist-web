@@ -704,6 +704,71 @@ export default function HomePage() {
                 </div>
               </div>
             </FadeIn>
+
+            {/* Second row — 3 more beta testimonials */}
+            <FadeIn delay={300}>
+              <div className="mt-5 grid gap-5 md:grid-cols-3">
+                {/* Marcus J. — SaaS */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                  <div className="relative">
+                    <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                    <p className="text-sm leading-relaxed text-ash">
+                      I run MEDDIC on every deal without thinking about it now. The agent scores my opportunities and tells me which discovery questions I&rsquo;m missing. Pipeline actually moves.
+                    </p>
+                    <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">MJ</div>
+                      <div>
+                        <div className="text-[12px] font-bold text-white">Marcus J.</div>
+                        <div className="text-[10px] text-muted">SaaS AE · Austin, TX</div>
+                      </div>
+                      <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Lisa T. — Medical Devices */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                  <div className="relative">
+                    <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                    <p className="text-sm leading-relaxed text-ash">
+                      Getting past the gatekeeper used to be my whole morning. Now the agent preps my intro for the specific surgeon and protocol. I walk in knowing exactly what to lead with.
+                    </p>
+                    <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">LT</div>
+                      <div>
+                        <div className="text-[12px] font-bold text-white">Lisa T.</div>
+                        <div className="text-[10px] text-muted">Medical Devices · Chicago, IL</div>
+                      </div>
+                      <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Carlos V. — Mortgage */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                  <div className="relative">
+                    <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                    <p className="text-sm leading-relaxed text-ash">
+                      Rate objection used to kill my pipeline. Now the agent runs the break-even calc in seconds and shows them why waiting costs more. Three refis saved this month because of it.
+                    </p>
+                    <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                      <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">CV</div>
+                      <div>
+                        <div className="text-[12px] font-bold text-white">Carlos V.</div>
+                        <div className="text-[10px] text-muted">Mortgage Broker · Phoenix, AZ</div>
+                      </div>
+                      <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
           </div>
 
           <FadeIn delay={250}>
