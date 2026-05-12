@@ -355,7 +355,7 @@ export default function PricingPage() {
 
       {/* TIERS */}
       <section id="plans" className="mx-auto max-w-7xl px-6 pb-10">
-        <div className="grid gap-4 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-3">
           {TIERS.map((tier) => {
             const price = billing === "annual" ? tier.annual : tier.monthly;
             const isRecommended = selectedTier === tier.id;
@@ -363,96 +363,101 @@ export default function PricingPage() {
             const highlight = isRecommended || isDefaultFeatured;
 
             return (
-              <TiltCard key={tier.id} maxTilt={8} scale={1.03} className={`flex flex-col rounded-2xl transition-all duration-300 ${
+              <TiltCard key={tier.id} maxTilt={highlight ? 4 : 6} scale={highlight ? 1.02 : 1.01} className={`flex flex-col rounded-2xl transition-all duration-500 ${
                 selectedTier && !isRecommended ? "opacity-40 scale-[0.97]" : ""
               }`}>
               <div
-                className={`relative flex flex-col rounded-2xl bg-slate p-7 transition-all duration-300 ${
+                className={`relative flex flex-col rounded-2xl p-8 transition-all duration-500 ${
                   highlight
-                    ? "border-2 border-deal shadow-[0_0_32px_rgba(16,185,129,0.25)]"
-                    : "border border-iron"
+                    ? "bg-gradient-to-b from-deal/[0.06] to-slate border-2 border-deal shadow-[0_0_60px_rgba(16,185,129,0.15),0_0_120px_rgba(16,185,129,0.06)]"
+                    : "bg-slate border border-white/[0.06] hover:border-white/[0.12] hover:shadow-[0_0_30px_rgba(16,185,129,0.04)]"
                 }`}
               >
+                {/* Glow orb behind highlighted card */}
                 {highlight && (
-                  <div className="absolute -top-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-deal px-3 py-1 font-mono text-[10px] font-medium tracking-widest text-pit">
-                    {isRecommended ? "YOUR PLAN" : "MOST POPULAR"}
+                  <div className="absolute -top-20 left-1/2 -translate-x-1/2 w-[200px] h-[120px] rounded-full blur-[60px] pointer-events-none opacity-40"
+                    style={{ background: "radial-gradient(circle, rgba(16,185,129,0.25) 0%, transparent 70%)" }} />
+                )}
+
+                {highlight && (
+                  <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-gradient-to-r from-deal to-emerald-400 px-4 py-1.5 text-[10px] font-bold uppercase tracking-[2px] text-pit shadow-[0_4px_16px_rgba(16,185,129,0.4)]">
+                    {isRecommended ? "★ YOUR PLAN" : "★ MOST POPULAR"}
                   </div>
                 )}
 
-                {/* Tier name */}
-                <div
-                  className={`mb-1 text-xs font-medium uppercase tracking-widest ${
-                    highlight ? "text-deal" : "text-ash"
-                  }`}
-                >
-                  {tier.name}
+                {/* Tier header with icon */}
+                <div className="mb-6 flex items-center gap-3">
+                  <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 ${
+                    highlight ? "bg-deal/20 shadow-[0_0_16px_rgba(16,185,129,0.2)]" : "bg-white/[0.04]"
+                  }`}>
+                    {tier.id === "starter" && <User className="h-5 w-5 text-deal" strokeWidth={2} />}
+                    {tier.id === "pro" && <Users className="h-5 w-5 text-deal" strokeWidth={2} />}
+                    {tier.id === "elite" && <Building2 className="h-5 w-5 text-gold-light" strokeWidth={2} />}
+                  </div>
+                  <div>
+                    <div className={`text-xs font-bold uppercase tracking-[2px] ${
+                      highlight ? "text-deal" : "text-ash"
+                    }`}>
+                      {tier.name}
+                    </div>
+                    <div className="text-[13px] font-semibold text-bone">
+                      {tier.id === "starter" && "1 rep"}
+                      {tier.id === "pro" && "Up to 25 reps"}
+                      {tier.id === "elite" && "Up to 100 reps"}
+                    </div>
+                  </div>
                 </div>
 
-                {/* Who it's for */}
-                <div className="mb-4 flex items-center gap-1.5 text-sm text-bone">
-                  {tier.id === "starter" && <User className="h-3.5 w-3.5 text-ash" strokeWidth={2} />}
-                  {tier.id === "pro" && <Users className="h-3.5 w-3.5 text-ash" strokeWidth={2} />}
-                  {tier.id === "elite" && <Building2 className="h-3.5 w-3.5 text-ash" strokeWidth={2} />}
-                  <span>
-                    {tier.id === "starter" && "1 rep"}
-                    {tier.id === "pro" && "Up to 25 reps"}
-                    {tier.id === "elite" && "Up to 100 reps"}
-                  </span>
-                </div>
-
-                {/* Price */}
-                <div className="mb-1 flex items-baseline gap-1">
+                {/* Price — bold and dramatic */}
+                <div className="mb-2">
                   {tier.id === "elite" ? (
-                    <span className="font-mono text-4xl font-medium text-bone">
+                    <div className="font-display text-5xl font-black leading-none text-white">
                       Custom
-                    </span>
+                    </div>
                   ) : (
-                    <>
-                      <span className="font-mono text-4xl font-medium text-bone">
-                        ${price.toFixed(2)}
+                    <div className="flex items-baseline gap-0.5">
+                      <span className="font-mono text-lg text-ash/60">$</span>
+                      <span className={`font-display text-5xl font-black leading-none ${
+                        highlight ? "text-white" : "text-bone"
+                      }`}>
+                        {price.toFixed(2).replace(/\.00$/, "")}
                       </span>
-                      <span className="text-sm text-ash">/ month</span>
-                    </>
+                      <span className="font-mono text-sm text-ash/60">/mo</span>
+                    </div>
                   )}
                 </div>
 
-                {/* Per-rep math */}
-                {tier.id === "starter" && (
-                  <div className="mb-1 font-mono text-xs text-muted">
-                    Per rep. Billed monthly.
-                  </div>
-                )}
-                {tier.id === "pro" && (
-                  <div className="mb-1 font-mono text-xs text-muted">
-                    Flat team rate — works out to ${(price / 25).toFixed(2)}/rep at 25 reps
-                  </div>
-                )}
-                {tier.id === "elite" && (
-                  <div className="mb-1 font-mono text-xs text-muted">
-                    Starting at $19.99/rep/mo — contact us for your rate
-                  </div>
-                )}
+                {/* Per-rep math — callout box */}
+                <div className={`mb-5 rounded-lg px-3 py-2 font-mono text-xs font-medium ${
+                  highlight ? "bg-deal/[0.08] text-deal-light border border-deal/20" : "bg-white/[0.03] text-muted border border-white/[0.04]"
+                }`}>
+                  {tier.id === "starter" && "Per rep. Billed monthly."}
+                  {tier.id === "pro" && (
+                    <><span className="text-bone">${(price / 25).toFixed(2)}</span> / rep at 25 reps — flat team rate</>
+                  )}
+                  {tier.id === "elite" && "Starting at $19.99/rep/mo — contact us"}
+                </div>
 
-                <p className="mb-5 mt-4 text-sm leading-relaxed text-ash">
+                {/* Tagline */}
+                <p className="mb-6 text-sm leading-relaxed text-ash">
                   {tier.tagline}
                 </p>
 
-                <div className="mb-5 h-px bg-iron" />
+                <div className="mb-6 h-px bg-gradient-to-r from-transparent via-white/[0.08] to-transparent" />
 
-                {/* Features */}
-                <ul className="mb-7 flex flex-1 flex-col gap-3">
-                  {tier.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-2.5 text-sm leading-relaxed text-bone"
-                    >
-                      <Check
-                        className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal"
-                        strokeWidth={2.5}
-                      />
-                      <span>{f}</span>
-                    </li>
-                  ))}
+                {/* Features — icon per feature */}
+                <ul className="mb-8 flex flex-1 flex-col gap-3.5">
+                  {tier.features.map((f, i) => {
+                    const icons = ["⚡", "📦", "🔌", "🔗", "💬", "📊", "🎯", "🛡️", "🧪", "🏷️", "🔄", "🔐", "💎", "👑", "🤝"];
+                    return (
+                      <li key={f} className="flex items-start gap-3 text-sm leading-relaxed text-bone/90">
+                        <span className="mt-0.5 flex h-5 w-5 flex-shrink-0 items-center justify-center rounded-md bg-deal/10 text-[11px]">
+                          {icons[i % icons.length]}
+                        </span>
+                        <span>{f}</span>
+                      </li>
+                    );
+                  })}
                 </ul>
 
                 {/* CTA */}
@@ -466,21 +471,26 @@ export default function PricingPage() {
                       if (err) setCheckoutError(err);
                     }}
                     disabled={loadingTier === tier.id}
-                    className={`block w-full rounded-md py-3 text-center text-sm font-medium transition-colors disabled:opacity-60 disabled:cursor-not-allowed ${
+                    className={`block w-full rounded-xl py-3.5 text-center text-sm font-bold tracking-wide transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
                       highlight
-                        ? "bg-deal text-pit hover:bg-deal-hover"
-                        : "border border-iron text-bone hover:border-ash"
+                        ? "bg-gradient-to-r from-deal to-emerald-500 text-pit shadow-[0_8px_24px_rgba(16,185,129,0.3)] hover:shadow-[0_12px_32px_rgba(16,185,129,0.45)] hover:-translate-y-0.5"
+                        : "border-2 border-white/[0.08] text-bone hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white"
                     }`}
                   >
-                    {loadingTier === tier.id ? "Redirecting…" : tier.cta}
+                    {loadingTier === tier.id ? (
+                      <span className="inline-flex items-center gap-2">
+                        <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+                        Redirecting…
+                      </span>
+                    ) : tier.cta}
                   </button>
                 ) : (
                   <Link
                     href={tier.href}
-                    className={`block rounded-md py-3 text-center text-sm font-medium transition-colors ${
+                    className={`block rounded-xl py-3.5 text-center text-sm font-bold tracking-wide transition-all duration-300 ${
                       highlight
-                        ? "bg-deal text-pit hover:bg-deal-hover"
-                        : "border border-iron text-bone hover:border-ash"
+                        ? "bg-gradient-to-r from-deal to-emerald-500 text-pit shadow-[0_8px_24px_rgba(16,185,129,0.3)] hover:shadow-[0_12px_32px_rgba(16,185,129,0.45)] hover:-translate-y-0.5"
+                        : "border-2 border-white/[0.08] text-bone hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white"
                     }`}
                   >
                     {tier.cta}

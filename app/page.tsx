@@ -526,6 +526,84 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* THREE BENEFITS — why closers choose us over ChatGPT, CRM, or nothing */}
+      <section className="relative overflow-hidden border-t border-white/5">
+        <div className="grid-pattern opacity-30" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <FadeIn>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                  Why closers choose us
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                ChatGPT can&rsquo;t do this.
+                <br />
+                <span className="text-shine font-black">Your CRM won&rsquo;t either.</span>
+              </h2>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Benefit 1 — Memory */}
+            <FadeIn delay={100}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  🧠
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Never forgets a deal
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Closers Assist knows exactly what you said, what they pushed back on, and what closed them last time.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Persistent memory across sessions
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Benefit 2 — Zero setup */}
+            <FadeIn delay={200}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  ⚡
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Zero setup. Zero training.
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Pick your industry. Start closing. No prompt engineering. No &ldquo;learn your CRM&rdquo; phase. No IT ticket. You already know how to text — that&rsquo;s the entire interface.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Close your first deal in under 2 minutes
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Benefit 3 — Your voice */}
+            <FadeIn delay={300}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  🎯
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Sounds like you. Not a bot.
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Your scripts. Your style. Your floor. Closers Assist learns how YOU talk — not generic ChatGPT responses that sound like a LinkedIn post from 2019. Every play reads like you typed it between customers.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Built on Thul&rsquo;s floor at Sun Toyota
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
       {/* TUTORIAL VIDEO */} 
       <section id="tutorial" className="relative overflow-hidden loud-bg">
         <div className="grid-pattern opacity-40" />

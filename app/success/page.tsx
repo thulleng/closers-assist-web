@@ -1,74 +1,89 @@
-import type { Metadata } from "next";
-import Link from "next/link";
-import { CheckCircle2, ArrowRight } from "lucide-react";
-import NeuralBackground from "@/components/NeuralBackground";
-import AIAvatar from "@/components/AIAvatar";
+"use client";
 
-export const metadata: Metadata = {
-  title: "You're in — Closers Assist",
-  description: "Welcome to Closers Assist.",
-};
+import { useEffect, useState } from "react";
+import Link from "next/link";
+import { CheckCircle, ArrowRight } from "lucide-react";
 
 export default function SuccessPage() {
+  const [email, setEmail] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const sessionId = params.get("session_id");
+
+    if (sessionId) {
+      fetch(`/api/checkout/session?session_id=${sessionId}`)
+        .then((r) => r.json())
+        .then((data) => {
+          setEmail(data.email || null);
+          setLoading(false);
+        })
+        .catch(() => setLoading(false));
+    } else {
+      setLoading(false);
+    }
+  }, []);
+
   return (
-    <div className="relative flex min-h-[80vh] items-center justify-center overflow-hidden loud-bg">
-      <div className="grid-pattern opacity-30" />
-      <NeuralBackground density={12} color="green" opacity={0.05} />
-
-      <div className="relative mx-auto max-w-lg px-6 py-24 text-center z-10">
-        {/* AI Avatar */}
-        <div className="mb-6 flex justify-center">
-          <AIAvatar variant="circuit" size={64} accentColor="green" />
-        </div>
-
+    <main className="min-h-screen bg-[#050506] flex items-center justify-center px-4">
+      <div className="max-w-md w-full text-center">
         {/* Icon */}
-        <div className="mb-8 flex justify-center">
-          <div className="flex h-20 w-20 items-center justify-center rounded-full border border-deal/40 bg-deal/10 shadow-[0_0_40px_rgba(16,185,129,0.3)]">
-            <CheckCircle2 className="h-10 w-10 text-deal" strokeWidth={1.5} />
-          </div>
+        <div className="mx-auto w-16 h-16 bg-[#10B981]/10 rounded-full flex items-center justify-center mb-6">
+          <CheckCircle className="w-9 h-9 text-[#10B981]" />
         </div>
 
-        {/* Headline */}
-        <h1 className="font-display text-4xl font-black leading-tight tracking-[-0.02em] text-white md:text-5xl">
-          You&rsquo;re in.{" "}
-          <span className="text-shine">Welcome to Closers Assist.</span>
-        </h1>
-
-        <p className="mt-5 text-lg leading-relaxed text-ash">
-          Your subscription is active. Your agent is ready. Go close something.
+        <h1 className="text-3xl font-bold text-white mb-3">You're in!</h1>
+        <p className="text-gray-400 text-lg mb-8">
+          Payment confirmed. Your ClosersAssist subscription is now active.
         </p>
 
-        {/* CTAs */}
-        <div className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
-          <Link
-            href="/dashboard"
-            className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-[15px]"
-          >
-            Go to Dashboard
-            <ArrowRight
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              strokeWidth={2.5}
-            />
-          </Link>
-          <Link
-            href="/"
-            className="btn-ghost rounded-xl px-7 py-3.5 text-[15px] font-semibold"
-          >
-            Back to home
-          </Link>
+        {/* Email confirmation */}
+        {!loading && email && (
+          <p className="text-sm text-gray-500 mb-8">
+            Confirmation sent to{" "}
+            <span className="text-gray-300">{email}</span>
+          </p>
+        )}
+
+        {/* Next steps */}
+        <div className="bg-white/[0.03] border border-white/[0.06] rounded-xl p-6 mb-8 text-left">
+          <h2 className="text-white font-semibold mb-3">Next steps</h2>
+          <ol className="space-y-3 text-sm text-gray-400">
+            <li className="flex gap-3">
+              <span className="text-[#10B981] font-bold">1.</span>
+              Check your email for login instructions
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#10B981] font-bold">2.</span>
+              Set up your agent with your skills, scripts, and CRM
+            </li>
+            <li className="flex gap-3">
+              <span className="text-[#10B981] font-bold">3.</span>
+              Start closing more deals
+            </li>
+          </ol>
         </div>
 
-        {/* Support note */}
-        <p className="mt-10 text-sm text-muted">
+        {/* CTA */}
+        <Link
+          href="/dashboard"
+          className="inline-flex items-center gap-2 bg-[#10B981] text-black font-semibold px-8 py-3 rounded-lg hover:bg-[#059669] transition-colors"
+        >
+          Go to Dashboard
+          <ArrowRight className="w-4 h-4" />
+        </Link>
+
+        <p className="text-gray-600 text-xs mt-8">
           Questions? Email{" "}
           <a
             href="mailto:thul@closersassist.com"
-            className="text-ash transition-colors hover:text-deal"
+            className="text-[#10B981] hover:underline"
           >
             thul@closersassist.com
           </a>
         </p>
       </div>
-    </div>
+    </main>
   );
 }

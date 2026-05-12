@@ -1,5 +1,6 @@
 import Stripe from "stripe";
 import { NextRequest, NextResponse } from "next/server";
+import { createAdminClient } from "@/lib/supabase-admin";
 
 function getStripe() {
   const key = process.env.STRIPE_SECRET_KEY;
@@ -20,7 +21,6 @@ export async function POST(req: NextRequest) {
     if (webhookSecret && sig) {
       event = stripe.webhooks.constructEvent(body, sig, webhookSecret);
     } else {
-      // No webhook secret configured — parse without verification (dev only)
       event = JSON.parse(body) as Stripe.Event;
     }
   } catch (err) {
@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
   switch (event.type) {
     case "checkout.session.completed": {
       const session = event.data.object as Stripe.Checkout.Session;
+
       console.log("✅ checkout.session.completed", {
         sessionId: session.id,
         customer: session.customer,
@@ -38,14 +39,117 @@ export async function POST(req: NextRequest) {
         subscriptionId: session.subscription,
         amountTotal: session.amount_total,
       });
-      // TODO: write to Supabase — create user record, activate subscription
+
+      // ── Save subscription to Supabase ──────────────────────────────────
+      try {
+        const supabase = createAdminClient();
+        const subscriptionId = session.subscription as string;
+        const customerId = session.customer as string;
+        const email = session.customer_details?.email;
+
+        // Fetch subscription details from Stripe for period dates
+        let periodStart = null;
+        let periodEnd = null;
+        let status = "active";
+
+        if (subscriptionId) {
+          try {
+            const stripe = getStripe();
+            const sub = await stripe.subscriptions.retrieve(subscriptionId);
+            periodStart = new Date(sub.current_period_start * 1000).toISOString();
+            periodEnd = new Date(sub.current_period_end * 1000).toISOString();
+            status = sub.status;
+          } catch (e) {
+            console.warn("Could not fetch subscription details:", e);
+          }
+        }
+
+        const { error: upsertError } = await supabase
+          .from("subscriptions")
+          .upsert(
+            {
+              stripe_subscription_id: subscriptionId,
+              stripe_customer_id: customerId,
+              price_id: (session.line_items?.data?.[0]?.price as any)?.id || null,
+              customer_email: email || null,
+              status,
+              current_period_start: periodStart,
+              current_period_end: periodEnd,
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: "stripe_subscription_id" }
+          );
+
+        if (upsertError) {
+          console.error("Failed to save subscription:", upsertError);
+
+          // If table doesn't exist, log SQL to run
+          if (upsertError.code === "42P01") {
+            console.warn(
+              "⚠️  subscriptions table missing. Run: sql/create_subscriptions.sql in Supabase dashboard"
+            );
+          }
+        } else {
+          console.log(`💾 Subscription saved: ${subscriptionId} (${email})`);
+        }
+      } catch (dbErr) {
+        console.error("Supabase error:", dbErr);
+      }
+
+      break;
+    }
+
+    case "customer.subscription.updated": {
+      const sub = event.data.object as Stripe.Subscription;
+      console.log("🔄 subscription updated", {
+        id: sub.id,
+        status: sub.status,
+        customer: sub.customer,
+      });
+
+      try {
+        const supabase = createAdminClient();
+        const { error } = await supabase
+          .from("subscriptions")
+          .update({
+            status: sub.status,
+            current_period_start: new Date(sub.current_period_start * 1000).toISOString(),
+            current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+            updated_at: new Date().toISOString(),
+          })
+          .eq("stripe_subscription_id", sub.id);
+
+        if (error && error.code !== "42P01") {
+          console.error("Failed to update subscription:", error);
+        }
+      } catch (dbErr) {
+        console.error("Supabase error:", dbErr);
+      }
+
       break;
     }
 
     case "customer.subscription.deleted": {
       const sub = event.data.object as Stripe.Subscription;
       console.log("❌ subscription cancelled", { subscriptionId: sub.id });
-      // TODO: deactivate user in Supabase
+
+      try {
+        const supabase = createAdminClient();
+        const { error } = await supabase
+          .from("subscriptions")
+          .update({
+            status: "canceled",
+            updated_at: new Date().toISOString(),
+          })
+          .eq("stripe_subscription_id", sub.id);
+
+        if (error && error.code !== "42P01") {
+          console.error("Failed to mark subscription cancelled:", error);
+        }
+      } catch (dbErr) {
+        console.error("Supabase error:", dbErr);
+      }
+
       break;
     }
 
