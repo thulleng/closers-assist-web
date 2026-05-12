@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Car,
   Home as HomeIcon,
@@ -243,12 +242,11 @@ export default function IndustriesPage() {
                 className="loud-card group flex h-full flex-col overflow-hidden rounded-2xl"
               >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
+                <img
                   src={ind.image}
                   alt={ind.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate via-slate/30 to-transparent" />
                 <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-md border border-iron bg-pit/80 backdrop-blur">
