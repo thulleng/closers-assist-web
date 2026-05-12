@@ -20,7 +20,7 @@ import Counter from "@/components/Counter";
 function OnboardingContent() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const email = searchParams.get("email") || "";
+  const email = searchParams?.get("email") || "";
   const [copied, setCopied] = useState(false);
 
   return (

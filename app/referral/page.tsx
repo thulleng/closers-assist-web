@@ -23,7 +23,7 @@ const REFERRERS: Record<string, { name: string; role: string }> = {
 
 function ReferralContent() {
   const searchParams = useSearchParams();
-  const refCode = (searchParams.get("ref") || "").toUpperCase();
+  const refCode = (searchParams?.get("ref") || "").toUpperCase();
   const referrer = REFERRERS[refCode] || null;
   const [copied, setCopied] = useState(false);
 
