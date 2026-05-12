@@ -84,6 +84,7 @@ export async function POST(req: NextRequest) {
 
     case "customer.subscription.updated": {
       const sub = event.data.object as Stripe.Subscription;
+      const s = sub as any;
       console.log("🔄 subscription updated", {
         id: sub.id,
         status: sub.status,
@@ -96,8 +97,8 @@ export async function POST(req: NextRequest) {
           .from("subscriptions")
           .update({
             status: sub.status,
-            current_period_start: new Date(sub.current_period_start * 1000).toISOString(),
-            current_period_end: new Date(sub.current_period_end * 1000).toISOString(),
+            current_period_start: new Date(s.current_period_start * 1000).toISOString(),
+            current_period_end: new Date(s.current_period_end * 1000).toISOString(),
             updated_at: new Date().toISOString(),
           })
           .eq("stripe_subscription_id", sub.id);
