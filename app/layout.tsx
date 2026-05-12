@@ -55,10 +55,10 @@ export const metadata: Metadata = {
     type: "website",
     images: [
       {
-        url: "/icon-512.png",
-        width: 512,
-        height: 512,
-        alt: "Closers Assist",
+        url: "/api/og",
+        width: 1200,
+        height: 630,
+        alt: "Closers Assist — The AI agent every closer owns.",
       },
     ],
   },
@@ -66,7 +66,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Closers Assist — The AI agent every closer owns.",
     description: "One AI agent, every industry, zero restrictions.",
-    images: ["/icon-512.png"],
+    images: ["/api/og"],
   },
   robots: {
     index: true,
