@@ -132,7 +132,7 @@ export default function BottomNav() {
           {BOTTOM_NAV.map(({ href, label, icon: Icon }) => {
             const active =
               pathname === href ||
-              (href !== "/" && pathname.startsWith(href));
+              (href !== "/" && pathname?.startsWith(href));
             return (
               <Link
                 key={href}
