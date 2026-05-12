@@ -38,6 +38,7 @@ import HeroVisual from "@/components/HeroVisual";
 import FloatingParticles from "@/components/FloatingParticles";
 import TiltCard from "@/components/TiltCard";
 import MobileCTABar from "@/components/MobileCTABar";
+import WaitlistCounter from "@/components/WaitlistCounter";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -190,6 +191,11 @@ export default function HomePage() {
                     Cancel in 1 click
                   </span>
                 </div>
+              </div>
+
+              {/* Waitlist counter */}
+              <div className="mt-6">
+                <WaitlistCounter />
               </div>
             </div>
 
