@@ -545,7 +545,7 @@ export default function HomePage() {
             </div>
             <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
               <video
-                src="/demo-90s.mp4"
+                src="/demo-90s.mp4?v=2"
                 controls
                 poster="/images/video-poster.jpg"
                 className="w-full"
