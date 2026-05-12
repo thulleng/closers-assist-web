@@ -889,9 +889,9 @@ export async function POST(req: NextRequest) {
       );
     });
 
-    // DeepSeek doesn't support vision — route to Claude when images are attached
-    const activeClient = hasImages ? claude : deepseek;
-    const activeModel = hasImages ? "claude-sonnet-4-20250514" : "deepseek-v4-pro";
+    // DeepSeek doesn't support vision — use Sonnet for images, Haiku for text
+    const activeClient = claude;  // all traffic now goes through native Anthropic
+    const activeModel = hasImages ? "claude-sonnet-4-20250514" : "claude-haiku-4-5-20251001";
 
     console.log("[chat] has_images:", hasImages, "model:", activeModel);
 
