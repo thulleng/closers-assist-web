@@ -136,3 +136,37 @@ export async function GET(req: NextRequest) {
 
   return NextResponse.json({ status: "ready" });
 }
+
+// ── DELETE: remove a deal by ID (admin cleanup) ─────────────────────────────
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const secret = searchParams.get("secret");
+    const id = searchParams.get("id");
+
+    if (!API_SECRET || secret !== API_SECRET) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: "id is required" }, { status: 400 });
+    }
+
+    const supabase = createAdminClient();
+    const { error } = await supabase.from("deals").delete().eq("id", id);
+
+    if (error) {
+      console.error("[deals/log] Delete error:", error);
+      return NextResponse.json({ error: error.message }, { status: 500 });
+    }
+
+    return NextResponse.json({ ok: true, deleted: id });
+  } catch (err) {
+    console.error("[deals/log] Unexpected delete error:", err);
+    return NextResponse.json(
+      { error: err instanceof Error ? err.message : "Internal error" },
+      { status: 500 }
+    );
+  }
+}
