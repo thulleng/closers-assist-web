@@ -37,7 +37,7 @@ const industries = [
     href: "/industries/auto",
     live: true,
     image:
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80&auto=format&fit=crop",
+      "/images/toyota-building.jpg",
   },
   {
     icon: HomeIcon,

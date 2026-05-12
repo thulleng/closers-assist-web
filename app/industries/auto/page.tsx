@@ -24,9 +24,9 @@ const data: IndustryData = {
   ),
   sub: "Built on the showroom floor by a working Toyota rep. Knows your mini structure, unit math, volume bonuses, and CXI math. Loaded with Star Safety System and TSS 4.0 out of the box.",
   heroImage:
-    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=1920&q=80&auto=format&fit=crop",
+    "/images/toyota-building.jpg",
   scenarioImage:
-    "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80&auto=format&fit=crop",
+    "/images/toyota-building.jpg",
   featuresDay1: [
     "Your dealership's pay plan modeled exactly — mini deals, full deals, streets, kicks, tier retro math, live.",
     "Monthly tracker — running unit count, gross commissions, tier progress, CXI score impact.",
