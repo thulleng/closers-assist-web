@@ -363,11 +363,13 @@ export default function PricingPage() {
             const highlight = isRecommended || isDefaultFeatured;
 
             return (
-              <TiltCard key={tier.id} maxTilt={8} scale={1.03} className="flex flex-col rounded-2xl">
+              <TiltCard key={tier.id} maxTilt={8} scale={1.03} className={`flex flex-col rounded-2xl transition-all duration-300 ${
+                selectedTier && !isRecommended ? "opacity-40 scale-[0.97]" : ""
+              }`}>
               <div
-                className={`relative flex flex-col rounded-2xl bg-slate p-7 ${
+                className={`relative flex flex-col rounded-2xl bg-slate p-7 transition-all duration-300 ${
                   highlight
-                    ? "border-2 border-deal"
+                    ? "border-2 border-deal shadow-[0_0_32px_rgba(16,185,129,0.25)]"
                     : "border border-iron"
                 }`}
               >
