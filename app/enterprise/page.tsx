@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Check, Calendar, Users, Zap, Shield, Bot, ArrowRight } from "lucide-react";
+import { EnterpriseBookingForm } from "@/components/EnterpriseBookingForm";
 
 const INCLUDES = [
   "Dedicated AI agent built for your dealership, brokerage, or team",
@@ -159,22 +160,14 @@ export default function EnterprisePage() {
       {/* ── Booking ───────────────────────────────────────── */}
       <section id="book" className="py-20 px-4 max-w-3xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-4">Let's talk</h2>
-        <p className="text-gray-400 mb-8 max-w-lg mx-auto">
+        <p className="text-gray-400 mb-10 max-w-lg mx-auto">
           No demos. No slide decks. Just a 15-minute call about your team, your
           floor, and how an AI closer can move the needle.
         </p>
 
-        <a
-          href="https://calendly.com/thuleng/closers-assist-enterprise"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-black font-semibold px-10 py-4 rounded-xl text-lg transition-colors"
-        >
-          <Calendar className="w-5 h-5" />
-          Book a 15-Minute Call
-        </a>
+        <EnterpriseBookingForm />
 
-        <p className="text-gray-600 text-sm mt-4">
+        <p className="text-gray-600 text-sm mt-8">
           Prefer email?{" "}
           <a
             href="mailto:thul@closersassist.com"
