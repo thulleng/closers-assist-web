@@ -61,7 +61,7 @@ const TIERS = [
     seats: 100,
     tagline: "For the dealership, brokerage, or agency rolling out at scale.",
     cta: "Talk to sales",
-    href: "mailto:thul@closersassist.com",
+    href: "/enterprise",
     features: [
       "Everything in Pro — for up to 100 reps",
       "Dedicated success manager",
