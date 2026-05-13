@@ -110,6 +110,22 @@ export default function EnterprisePage() {
         </div>
       </section>
 
+      {/* ── Video ──────────────────────────────────────────── */}
+      <section className="py-8 px-4 max-w-4xl mx-auto">
+        <div className="relative rounded-2xl overflow-hidden border border-white/[0.06] shadow-[0_0_60px_rgba(16,185,129,0.08)]">
+          <video
+            src="/enterprise-video.mp4?v=1"
+            poster="/enterprise-video.mp4?v=1#t=0.1"
+            controls
+            preload="metadata"
+            className="w-full h-auto"
+            style={{ background: "#050506" }}
+          >
+            Your browser does not support the video tag.
+          </video>
+        </div>
+      </section>
+
       {/* ── What You Get ──────────────────────────────────── */}
       <section className="py-20 px-4 max-w-5xl mx-auto">
         <h2 className="text-3xl font-bold text-center mb-4">
