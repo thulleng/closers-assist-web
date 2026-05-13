@@ -100,6 +100,12 @@ export default function Nav() {
           >
             Refer & Earn
           </Link>
+          <Link
+            href="/enterprise"
+            className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
+          >
+            Enterprise
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">

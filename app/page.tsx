@@ -1857,6 +1857,113 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 7.3 — ENTERPRISE CTA */}
+      <section className="relative overflow-hidden">
+        <div
+          className="relative border-y border-deal/20"
+          style={{
+            background: "linear-gradient(180deg, #050506 0%, #0a0a0e 100%)",
+          }}
+        >
+          {/* Ambient glows */}
+          <div
+            className="pointer-events-none absolute -top-32 left-1/2 h-64 w-[600px] -translate-x-1/2 rounded-full blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(16,185,129,0.25) 0%, transparent 60%)",
+            }}
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-20 right-0 h-48 w-72 rounded-full blur-3xl opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 70%)",
+            }}
+            aria-hidden
+          />
+
+          <FadeIn>
+            <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 px-6 py-20 text-center md:flex-row md:gap-12 md:py-24 md:text-left">
+              {/* Left: badge + copy */}
+              <div className="flex-1 space-y-5">
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
+                  <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                    Enterprise
+                  </span>
+                </div>
+
+                <h2 className="font-display text-3xl font-black leading-[1.1] tracking-[-0.02em] text-white sm:text-5xl">
+                  Need a dedicated AI closer
+                  <br />
+                  for your{" "}
+                  <span className="text-shine font-black">whole floor?</span>
+                </h2>
+
+                <p className="text-lg leading-relaxed text-ash">
+                  Done-for-you onboarding. Custom scripts. CRM integration.
+                  <br />
+                  <span className="font-semibold text-bone">
+                    $5K/mo · 48-hour setup · White-glove rollout
+                  </span>
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <Link
+                    href="/enterprise"
+                    className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-[#050506] shadow-[0_4px_20px_rgba(251,191,36,0.4)] transition-all hover:shadow-[0_6px_28px_rgba(251,191,36,0.6)]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)",
+                    }}
+                  >
+                    Learn More
+                    <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+                  </Link>
+                  <Link
+                    href="/enterprise"
+                    className="rounded-xl border border-deal/40 px-6 py-3 text-sm font-bold text-deal-light transition-all hover:border-deal hover:bg-deal/10"
+                  >
+                    Book a Call →
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right: stat cards */}
+              <div className="flex-shrink-0 space-y-4">
+                <div className="flex gap-4">
+                  <div className="rounded-2xl border border-white/8 bg-black/60 p-5 text-center backdrop-blur">
+                    <div className="font-display text-3xl font-black text-deal">
+                      $5K
+                    </div>
+                    <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                      / mo
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-white/8 bg-black/60 p-5 text-center backdrop-blur">
+                    <div className="font-display text-3xl font-black text-gold-light">
+                      48h
+                    </div>
+                    <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                      Setup
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-deal/20 bg-black/60 p-5 text-center backdrop-blur">
+                  <div className="font-display text-2xl font-black text-white">
+                    Done-for-you
+                  </div>
+                  <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-deal-light">
+                    Custom scripts · CRM · Rollout
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* 7.4 — NEWSLETTER: From the Floor */}
       <NewsletterSection />
 

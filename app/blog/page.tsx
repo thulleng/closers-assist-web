@@ -10,6 +10,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "sun-toyota-pilot",
+    title: "I Run an AI Closer on My Dealership Floor — Here's What Happened in 30 Days",
+    date: "May 12, 2026",
+    readTime: "5 min",
+    preview: "30 days. 247 leads. 43 appointments. The real numbers from running an AI closer at Sun Toyota — and why your floor is next.",
+    tag: "Case Study",
+  },
+  {
     slug: "how-i-built-this",
     title: "How I Built an AI Sales Agent Between Customers",
     date: "May 8, 2026",
