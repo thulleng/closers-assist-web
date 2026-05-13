@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowUp, Paperclip, X } from "lucide-react";
+import DealSelector from "./DealSelector";
 
 type TextContent = { type: "text"; text: string };
 type ImageContent = { type: "image"; source: { type: "base64"; media_type: string; data: string } };
@@ -11,6 +12,17 @@ type MessageContent = string | (TextContent | ImageContent)[];
 type Message = {
   role: "user" | "assistant";
   content: MessageContent;
+};
+
+type Deal = {
+  id: string;
+  customer_name: string;
+  deal_type: string;
+  vehicle?: string;
+  front_gross?: number;
+  commission?: number;
+  sold_date: string;
+  status?: string;
 };
 
 const DEFAULT_STARTERS = [
@@ -35,6 +47,7 @@ export default function RealChat({
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const [imageContent, setImageContent] = useState<ImageContent | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [selectedDealId, setSelectedDealId] = useState<string | null>(null);
   const dragCounter = useRef(0); // track nested enter/leave events
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -128,7 +141,7 @@ export default function RealChat({
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages, industry }),
+        body: JSON.stringify({ messages: nextMessages, industry, dealId: selectedDealId }),
       });
 
       if (!res.ok || !res.body) {
@@ -212,6 +225,15 @@ export default function RealChat({
           <p className="text-xs text-ash">jpg, png, gif, webp</p>
         </div>
       )}
+
+      {/* Deal selector — pick a deal for focused context */}
+      <div className="border-b border-iron px-4 py-2">
+        <DealSelector
+          onSelect={(deal) => setSelectedDealId(deal.id)}
+          selectedDealId={selectedDealId}
+          onClear={() => setSelectedDealId(null)}
+        />
+      </div>
 
       {/* Messages */}
       <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-5 py-5 space-y-4">

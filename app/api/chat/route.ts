@@ -617,6 +617,63 @@ async function synthesizeSession(
     return null; // synthesis is best-effort — never block the chat for it
   }
 }
+
+/**
+ * Build rich context for a specific deal — the closer selected this deal
+ * from the dropdown, so the AI should know everything about it.
+ */
+async function buildDealContext(
+  supabase: SupabaseRouteClient,
+  userId: string,
+  dealId: string
+): Promise<string> {
+  try {
+    const { data: deal, error } = await supabase
+      .from("deals")
+      .select("*")
+      .eq("id", dealId)
+      .eq("user_id", userId)
+      .single();
+
+    if (error || !deal) return "";
+
+    const { data: memories } = await supabase
+      .from("agent_memory")
+      .select("content, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    const dealMemories = (memories ?? [])
+      .filter((m: { content: string }) => m.content.startsWith(`[deal:${dealId}]`))
+      .slice(0, 8)
+      .map((m: { content: string; created_at: string }) => {
+        const d = new Date(m.created_at);
+        const label = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        return `[${label}] ${m.content.replace(`[deal:${dealId}] `, "")}`;
+      });
+
+    const lines = [
+      "DEAL CONTEXT — The user has selected this specific deal. Focus your response on THIS deal:",
+      `Customer: ${deal.customer_name}`,
+      deal.vehicle ? `Vehicle: ${deal.vehicle}` : null,
+      `Type: ${deal.deal_type}${deal.front_gross ? ` | Front gross: $${deal.front_gross.toLocaleString()}` : ""}${deal.commission ? ` | Commission: $${deal.commission.toLocaleString()}` : ""}`,
+      deal.status ? `Status: ${deal.status}` : null,
+      deal.last_contact_date ? `Last contact: ${deal.last_contact_date}` : null,
+      deal.notes ? `Notes: ${deal.notes}` : null,
+    ].filter(Boolean);
+
+    if (dealMemories.length > 0) {
+      lines.push(`\nPast conversations about ${deal.customer_name}:`);
+      lines.push(...dealMemories);
+    }
+
+    return lines.join("\n");
+  } catch {
+    return ""; // fail silently — deal context is a nice-to-have
+  }
+}
+
 async function dispatchTool(
   name: string,
   args: ToolArgs,
@@ -785,7 +842,7 @@ async function dispatchTool(
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, industry = "automotive" } = await req.json();
+    const { messages, industry = "automotive", dealId } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Invalid messages" }), {
@@ -918,6 +975,11 @@ export async function POST(req: NextRequest) {
       ? await buildMemoryProfile(profileData, monthlyContext, memoryMessages, supabase, user.id)
       : "";
 
+    // Build deal context — if user selected a specific deal, inject everything about it
+    const dealContext = user && dealId
+      ? await buildDealContext(supabase, user.id, dealId)
+      : "";
+
     const now = new Date();
     const dateLine = `Today's date is ${now.toLocaleDateString("en-US", {
       weekday: "long",
@@ -931,7 +993,7 @@ export async function POST(req: NextRequest) {
       timeZoneName: "short",
       timeZone: "America/New_York",
     })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
-    const systemPrompt = [dateLine, memoryProfile, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
+    const systemPrompt = [dateLine, memoryProfile, dealContext, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
       .filter(Boolean)
       .join("\n\n---\n\n");
 
