@@ -1,16 +1,40 @@
 import Link from "next/link";
 import { ArrowRight, Smartphone, Zap, MessageCircle } from "lucide-react";
 import type { Metadata } from "next";
+import { Suspense } from "react";
 import FadeIn from "@/components/FadeIn";
+import TelegramLinkClient from "@/components/TelegramLinkClient";
 
 export const metadata: Metadata = {
   title: "Telegram",
   description: "Closers Assist on Telegram — your AI sales agent follows you to the lot. Same agent, every device.",
 };
 
-export default function TelegramPage() {
+export default async function TelegramPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ code?: string; chat_id?: string }>;
+}) {
+  const params = await searchParams;
+  const isLinking = !!(params.code && params.chat_id);
+
   return (
     <main>
+      {/* LINKING FLOW — shown when user comes from bot start link */}
+      {isLinking && (
+        <section className="relative overflow-hidden loud-bg min-h-[60vh] flex items-center">
+          <div className="grid-pattern opacity-40" />
+          <div className="relative mx-auto max-w-3xl px-6 py-20 w-full">
+            <Suspense fallback={null}>
+              <TelegramLinkClient />
+            </Suspense>
+          </div>
+        </section>
+      )}
+
+      {/* MARKETING PAGE — shown when no linking params */}
+      {!isLinking && (
+        <>
       {/* HERO */}
       <section className="relative overflow-hidden loud-bg">
         <div className="grid-pattern opacity-40" />
@@ -214,6 +238,47 @@ export default function TelegramPage() {
         </div>
       </section>
 
+      {/* MORE PLATFORMS — coming soon */}
+      <section className="relative overflow-hidden loud-bg-alt border-t border-white/5">
+        <div className="grid-pattern opacity-40" />
+        <div className="relative mx-auto max-w-4xl px-6 py-16">
+          <FadeIn>
+            <div className="mb-10 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-gold opacity-75 pulse-ring" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-gold" />
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                  Coming Soon
+                </span>
+              </div>
+              <h2 className="font-display text-2xl font-black tracking-tight text-white sm:text-3xl">
+                More ways to connect
+              </h2>
+              <p className="mt-2 text-sm text-ash">Same agent. More platforms. Pick the one your team already uses.</p>
+            </div>
+
+            <div className="grid gap-4 sm:grid-cols-3">
+              {[
+                { name: "WhatsApp", desc: "Webhook live. Meta Business setup pending.", icon: "💬", status: "In development" },
+                { name: "Slack", desc: "For SaaS sales teams who live in channels.", icon: "💜", status: "Coming soon" },
+                { name: "Discord", desc: "For gaming, creator, and community sellers.", icon: "🎮", status: "Coming soon" },
+              ].map(({ name, desc, icon, status }) => (
+                <div key={name} className={`rounded-2xl border p-6 text-center transition-opacity ${status === "In development" ? "border-gold/20 bg-gold/5 opacity-80" : "border-white/5 bg-slate/30 opacity-60 hover:opacity-80"}`}>
+                  <div className="mb-3 text-3xl">{icon}</div>
+                  <h3 className="font-bold text-white">{name}</h3>
+                  <p className="mt-1 text-xs text-muted">{desc}</p>
+                  <span className={`mt-3 inline-block rounded-full border px-3 py-0.5 text-[10px] font-semibold ${status === "In development" ? "border-gold/40 text-gold" : "border-gold/20 text-gold/60"}`}>
+                    {status}
+                  </span>
+                </div>
+              ))}
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* CTA */}
       <section className="relative overflow-hidden loud-bg border-t border-white/5">
         <div className="grid-pattern opacity-40" />
@@ -241,6 +306,8 @@ export default function TelegramPage() {
           </FadeIn>
         </div>
       </section>
+        </>
+      )}
     </main>
   );
 }

@@ -1,17 +1,18 @@
 "use client";
 
 import { useEffect, useState, useRef } from "react";
-import { ChevronDown, User, X } from "lucide-react";
+import { ChevronDown, User, Database, X } from "lucide-react";
 
 type Deal = {
   id: string;
   customer_name: string;
-  deal_type: string;
+  deal_type?: string;
   vehicle?: string;
   front_gross?: number;
   commission?: number;
-  sold_date: string;
+  sold_date?: string;
   status?: string;
+  source?: "deal" | "crm";
 };
 
 export default function DealSelector({
@@ -28,12 +29,24 @@ export default function DealSelector({
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    fetch("/api/me/deals", {
-      credentials: "include",
-    })
-      .then((r) => r.json())
-      .then((d) => {
-        if (d.deals) setDeals(d.deals.filter((d: Deal) => d.status !== "closed" && d.status !== "lost"));
+    Promise.all([
+      fetch("/api/me/deals", { credentials: "include" }).then((r) => r.json()),
+      fetch("/api/me/contacts", { credentials: "include" }).then((r) => r.json()),
+    ])
+      .then(([dealData, contactData]) => {
+        const activeDeals: Deal[] = (dealData.deals ?? [])
+          .filter((d: Deal) => d.status !== "closed" && d.status !== "lost")
+          .map((d: Deal) => ({ ...d, source: "deal" as const }));
+
+        const crmContacts: Deal[] = (contactData.contacts ?? []).map((c: Record<string, unknown>) => ({
+          id: `crm-${c.id}`,
+          customer_name: c.customer_name as string,
+          vehicle: c.vehicle_interest as string | undefined,
+          status: "crm_lead",
+          source: "crm" as const,
+        }));
+
+        setDeals([...crmContacts, ...activeDeals]);
       })
       .catch(() => {});
   }, []);
@@ -50,8 +63,12 @@ export default function DealSelector({
 
   const selected = deals.find((d) => d.id === selectedDealId);
 
-  const typeLabel = (t: string) =>
-    t === "full_deal" ? "Full" : t === "full_mini" ? "Mini" : t === "half_mini" ? "Half" : t === "street_purchase" ? "Street" : t;
+  const typeLabel = (d: Deal) =>
+    d.source === "crm" ? "CRM" :
+    d.deal_type === "full_deal" ? "Full" :
+    d.deal_type === "full_mini" ? "Mini" :
+    d.deal_type === "half_mini" ? "Half" :
+    d.deal_type === "street_purchase" ? "Street" : "";
 
   if (deals.length === 0 && !selected) return null;
 
@@ -69,8 +86,10 @@ export default function DealSelector({
               {selected.vehicle && (
                 <span className="text-muted">· {selected.vehicle}</span>
               )}
-              <span className="rounded bg-deal/15 px-1.5 py-0.5 text-[10px] font-semibold text-deal">
-                {typeLabel(selected.deal_type)}
+              <span className={`rounded px-1.5 py-0.5 text-[10px] font-semibold ${
+                selected.source === "crm" ? "bg-gold/15 text-gold" : "bg-deal/15 text-deal"
+              }`}>
+                {typeLabel(selected)}
               </span>
             </>
           ) : (
@@ -108,15 +127,21 @@ export default function DealSelector({
                     : "text-bone hover:bg-slate"
                 }`}
               >
-                <User className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
+                {d.source === "crm" ? (
+                  <Database className="h-3 w-3 flex-shrink-0 text-gold" strokeWidth={2} />
+                ) : (
+                  <User className="h-3 w-3 flex-shrink-0" strokeWidth={2} />
+                )}
                 <div className="flex-1 min-w-0">
                   <div className="truncate font-medium">{d.customer_name}</div>
                   {d.vehicle && (
                     <div className="truncate text-[11px] text-ash">{d.vehicle}</div>
                   )}
                 </div>
-                <span className="flex-shrink-0 rounded bg-deal/15 px-1.5 py-0.5 text-[10px] font-semibold text-deal">
-                  {typeLabel(d.deal_type)}
+                <span className={`flex-shrink-0 rounded px-1.5 py-0.5 text-[10px] font-semibold ${
+                  d.source === "crm" ? "bg-gold/15 text-gold" : "bg-deal/15 text-deal"
+                }`}>
+                  {typeLabel(d)}
                 </span>
               </button>
             ))}

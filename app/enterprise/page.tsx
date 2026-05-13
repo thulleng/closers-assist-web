@@ -173,6 +173,41 @@ export default function EnterprisePage() {
         </div>
       </section>
 
+      {/* ── Pilot Results ──────────────────────────────────── */}
+      <section className="py-20 px-4 max-w-3xl mx-auto">
+        <div className="text-center mb-10">
+          <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+            <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+            <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">Live Pilot</span>
+          </div>
+          <h2 className="font-display text-3xl font-black text-white">Proven on the floor</h2>
+          <p className="mt-2 text-sm text-ash">Deploying at Sun Toyota, Holiday FL — a working dealership with real closers.</p>
+        </div>
+
+        <div className="grid gap-4 sm:grid-cols-3 mb-8">
+          {[
+            { value: "0 Min", label: "Setup time per rep", sub: "Open link, start talking" },
+            { value: "100%", label: "Adoption rate", sub: "Zero training required" },
+            { value: "48 Hrs", label: "To first deal logged", sub: "Faster than any CRM rollout" },
+          ].map((s) => (
+            <div key={s.label} className="glass-panel rounded-2xl p-5 text-center">
+              <p className="glow-text-green font-display text-3xl font-black">{s.value}</p>
+              <p className="mt-1 text-sm font-semibold text-bone">{s.label}</p>
+              <p className="mt-1 text-[11px] text-muted">{s.sub}</p>
+            </div>
+          ))}
+        </div>
+
+        <div className="rounded-2xl border border-gold/20 bg-gold/[0.03] p-6">
+          <p className="text-sm text-ash leading-relaxed">
+            <span className="font-semibold text-gold-light">The real pitch: </span>
+            One mini deal — $400 commission — covers a rep&apos;s Closers Assist subscription for over a year. 
+            Your lowest closer pays for the whole floor. Every deal after that is pure margin. 
+            This isn&apos;t software ROI math. It&apos;s car math.
+          </p>
+        </div>
+      </section>
+
       {/* ── Booking ───────────────────────────────────────── */}
       <section id="book" className="py-20 px-4 max-w-3xl mx-auto text-center">
         <h2 className="text-3xl font-bold mb-4">Let's talk</h2>

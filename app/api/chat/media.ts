@@ -2,7 +2,7 @@
  * Media processing for Closers Assist chat.
  *
  * Handles audio transcription (Deepgram STT) and video frame extraction
- * (ffmpeg + Claude Vision). Converts audio/video user uploads to text
+ * (ffmpeg + DeepSeek Vision). Converts audio/video user uploads to text
  * descriptions before the main model sees them.
  */
 
@@ -12,7 +12,6 @@ import * as os from "os";
 import * as path from "path";
 import { execFile } from "child_process";
 import { promisify } from "util";
-import Anthropic from "@anthropic-ai/sdk";
 
 const execFileAsync = promisify(execFile);
 
@@ -67,7 +66,7 @@ export async function transcribeAudio(block: AudioBlock): Promise<string> {
       model: "nova-3",
       smart_format: true,
       punctuate: true,
-      language: "en",
+      detect_language: true,
     })) as { results?: { channels?: { alternatives?: { transcript?: string }[] }[] } };
 
     const transcript =
@@ -156,18 +155,20 @@ async function describeFrame(
   index: number,
   total: number
 ): Promise<string> {
-  const apiKey = process.env.ANTHROPIC_API_KEY;
+  const apiKey = process.env.DEEPSEEK_API_KEY;
   if (!apiKey) {
-    return `[Frame ${index + 1}/${total}: no ANTHROPIC_API_KEY]`;
+    return `[Frame ${index + 1}/${total}: no DEEPSEEK_API_KEY]`;
   }
 
   try {
     const buffer = fs.readFileSync(framePath);
     const b64 = buffer.toString("base64");
 
-    const claude = new Anthropic({ apiKey });
-    const msg = await claude.messages.create({
-      model: "claude-sonnet-4-20250514",
+    // Use DeepSeek via Anthropic-compatible endpoint
+    const Anthropic = (await import("@anthropic-ai/sdk")).default;
+    const ai = new Anthropic({ apiKey, baseURL: "https://api.deepseek.com/anthropic" });
+    const msg = await ai.messages.create({
+      model: "deepseek-chat",
       max_tokens: 300,
       messages: [
         {

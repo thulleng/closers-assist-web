@@ -3,20 +3,16 @@ import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { preprocessMedia } from "./media";
 
-// DeepSeek V4 Pro via Anthropic-compatible endpoint
-// Requires DEEPSEEK_API_KEY in production (Vercel env)
-const deepseek = new Anthropic({
+// DeepSeek V4 — handles text, images, audio, and video via Anthropic-compatible endpoint
+const ai = new Anthropic({
   apiKey: process.env.DEEPSEEK_API_KEY ?? "",
   baseURL: "https://api.deepseek.com/anthropic",
 });
 
-// Claude via native Anthropic — used when images are attached (DeepSeek doesn't support vision)
-const claude = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY ?? "",
-});
-
 const REASONING_FRAMEWORK = `HOW YOU OPERATE — INTERNAL PROCESS:
 Before every response, run through this silently. The user never sees this process — they only see your final answer.
+
+0. LANGUAGE — Detect what language the user is writing in. Respond in THAT language. If they write in Spanish, respond in Spanish. French → French. Arabic → Arabic. Same for any language. Never switch to English unless the user does first. This is non-negotiable.
 
 1. SITUATION — Read what's really happening. Between customers? At the desk? End of month panic? Is this an objection, a calculation, a strategy question, or deal logging?
 2. NUMBERS — What matters here? Their pay plan math. Their unit count. Their bonus gap. Their commission on this deal. If the user's monthly context is provided below, USE IT. Don't ask what you already know.
@@ -594,8 +590,8 @@ async function synthesizeSession(
     .join("\n");
 
   try {
-    const summary = await claude.messages.create({
-      model: "claude-haiku-4-5-20251001",
+    const summary = await ai.messages.create({
+      model: "deepseek-chat",
       max_tokens: 250,
       system:
         "Summarize this sales coaching conversation in 2-3 sentences. Include: what was discussed, any deals logged (names, amounts), decisions made, goals mentioned, and the user's mood or state. Be specific with numbers and names. No fluff. Write like a colleague leaving a sticky note for the next shift.",
@@ -1023,7 +1019,7 @@ export async function POST(req: NextRequest) {
     const encoder = new TextEncoder();
     let assistantResponse = "";
 
-    type StreamParams = Parameters<typeof deepseek.messages.stream>[0];
+    type StreamParams = Parameters<typeof ai.messages.stream>[0];
     type StreamMsgs   = StreamParams["messages"];
 
     const conversation: StreamMsgs = processedMessages
@@ -1076,9 +1072,9 @@ export async function POST(req: NextRequest) {
       );
     });
 
-    // DeepSeek doesn't support vision — use Sonnet for images, Haiku for text
-    const activeClient = claude;  // all traffic now goes through native Anthropic
-    const activeModel = hasImages ? "claude-sonnet-4-20250514" : "claude-haiku-4-5-20251001";
+    // DeepSeek V4 handles text, images, and voice — single model for everything
+    const activeClient = ai;
+    const activeModel = "deepseek-chat";
 
     console.log("[chat] has_images:", hasImages, "model:", activeModel);
 
