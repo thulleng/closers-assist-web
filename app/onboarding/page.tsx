@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useEffect, useState } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Link from "next/link";
 import {
   ArrowRight,
@@ -19,9 +19,7 @@ import Counter from "@/components/Counter";
 
 function OnboardingContent() {
   const searchParams = useSearchParams();
-  const router = useRouter();
   const email = searchParams?.get("email") || "";
-  const [copied, setCopied] = useState(false);
 
   return (
     <div className="relative min-h-screen overflow-hidden loud-bg">
@@ -38,7 +36,7 @@ function OnboardingContent() {
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
               </span>
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                You&rsquo;re in.
+                Subscription active
               </span>
             </div>
             <h1 className="font-display text-[42px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[64px]">
@@ -68,8 +66,12 @@ function OnboardingContent() {
               <div className="absolute right-4 top-4 rounded-full border border-deal/40 bg-deal/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-deal-light">
                 Fastest
               </div>
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
-                style={{ background: "linear-gradient(135deg, #10B981, #059669)" }}>
+              <div
+                className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
+                style={{
+                  background: "linear-gradient(135deg, #10B981, #059669)",
+                }}
+              >
                 <SendIcon className="h-7 w-7 text-white" />
               </div>
               <h3 className="mb-2 font-display text-2xl font-black text-white">
@@ -94,7 +96,7 @@ function OnboardingContent() {
                 </div>
               </div>
               <a
-                href="https://t.me/ClosersAssistBot"
+                href="https://t.me/CloseBot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-deal px-5 py-3.5 text-[15px] font-bold text-white shadow-[0_8px_24px_rgba(16,185,129,0.4)] transition-all hover:shadow-[0_12px_32px_rgba(16,185,129,0.5)]"
@@ -103,15 +105,20 @@ function OnboardingContent() {
                 <ExternalLink className="h-4 w-4" />
               </a>
               <p className="mt-3 text-center text-[11px] text-muted">
-                Or search <span className="font-mono text-deal-light">@ClosersAssistBot</span> in
+                Or search{" "}
+                <span className="font-mono text-deal-light">@CloseBot</span> in
                 Telegram
               </p>
             </div>
 
             {/* Web option */}
             <div className="loud-card group relative overflow-hidden rounded-2xl p-7">
-              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(251,191,36,0.25)]"
-                style={{ background: "linear-gradient(135deg, #FBBF24, #D97706)" }}>
+              <div
+                className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(251,191,36,0.25)]"
+                style={{
+                  background: "linear-gradient(135deg, #FBBF24, #D97706)",
+                }}
+              >
                 <Monitor className="h-7 w-7 text-[#422006]" />
               </div>
               <h3 className="mb-2 font-display text-2xl font-black text-white">
@@ -136,7 +143,7 @@ function OnboardingContent() {
                 </div>
               </div>
               <Link
-                href="/dashboard"
+                href="/dashboard/auto"
                 className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gold-light bg-gold-light/10 px-5 py-3.5 text-[15px] font-bold text-gold-light transition-all hover:bg-gold-light/20"
               >
                 Open Dashboard
@@ -181,10 +188,7 @@ function OnboardingContent() {
                   done: false,
                 },
               ].map((item) => (
-                <div
-                  key={item.step}
-                  className="loud-card rounded-2xl p-6"
-                >
+                <div key={item.step} className="loud-card rounded-2xl p-6">
                   <div className="mb-3 flex items-center gap-3">
                     <div
                       className={`flex h-8 w-8 items-center justify-center rounded-full font-display text-sm font-black ${
@@ -214,7 +218,13 @@ function OnboardingContent() {
             </div>
             <div className="grid grid-cols-3 gap-3 sm:gap-6">
               <div className="text-center">
-                <Counter to={29.99} decimals={2} prefix="$" duration={2000} className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]" />
+                <Counter
+                  to={29.99}
+                  decimals={2}
+                  prefix="$"
+                  duration={2000}
+                  className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]"
+                />
                 <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
                   Per month
                 </div>
@@ -245,20 +255,18 @@ function OnboardingContent() {
             <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2">
               <span className="text-sm text-gold-light">💡</span>
               <span className="text-sm font-medium text-ash">
-                Pro tip: Pin the Telegram bot. It&rsquo;s faster than opening an app.
+                Pro tip: Pin the Telegram bot. It&rsquo;s faster than opening an
+                app.
               </span>
             </div>
             <div className="mt-8">
               <Link
-                href="/pricing"
-                className="btn-loud inline-flex items-center gap-2 rounded-xl px-8 py-4 text-lg"
+                href="/telegram"
+                className="inline-flex items-center gap-2 text-sm text-ash hover:text-white transition-colors underline underline-offset-4"
               >
-                Upgrade to Pro — $29.99/mo
-                <ArrowRight className="h-5 w-5" />
+                How to link Telegram to your account
+                <ArrowRight className="h-3 w-3" />
               </Link>
-              <p className="mt-4 text-sm text-muted">
-                No credit card. Cancel anytime. 14-day free trial.
-              </p>
             </div>
           </div>
         </FadeIn>

@@ -134,14 +134,33 @@ export async function POST(req: NextRequest) {
       .order("sold_date", { ascending: false })
       .limit(20);
 
-    // Recent memory
+    // Recent memory: 100 messages for rich context
     const { data: memory } = await supabase
       .from("agent_memory")
       .select("role, content")
       .eq("user_id", userId)
       .neq("role", "fact")
+      .neq("role", "summary")
       .order("created_at", { ascending: false })
-      .limit(20);
+      .limit(100);
+
+    // Facts: learned knowledge (includes Obsidian vault notes)
+    const { data: facts } = await supabase
+      .from("agent_memory")
+      .select("content")
+      .eq("user_id", userId)
+      .eq("role", "fact")
+      .order("created_at", { ascending: false })
+      .limit(30);
+
+    // Session summaries: condensed past conversations
+    const { data: summaries } = await supabase
+      .from("agent_memory")
+      .select("content, created_at")
+      .eq("user_id", userId)
+      .eq("role", "summary")
+      .order("created_at", { ascending: false })
+      .limit(5);
 
     // ── Build personalized system prompt ──
     const agentName = (profile.agent_name as string) || "Closer";
@@ -241,17 +260,32 @@ Be direct, practical, zero fluff. The person texting you is between customers. G
       systemPrompt += `\n\n## DEALS THIS MONTH (${deals.length})\n${dealLines}`;
     }
 
-    // Memory context
+    // Memory context: 25 turns, richer excerpts
     if (memory && memory.length > 0) {
       const recentMsgs = memory
-        .slice(0, 10)
+        .slice(0, 25)
         .reverse()
-        .map((m: any) => `${m.role === "user" ? "REP" : "YOU"}: ${(m.content || "").slice(0, 150)}`)
+        .map((m: any) => `${m.role === "user" ? "REP" : "YOU"}: ${(m.content || "").slice(0, 200)}`)
         .join("\n");
-      systemPrompt += `\n\n## RECENT CONTEXT\n${recentMsgs}`;
+      systemPrompt += `\n\n## RECENT CONTEXT (last 25 turns)\n${recentMsgs}`;
     }
 
-    systemPrompt += `\n\nThe user is texting you from the lot. Keep responses tight — they have 90 seconds between customers.`;
+    // Facts (includes Obsidian vault notes)
+    if (facts && facts.length > 0) {
+      const factLines = facts.map((f: any) => `- ${f.content}`);
+      systemPrompt += `\n\n## WHAT YOU KNOW ABOUT THIS USER\n${factLines.join("\n")}`;
+    }
+
+    // Session summaries
+    if (summaries && summaries.length > 0) {
+      const summaryLines = summaries.map((s: any) => {
+        const d = new Date(s.created_at);
+        return `[${d.toLocaleDateString("en-US", { month: "short", day: "numeric" })}] ${s.content}`;
+      });
+      systemPrompt += `\n\n## PAST SESSION SUMMARIES\n${summaryLines.join("\n")}`;
+    }
+
+    systemPrompt += `\n\nMEMORY: You know this user. Reference facts and history naturally. Save important details as facts. Never say "I don't remember" -- say "Refresh me on that." Keep responses tight -- 90 seconds between customers.`;
 
     // ── Process media if present ────────────────────────────────────────────
     let processedText = text || "";

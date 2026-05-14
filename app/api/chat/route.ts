@@ -396,7 +396,7 @@ const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
   },
   {
     name: "remember_fact",
-    description: "Save a fact about the user to their persistent memory profile. Use when the user explicitly asks you to remember something, shares a preference, states a goal, or reveals something personal.",
+    description: "Save something important about the user to persistent memory. Use PROACTIVELY -- not just when asked. Save names, preferences, goals, deals they are proud of, personal details, shares a preference, states a goal, or reveals something personal.",
     input_schema: {
       type: "object",
       properties: {

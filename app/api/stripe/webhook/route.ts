@@ -40,12 +40,80 @@ export async function POST(req: NextRequest) {
         amountTotal: session.amount_total,
       });
 
-      // ── Save subscription to Supabase ──────────────────────────────────
+      const email = session.customer_details?.email;
+      const subscriptionId = session.subscription as string;
+      const customerId = session.customer as string;
+
+      // ── Step 1: Auto-create Supabase user ──────────────────────────────
+      let userId: string | null = null;
+
+      if (email) {
+        try {
+          const supabase = createAdminClient();
+
+          // Check if user already exists for this email
+          const { data: existingUsers, error: listError } = await supabase.auth.admin.listUsers();
+          
+          if (!listError && existingUsers) {
+            const existing = existingUsers.users.find(
+              (u) => u.email?.toLowerCase() === email.toLowerCase()
+            );
+            if (existing) {
+              userId = existing.id;
+              console.log(`👤 Existing user found: ${email} (${userId})`);
+            }
+          }
+
+          // Create user if not found
+          if (!userId) {
+            // Generate a secure random password (user will use magic link anyway)
+            const tempPassword = Array.from(
+              crypto.getRandomValues(new Uint8Array(24))
+            )
+              .map((b) => b.toString(16).padStart(2, "0"))
+              .join("");
+
+            const { data: newUser, error: createError } = await supabase.auth.admin.createUser({
+              email,
+              password: tempPassword,
+              email_confirm: true,
+              user_metadata: {
+                source: "stripe_checkout",
+                stripe_session_id: session.id,
+                stripe_customer_id: customerId,
+              },
+            });
+
+            if (createError) {
+              console.error("Failed to create Supabase user:", createError);
+            } else if (newUser?.user) {
+              userId = newUser.user.id;
+              console.log(`🆕 User created: ${email} (${userId})`);
+
+              // Send magic link so they can log in without knowing the password
+              const { error: linkError } = await supabase.auth.admin.generateLink({
+                type: "magiclink",
+                email,
+                options: {
+                  redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://closersassist.com"}/onboarding`,
+                },
+              });
+
+              if (linkError) {
+                console.error("Failed to send magic link:", linkError);
+              } else {
+                console.log(`📧 Magic link sent to ${email}`);
+              }
+            }
+          }
+        } catch (userErr) {
+          console.error("User provisioning error:", userErr);
+        }
+      }
+
+      // ── Step 2: Save subscription to Supabase ──────────────────────────
       try {
         const supabase = createAdminClient();
-        const subscriptionId = session.subscription as string;
-        const customerId = session.customer as string;
-        const email = session.customer_details?.email;
 
         const { error: upsertError } = await supabase
           .from("subscriptions")
@@ -53,6 +121,8 @@ export async function POST(req: NextRequest) {
             {
               stripe_subscription_id: subscriptionId,
               stripe_customer_id: customerId,
+              stripe_session_id: session.id,
+              user_id: userId,
               price_id: null,
               customer_email: email || null,
               status: "active",
@@ -66,14 +136,13 @@ export async function POST(req: NextRequest) {
         if (upsertError) {
           console.error("Failed to save subscription:", upsertError);
 
-          // If table doesn't exist, log SQL to run
           if (upsertError.code === "42P01") {
             console.warn(
               "⚠️  subscriptions table missing. Run: sql/create_subscriptions.sql in Supabase dashboard"
             );
           }
         } else {
-          console.log(`💾 Subscription saved: ${subscriptionId} (${email})`);
+          console.log(`💾 Subscription saved: ${subscriptionId} (${email}, user=${userId})`);
         }
       } catch (dbErr) {
         console.error("Supabase error:", dbErr);
