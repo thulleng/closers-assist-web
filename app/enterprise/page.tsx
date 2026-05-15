@@ -114,8 +114,8 @@ export default function EnterprisePage() {
       <section className="py-8 px-4 max-w-4xl mx-auto">
         <div className="relative rounded-2xl overflow-hidden border border-white/[0.06] shadow-[0_0_60px_rgba(16,185,129,0.08)]">
           <video
-            src="/enterprise-video.mp4?v=1"
-            poster="/enterprise-video.mp4?v=1#t=0.1"
+            src="/enterprise-video.mp4?v=3"
+            poster="/enterprise-poster.jpg"
             controls
             preload="metadata"
             className="w-full h-auto"

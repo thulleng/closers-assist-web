@@ -84,7 +84,7 @@ export async function transcribeAudio(block: AudioBlock): Promise<string> {
   }
 }
 
-// ── Video: ffmpeg frame extraction + Claude Vision ───────────────────────────
+// ── Video: ffmpeg frame extraction + DeepSeek Vision ───────────────────────────
 
 function getFfmpegPath(): string {
   try {
@@ -164,9 +164,9 @@ async function describeFrame(
     const buffer = fs.readFileSync(framePath);
     const b64 = buffer.toString("base64");
 
-    // Use DeepSeek via Anthropic-compatible endpoint
-    const Anthropic = (await import("@anthropic-ai/sdk")).default;
-    const ai = new Anthropic({ apiKey, baseURL: "https://api.deepseek.com/anthropic" });
+    // Use DeepSeek for image analysis
+    const DeepSeek = (await import("@anthropic-ai/sdk")).default;
+    const ai = new DeepSeek({ apiKey, baseURL: "https://api.deepseek.com/anthropic" });
     const msg = await ai.messages.create({
       model: "deepseek-chat",
       max_tokens: 300,

@@ -59,8 +59,8 @@ export async function POST(req: NextRequest) {
           }
 
           // Linked — call AI
-          const { default: Anthropic } = await import("@anthropic-ai/sdk");
-          const deepseek = new Anthropic({
+          const { default: DeepSeek } = await import("@anthropic-ai/sdk");
+          const deepseek = new DeepSeek({
             apiKey: process.env.DEEPSEEK_API_KEY || "",
             baseURL: "https://api.deepseek.com/anthropic",
           });

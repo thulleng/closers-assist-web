@@ -81,7 +81,7 @@ export default async function TelegramPage({
               </div>
 
               <p className="mt-4 text-sm text-muted">
-                Search <span className="font-mono text-deal-light">@ClosersAssistBot</span> on Telegram. Same Claude engine. Web + Telegram — one agent.
+                Search <span className="font-mono text-deal-light">@ClosersAssistBot</span> on Telegram. Same AI engine. Web + Telegram — one agent.
               </p>
             </FadeIn>
 

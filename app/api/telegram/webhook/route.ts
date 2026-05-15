@@ -169,7 +169,7 @@ export async function POST(req: NextRequest) {
     const fullName = [firstName, lastName].filter(Boolean).join(" ");
     const title = (profile.title as string) || "";
     const company = (profile.company as string) || "";
-    const industry = (profile.industry as string) || "automotive";
+    const industry = (profile.industry as string) || "default";
     const yearsInSales = (profile.years_in_sales as string) || "";
     const coachingStyle = (profile.coaching_style as string) || "direct";
     const agentFocus = (profile.agent_focus as string) || "closing rate";
@@ -213,8 +213,8 @@ ${REASONING_FRAMEWORK}
 
 PROACTIVE RULES:
 - If the user mentions a deal in passing, OFFER to log it: "Want me to add that to your tracker?"
-- If their monthly context shows they're close to a bonus tier, POINT IT OUT: "You're 2 units from $500 — that RAV4 deal puts you one away."
-- If you notice a pattern (3 minis in a row, low gross, slow week), SAY SOMETHING: "Three minis this week. Want to talk about how to turn the next one into a full deal?"
+- If their monthly context shows they're close to a bonus tier, POINT IT OUT: "You're 2 deals from $500 — that next close puts you one away."
+- If you notice a pattern (3 small deals in a row, low volume, slow week), SAY SOMETHING: "Three small ones this week. Want to talk about how to turn the next one into a bigger deal?"
 - Never wait to be asked what you already know from their context.`,
 
       "real-estate": `You are Closers Assist — an elite AI sales partner for real estate agents. You understand the full transaction lifecycle: buyer consults, listing appointments, offers, negotiations, inspections, appraisals, and closings.
@@ -243,6 +243,23 @@ PROACTIVE RULES: Reference monthly context. Flag pipeline gaps. Scripts first, s
 ${REASONING_FRAMEWORK}
 YOUR VOICE: Clinical, precise. Like the senior rep who knows every surgeon's preferences.
 PROACTIVE RULES: Reference monthly context. Scripts first, clinical rationale second.`,
+
+      retail: `You are Closers Assist — an elite AI sales partner for big-ticket retail closers. Furniture, appliances, electronics, mattresses. Financing math, attachment selling, floor-up techniques.
+${REASONING_FRAMEWORK}
+YOUR VOICE: Energetic, practical. Like the floor manager who still takes ups.
+PROACTIVE RULES: Reference monthly context. Flag attachment opportunities. Scripts first.`,
+
+      rental: `You are Closers Assist — rental sales: Turo, Airbnb, RV, boat, truck. Handle pricing disputes, damage deposit concerns, cancellation pushback, upsells, 5-star review asks.
+${REASONING_FRAMEWORK}
+Give 2-3 plays with word-for-word scripts and confidence %.`,
+
+      project_manager: `You are Closers Assist — project managers who sell: pitching, upselling scope, defending budgets, closing change orders.
+${REASONING_FRAMEWORK}
+Handle budget objections, SOW defense, timeline pushback, closing verbal yes to signed contract. Give 2-3 plays with scripts and confidence %.`,
+
+      other_sales: `You are Closers Assist — general sales: universal objections — price, timing, think about it, decision-maker stalls, ghosting.
+${REASONING_FRAMEWORK}
+Give 2-3 plays with word-for-word scripts and confidence %. Root everything in closing fundamentals.`,
 
       default: `You are Closers Assist — an elite AI sales partner built for commission-based closers. Handle objections, calculate numbers, write follow-ups, and close deals.
 ${REASONING_FRAMEWORK}
@@ -317,8 +334,8 @@ Be direct, practical, zero fluff. The person texting you is between customers. G
             });
           } else if (mediaType === "photo") {
             const b64 = fileBuffer.toString("base64");
-            const Anthropic = (await import("@anthropic-ai/sdk")).default;
-            const ai = new Anthropic({
+            const DeepSeek = (await import("@anthropic-ai/sdk")).default;
+            const ai = new DeepSeek({
               apiKey: process.env.DEEPSEEK_API_KEY || "",
               baseURL: "https://api.deepseek.com/anthropic",
             });
@@ -352,8 +369,8 @@ Be direct, practical, zero fluff. The person texting you is between customers. G
     });
 
     // ── Call AI ──
-    const { default: Anthropic } = await import("@anthropic-ai/sdk");
-    const deepseek = new Anthropic({
+    const { default: DeepSeek } = await import("@anthropic-ai/sdk");
+    const deepseek = new DeepSeek({
       apiKey: process.env.DEEPSEEK_API_KEY || "",
       baseURL: "https://api.deepseek.com/anthropic",
     });

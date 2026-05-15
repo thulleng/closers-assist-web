@@ -1,10 +1,18 @@
-import Anthropic from "@anthropic-ai/sdk";
+import DeepSeek from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { preprocessMedia } from "./media";
+import { withHealing, fallbackResponse } from "./middleware/healing";
+import {
+  orgoBash,
+  orgoScreenshot,
+  orgoClick,
+  orgoType,
+  orgoCloneComputer,
+} from "./orgo";
 
-// DeepSeek V4 — handles text, images, audio, and video via Anthropic-compatible endpoint
-const ai = new Anthropic({
+// DeepSeek V4 — handles text, images, audio, and video via DeepSeek-compatible endpoint
+const ai = new DeepSeek({
   apiKey: process.env.DEEPSEEK_API_KEY ?? "",
   baseURL: "https://api.deepseek.com/anthropic",
 });
@@ -19,9 +27,11 @@ Before every response, run through this silently. The user never sees this proce
 3. STRATEGY — What's the highest-probability move? Give 1-3 options ranked by likelihood of closing. If there's a clear best play, lead with it — don't present a menu.
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
-const AUTOMOTIVE_PROMPT = `You are Closers Assist — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
+  const AUTOMOTIVE_PROMPT = `You are Closers Assist — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
+  
+${REASONING_FRAMEWORK}
 
-YOUR IDENTITY:
+  YOUR IDENTITY:
 You speak the lot fluently — minis, full deals, street purchases, half-minis. You know T.O. timing, desk strategy, CXI protection, front vs. back gross, volume bonuses, and the difference between 10 countable units and 10 sold. You understand that a $200 mini isn't just $200 — it's a half-unit toward a $500 bonus at 11. You think in paychecks, not just deals.
 
 YOUR VOICE:
@@ -174,6 +184,18 @@ function buildPersonalizedPrompt(
   // Style + focus
   intro.push(`Your coaching style is ${coachingStyle}. Your primary focus is ${agentFocus}.`);
 
+  // Personality profile — persistent voice, tone, quirks
+  const personality = (profile.personality_profile as Record<string, unknown>) || {};
+  const voiceTone     = (personality.voice_tone     as string) || "";
+  const communication = (personality.communication as string) || "";
+  const quirks        = (personality.quirks        as string) || "";
+  const shorthand     = (personality.shorthand     as string) || "";
+
+  if (voiceTone)     intro.push(`Your voice tone: ${voiceTone}.`);
+  if (communication) intro.push(`Your communication style: ${communication}.`);
+  if (quirks)        intro.push(`Your quirks: ${quirks}.`);
+  if (shorthand)     intro.push(`Shorthand you use with this person: ${shorthand}.`);
+
   // Goal
   if (customGoals) intro.push(`Their goal this month: ${customGoals}.`);
 
@@ -194,12 +216,12 @@ const MEMORY_INSTRUCTIONS = `HOW TO TALK TO THIS PERSON:
 You know them. The history above IS your memory — every deal they've told you about, every objection you've helped them handle, every follow-up you've written together. The memory profile above tells you who they are. The conversation history shows you what you've discussed.
 
 Talk like someone who's been in their corner for weeks:
-- Greet them by name naturally — not like a chatbot, like a coach who just walked onto the lot
-- Reference specific deals, customers, and situations from your history: "How'd the Cunningham deal close?" not "Have you sold any cars recently?"
+- Greet them by name naturally — not like a chatbot, like a coach checking in
+- Reference specific deals, customers, and situations from your history: "How'd the Hansen deal close?" not "Have you closed anything recently?"
 - Call back to past advice you gave: "Last time we talked about payment objections — did the 'total cost of ownership' angle work?"
-- Notice patterns: "Three minis this week. Last month you were here too before you turned it around."
-- Celebrate wins: "That $4k gross on Cunningham — that's your best deal this month."
-- Push them when they're slacking: "You're $1 above draw with 7 units to bonus. What's the play today?"
+- Notice patterns: "Three small deals this week. Last month you were here too before you turned it around."
+- Celebrate wins: "That $4k commission on Hansen — that's your best deal this month."
+- Push them when they're slacking: "You're at quota with 4 deals to bonus. What's the play today?"
 
 Voice: Direct, warm, familiar. Like a veteran closer who's been mentoring them for months. Not a customer service agent. Not an AI assistant. A partner.
 
@@ -210,18 +232,18 @@ const TOOLS_INSTRUCTIONS = `INCOME TRACKER TOOLS:
 CRITICAL — READ THIS FIRST:
 You MUST call the appropriate tool whenever the user mentions a deal action (selling, logging, updating, deleting, summarizing). Saying "I logged it" / "saved" / "added to your tracker" WITHOUT calling the matching tool is a lie that erodes user trust and corrupts their income data. NEVER claim a deal was saved unless add_deal actually returned ok: true. If you can't call the tool for any reason, say so explicitly: "I wasn't able to log that — try again?" — do not pretend.
 
-You can manage the user's deal log directly. Whenever the user mentions selling a deal, getting a mini, taking in a street purchase, wanting to update or remove a logged deal, or asking how the month is shaping up — USE THE TOOLS, don't just chat.
+You can manage the user's deal log directly. Whenever the user mentions closing a deal, logging a sale, wanting to update or remove a logged deal, or asking how the month is shaping up — USE THE TOOLS, don't just chat.
 
 Tools available:
-- add_deal — log a new sale. Use when the user says things like "I just sold a Camry to the Johnsons", "got a half mini today", "logged a street purchase for $4k". deal_type is one of: half_mini, full_mini, full_deal, street_purchase. For full_deal, you need front_gross. Other fields (vehicle, sold_date, notes) are optional — if sold_date isn't given, leave it blank and the tool defaults to today.
-- update_deal — fix or amend an existing deal by id. Use when the user corrects something ("actually that was a full mini, not a half").
+- add_deal — log a new sale. Use when the user says things like "I just closed the Hansen deal", "booked a $5k roofing job", "signed a new policy". deal_type is one of: deal (standard), full_deal, half_mini, full_mini, street_purchase (auto-specific). For deal, you need front_gross (the dollar amount). Other fields (customer_name, sold_date, notes) are optional — if sold_date isn't given, leave it blank and the tool defaults to today.
+- update_deal — fix or amend an existing deal by id. Use when the user corrects something ("actually that was $5k, not $4k").
 - delete_deal — remove a logged deal by id. Confirm with the user before deleting.
-- list_deals — return deals for a given month/year (defaults to current month). Use when the user asks "what did I sell this month" or "show me last month".
-- get_monthly_summary — return units, gross, commission, draw balance, and units-to-next-bonus for a month. Use when the user asks "where am I at", "how's the month looking", "what's my paycheck".
+- list_deals — return deals for a given month/year. Use when the user asks "what did I close this month" or "show me last month".
+- get_monthly_summary — return deal count, total volume, commission, draw balance, and deals-to-next-bonus. Use when the user asks "where am I at", "how's the month looking".
 
 Rules:
-- Don't ask the user for their commission rate or pay-plan numbers — the tools read pay_plans automatically. If they don't have a plan saved, the system creates a default automotive one on first deal log; you can mention this casually.
-- After a tool returns, narrate the result naturally to the user (e.g. "Logged the Johnson Camry — \${commission} on the books, you're at X units this month"). Don't dump raw JSON.
+- Don't ask the user for their commission rate or pay-plan numbers — the tools read pay_plans automatically. If they don't have a plan saved, the system creates a default one on first deal log; you can mention this casually.
+- After a tool returns, narrate the result naturally to the user (e.g. "Logged the Hansen deal — \${commission} on the books, you're at X deals this month"). Don't dump raw JSON.
 - If the user mentions a deal in passing without explicitly asking to log it, OFFER to log it: "Want me to add that to your tracker?" Don't auto-log without consent.`;
 
 type TextBlock  = { type: "text"; text: string };
@@ -273,16 +295,16 @@ type DealType = "half_mini" | "full_mini" | "full_deal" | "street_purchase";
 const DEAL_TYPES: DealType[] = ["half_mini", "full_mini", "full_deal", "street_purchase"];
 
 const DEFAULT_PAY_PLAN = {
-  industry: "automotive",
-  commission_rate: 0.25,
-  monthly_draw: 2600,
+  industry: "general",
+  commission_rate: 0.20,
+  monthly_draw: 3000,
   half_mini_amount: 200,
   full_mini_amount: 400,
   street_purchase_amount: 500,
   volume_bonuses: [
-    { units: 11, bonus: 500 },
-    { units: 13, bonus: 750 },
-    { units: 15, bonus: 1000 },
+    { units: 8, bonus: 500 },
+    { units: 12, bonus: 1000 },
+    { units: 16, bonus: 2000 },
   ],
   cxi_threshold: 4.8,
   cxi_bonus: 250,
@@ -329,7 +351,7 @@ function monthWindow(month?: number, year?: number): { start: string; end: strin
   return { start, end, label };
 }
 
-const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
+const TOOL_DEFINITIONS: DeepSeek.Messages.Tool[] = [
   {
     name: "add_deal",
     description: "Log a new deal to the user's deals table. Auto-calculates commission and units from their pay plan. Returns the saved row.",
@@ -404,6 +426,45 @@ const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
         fact: { type: "string", description: "The fact to remember." },
       },
       required: ["category", "fact"],
+    },
+  },
+  {
+    name: "orgo_bash",
+    description: "Run a shell command on the user's Orgo cloud computer. Use for terminal operations, file management, installing packages, or any command-line task.",
+    input_schema: {
+      type: "object",
+      properties: {
+        command: { type: "string", description: "The shell command to execute." },
+      },
+      required: ["command"],
+    },
+  },
+  {
+    name: "orgo_screenshot",
+    description: "Take a screenshot of the user's Orgo cloud computer. Use to see what's on the screen — browser windows, terminal output, application state.",
+    input_schema: { type: "object", properties: {} },
+  },
+  {
+    name: "orgo_click",
+    description: "Click at coordinates on the user's Orgo cloud computer. Use to interact with UI elements, buttons, links.",
+    input_schema: {
+      type: "object",
+      properties: {
+        x: { type: "number", description: "X coordinate to click." },
+        y: { type: "number", description: "Y coordinate to click." },
+      },
+      required: ["x", "y"],
+    },
+  },
+  {
+    name: "orgo_type",
+    description: "Type text into the user's Orgo cloud computer. Use to fill forms, compose messages, or enter commands into applications.",
+    input_schema: {
+      type: "object",
+      properties: {
+        text: { type: "string", description: "Text to type." },
+      },
+      required: ["text"],
     },
   },
 ];
@@ -513,6 +574,43 @@ async function buildMemoryProfile(
     } catch { /* ignore */ }
   }
 
+  // 0c. Morning brief — today's proactive check-in
+  if (supabase && userId) {
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const { data: briefs } = await supabase
+        .from("agent_memory")
+        .select("content")
+        .eq("user_id", userId)
+        .eq("role", "system")
+        .like("content", `[Morning Brief ${today}%`)
+        .limit(1);
+
+      if (briefs?.length) {
+        parts.push(`MORNING BRIEF (address this proactively):\n${briefs[0].content}`);
+      }
+    } catch { /* ignore */ }
+  }
+
+  // 0d. Active alerts — pace warnings, pattern flags
+  if (supabase && userId) {
+    try {
+      const { data: alerts } = await supabase
+        .from("agent_memory")
+        .select("content")
+        .eq("user_id", userId)
+        .eq("role", "system")
+        .like("content", "[PACE ALERT]%")
+        .gte("created_at", new Date(Date.now() - 72 * 3600000).toISOString())
+        .limit(3);
+
+      if (alerts?.length) {
+        const alertText = alerts.map((a: { content: string }) => a.content).join("\n");
+        parts.push(`ACTIVE ALERTS — address these proactively when the user opens chat:\n${alertText}`);
+      }
+    } catch { /* ignore */ }
+  }
+
   // 1. Identity from profile
   if (profileData) {
     const name = [profileData.first_name, profileData.last_name].filter(Boolean).join(" ") || "the rep";
@@ -537,7 +635,7 @@ async function buildMemoryProfile(
   if (memoryMessages.length > 0) {
     const pastTurns = memoryMessages.filter((m) => m.role === "user").length;
     const recentTopics = new Set<string>();
-    const topicPattern = /\b(objection|script|commission|follow.?up|T\.?O\.?|desk|mini|deal|customer|bonus|CXI|review|text|email)\b/gi;
+    const topicPattern = /\b(objection|script|commission|follow.?up|deal|customer|bonus|review|text|email|pipeline|quota|close)\b/gi;
 
     for (const msg of memoryMessages.slice(-30)) {
       if (msg.role === "user" && typeof msg.content === "string") {
@@ -830,6 +928,45 @@ async function dispatchTool(
       return { ok: true, saved: fact, category, total_facts: count ?? 1 };
     }
 
+    // ── Orgo cloud computer actions ────────────────────────────
+
+    if (name.startsWith("orgo_")) {
+      // Get the user's Orgo computer ID from their profile
+      const { data: profile } = await supabase
+        .from("agent_profiles")
+        .select("orgo_computer_id")
+        .eq("user_id", userId)
+        .single();
+
+      const computerId = (profile as { orgo_computer_id?: string } | null)?.orgo_computer_id;
+
+      if (!computerId) {
+        return { error: "No Orgo computer assigned to this account yet. Contact support to provision your cloud agent." };
+      }
+
+      switch (name) {
+        case "orgo_bash": {
+          const command = args.command as string;
+          const result = await orgoBash(computerId, command);
+          return result;
+        }
+        case "orgo_screenshot": {
+          const result = await orgoScreenshot(computerId);
+          return result;
+        }
+        case "orgo_click": {
+          const result = await orgoClick(computerId, Number(args.x), Number(args.y));
+          return result;
+        }
+        case "orgo_type": {
+          const result = await orgoType(computerId, args.text as string);
+          return result;
+        }
+        default:
+          return { error: `unknown orgo tool: ${name}` };
+      }
+    }
+
     return { error: `unknown tool: ${name}` };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
@@ -838,7 +975,7 @@ async function dispatchTool(
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, industry = "automotive", dealId } = await req.json();
+    const { messages, industry = "default", dealId } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Invalid messages" }), {
@@ -919,7 +1056,7 @@ export async function POST(req: NextRequest) {
       const [profileResult, memoryResult] = await Promise.all([
         supabase
           .from("agent_profiles")
-          .select("first_name, last_name, company, title, years_in_sales, industry, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, agent_name, coaching_style, agent_focus, custom_goals")
+          .select("first_name, last_name, company, title, years_in_sales, industry, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, agent_name, coaching_style, agent_focus, custom_goals, personality_profile")
           .eq("user_id", user.id)
           .single(),
         supabase
@@ -927,6 +1064,7 @@ export async function POST(req: NextRequest) {
           .select("role, content, created_at")
           .eq("user_id", user.id)
           .neq("role", "fact")
+          .neq("role", "summary")
           .order("created_at", { ascending: false })
           .limit(100),
       ]);
@@ -996,7 +1134,7 @@ export async function POST(req: NextRequest) {
     const contextMessages = mergeMessages(memoryMessages, messages);
 
     // ── Pre-process audio/video uploads ──────────────────────────────────────
-    // Transcribe audio via Deepgram, extract video frames via ffmpeg + Claude Vision.
+    // Transcribe audio via Deepgram, extract video frames via DeepSeek Vision.
     // This runs before the stream so the model sees clean text, not raw media.
     //
     // Normalize string content → [{type:"text", text:...}] first.
@@ -1088,7 +1226,7 @@ export async function POST(req: NextRequest) {
               model: activeModel,
               max_tokens: 1024,
               system: systemPrompt,
-              tools: hasImages ? undefined : TOOL_DEFINITIONS, // Claude tool format differs
+              tools: hasImages ? undefined : TOOL_DEFINITIONS, // tool format differs for images
               messages: conversation,
             };
             // First hop only: when the user has unambiguously described a
@@ -1107,7 +1245,23 @@ export async function POST(req: NextRequest) {
               "tools count:", TOOL_DEFINITIONS.length,
               "tool_choice:", streamParams.tool_choice ?? "default-auto");
 
-            const anthropicStream = activeClient.messages.stream(streamParams);
+            // Hop 0: use self-healing wrapper with retry + backoff.
+            // Subsequent hops: direct stream (connection already proven).
+            let anthropicStream: Awaited<ReturnType<typeof activeClient.messages.stream>>;
+            if (hop === 0) {
+              const healed = await withHealing(
+                () => activeClient.messages.stream(streamParams),
+                "DeepSeek stream"
+              );
+              if (!healed.success || !healed.result) {
+                controller.enqueue(encoder.encode(fallbackResponse()));
+                controller.close();
+                return;
+              }
+              anthropicStream = healed.result;
+            } else {
+              anthropicStream = activeClient.messages.stream(streamParams);
+            }
 
             for await (const chunk of anthropicStream) {
               if (
@@ -1122,7 +1276,7 @@ export async function POST(req: NextRequest) {
             const final = await anthropicStream.finalMessage();
             console.log("[chat] hop", hop,
               "stop_reason:", final.stop_reason,
-              "content_types:", final.content.map((b) => b.type),
+              "content_types:", final.content.map((b: { type: string }) => b.type),
               "user_id:", user?.id ?? "anon");
 
             if (final.stop_reason !== "tool_use") break;
@@ -1131,10 +1285,10 @@ export async function POST(req: NextRequest) {
             conversation.push({ role: "assistant", content: final.content });
 
             const toolUseBlocks = final.content.filter(
-              (b): b is Extract<typeof b, { type: "tool_use" }> => b.type === "tool_use"
+              (b: { type: string }): b is { type: "tool_use" } & typeof b => b.type === "tool_use"
             );
             const toolResults = await Promise.all(
-              toolUseBlocks.map(async (tu) => {
+              toolUseBlocks.map(async (tu: { name: string; input: unknown; id: string }) => {
                 const result = user
                   ? await dispatchTool(tu.name, tu.input as ToolArgs, supabase, user.id)
                   : { error: "not authenticated" };

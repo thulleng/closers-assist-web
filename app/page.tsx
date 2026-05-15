@@ -40,6 +40,7 @@ import TiltCard from "@/components/TiltCard";
 import MobileCTABar from "@/components/MobileCTABar";
 import WaitlistCounter from "@/components/WaitlistCounter";
 import NewsletterSection from "@/components/NewsletterSection";
+import DemoChat from "@/components/DemoChat";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -601,6 +602,31 @@ export default function HomePage() {
               </div>
             </FadeIn>
           </div>
+        </div>
+      </section>
+
+      {/* DEMO CHAT — Try it live */}
+      <section className="relative overflow-hidden loud-bg">
+        <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center">
+          <FadeIn>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                Try it live
+              </span>
+            </div>
+            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
+              Ask it anything.
+              <br />
+              <span className="text-shine font-black">Right now.</span>
+            </h2>
+            <p className="text-ash mb-10 max-w-md mx-auto">
+              Type an objection, a deal question, or a follow-up — see what your AI closer would say. No signup.
+            </p>
+          </FadeIn>
+          <FadeIn delay={150}>
+            <DemoChat />
+          </FadeIn>
         </div>
       </section>
 

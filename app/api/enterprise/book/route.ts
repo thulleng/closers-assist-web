@@ -24,8 +24,37 @@ export async function POST(req: NextRequest) {
     });
 
     if (error) {
-      // Table might not exist — try to log anyway
       console.warn("Failed to insert enterprise lead:", error.message);
+    }
+
+    // ── Notify Thul via Telegram ──────────────────────────────────────
+    const botToken = process.env.TELEGRAM_BOT_TOKEN;
+    const thulChatId = process.env.THUL_TELEGRAM_CHAT_ID; // Set in Vercel env
+
+    if (botToken && thulChatId) {
+      const alert = [
+        `🔔 *New Enterprise Lead*`,
+        ``,
+        `*Name:* ${name}`,
+        `*Email:* ${email}`,
+        `*Company:* ${company}`,
+        teamSize ? `*Team size:* ${teamSize}` : null,
+        message ? `*Message:* ${message.slice(0, 200)}` : null,
+        ``,
+        `_Reply to this lead at ${email}_`,
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      await fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          chat_id: thulChatId,
+          text: alert,
+          parse_mode: "Markdown",
+        }),
+      }).catch((e) => console.warn("Telegram notify failed:", e));
     }
 
     return NextResponse.json({ success: true });

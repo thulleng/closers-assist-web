@@ -17,12 +17,14 @@ const TIERS = [
     buyer: "solo" as Buyer,
     monthly: 29.99,
     annual: 23.99,
+    annualYearly: 287.88,
     unit: "rep",
     seats: 1,
     tagline: "For the solo closer who wants to make more money this month.",
     cta: "Get Started",
     href: "/pricing",
-    priceId: "price_1TP9nMJzG6xU26F9ii7RlgCf",
+    monthlyPriceId: "price_1TP9nMJzG6xU26F9ii7RlgCf",
+    annualPriceId: "price_1TXA7OJzG6xU26F9OQy2HVB9",
     features: [
       "Everything your agent can do — no feature gating",
       "Unlimited uploads, skills, instructions, memory",
@@ -37,12 +39,14 @@ const TIERS = [
     buyer: "team" as Buyer,
     monthly: 624.75,
     annual: 499.75,
+    annualYearly: 5997,
     unit: "team",
     seats: 25,
     tagline: "For the sales manager rolling it out to the whole team.",
     cta: "Get Started",
     href: "/pricing",
-    priceId: "price_1TP9oGJzG6xU26F9N8yjczSE",
+    monthlyPriceId: "price_1TP9oGJzG6xU26F9N8yjczSE",
+    annualPriceId: "price_1TXA96JzG6xU26F97H06sQkr",
     features: [
       "Everything in Starter — for up to 25 reps",
       "Team dashboard — units, leaderboards, CXI tracking",
@@ -57,6 +61,7 @@ const TIERS = [
     buyer: "dealership" as Buyer,
     monthly: 0,
     annual: 0,
+    annualYearly: 0,
     unit: "team",
     seats: 100,
     tagline: "For the dealership, brokerage, or agency rolling out at scale.",
@@ -81,7 +86,7 @@ const BUYER_TO_TIER: Record<Buyer, string> = {
 const FAQ = [
   {
     q: "How does billing actually work?",
-    a: "Starter is billed per rep per month ($29.99 each). Pro is $24.99/rep/mo billed as a flat team rate — $624.75/mo covers up to 25 reps on one invoice. Elite is custom pricing — contact us for your rate.",
+    a: "Starter is $29.99/mo per rep or $287.88/yr (20% off — $23.99/mo equivalent). Pro is $624.75/mo flat team rate or $5,997/yr (20% off — $499.75/mo equivalent) covering up to 25 reps. Elite is custom pricing — contact us for your rate.",
   },
   {
     q: "What if my team is bigger than 25 but smaller than 100?",
@@ -226,10 +231,10 @@ export default function PricingPage() {
             ].map((row, i) => (
               <div
                 key={row.feat}
-                className="group grid grid-cols-[auto,1fr,1fr] gap-0 rounded-xl border border-white/5 bg-white/[0.02] transition-all duration-300 hover:border-deal/30 hover:bg-white/[0.05] hover:shadow-[inset_0_0_40px_rgba(16,185,129,0.04)]"
+                className="group grid grid-cols-1 gap-2 rounded-xl border border-white/5 bg-white/[0.02] transition-all duration-300 hover:border-deal/30 hover:bg-white/[0.05] hover:shadow-[inset_0_0_40px_rgba(16,185,129,0.04)] sm:grid-cols-[auto,1fr,1fr] sm:gap-0"
               >
                 {/* === OUR COLUMN — ClosersAssist === */}
-                <div className="flex items-start gap-3 rounded-l-xl p-5 transition-colors duration-300 bg-deal/[0.03] group-hover:bg-deal/[0.06]">
+                <div className="flex items-start gap-3 rounded-xl p-5 transition-colors duration-300 bg-deal/[0.03] group-hover:bg-deal/[0.06] sm:rounded-l-xl sm:rounded-r-none">
                   {/* Glowing check circle */}
                   <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-deal/20 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
                     <Check className="h-3.5 w-3.5 text-deal" strokeWidth={3} />
@@ -238,12 +243,12 @@ export default function PricingPage() {
                 </div>
 
                 {/* === THEIR COLUMN — Free AI === */}
-                <div className="flex items-start gap-3 rounded-r-xl p-5 opacity-60 group-hover:opacity-50 transition-opacity duration-300">
-                  {/* Dim X circle */}
-                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-white/5">
-                    <X className="h-3.5 w-3.5 text-ash/30" strokeWidth={2} />
+                <div className="flex items-start gap-3 rounded-xl p-5 opacity-85 transition-opacity duration-300 sm:rounded-r-xl sm:rounded-l-none">
+                  {/* X circle */}
+                  <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-gold/10">
+                    <X className="h-3.5 w-3.5 text-gold/60" strokeWidth={2} />
                   </div>
-                  <span className="text-sm text-muted leading-relaxed">{row.them}</span>
+                  <span className="text-sm text-gold-light/80 leading-relaxed">{row.them}</span>
                 </div>
               </div>
             ))}
@@ -285,7 +290,7 @@ export default function PricingPage() {
         <p className="mb-4 text-center text-sm text-ash">
           Tell us who you are — we&rsquo;ll highlight your plan.
         </p>
-        <div className="grid grid-cols-3 gap-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
           {[
             {
               id: "solo" as Buyer,
@@ -415,14 +420,21 @@ export default function PricingPage() {
                       Custom
                     </div>
                   ) : (
-                    <div className="flex items-baseline gap-0.5">
-                      <span className="font-mono text-lg text-ash/60">$</span>
-                      <span className={`font-display text-5xl font-black leading-none ${
-                        highlight ? "text-white" : "text-bone"
-                      }`}>
-                        {price.toFixed(2).replace(/\.00$/, "")}
-                      </span>
-                      <span className="font-mono text-sm text-ash/60">/mo</span>
+                    <div>
+                      <div className="flex items-baseline gap-0.5">
+                        <span className="font-mono text-lg text-ash/60">$</span>
+                        <span className={`font-display text-5xl font-black leading-none ${
+                          highlight ? "text-white" : "text-bone"
+                        }`}>
+                          {price.toFixed(2).replace(/\.00$/, "")}
+                        </span>
+                        <span className="font-mono text-sm text-ash/60">/mo</span>
+                      </div>
+                      {billing === "annual" && tier.id !== "elite" && (
+                        <div className="mt-0.5 text-xs text-deal-light font-mono">
+                          or ${tier.annualYearly.toFixed(2).replace(/\.00$/, "")} billed once/yr
+                        </div>
+                      )}
                     </div>
                   )}
                 </div>
@@ -431,9 +443,11 @@ export default function PricingPage() {
                 <div className={`mb-5 rounded-lg px-3 py-2 font-mono text-xs font-medium ${
                   highlight ? "bg-deal/[0.08] text-deal-light border border-deal/20" : "bg-white/[0.03] text-muted border border-white/[0.04]"
                 }`}>
-                  {tier.id === "starter" && "Per rep. Billed monthly."}
+                  {tier.id === "starter" && (
+                    <>{billing === "annual" ? "Billed annually. 14-day free trial." : "Per rep. Billed monthly."}</>
+                  )}
                   {tier.id === "pro" && (
-                    <><span className="text-bone">${(price / 25).toFixed(2)}</span> / rep at 25 reps — flat team rate</>
+                    <><span className="text-bone">${(price / 25).toFixed(2)}</span> / rep at 25 reps — {billing === "annual" ? "billed annually" : "flat team rate"}</>
                   )}
                   {tier.id === "elite" && "Starting at $19.99/rep/mo — contact us"}
                 </div>
@@ -461,16 +475,19 @@ export default function PricingPage() {
                 </ul>
 
                 {/* CTA */}
-                {"priceId" in tier ? (
+                {!("monthlyPriceId" in tier && "annualPriceId" in tier) ? null : (
                   <button
                     onClick={async () => {
                       setLoadingTier(tier.id);
                       setCheckoutError(null);
-                      const err = await startCheckout((tier as { priceId: string }).priceId);
+                      const priceId = billing === "annual" 
+                        ? (tier as { annualPriceId: string }).annualPriceId
+                        : (tier as { monthlyPriceId: string }).monthlyPriceId;
+                      const err = await startCheckout(priceId);
                       setLoadingTier(null);
                       if (err) setCheckoutError(err);
                     }}
-                    disabled={loadingTier === tier.id}
+                    disabled={loadingTier === tier.id || (billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER"))}
                     className={`block w-full rounded-xl py-3.5 text-center text-sm font-bold tracking-wide transition-all duration-300 disabled:opacity-60 disabled:cursor-not-allowed ${
                       highlight
                         ? "bg-gradient-to-r from-deal to-emerald-500 text-pit shadow-[0_8px_24px_rgba(16,185,129,0.3)] hover:shadow-[0_12px_32px_rgba(16,185,129,0.45)] hover:-translate-y-0.5"
@@ -482,9 +499,10 @@ export default function PricingPage() {
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                         Redirecting…
                       </span>
-                    ) : tier.cta}
+                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : tier.cta}
                   </button>
-                ) : (
+                )}
+                {!("monthlyPriceId" in tier) && (
                   <Link
                     href={tier.href}
                     className={`block rounded-xl py-3.5 text-center text-sm font-bold tracking-wide transition-all duration-300 ${
@@ -517,20 +535,20 @@ export default function PricingPage() {
               scale.
             </p>
           </div>
-          <div className="grid grid-cols-3 gap-4 text-center">
+          <div className="grid grid-cols-1 gap-3 text-center sm:grid-cols-3 sm:gap-4">
             <div className="loud-card rounded-lg p-5">
               <div className="mb-1 text-xs text-ash">Starter (1 rep)</div>
               <div className="font-mono text-2xl font-medium text-bone">
-                $29.99
+                ${billing === "annual" ? "23.99" : "29.99"}
               </div>
-              <div className="mt-1 font-mono text-xs text-muted">per rep</div>
+              <div className="mt-1 font-mono text-xs text-muted">per rep / mo</div>
             </div>
             <div className="rounded-lg border border-deal/40 bg-pit p-5">
               <div className="mb-1 text-xs text-ash">Pro (25 reps)</div>
               <div className="font-mono text-2xl font-medium text-deal">
-                $24.99
+                ${billing === "annual" ? "19.99" : "24.99"}
               </div>
-              <div className="mt-1 font-mono text-xs text-muted">per rep</div>
+              <div className="mt-1 font-mono text-xs text-muted">per rep / mo</div>
             </div>
             <div className="rounded-lg border border-deal/40 bg-pit p-5">
               <div className="mb-1 text-xs text-ash">Elite (100+ reps)</div>
@@ -624,10 +642,13 @@ export default function PricingPage() {
 
           <FadeIn delay={200}>
             <div className="mt-10">
-              <Link href="#plans" className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg">
-                Get Started — $29.99/mo
+              <button
+                onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })}
+                className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
+              >
+                Get Started — ${billing === "annual" ? "23.99" : "29.99"}/mo
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-              </Link>
+              </button>
               <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>
           </FadeIn>
