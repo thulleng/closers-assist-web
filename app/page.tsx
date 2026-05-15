@@ -722,6 +722,96 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* HOW IT WORKS — 3 steps to deploy your agent */}
+      <section className="relative overflow-hidden loud-bg-alt border-t border-white/5">
+        <div className="grid-pattern opacity-30" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <FadeIn>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5">
+                <span className="relative flex h-2 w-2">
+                  <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                </span>
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  How it works
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                Your agent is live
+                <br />
+                <span className="text-shine font-black">in 5 minutes.</span>
+              </h2>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-8 md:grid-cols-3">
+            {/* Step 1 */}
+            <FadeIn delay={100}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 font-display text-xl font-black text-deal-light">
+                    1
+                  </div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Tell us about you
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Your industry. Your pay plan. Your scripts. Your goals. Your agent learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  &lt; 2 minutes
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Step 2 */}
+            <FadeIn delay={200}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 font-display text-xl font-black text-deal-light">
+                    2
+                  </div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Deploy on Telegram
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  One click. Your agent goes live on Telegram — the app you already use. No new dashboard to learn. No software to install. Just open Telegram and start talking to your closer.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Instant
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Step 3 */}
+            <FadeIn delay={300}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30">
+                <div className="mb-5 flex items-center gap-3">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 font-display text-xl font-black text-deal-light">
+                    3
+                  </div>
+                  <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Start closing. Start living.
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Your agent handles follow-ups, remembers every customer, drafts your responses, tracks your commissions — <span className="font-semibold text-bone">and</span> books your dentist appointment. You focus on the floor.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Day 1 value
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
       {/* DEMO CHAT — Try it live */}
       <section className="relative overflow-hidden loud-bg">
         <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center">
@@ -2102,23 +2192,26 @@ export default function HomePage() {
 
       {/* 8 — FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">
+        <div className="pointer-events-none absolute left-1/2 top-1/2 h-[500px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-40"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 60%)" }} />
         <div className="relative mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
           <FadeIn>
             <h2 className="font-display text-5xl font-black leading-[0.95] tracking-[-0.03em] text-white md:text-7xl">
-              Your CRM is a graveyard.<br />
-              <span className="text-shine font-black">This isn&rsquo;t.</span>
+              Your agent is waiting.
+              <br />
+              <span className="text-shine font-black">Deploy yours in 5 minutes.</span>
             </h2>
           </FadeIn>
           <FadeIn delay={150}>
             <p className="mx-auto mt-7 max-w-xl text-lg text-ash md:text-xl">
-              Give yourself the edge your desk won&rsquo;t.
+              An AI employee that handles your deals AND your life. Month to month. No setup fees. No contracts.
             </p>
           </FadeIn>
           <FadeIn delay={300}>
             <div className="mt-10 max-w-md mx-auto">
               <EmailCapture
                 placeholder="your@email.com"
-                buttonText="Start Closing More Deals"
+                buttonText="Deploy My Agent"
               />
               <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>
