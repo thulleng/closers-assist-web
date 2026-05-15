@@ -507,9 +507,11 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="border-x border-white/10 text-center">
-                  <Counter to={29.99} decimals={2} prefix="$" duration={2200} className="font-display text-[22px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[34px] md:text-[48px] lg:text-[72px]" />
+                  <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]">
+                    24/7
+                  </div>
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    Per rep / mo
+                    Always on
                   </div>
                 </div>
                 <div className="text-center">
@@ -526,7 +528,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* THREE BENEFITS — why closers choose us over ChatGPT, CRM, or nothing */}
+      {/* THREE BENEFITS — what makes your AI employee unstoppable */}
       <section className="relative overflow-hidden border-t border-white/5">
         <div className="grid-pattern opacity-30" />
         <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
@@ -539,9 +541,9 @@ export default function HomePage() {
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                ChatGPT can&rsquo;t do this.
+                More than a bot.
                 <br />
-                <span className="text-shine font-black">Your CRM won&rsquo;t either.</span>
+                <span className="text-shine font-black">This is your employee.</span>
               </h2>
             </div>
           </FadeIn>
@@ -575,7 +577,7 @@ export default function HomePage() {
                   Zero setup. Zero training.
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
-                  Pick your industry. Start closing. No prompt engineering. No &ldquo;learn your CRM&rdquo; phase. No IT ticket. You already know how to text — that&rsquo;s the entire interface.
+                  Pick your industry. Start closing. No prompt engineering. No training period. No IT ticket. You already know how to text — that&rsquo;s the entire interface.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   Close your first deal in under 2 minutes
@@ -593,7 +595,7 @@ export default function HomePage() {
                   Sounds like you. Not a bot.
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
-                  Your scripts. Your style. Your floor. Closers Assist learns how YOU talk — not generic ChatGPT responses that sound like a LinkedIn post from 2019. Every play reads like you typed it between customers.
+                  Your scripts. Your style. Your floor. Closers Assist learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   Built on Thul&rsquo;s floor at Sun Toyota
@@ -924,12 +926,11 @@ export default function HomePage() {
                     &ldquo;
                   </div>
                   <p className="text-xl font-semibold leading-snug text-white md:text-2xl">
-                    My CRM is a graveyard of dead leads.{" "}
+                    I used to drop follow-ups all the time.{" "}
                     <span className="text-shine">
-                      Closers Assist is the only tool
+                      Now my agent handles it
                     </span>{" "}
-                    that actually helps me close the ones I&rsquo;m about to
-                    lose.
+                    while I&rsquo;m working the floor. Haven&rsquo;t lost a lead since.
                   </p>
                   <div className="mt-7 flex items-center gap-3 border-t border-white/10 pt-5">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full font-display text-xs font-black text-white shadow-[0_4px_16px_rgba(16,185,129,0.5)]"
@@ -1420,10 +1421,9 @@ export default function HomePage() {
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
                   My name is Thul. I sell Toyotas at Sun Toyota in Florida. I
-                  built Closers Assist because my CRM doesn&rsquo;t close
-                  deals — I do. Every tool on the market treats closers like
-                  data entry clerks. We needed an agent that knows our pay
-                  plan, our scripts, our objections, our customers.{" "}
+                  built Closers Assist because I needed an employee — not
+                  another tool. Something that knows my pay
+                  plan, my scripts, my objections, my customers.{" "}
                   <span className="font-semibold text-white">
                     So I built one. Now it&rsquo;s yours.
                   </span>
