@@ -94,6 +94,18 @@ export default function Nav() {
           >
             Founder
           </Link>
+          <Link
+            href="/referral"
+            className="text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80"
+          >
+            Refer & Earn
+          </Link>
+          <Link
+            href="/enterprise"
+            className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
+          >
+            Enterprise
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">

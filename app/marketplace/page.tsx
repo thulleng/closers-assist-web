@@ -134,6 +134,16 @@ export default function MarketplacePage() {
       {/* HERO */}
       <section className="relative overflow-hidden loud-bg">
         <div className="grid-pattern" />
+        
+        {/* Background — AI robotic hand */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.15] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80&auto=format&fit=crop)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
 
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
           <FadeIn>

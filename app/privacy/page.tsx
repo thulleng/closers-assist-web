@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <div className="relative overflow-hidden loud-bg">
+      <div className="grid-pattern opacity-30" />
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
         <div className="mb-10">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
@@ -69,15 +70,15 @@ export default function PrivacyPage() {
             </h2>
             <p>
               Your conversations with your Closers Assist agent are processed
-              by Anthropic&rsquo;s Claude API. By using Closers Assist, you
+              by DeepSeek&rsquo;s API. By using Closers Assist, you
               agree to{" "}
               <a
-                href="https://www.anthropic.com/legal/privacy"
+                href="https://api-docs.deepseek.com/policies/privacy-policy"
                 className="text-deal-light hover:text-white underline"
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Anthropic&rsquo;s privacy policy
+                DeepSeek&rsquo;s privacy policy
               </a>{" "}
               as it applies to API usage.
             </p>

@@ -49,6 +49,9 @@ async function loadDashboardData(): Promise<DashboardData> {
 
 export default async function AutoDashboardPage() {
   const data = await loadDashboardData();
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+  const isDemo = !user;
   return (
     <>
       {/* Top bar — glass with neon accent */}
@@ -92,25 +95,27 @@ export default async function AutoDashboardPage() {
       {/* Dashboard itself */}
       <IncomeTracker data={data} />
 
-      {/* Footer CTA strip */}
-      <section className="mx-auto max-w-[480px] px-4 pb-20">
-        <div className="glass-panel p-5 text-center">
-          <div className="mb-1 font-mono text-[10px] font-medium uppercase tracking-[1.5px] text-neon-green">
-            DEMO DASHBOARD
+      {/* Footer — only show demo CTA when not authenticated */}
+      {isDemo && (
+        <section className="mx-auto max-w-[500px] px-4 pb-20">
+          <div className="glass-panel p-5 text-center">
+            <div className="mb-1 font-mono text-[10px] font-medium uppercase tracking-[1.5px] text-neon-green">
+              DEMO DASHBOARD
+            </div>
+            <div className="mb-4 text-[15px] text-bone">
+              This is a live preview using sample Sun Toyota data. On your real
+              account, this dashboard auto-generates from your pay plan upload
+              and daily deal logs.
+            </div>
+            <Link
+              href="/pricing"
+              className="btn-loud inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm"
+            >
+              Get Started
+            </Link>
           </div>
-          <div className="mb-4 text-[15px] text-bone">
-            This is a live preview using sample Sun Toyota data. On your real
-            account, this dashboard auto-generates from your pay plan upload
-            and daily deal logs.
-          </div>
-          <Link
-            href="/pricing"
-            className="btn-loud inline-flex items-center gap-2 rounded-lg px-6 py-3 text-sm"
-          >
-            Get Started
-          </Link>
-        </div>
-      </section>
+        </section>
+      )}
     </>
   );
 }

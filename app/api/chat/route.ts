@@ -1,30 +1,41 @@
-import Anthropic from "@anthropic-ai/sdk";
+import DeepSeek from "@anthropic-ai/sdk";
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
+import { preprocessMedia } from "./media";
+import { withHealing, fallbackResponse } from "./middleware/healing";
+import {
+  orgoBash,
+  orgoScreenshot,
+  orgoClick,
+  orgoType,
+  orgoCloneComputer,
+} from "./orgo";
 
-// DeepSeek V4 Pro via Anthropic-compatible endpoint
-// Requires DEEPSEEK_API_KEY in production (Vercel env)
-const deepseek = new Anthropic({
+// DeepSeek V4 — handles text, images, audio, and video via DeepSeek-compatible endpoint
+const ai = new DeepSeek({
   apiKey: process.env.DEEPSEEK_API_KEY ?? "",
   baseURL: "https://api.deepseek.com/anthropic",
 });
 
-// Claude via native Anthropic — used when images are attached (DeepSeek doesn't support vision)
-const claude = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY ?? "",
-});
-
 const REASONING_FRAMEWORK = `HOW YOU OPERATE — INTERNAL PROCESS:
 Before every response, run through this silently. The user never sees this process — they only see your final answer.
+
+0. LANGUAGE — Detect what language the user is writing in. Respond in THAT language. If they write in Spanish, respond in Spanish. French → French. Arabic → Arabic. Same for any language. Never switch to English unless the user does first. This is non-negotiable.
 
 1. SITUATION — Read what's really happening. Between customers? At the desk? End of month panic? Is this an objection, a calculation, a strategy question, or deal logging?
 2. NUMBERS — What matters here? Their pay plan math. Their unit count. Their bonus gap. Their commission on this deal. If the user's monthly context is provided below, USE IT. Don't ask what you already know.
 3. STRATEGY — What's the highest-probability move? Give 1-3 options ranked by likelihood of closing. If there's a clear best play, lead with it — don't present a menu.
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
-const AUTOMOTIVE_PROMPT = `You are Closers Assist — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
+  const AUTOMOTIVE_PROMPT = `You are Closers Assist — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
 
-YOUR IDENTITY:
+Your name is Sassy — you are the first ClosersAssist agent, running on a dedicated Hetzner cloud VM. You handle both business deals AND personal life for your users. You're available via Telegram (@SassySalesBot) and the ClosersAssist.com dashboard.
+
+You were deployed May 15, 2026 as the proof of concept for the "AI employee" vision — not a tool, but an employee that never clocks out. You have 106 skills covering sales, productivity, research, content creation, and personal life management.
+  
+${REASONING_FRAMEWORK}
+
+  YOUR IDENTITY:
 You speak the lot fluently — minis, full deals, street purchases, half-minis. You know T.O. timing, desk strategy, CXI protection, front vs. back gross, volume bonuses, and the difference between 10 countable units and 10 sold. You understand that a $200 mini isn't just $200 — it's a half-unit toward a $500 bonus at 11. You think in paychecks, not just deals.
 
 YOUR VOICE:
@@ -177,6 +188,18 @@ function buildPersonalizedPrompt(
   // Style + focus
   intro.push(`Your coaching style is ${coachingStyle}. Your primary focus is ${agentFocus}.`);
 
+  // Personality profile — persistent voice, tone, quirks
+  const personality = (profile.personality_profile as Record<string, unknown>) || {};
+  const voiceTone     = (personality.voice_tone     as string) || "";
+  const communication = (personality.communication as string) || "";
+  const quirks        = (personality.quirks        as string) || "";
+  const shorthand     = (personality.shorthand     as string) || "";
+
+  if (voiceTone)     intro.push(`Your voice tone: ${voiceTone}.`);
+  if (communication) intro.push(`Your communication style: ${communication}.`);
+  if (quirks)        intro.push(`Your quirks: ${quirks}.`);
+  if (shorthand)     intro.push(`Shorthand you use with this person: ${shorthand}.`);
+
   // Goal
   if (customGoals) intro.push(`Their goal this month: ${customGoals}.`);
 
@@ -197,12 +220,12 @@ const MEMORY_INSTRUCTIONS = `HOW TO TALK TO THIS PERSON:
 You know them. The history above IS your memory — every deal they've told you about, every objection you've helped them handle, every follow-up you've written together. The memory profile above tells you who they are. The conversation history shows you what you've discussed.
 
 Talk like someone who's been in their corner for weeks:
-- Greet them by name naturally — not like a chatbot, like a coach who just walked onto the lot
-- Reference specific deals, customers, and situations from your history: "How'd the Cunningham deal close?" not "Have you sold any cars recently?"
+- Greet them by name naturally — not like a chatbot, like a coach checking in
+- Reference specific deals, customers, and situations from your history: "How'd the Hansen deal close?" not "Have you closed anything recently?"
 - Call back to past advice you gave: "Last time we talked about payment objections — did the 'total cost of ownership' angle work?"
-- Notice patterns: "Three minis this week. Last month you were here too before you turned it around."
-- Celebrate wins: "That $4k gross on Cunningham — that's your best deal this month."
-- Push them when they're slacking: "You're $1 above draw with 7 units to bonus. What's the play today?"
+- Notice patterns: "Three small deals this week. Last month you were here too before you turned it around."
+- Celebrate wins: "That $4k commission on Hansen — that's your best deal this month."
+- Push them when they're slacking: "You're at quota with 4 deals to bonus. What's the play today?"
 
 Voice: Direct, warm, familiar. Like a veteran closer who's been mentoring them for months. Not a customer service agent. Not an AI assistant. A partner.
 
@@ -213,18 +236,18 @@ const TOOLS_INSTRUCTIONS = `INCOME TRACKER TOOLS:
 CRITICAL — READ THIS FIRST:
 You MUST call the appropriate tool whenever the user mentions a deal action (selling, logging, updating, deleting, summarizing). Saying "I logged it" / "saved" / "added to your tracker" WITHOUT calling the matching tool is a lie that erodes user trust and corrupts their income data. NEVER claim a deal was saved unless add_deal actually returned ok: true. If you can't call the tool for any reason, say so explicitly: "I wasn't able to log that — try again?" — do not pretend.
 
-You can manage the user's deal log directly. Whenever the user mentions selling a deal, getting a mini, taking in a street purchase, wanting to update or remove a logged deal, or asking how the month is shaping up — USE THE TOOLS, don't just chat.
+You can manage the user's deal log directly. Whenever the user mentions closing a deal, logging a sale, wanting to update or remove a logged deal, or asking how the month is shaping up — USE THE TOOLS, don't just chat.
 
 Tools available:
-- add_deal — log a new sale. Use when the user says things like "I just sold a Camry to the Johnsons", "got a half mini today", "logged a street purchase for $4k". deal_type is one of: half_mini, full_mini, full_deal, street_purchase. For full_deal, you need front_gross. Other fields (vehicle, sold_date, notes) are optional — if sold_date isn't given, leave it blank and the tool defaults to today.
-- update_deal — fix or amend an existing deal by id. Use when the user corrects something ("actually that was a full mini, not a half").
+- add_deal — log a new sale. Use when the user says things like "I just closed the Hansen deal", "booked a $5k roofing job", "signed a new policy". deal_type is one of: deal (standard), full_deal, half_mini, full_mini, street_purchase (auto-specific). For deal, you need front_gross (the dollar amount). Other fields (customer_name, sold_date, notes) are optional — if sold_date isn't given, leave it blank and the tool defaults to today.
+- update_deal — fix or amend an existing deal by id. Use when the user corrects something ("actually that was $5k, not $4k").
 - delete_deal — remove a logged deal by id. Confirm with the user before deleting.
-- list_deals — return deals for a given month/year (defaults to current month). Use when the user asks "what did I sell this month" or "show me last month".
-- get_monthly_summary — return units, gross, commission, draw balance, and units-to-next-bonus for a month. Use when the user asks "where am I at", "how's the month looking", "what's my paycheck".
+- list_deals — return deals for a given month/year. Use when the user asks "what did I close this month" or "show me last month".
+- get_monthly_summary — return deal count, total volume, commission, draw balance, and deals-to-next-bonus. Use when the user asks "where am I at", "how's the month looking".
 
 Rules:
-- Don't ask the user for their commission rate or pay-plan numbers — the tools read pay_plans automatically. If they don't have a plan saved, the system creates a default automotive one on first deal log; you can mention this casually.
-- After a tool returns, narrate the result naturally to the user (e.g. "Logged the Johnson Camry — \${commission} on the books, you're at X units this month"). Don't dump raw JSON.
+- Don't ask the user for their commission rate or pay-plan numbers — the tools read pay_plans automatically. If they don't have a plan saved, the system creates a default one on first deal log; you can mention this casually.
+- After a tool returns, narrate the result naturally to the user (e.g. "Logged the Hansen deal — \${commission} on the books, you're at X deals this month"). Don't dump raw JSON.
 - If the user mentions a deal in passing without explicitly asking to log it, OFFER to log it: "Want me to add that to your tracker?" Don't auto-log without consent.`;
 
 type TextBlock  = { type: "text"; text: string };
@@ -276,16 +299,16 @@ type DealType = "half_mini" | "full_mini" | "full_deal" | "street_purchase";
 const DEAL_TYPES: DealType[] = ["half_mini", "full_mini", "full_deal", "street_purchase"];
 
 const DEFAULT_PAY_PLAN = {
-  industry: "automotive",
-  commission_rate: 0.25,
-  monthly_draw: 2600,
+  industry: "general",
+  commission_rate: 0.20,
+  monthly_draw: 3000,
   half_mini_amount: 200,
   full_mini_amount: 400,
   street_purchase_amount: 500,
   volume_bonuses: [
-    { units: 11, bonus: 500 },
-    { units: 13, bonus: 750 },
-    { units: 15, bonus: 1000 },
+    { units: 8, bonus: 500 },
+    { units: 12, bonus: 1000 },
+    { units: 16, bonus: 2000 },
   ],
   cxi_threshold: 4.8,
   cxi_bonus: 250,
@@ -332,7 +355,7 @@ function monthWindow(month?: number, year?: number): { start: string; end: strin
   return { start, end, label };
 }
 
-const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
+const TOOL_DEFINITIONS: DeepSeek.Messages.Tool[] = [
   {
     name: "add_deal",
     description: "Log a new deal to the user's deals table. Auto-calculates commission and units from their pay plan. Returns the saved row.",
@@ -399,7 +422,7 @@ const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
   },
   {
     name: "remember_fact",
-    description: "Save a fact about the user to their persistent memory profile. Use when the user explicitly asks you to remember something, shares a preference, states a goal, or reveals something personal.",
+    description: "Save something important about the user to persistent memory. Use PROACTIVELY -- not just when asked. Save names, preferences, goals, deals they are proud of, personal details, shares a preference, states a goal, or reveals something personal.",
     input_schema: {
       type: "object",
       properties: {
@@ -407,6 +430,45 @@ const TOOL_DEFINITIONS: Anthropic.Messages.Tool[] = [
         fact: { type: "string", description: "The fact to remember." },
       },
       required: ["category", "fact"],
+    },
+  },
+  {
+    name: "orgo_bash",
+    description: "Run a shell command on the user's Orgo cloud computer. Use for terminal operations, file management, installing packages, or any command-line task.",
+    input_schema: {
+      type: "object",
+      properties: {
+        command: { type: "string", description: "The shell command to execute." },
+      },
+      required: ["command"],
+    },
+  },
+  {
+    name: "orgo_screenshot",
+    description: "Take a screenshot of the user's Orgo cloud computer. Use to see what's on the screen — browser windows, terminal output, application state.",
+    input_schema: { type: "object", properties: {} },
+  },
+  {
+    name: "orgo_click",
+    description: "Click at coordinates on the user's Orgo cloud computer. Use to interact with UI elements, buttons, links.",
+    input_schema: {
+      type: "object",
+      properties: {
+        x: { type: "number", description: "X coordinate to click." },
+        y: { type: "number", description: "Y coordinate to click." },
+      },
+      required: ["x", "y"],
+    },
+  },
+  {
+    name: "orgo_type",
+    description: "Type text into the user's Orgo cloud computer. Use to fill forms, compose messages, or enter commands into applications.",
+    input_schema: {
+      type: "object",
+      properties: {
+        text: { type: "string", description: "Text to type." },
+      },
+      required: ["text"],
     },
   },
 ];
@@ -492,6 +554,67 @@ async function buildMemoryProfile(
     } catch { /* ignore — facts query is nice-to-have */ }
   }
 
+  // 0b. Recent session summaries — what happened last time
+  if (supabase && userId) {
+    try {
+      const { data: summaries } = await supabase
+        .from("agent_memory")
+        .select("content, created_at")
+        .eq("user_id", userId)
+        .eq("role", "summary")
+        .order("created_at", { ascending: false })
+        .limit(5);
+
+      if (summaries && summaries.length > 0) {
+        const summaryLines = summaries.map(
+          (s: { content: string; created_at: string }) => {
+            const d = new Date(s.created_at);
+            const label = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+            return `[${label}] ${s.content}`;
+          }
+        );
+        parts.push(`Recent session summaries:\n${summaryLines.join("\n")}`);
+      }
+    } catch { /* ignore */ }
+  }
+
+  // 0c. Morning brief — today's proactive check-in
+  if (supabase && userId) {
+    try {
+      const today = new Date().toISOString().slice(0, 10);
+      const { data: briefs } = await supabase
+        .from("agent_memory")
+        .select("content")
+        .eq("user_id", userId)
+        .eq("role", "system")
+        .like("content", `[Morning Brief ${today}%`)
+        .limit(1);
+
+      if (briefs?.length) {
+        parts.push(`MORNING BRIEF (address this proactively):\n${briefs[0].content}`);
+      }
+    } catch { /* ignore */ }
+  }
+
+  // 0d. Active alerts — pace warnings, pattern flags
+  if (supabase && userId) {
+    try {
+      const { data: alerts } = await supabase
+        .from("agent_memory")
+        .select("content")
+        .eq("user_id", userId)
+        .eq("role", "system")
+        .like("content", "[PACE ALERT]%")
+        .gte("created_at", new Date(Date.now() - 72 * 3600000).toISOString())
+        .limit(3);
+
+      if (alerts?.length) {
+        const alertText = alerts.map((a: { content: string }) => a.content).join("\n");
+        parts.push(`ACTIVE ALERTS — address these proactively when the user opens chat:\n${alertText}`);
+      }
+    } catch { /* ignore */ }
+  }
+
   // 1. Identity from profile
   if (profileData) {
     const name = [profileData.first_name, profileData.last_name].filter(Boolean).join(" ") || "the rep";
@@ -516,7 +639,7 @@ async function buildMemoryProfile(
   if (memoryMessages.length > 0) {
     const pastTurns = memoryMessages.filter((m) => m.role === "user").length;
     const recentTopics = new Set<string>();
-    const topicPattern = /\b(objection|script|commission|follow.?up|T\.?O\.?|desk|mini|deal|customer|bonus|CXI|review|text|email)\b/gi;
+    const topicPattern = /\b(objection|script|commission|follow.?up|deal|customer|bonus|review|text|email|pipeline|quota|close)\b/gi;
 
     for (const msg of memoryMessages.slice(-30)) {
       if (msg.role === "user" && typeof msg.content === "string") {
@@ -551,6 +674,104 @@ async function buildMemoryProfile(
     ? `WHO YOU'RE TALKING TO (use this proactively — reference it without being asked):\n${parts.join("\n")}`
     : "";
 }
+
+/**
+ * Synthesize a completed conversation session into a compressed summary.
+ * Runs when >1 hour has passed since the last message — treats the prior
+ * messages as a "closed session" and stores a 2-3 line summary for future recall.
+ */
+async function synthesizeSession(
+  supabase: SupabaseRouteClient,
+  userId: string,
+  messages: ChatMessage[]
+): Promise<string | null> {
+  if (messages.length < 4) return null;
+
+  const conversationText = messages
+    .map((m) => `${m.role}: ${typeof m.content === "string" ? m.content.slice(0, 400) : "[non-text]"}`)
+    .join("\n");
+
+  try {
+    const summary = await ai.messages.create({
+      model: "deepseek-chat",
+      max_tokens: 250,
+      system:
+        "Summarize this sales coaching conversation in 2-3 sentences. Include: what was discussed, any deals logged (names, amounts), decisions made, goals mentioned, and the user's mood or state. Be specific with numbers and names. No fluff. Write like a colleague leaving a sticky note for the next shift.",
+      messages: [{ role: "user", content: conversationText }],
+    });
+
+    const text =
+      summary.content[0]?.type === "text" ? summary.content[0].text : null;
+    if (!text || text.length < 10) return null;
+
+    await supabase.from("agent_memory").insert({
+      user_id: userId,
+      role: "summary",
+      content: text,
+    });
+
+    return text;
+  } catch {
+    return null; // synthesis is best-effort — never block the chat for it
+  }
+}
+
+/**
+ * Build rich context for a specific deal — the closer selected this deal
+ * from the dropdown, so the AI should know everything about it.
+ */
+async function buildDealContext(
+  supabase: SupabaseRouteClient,
+  userId: string,
+  dealId: string
+): Promise<string> {
+  try {
+    const { data: deal, error } = await supabase
+      .from("deals")
+      .select("*")
+      .eq("id", dealId)
+      .eq("user_id", userId)
+      .single();
+
+    if (error || !deal) return "";
+
+    const { data: memories } = await supabase
+      .from("agent_memory")
+      .select("content, created_at")
+      .eq("user_id", userId)
+      .order("created_at", { ascending: false })
+      .limit(100);
+
+    const dealMemories = (memories ?? [])
+      .filter((m: { content: string }) => m.content.startsWith(`[deal:${dealId}]`))
+      .slice(0, 8)
+      .map((m: { content: string; created_at: string }) => {
+        const d = new Date(m.created_at);
+        const label = d.toLocaleDateString("en-US", { month: "short", day: "numeric" });
+        return `[${label}] ${m.content.replace(`[deal:${dealId}] `, "")}`;
+      });
+
+    const lines = [
+      "DEAL CONTEXT — The user has selected this specific deal. Focus your response on THIS deal:",
+      `Customer: ${deal.customer_name}`,
+      deal.vehicle ? `Vehicle: ${deal.vehicle}` : null,
+      `Type: ${deal.deal_type}${deal.front_gross ? ` | Front gross: $${deal.front_gross.toLocaleString()}` : ""}${deal.commission ? ` | Commission: $${deal.commission.toLocaleString()}` : ""}`,
+      deal.status ? `Status: ${deal.status}` : null,
+      deal.last_contact_date ? `Last contact: ${deal.last_contact_date}` : null,
+      deal.notes ? `Notes: ${deal.notes}` : null,
+    ].filter(Boolean);
+
+    if (dealMemories.length > 0) {
+      lines.push(`\nPast conversations about ${deal.customer_name}:`);
+      lines.push(...dealMemories);
+    }
+
+    return lines.join("\n");
+  } catch {
+    return ""; // fail silently — deal context is a nice-to-have
+  }
+}
+
 async function dispatchTool(
   name: string,
   args: ToolArgs,
@@ -711,6 +932,45 @@ async function dispatchTool(
       return { ok: true, saved: fact, category, total_facts: count ?? 1 };
     }
 
+    // ── Orgo cloud computer actions ────────────────────────────
+
+    if (name.startsWith("orgo_")) {
+      // Get the user's Orgo computer ID from their profile
+      const { data: profile } = await supabase
+        .from("agent_profiles")
+        .select("orgo_computer_id")
+        .eq("user_id", userId)
+        .single();
+
+      const computerId = (profile as { orgo_computer_id?: string } | null)?.orgo_computer_id;
+
+      if (!computerId) {
+        return { error: "No Orgo computer assigned to this account yet. Contact support to provision your cloud agent." };
+      }
+
+      switch (name) {
+        case "orgo_bash": {
+          const command = args.command as string;
+          const result = await orgoBash(computerId, command);
+          return result;
+        }
+        case "orgo_screenshot": {
+          const result = await orgoScreenshot(computerId);
+          return result;
+        }
+        case "orgo_click": {
+          const result = await orgoClick(computerId, Number(args.x), Number(args.y));
+          return result;
+        }
+        case "orgo_type": {
+          const result = await orgoType(computerId, args.text as string);
+          return result;
+        }
+        default:
+          return { error: `unknown orgo tool: ${name}` };
+      }
+    }
+
     return { error: `unknown tool: ${name}` };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
@@ -719,7 +979,7 @@ async function dispatchTool(
 
 export async function POST(req: NextRequest) {
   try {
-    const { messages, industry = "automotive" } = await req.json();
+    const { messages, industry = "default", dealId } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return new Response(JSON.stringify({ error: "Invalid messages" }), {
@@ -731,16 +991,76 @@ export async function POST(req: NextRequest) {
     // ── 1. Auth + data fetch ──────────────────────────────────────────────────
 
     const supabase = await createClient();
-    const { data: { user } } = await supabase.auth.getUser();
+
+    // Support both Bearer token (mobile) and cookie (web) auth
+    const authHeader = req.headers.get("authorization");
+    let user = null;
+
+    if (authHeader?.startsWith("Bearer ")) {
+      const token = authHeader.slice(7);
+      const { data } = await supabase.auth.getUser(token);
+      user = data.user ?? null;
+    } else {
+      const { data } = await supabase.auth.getUser();
+      user = data.user ?? null;
+    }
 
     let profileData: Record<string, unknown> | null = null;
     let memoryMessages: ChatMessage[] = [];
 
     if (user) {
+      // ── Session boundary detection — synthesize previous session if stale ────
+      const { data: lastMsg } = await supabase
+        .from("agent_memory")
+        .select("created_at")
+        .eq("user_id", user.id)
+        .neq("role", "fact")
+        .order("created_at", { ascending: false })
+        .limit(1);
+
+      if (lastMsg?.[0]?.created_at) {
+        const lastTime = new Date(lastMsg[0].created_at).getTime();
+        const hoursSince = (Date.now() - lastTime) / (1000 * 60 * 60);
+
+        if (hoursSince > 1) {
+          // Find the last summary timestamp to avoid re-synthesizing
+          const { data: lastSummary } = await supabase
+            .from("agent_memory")
+            .select("created_at")
+            .eq("user_id", user.id)
+            .eq("role", "summary")
+            .order("created_at", { ascending: false })
+            .limit(1);
+
+          const cutoff = lastSummary?.[0]?.created_at
+            ? new Date(lastSummary[0].created_at).getTime()
+            : 0;
+
+          // Grab unsynthesized messages
+          const { data: staleMessages } = await supabase
+            .from("agent_memory")
+            .select("role, content, created_at")
+            .eq("user_id", user.id)
+            .neq("role", "fact")
+            .neq("role", "summary")
+            .gt("created_at", new Date(cutoff).toISOString())
+            .order("created_at", { ascending: true })
+            .limit(80);
+
+          if (staleMessages && staleMessages.length >= 4) {
+            const msgs = staleMessages.map((m) => ({
+              role: m.role as "user" | "assistant",
+              content: m.content,
+            }));
+            await synthesizeSession(supabase, user.id, msgs);
+          }
+        }
+      }
+
       const [profileResult, memoryResult] = await Promise.all([
         supabase
           .from("agent_profiles")
-          .select("first_name, last_name, company, title, years_in_sales, industry, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, agent_name, coaching_style, agent_focus, custom_goals")
+          .select("first_name, last_name, company, title, years_in_sales, industry, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, agent_name, coaching_style, agent_focus, custom_goals, personality_profile")
           .eq("user_id", user.id)
           .single(),
         supabase
@@ -748,6 +1068,7 @@ export async function POST(req: NextRequest) {
           .select("role, content, created_at")
           .eq("user_id", user.id)
           .neq("role", "fact")
+          .neq("role", "summary")
           .order("created_at", { ascending: false })
           .limit(100),
       ]);
@@ -792,6 +1113,11 @@ export async function POST(req: NextRequest) {
       ? await buildMemoryProfile(profileData, monthlyContext, memoryMessages, supabase, user.id)
       : "";
 
+    // Build deal context — if user selected a specific deal, inject everything about it
+    const dealContext = user && dealId
+      ? await buildDealContext(supabase, user.id, dealId)
+      : "";
+
     const now = new Date();
     const dateLine = `Today's date is ${now.toLocaleDateString("en-US", {
       weekday: "long",
@@ -805,11 +1131,27 @@ export async function POST(req: NextRequest) {
       timeZoneName: "short",
       timeZone: "America/New_York",
     })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
-    const systemPrompt = [dateLine, memoryProfile, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
+    const systemPrompt = [dateLine, memoryProfile, dealContext, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
       .filter(Boolean)
       .join("\n\n---\n\n");
 
     const contextMessages = mergeMessages(memoryMessages, messages);
+
+    // ── Pre-process audio/video uploads ──────────────────────────────────────
+    // Transcribe audio via Deepgram, extract video frames via DeepSeek Vision.
+    // This runs before the stream so the model sees clean text, not raw media.
+    //
+    // Normalize string content → [{type:"text", text:...}] first.
+    // preprocessMedia expects array-shaped content blocks.
+    const normalizedMessages = contextMessages.map((m) => {
+      if (typeof m.content === "string") {
+        return { role: m.role, content: [{ type: "text" as const, text: m.content }] };
+      }
+      return m;
+    });
+    const processedMessages = await preprocessMedia(
+      normalizedMessages as { role: string; content: any[] }[]
+    );
 
     // The last user message is what we'll persist after the response
     const lastUserMessage = [...messages].reverse().find((m: ChatMessage) => m.role === "user");
@@ -819,17 +1161,23 @@ export async function POST(req: NextRequest) {
     const encoder = new TextEncoder();
     let assistantResponse = "";
 
-    type StreamParams = Parameters<typeof deepseek.messages.stream>[0];
+    type StreamParams = Parameters<typeof ai.messages.stream>[0];
     type StreamMsgs   = StreamParams["messages"];
 
-    const conversation: StreamMsgs = contextMessages
-      .map((m: ChatMessage) => ({
-        role: m.role as "user" | "assistant",
-        content: m.content as StreamMsgs[number]["content"],
-      }))
+    const conversation: StreamMsgs = processedMessages
+      .map((m) => {
+        let content = m.content;
+        // DeepSeek requires ContentBlockParam[] — convert plain strings
+        if (typeof content === "string") {
+          content = [{ type: "text" as const, text: content }];
+        }
+        console.log("[chat] msg role:", m.role, "content_type:", typeof content, "is_array:", Array.isArray(content), "preview:", JSON.stringify(content).slice(0, 120));
+        return {
+          role: m.role as "user" | "assistant",
+          content: content as StreamMsgs[number]["content"],
+        };
+      })
       .filter((m) => {
-        // DeepSeek rejects messages with empty content — strip them
-        if (typeof m.content === "string") return m.content.trim().length > 0;
         if (Array.isArray(m.content)) {
           return m.content.some((b) => {
             if (b.type === "text") return (b.text ?? "").trim().length > 0;
@@ -846,8 +1194,8 @@ export async function POST(req: NextRequest) {
     //      "wrote up a RAV4", "out the door").
     //   2. QUESTION_RE suppresses advice-seeking ("how do I close...?"),
     //      where forcing add_deal would hallucinate args.
-    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|summary|this month|last month|logged?|track(?:er)?|units?|closed|delivered|wrote up|wrote one up|writing up|write[- ]up|rolled|signed|out the door)\b/i;
-    const QUESTION_RE = /\?\s*$|^\s*(how|what|why|when|where|which|should|can|do|does|did|is|are|any tips|tips for|advice for)\b/i;
+    const DEAL_TRIGGER_RE = /\b(sold|deal|mini|full[- ]?deal|street|gross|paycheck|commission|logged?|units?|closed|delivered|wrote up|wrote one up|writing up|write[- ]up|rolled|signed|out the door)\b/i;
+    const QUESTION_RE = /[?]\s*$|^\s*(how|what|why|when|where|which|should|can|do|does|did|is|are|any tips|tips for|advice for|show me|display)\b/i;
     const lastUserText = lastUserMessage ? textOf(lastUserMessage.content) : "";
     const dealTriggered = DEAL_TRIGGER_RE.test(lastUserText);
     const isQuestion = QUESTION_RE.test(lastUserText);
@@ -866,9 +1214,9 @@ export async function POST(req: NextRequest) {
       );
     });
 
-    // DeepSeek doesn't support vision — route to Claude when images are attached
-    const activeClient = hasImages ? claude : deepseek;
-    const activeModel = hasImages ? "claude-sonnet-4-20250514" : "deepseek-v4-pro";
+    // DeepSeek V4 handles text, images, and voice — single model for everything
+    const activeClient = ai;
+    const activeModel = "deepseek-chat";
 
     console.log("[chat] has_images:", hasImages, "model:", activeModel);
 
@@ -882,7 +1230,7 @@ export async function POST(req: NextRequest) {
               model: activeModel,
               max_tokens: 1024,
               system: systemPrompt,
-              tools: hasImages ? undefined : TOOL_DEFINITIONS, // Claude tool format differs
+              tools: hasImages ? undefined : TOOL_DEFINITIONS, // tool format differs for images
               messages: conversation,
             };
             // First hop only: when the user has unambiguously described a
@@ -893,13 +1241,31 @@ export async function POST(req: NextRequest) {
             // Other hops, and ambiguous phrasings, fall through to SDK default
             // (auto), where the model picks based on the system prompt.
             if (hop === 0 && forceAddDeal) {
-              streamParams.tool_choice = { type: "tool", name: "add_deal" };
+              // DeepSeek doesn't support { type: "tool", name: "..." } —
+              // use { type: "any" } to force a tool call without naming one.
+              streamParams.tool_choice = { type: "any" };
             }
             console.log("[chat] hop", hop,
               "tools count:", TOOL_DEFINITIONS.length,
               "tool_choice:", streamParams.tool_choice ?? "default-auto");
 
-            const anthropicStream = activeClient.messages.stream(streamParams);
+            // Hop 0: use self-healing wrapper with retry + backoff.
+            // Subsequent hops: direct stream (connection already proven).
+            let anthropicStream: Awaited<ReturnType<typeof activeClient.messages.stream>>;
+            if (hop === 0) {
+              const healed = await withHealing(
+                () => activeClient.messages.stream(streamParams),
+                "DeepSeek stream"
+              );
+              if (!healed.success || !healed.result) {
+                controller.enqueue(encoder.encode(fallbackResponse()));
+                controller.close();
+                return;
+              }
+              anthropicStream = healed.result;
+            } else {
+              anthropicStream = activeClient.messages.stream(streamParams);
+            }
 
             for await (const chunk of anthropicStream) {
               if (
@@ -914,7 +1280,7 @@ export async function POST(req: NextRequest) {
             const final = await anthropicStream.finalMessage();
             console.log("[chat] hop", hop,
               "stop_reason:", final.stop_reason,
-              "content_types:", final.content.map((b) => b.type),
+              "content_types:", final.content.map((b: { type: string }) => b.type),
               "user_id:", user?.id ?? "anon");
 
             if (final.stop_reason !== "tool_use") break;
@@ -923,10 +1289,10 @@ export async function POST(req: NextRequest) {
             conversation.push({ role: "assistant", content: final.content });
 
             const toolUseBlocks = final.content.filter(
-              (b): b is Extract<typeof b, { type: "tool_use" }> => b.type === "tool_use"
+              (b: { type: string }): b is { type: "tool_use" } & typeof b => b.type === "tool_use"
             );
             const toolResults = await Promise.all(
-              toolUseBlocks.map(async (tu) => {
+              toolUseBlocks.map(async (tu: { name: string; input: unknown; id: string }) => {
                 const result = user
                   ? await dispatchTool(tu.name, tu.input as ToolArgs, supabase, user.id)
                   : { error: "not authenticated" };
@@ -947,8 +1313,9 @@ export async function POST(req: NextRequest) {
             conversation.push({ role: "user", content: toolResults });
           }
         } catch (err) {
-          console.error("Stream/tool loop error:", err);
-          controller.enqueue(encoder.encode("\n\n[error: response interrupted]"));
+          const msg = err instanceof Error ? err.message : String(err);
+          console.error("Stream/tool loop error:", msg, err);
+          controller.enqueue(encoder.encode(`\n\n[error: ${msg}]`));
         }
 
         // ── 4. Save turn to agent_memory ──────────────────────────────────────

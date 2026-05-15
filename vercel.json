@@ -1,0 +1,16 @@
+{
+  "crons": [
+    {
+      "path": "/api/cron/weekly-learning",
+      "schedule": "0 4 * * 1"
+    },
+    {
+      "path": "/api/cron/morning-brief",
+      "schedule": "0 12 * * 1-5"
+    },
+    {
+      "path": "/api/cron/unit-watchdog",
+      "schedule": "0 15 * * 5"
+    }
+  ]
+}

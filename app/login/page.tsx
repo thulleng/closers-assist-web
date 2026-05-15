@@ -4,6 +4,8 @@ import { useState, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
 import { Zap } from "lucide-react";
+import NeuralBackground from "@/components/NeuralBackground";
+import AIAvatar from "@/components/AIAvatar";
 
 const INPUT_CLS =
   "w-full rounded-xl border border-iron bg-pit px-4 py-3 text-sm text-bone placeholder:text-muted focus:border-deal/60 focus:outline-none transition-colors";
@@ -27,10 +29,12 @@ function friendlyError(msg: string): string {
 function LoginForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const next = searchParams.get("next") ?? "/dashboard/auto";
+  const next = searchParams?.get("next") ?? "/dashboard/auto";
 
-  // "password" | "signup" | "magic"
-  const [mode, setMode] = useState<"password" | "signup" | "magic">("password");
+  // "password" | "signup" | "magic" | "reset" | "recovery"
+  const [mode, setMode] = useState<"password" | "signup" | "magic" | "reset" | "recovery">(
+    searchParams?.get("reset") ? "recovery" : "password"
+  );
 
   const [email, setEmail]       = useState("");
   const [password, setPassword] = useState("");
@@ -39,7 +43,7 @@ function LoginForm() {
   const [success, setSuccess]   = useState<string | null>(null);
   const [error, setError]       = useState<string | null>(null);
 
-  function switchMode(m: "password" | "signup" | "magic") {
+  function switchMode(m: "password" | "signup" | "magic" | "reset" | "recovery") {
     setMode(m);
     setError(null);
     setSuccess(null);
@@ -87,6 +91,45 @@ function LoginForm() {
       setSuccess("Account created! Check your email to confirm, then come back to sign in.");
       setLoading(false);
     }
+  }
+
+  // ── Reset password (send email) ──────────────────────────────────────────
+  async function handleResetPassword(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: `${location.origin}/auth/callback?next=/login?reset=true`,
+    });
+
+    if (error) {
+      setError(friendlyError(error.message));
+    } else {
+      setSent(true);
+    }
+
+    setLoading(false);
+  }
+
+  // ── Recovery (set new password after email link) ─────────────────────────
+  async function handleRecovery(e: React.FormEvent) {
+    e.preventDefault();
+    setError(null);
+    setLoading(true);
+
+    const supabase = createClient();
+    const { error } = await supabase.auth.updateUser({ password });
+
+    if (error) {
+      setError(friendlyError(error.message));
+    } else {
+      setSuccess("Password updated. Sign in with your new password.");
+      switchMode("password");
+    }
+
+    setLoading(false);
   }
 
   // ── Magic link ───────────────────────────────────────────────────────────
@@ -137,9 +180,11 @@ function LoginForm() {
     );
   }
 
-  const isPasswordMode = mode === "password";
-  const isSignUpMode   = mode === "signup";
-  const isMagicMode    = mode === "magic";
+  const isPasswordMode  = mode === "password";
+  const isSignUpMode    = mode === "signup";
+  const isMagicMode     = mode === "magic";
+  const isResetMode     = mode === "reset";
+  const isRecoveryMode  = mode === "recovery";
 
   return (
     <div className="rounded-2xl border border-iron bg-slate p-8">
@@ -218,7 +263,7 @@ function LoginForm() {
               <button
                 type="button"
                 className="text-xs text-muted hover:text-ash transition-colors underline underline-offset-2"
-                onClick={() => alert("Password reset coming soon — use magic link for now.")}
+                onClick={() => switchMode("reset")}
               >
                 Forgot password?
               </button>
@@ -307,6 +352,74 @@ function LoginForm() {
         </form>
       )}
 
+      {/* ── Reset password form (send email) ── */}
+      {isResetMode && (
+        <>
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-bone mb-1">Reset your password</h1>
+            <p className="text-sm text-ash">
+              Enter your email and we&apos;ll send you a reset link.
+            </p>
+          </div>
+          <form onSubmit={handleResetPassword} className="space-y-4">
+            <div>
+              <label className={LABEL_CLS}>Email</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                autoFocus
+                autoComplete="email"
+                placeholder="you@dealership.com"
+                className={INPUT_CLS}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-loud w-full py-3 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Sending reset link..." : "Send reset link →"}
+            </button>
+          </form>
+        </>
+      )}
+
+      {/* ── Recovery form (set new password) ── */}
+      {isRecoveryMode && (
+        <>
+          <div className="mb-6">
+            <h1 className="text-2xl font-bold text-bone mb-1">Set new password</h1>
+            <p className="text-sm text-ash">
+              Choose a new password for your account.
+            </p>
+          </div>
+          <form onSubmit={handleRecovery} className="space-y-4">
+            <div>
+              <label className={LABEL_CLS}>New password</label>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                autoFocus
+                autoComplete="new-password"
+                placeholder="At least 6 characters"
+                className={INPUT_CLS}
+              />
+            </div>
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-loud w-full py-3 text-sm font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {loading ? "Updating..." : "Update password →"}
+            </button>
+          </form>
+        </>
+      )}
+
       {/* ── Divider + secondary option ── */}
       <div className="mt-6 flex items-center gap-3">
         <div className="flex-1 h-px bg-iron" />
@@ -337,8 +450,15 @@ function LoginForm() {
 
 export default function LoginPage() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-4 py-16">
-      <div className="w-full max-w-md">
+    <div className="relative min-h-screen flex items-center justify-center px-4 py-16 overflow-hidden loud-bg">
+      <NeuralBackground density={18} color="green" opacity={0.06} />
+      
+      <div className="relative w-full max-w-md z-10">
+        {/* AI Avatar visual anchor */}
+        <div className="flex justify-center mb-6">
+          <AIAvatar variant="circuit" size={80} className="sm:scale-100" accentColor="green" />
+        </div>
+
         {/* Logo */}
         <div className="flex items-center justify-center gap-2 mb-10">
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-deal">

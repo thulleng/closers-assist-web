@@ -3,14 +3,28 @@
 import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowUp, Paperclip, X } from "lucide-react";
+import DealSelector from "./DealSelector";
 
 type TextContent = { type: "text"; text: string };
 type ImageContent = { type: "image"; source: { type: "base64"; media_type: string; data: string } };
-type MessageContent = string | (TextContent | ImageContent)[];
+type AudioContent = { type: "audio"; source: { type: "base64"; media_type: string; data: string } };
+type VideoContent = { type: "video"; source: { type: "base64"; media_type: string; data: string } };
+type MessageContent = string | (TextContent | ImageContent | AudioContent | VideoContent)[];
 
 type Message = {
   role: "user" | "assistant";
   content: MessageContent;
+};
+
+type Deal = {
+  id: string;
+  customer_name: string;
+  deal_type: string;
+  vehicle?: string;
+  front_gross?: number;
+  commission?: number;
+  sold_date: string;
+  status?: string;
 };
 
 const DEFAULT_STARTERS = [
@@ -33,8 +47,13 @@ export default function RealChat({
   const [input, setInput] = useState("");
   const [streaming, setStreaming] = useState(false);
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const [audioPreview, setAudioPreview] = useState<string | null>(null);
+  const [videoPreview, setVideoPreview] = useState<string | null>(null);
   const [imageContent, setImageContent] = useState<ImageContent | null>(null);
+  const [audioContent, setAudioContent] = useState<AudioContent | null>(null);
+  const [videoContent, setVideoContent] = useState<VideoContent | null>(null);
   const [dragging, setDragging] = useState(false);
+  const [selectedDealId, setSelectedDealId] = useState<string | null>(null);
   const dragCounter = useRef(0); // track nested enter/leave events
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
@@ -46,17 +65,33 @@ export default function RealChat({
     container.scrollTop = container.scrollHeight;
   }, [messages]);
 
-  const ACCEPTED = ["image/jpeg", "image/png", "image/gif", "image/webp"];
+  const ACCEPTED = ["image/jpeg", "image/png", "image/gif", "image/webp", "audio/mpeg", "audio/mp4", "audio/ogg", "audio/wav", "audio/webm", "video/mp4", "video/webm", "video/quicktime"];
 
   const loadFile = (file: File) => {
     if (!ACCEPTED.includes(file.type)) return;
     const reader = new FileReader();
+    const isAudio = file.type.startsWith("audio/");
+    const isVideo = file.type.startsWith("video/");
     reader.onload = (ev) => {
       const dataUrl = ev.target?.result as string;
       const [meta, data] = dataUrl.split(",");
-      const mediaType = meta.match(/:(.*?);/)?.[1] ?? "image/jpeg";
-      setImagePreview(dataUrl);
-      setImageContent({ type: "image", source: { type: "base64", media_type: mediaType, data } });
+      const mediaType = meta.match(/:(.*?);/)?.[1] ?? file.type;
+      if (isAudio) {
+        setAudioPreview(file.name);
+        setAudioContent({ type: "audio", source: { type: "base64", media_type: mediaType, data } });
+        setImagePreview(null); setImageContent(null);
+        setVideoPreview(null); setVideoContent(null);
+      } else if (isVideo) {
+        setVideoPreview(dataUrl);
+        setVideoContent({ type: "video", source: { type: "base64", media_type: mediaType, data } });
+        setImagePreview(null); setImageContent(null);
+        setAudioPreview(null); setAudioContent(null);
+      } else {
+        setImagePreview(dataUrl);
+        setImageContent({ type: "image", source: { type: "base64", media_type: mediaType, data } });
+        setAudioPreview(null); setAudioContent(null);
+        setVideoPreview(null); setVideoContent(null);
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -67,9 +102,10 @@ export default function RealChat({
     e.target.value = "";
   };
 
-  const clearImage = () => {
-    setImagePreview(null);
-    setImageContent(null);
+  const clearMedia = () => {
+    setImagePreview(null); setImageContent(null);
+    setAudioPreview(null); setAudioContent(null);
+    setVideoPreview(null); setVideoContent(null);
   };
 
   // ── Drag and drop handlers ────────────────────────────────────────────────
@@ -104,13 +140,16 @@ export default function RealChat({
 
   const sendMessage = async (text: string) => {
     const trimmed = text.trim();
-    if ((!trimmed && !imageContent) || streaming) return;
+    const hasMedia = imageContent || audioContent || videoContent;
+    if ((!trimmed && !hasMedia) || streaming) return;
 
-    // Build content: plain string if no image, content array if image present
-    const content: MessageContent = imageContent
+    // Build content: plain string if no media, content array if media present
+    const content: MessageContent = hasMedia
       ? [
           ...(trimmed ? [{ type: "text" as const, text: trimmed }] : []),
-          imageContent,
+          ...(imageContent ? [imageContent] : []),
+          ...(audioContent ? [audioContent] : []),
+          ...(videoContent ? [videoContent] : []),
         ]
       : trimmed;
 
@@ -118,7 +157,7 @@ export default function RealChat({
     const nextMessages = [...messages, userMessage];
     setMessages(nextMessages);
     setInput("");
-    clearImage();
+    clearMedia();
     setStreaming(true);
 
     // Add empty assistant message that we'll stream into
@@ -128,7 +167,7 @@ export default function RealChat({
       const res = await fetch("/api/chat", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages, industry }),
+        body: JSON.stringify({ messages: nextMessages, industry, dealId: selectedDealId }),
       });
 
       if (!res.ok || !res.body) {
@@ -208,10 +247,19 @@ export default function RealChat({
           <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-deal/20">
             <Paperclip className="h-7 w-7 text-deal" strokeWidth={2} />
           </div>
-          <p className="text-base font-semibold text-deal">Drop image here</p>
-          <p className="text-xs text-ash">jpg, png, gif, webp</p>
+          <p className="text-base font-semibold text-deal">Drop media here</p>
+          <p className="text-xs text-ash">Images, audio, video</p>
         </div>
       )}
+
+      {/* Deal selector — pick a deal for focused context */}
+      <div className="border-b border-iron px-4 py-2">
+        <DealSelector
+          onSelect={(deal) => setSelectedDealId(deal.id)}
+          selectedDealId={selectedDealId}
+          onClear={() => setSelectedDealId(null)}
+        />
+      </div>
 
       {/* Messages */}
       <div ref={chatContainerRef} className="flex-1 overflow-y-auto px-5 py-5 space-y-4">
@@ -282,10 +330,33 @@ export default function RealChat({
               />
               <button
                 type="button"
-                onClick={clearImage}
-                aria-label="Remove image"
+                onClick={clearMedia}
+                aria-label="Remove media"
                 className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-slate border border-iron text-ash hover:text-bone transition-colors"
               >
+                <X className="h-3 w-3" strokeWidth={2.5} />
+              </button>
+            </div>
+          </div>
+        )}
+        {audioPreview && (
+          <div className="mb-2 inline-flex items-start gap-2">
+            <div className="relative flex items-center gap-2 rounded-lg border border-iron bg-slate px-3 py-2">
+              <span className="text-xs text-bone">🎤 {audioPreview}</span>
+              <button type="button" onClick={clearMedia} aria-label="Remove media"
+                className="flex h-5 w-5 items-center justify-center rounded-full border border-iron text-ash hover:text-bone">
+                <X className="h-3 w-3" strokeWidth={2.5} />
+              </button>
+            </div>
+          </div>
+        )}
+        {videoPreview && (
+          <div className="mb-2 inline-flex items-start gap-2">
+            <div className="relative">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <video src={videoPreview} className="h-16 w-24 rounded-lg object-cover border border-iron" />
+              <button type="button" onClick={clearMedia} aria-label="Remove media"
+                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-slate border border-iron text-ash hover:text-bone">
                 <X className="h-3 w-3" strokeWidth={2.5} />
               </button>
             </div>
@@ -297,7 +368,7 @@ export default function RealChat({
           <input
             ref={fileInputRef}
             type="file"
-            accept="image/jpeg,image/png,image/gif,image/webp"
+            accept="image/jpeg,image/png,image/gif,image/webp,audio/mpeg,audio/mp4,audio/ogg,audio/wav,video/mp4,video/webm,video/quicktime"
             className="hidden"
             onChange={handleFileChange}
           />
@@ -307,7 +378,7 @@ export default function RealChat({
             type="button"
             onClick={() => fileInputRef.current?.click()}
             disabled={streaming}
-            aria-label="Attach image"
+            aria-label="Attach media"
             className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl border border-iron bg-slate text-ash transition-all hover:border-white/25 hover:text-bone disabled:opacity-30 disabled:cursor-not-allowed"
           >
             <Paperclip className="h-4 w-4" strokeWidth={2} />
@@ -326,7 +397,7 @@ export default function RealChat({
           />
           <button
             onClick={() => sendMessage(input)}
-            disabled={(!input.trim() && !imageContent) || streaming}
+            disabled={(!input.trim() && !imageContent && !audioContent && !videoContent) || streaming}
             aria-label="Send message"
             className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-xl bg-deal text-pit transition-all hover:bg-deal-hover disabled:opacity-30 disabled:cursor-not-allowed"
           >

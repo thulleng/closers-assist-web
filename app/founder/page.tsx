@@ -14,6 +14,17 @@ export default function FounderPage() {
   return (
     <article className="relative overflow-hidden loud-bg">
       <div className="grid-pattern opacity-50" />
+      
+      {/* Background — AI robotic hand */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-[0.18] pointer-events-none"
+        style={{
+          backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
       <div className="relative mx-auto max-w-7xl px-6 pb-20 pt-20 md:pt-28">
         <FadeIn>
           <header className="mb-14 grid gap-12 lg:grid-cols-[1.2fr,1fr] lg:items-center">

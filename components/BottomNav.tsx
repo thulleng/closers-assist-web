@@ -14,6 +14,8 @@ import {
   BookOpen,
   User,
   Store,
+  Gift,
+  Building2,
 } from "lucide-react";
 
 const BOTTOM_NAV = [
@@ -21,6 +23,7 @@ const BOTTOM_NAV = [
   { href: "/industries", label: "Industries", icon: Layers },
   { href: "/dashboard/auto", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pricing", label: "Pricing", icon: DollarSign },
+  { href: "/enterprise", label: "Enterprise", icon: Building2 },
 ];
 
 const DRAWER_LINKS = [
@@ -37,10 +40,16 @@ const DRAWER_LINKS = [
     icon: User,
   },
   {
-    href: "/skills-marketplace",
+    href: "/marketplace",
     label: "Skills Marketplace",
     subtitle: "Add-ons for your agent.",
     icon: Store,
+  },
+  {
+    href: "/referral",
+    label: "Refer & Earn",
+    subtitle: "$10 credit per signup. Free month at 5.",
+    icon: Gift,
   },
 ];
 
@@ -121,23 +130,23 @@ export default function BottomNav() {
         className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/10 backdrop-blur-xl md:hidden"
         style={{ background: "rgba(5,5,6,0.95)" }}
       >
-        <div className="flex items-center justify-around px-2 pt-2 pb-[env(safe-area-inset-bottom,8px)]">
+        <div className="flex items-center justify-around px-1 pt-2 pb-[env(safe-area-inset-bottom,8px)]">
           {BOTTOM_NAV.map(({ href, label, icon: Icon }) => {
             const active =
               pathname === href ||
-              (href !== "/" && pathname.startsWith(href));
+              (href !== "/" && pathname?.startsWith(href));
             return (
               <Link
                 key={href}
                 href={href}
-                className="flex flex-col items-center gap-1 px-3 py-1.5"
+                className="flex flex-col items-center gap-0.5 px-1.5 py-1.5"
               >
                 <Icon
                   className={`h-5 w-5 ${active ? "text-deal" : "text-ash"}`}
                   strokeWidth={active ? 2.5 : 2}
                 />
                 <span
-                  className={`text-[10px] font-medium ${
+                  className={`text-[9px] font-medium ${
                     active ? "text-deal" : "text-muted"
                   }`}
                 >
@@ -150,7 +159,7 @@ export default function BottomNav() {
           {/* More button */}
           <button
             onClick={() => setDrawerOpen((prev) => !prev)}
-            className="flex flex-col items-center gap-1 px-3 py-1.5"
+            className="flex flex-col items-center gap-0.5 px-1.5 py-1.5"
           >
             {drawerOpen ? (
               <X className="h-5 w-5 text-deal" strokeWidth={2.5} />
@@ -158,7 +167,7 @@ export default function BottomNav() {
               <Menu className="h-5 w-5 text-ash" strokeWidth={2} />
             )}
             <span
-              className={`text-[10px] font-medium ${
+              className={`text-[9px] font-medium ${
                 drawerOpen ? "text-deal" : "text-muted"
               }`}
             >

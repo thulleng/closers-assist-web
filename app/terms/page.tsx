@@ -9,6 +9,7 @@ export const metadata: Metadata = {
 export default function TermsPage() {
   return (
     <div className="relative overflow-hidden loud-bg">
+      <div className="grid-pattern opacity-30" />
       <div className="mx-auto max-w-3xl px-6 py-20 md:py-28">
         <div className="mb-10">
           <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">

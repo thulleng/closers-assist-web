@@ -310,6 +310,7 @@ summary {
   transition: border-color 300ms ease, box-shadow 300ms ease;
 }
 .neon-border:hover {
+  animation-play-state: paused;
   border-color: rgba(0, 255, 136, 0.8);
   box-shadow: 0 0 36px rgba(0, 255, 136, 0.45);
 }
@@ -433,4 +434,90 @@ summary {
   animation: glitch-text 0.3s ease-in-out 0.1s;
   clip-path: inset(60% 0 20% 0);
   opacity: 0.8;
+}
+
+/* ═══════════════════════════════════════════════
+   ENHANCED VISUALS — Pulsing CTAs, Glass, Particles
+   ═══════════════════════════════════════════════ */
+
+/* ── Pulsing Glow Ring around CTAs ── */
+@keyframes cta-glow-ring {
+  0% {
+    box-shadow:
+      0 0 30px rgba(0, 255, 136, 0.35),
+      0 8px 30px rgba(16, 185, 129, 0.4),
+      0 0 0 0 rgba(0, 255, 136, 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+  100% {
+    box-shadow:
+      0 0 50px rgba(0, 255, 136, 0.5),
+      0 12px 40px rgba(16, 185, 129, 0.5),
+      0 0 0 16px rgba(0, 255, 136, 0),
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+.btn-loud {
+  animation: cta-glow-ring 2s ease-out infinite;
+}
+.btn-loud:hover {
+  animation: none;
+}
+
+/* ── Enhanced Frosted Glass ── */
+.glass-deep {
+  background: rgba(8, 8, 12, 0.7);
+  backdrop-filter: blur(20px) saturate(120%);
+  -webkit-backdrop-filter: blur(20px) saturate(120%);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  transition: border-color 300ms ease, box-shadow 300ms ease;
+}
+.glass-deep:hover {
+  border-color: rgba(16, 185, 129, 0.2);
+  box-shadow:
+    0 12px 40px rgba(0, 0, 0, 0.5),
+    0 0 30px rgba(16, 185, 129, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.06);
+}
+
+/* ── Scroll Reveal (for sections not using FadeIn component) ── */
+.scroll-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 700ms ease-out, transform 700ms ease-out;
+}
+.scroll-reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ── Page Transition Fade ── */
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.page-enter {
+  animation: page-in 350ms ease-out both;
+}
+
+/* ── Subtle Gradient Shift on Key Headings ── */
+@keyframes gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+.gradient-shift {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease-in-out infinite;
+}
+
+/* ── Floating Particle Keyframe (used by FloatingParticles component) ── */
+@keyframes particle-rise {
+  0%   { transform: translateY(0) translateX(0); opacity: 0; }
+  10%  { opacity: 1; }
+  80%  { opacity: 0.6; }
+  100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
 }

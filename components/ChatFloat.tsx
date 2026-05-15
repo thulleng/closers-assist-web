@@ -26,8 +26,8 @@ export default function ChatFloat() {
   const [open, setOpen] = useState(false);
   const drawerRef = useRef<HTMLDivElement>(null);
 
-  const isDashboard = pathname.startsWith("/dashboard");
-  const industry = industryFromPath(pathname);
+  const isDashboard = (pathname ?? "").startsWith("/dashboard");
+  const industry = industryFromPath(pathname ?? "");
 
   // Close on Escape
   useEffect(() => {

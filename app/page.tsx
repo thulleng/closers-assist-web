@@ -14,6 +14,8 @@ import {
   Store,
   ArrowRight,
   CheckCircle2,
+  Check,
+  X,
   Bug,
   Wind,
   Landmark,
@@ -32,6 +34,13 @@ import LiveScoreboard from "@/components/LiveScoreboard";
 import RealChat from "@/components/RealChat";
 import EmailCapture from "@/components/EmailCapture";
 import FoundersCircle from "@/components/FoundersCircle";
+import HeroVisual from "@/components/HeroVisual";
+import FloatingParticles from "@/components/FloatingParticles";
+import TiltCard from "@/components/TiltCard";
+import MobileCTABar from "@/components/MobileCTABar";
+import WaitlistCounter from "@/components/WaitlistCounter";
+import NewsletterSection from "@/components/NewsletterSection";
+import DemoChat from "@/components/DemoChat";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -107,6 +116,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg bg-ai-gradient">
         <div className="grid-pattern" />
         <div className="grain" />
+        <FloatingParticles />
 
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr,1fr]">
@@ -126,41 +136,34 @@ export default function HomePage() {
 
               <div>
                 <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
-                  Close like it&rsquo;s
+                  You can&rsquo;t clone
                   <br />
-                  the last day.
+                  yourself.
                   <br />
                   <span className="text-shine font-black">
-                    Every. Single. Day.
+                    We did.
                   </span>
                 </h1>
               </div>
 
               <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
-                  The AI agent built on the showroom floor. Knows your pay
-                  plan, your scripts, your customers.
+                  An AI employee that handles your deals AND your life.
                   <br />
                   <span className="mt-2 inline-block font-semibold text-gold-light">
-                    $29.99/month. One closed deal pays for 10 years.
+                    Never drops a ball. Never forgets a detail. Never clocks out.
                   </span>
                 </p>
               </div>
 
               <div>
-                <div className="mt-8 flex flex-wrap items-center gap-3">
-                  <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                    Get Started →
-                  </Link>
-                  <Link
-                    href="/how-it-works"
-                    className="btn-ghost flex items-center gap-2 rounded-xl px-6 py-4 text-[15px] font-semibold"
-                  >
-                    <span className="text-gold-light">▶</span> Watch it close
-                    a deal (90s)
-                  </Link>
+                <div className="mt-8 max-w-md">
+                  <EmailCapture
+                    placeholder="your@email.com"
+                    buttonText="Deploy My Agent"
+                  />
                 </div>
-                <div className="mt-5 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
+                <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
                       className="h-3.5 w-3.5 text-deal"
@@ -182,13 +185,29 @@ export default function HomePage() {
                     />
                     Cancel in 1 click
                   </span>
+                  <Link
+                    href="#tutorial"
+                    className="text-gold-light hover:underline"
+                  >
+                    ▶ Watch it close a deal in under 2 minutes
+                  </Link>
                 </div>
+              </div>
+
+              {/* Waitlist counter */}
+              <div className="mt-6">
+                <WaitlistCounter />
               </div>
             </div>
 
-            {/* RIGHT COLUMN — 3D money card visual */}
+            {/* RIGHT COLUMN — 3D money card visual + AI core */}
             <div>
               <div className="relative mx-auto h-[620px] w-full max-w-[380px]">
+                {/* AI Core visual — layered behind the phone */}
+                <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-90">
+                  <HeroVisual size={420} />
+                </div>
+
                 {/* Ambient green glow behind phone */}
                 <div
                   className="absolute left-1/2 top-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl"
@@ -476,38 +495,290 @@ export default function HomePage() {
 
           {/* HUGE stat strip — the math closers can't argue with */}
           <div>
-            <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-8 backdrop-blur">
+            <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-5 sm:p-8 backdrop-blur">
               <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
                 The math closers can&rsquo;t argue with
               </div>
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-3 sm:gap-6">
                 <div className="text-center">
-                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    18
-                  </div>
-                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                  <Counter to={18} duration={2000} className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]" />
+                  <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Industries
                   </div>
                 </div>
                 <div className="border-x border-white/10 text-center">
-                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
-                    $29.99
-                  </div>
-                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                  <Counter to={29.99} decimals={2} prefix="$" duration={2200} className="font-display text-[22px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[34px] md:text-[48px] lg:text-[72px]" />
+                  <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Per rep / mo
                   </div>
                 </div>
                 <div className="text-center">
-                  <div className="font-display text-[56px] font-black leading-none tracking-[-0.03em] text-mega md:text-[72px]">
+                  <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]">
                     &lt;3s
                   </div>
-                  <div className="mt-2 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                  <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Question to play
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* THREE BENEFITS — why closers choose us over ChatGPT, CRM, or nothing */}
+      <section className="relative overflow-hidden border-t border-white/5">
+        <div className="grid-pattern opacity-30" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <FadeIn>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                  Why closers choose us
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                ChatGPT can&rsquo;t do this.
+                <br />
+                <span className="text-shine font-black">Your CRM won&rsquo;t either.</span>
+              </h2>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-6 md:grid-cols-3">
+            {/* Benefit 1 — Memory */}
+            <FadeIn delay={100}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  🧠
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Never forgets a deal
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Closers Assist knows exactly what you said, what they pushed back on, and what closed them last time.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Persistent memory across sessions
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Benefit 2 — Zero setup */}
+            <FadeIn delay={200}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  ⚡
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Zero setup. Zero training.
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Pick your industry. Start closing. No prompt engineering. No &ldquo;learn your CRM&rdquo; phase. No IT ticket. You already know how to text — that&rsquo;s the entire interface.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Close your first deal in under 2 minutes
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Benefit 3 — Your voice */}
+            <FadeIn delay={300}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  🎯
+                </div>
+                <h3 className="mb-3 font-display text-xl font-black text-white">
+                  Sounds like you. Not a bot.
+                </h3>
+                <p className="text-sm leading-relaxed text-ash">
+                  Your scripts. Your style. Your floor. Closers Assist learns how YOU talk — not generic ChatGPT responses that sound like a LinkedIn post from 2019. Every play reads like you typed it between customers.
+                </p>
+                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                  Built on Thul&rsquo;s floor at Sun Toyota
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* WHAT YOUR AGENT DOES — Two columns: Business + Personal */}
+      <section className="relative overflow-hidden loud-bg-alt border-t border-white/5">
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <FadeIn>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  What your agent does
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                One agent.
+                <br />
+                <span className="text-shine font-black">Your entire life. Handled.</span>
+              </h2>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Closes Deals */}
+            <FadeIn delay={50}>
+              <div className="group relative overflow-hidden rounded-2xl border border-deal/20 bg-black/50 p-8 backdrop-blur transition-all hover:border-deal/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.1)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  💼
+                </div>
+                <h3 className="mb-2 font-display text-2xl font-black text-white">
+                  Closes Deals
+                </h3>
+                <p className="mb-5 text-sm text-ash">Your agent handles the revenue side — so you focus on closing, not admin.</p>
+                <ul className="space-y-3 text-sm text-ash">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Follows up with leads automatically</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Manages pipeline stage-by-stage</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Drafts contracts & invoices</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Syncs with email & CRM</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Never lets a cold lead go cold</span>
+                  </li>
+                </ul>
+              </div>
+            </FadeIn>
+
+            {/* Handles Life */}
+            <FadeIn delay={150}>
+              <div className="group relative overflow-hidden rounded-2xl border border-gold/20 bg-black/50 p-8 backdrop-blur transition-all hover:border-gold/40 hover:shadow-[0_0_40px_rgba(251,191,36,0.1)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 text-2xl">
+                  🏠
+                </div>
+                <h3 className="mb-2 font-display text-2xl font-black text-white">
+                  Handles Life
+                </h3>
+                <p className="mb-5 text-sm text-ash">Your agent remembers the personal stuff — so you never drop a ball at home.</p>
+                <ul className="space-y-3 text-sm text-ash">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Books appointments & reservations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Reminds you of birthdays & events</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Researches flights & hotels</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Summarizes school newsletters</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Manages your to-do list</span>
+                  </li>
+                </ul>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* THE MOAT — Why they can't leave */}
+      <section className="relative overflow-hidden loud-bg border-t border-white/5">
+        <div className="relative mx-auto max-w-4xl px-6 py-16 md:py-24 text-center">
+          <FadeIn>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                The moat
+              </span>
+            </div>
+            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
+              Most AI tools do one thing.
+              <br />
+              <span className="text-shine font-black">Yours does everything.</span>
+            </h2>
+            <p className="text-lg text-ash max-w-2xl mx-auto mb-8">
+              Switch costs? You&rsquo;d have to teach a new AI your entire life. Your deals, your customers, your kid&rsquo;s soccer schedule — it all lives in one brain.
+            </p>
+            <p className="text-lg font-bold text-gold-light">
+              That&rsquo;s the point. We built it that way on purpose.
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* DEMO CHAT — Try it live */}
+      <section className="relative overflow-hidden loud-bg">
+        <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center">
+          <FadeIn>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                Try it live
+              </span>
+            </div>
+            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
+              Ask it anything.
+              <br />
+              <span className="text-shine font-black">Right now.</span>
+            </h2>
+            <p className="text-ash mb-10 max-w-md mx-auto">
+              Type an objection, a deal question, or a follow-up — see what your AI closer would say. No signup.
+            </p>
+          </FadeIn>
+          <FadeIn delay={150}>
+            <DemoChat />
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* TUTORIAL VIDEO */} 
+      <section id="tutorial" className="relative overflow-hidden loud-bg">
+        <div className="grid-pattern opacity-40" />
+        <div className="relative mx-auto max-w-5xl px-6 py-16 md:py-20">
+          <FadeIn>
+            <div className="mb-8 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  Watch the walkthrough
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                See exactly how it works
+                <span className="text-shine font-black"> in under 2 minutes.</span>
+              </h2>
+            </div>
+            <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
+              <video
+                src="/demo-90s.mp4?v=2"
+                controls
+                poster="/images/video-poster.jpg"
+                className="w-full"
+                preload="metadata"
+              >
+                Your browser does not support the video tag.
+              </video>
+            </div>
+            <p className="mt-4 text-center text-sm text-ash">
+              From sign-up to your first closed deal — everything you need in under 2 minutes.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -598,6 +869,131 @@ export default function HomePage() {
             </FadeIn>
           </div>
 
+          {/* ── Full-width beta testimonials — 2 rows × 3 ────────────────── */}
+          <FadeIn delay={200}>
+            <div className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+              {/* Alex M. — Insurance */}
+              <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                <div className="relative">
+                  <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                  <p className="text-sm leading-relaxed text-ash">
+                    The objection killer alone is worth it. Customer said my rate was too high — agent gave me three plays ranked by close %. Closed him 20 minutes later.
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">AM</div>
+                    <div>
+                      <div className="text-[12px] font-bold text-white">Alex M.</div>
+                      <div className="text-[10px] text-muted">Insurance Agent · Tampa, FL</div>
+                    </div>
+                    <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Sarah K. — Real Estate */}
+              <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                <div className="relative">
+                  <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                  <p className="text-sm leading-relaxed text-ash">
+                    I used to spend Sunday nights writing follow-ups. Now I paste the name and it writes three versions. My reply rate doubled in two weeks.
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">SK</div>
+                    <div>
+                      <div className="text-[12px] font-bold text-white">Sarah K.</div>
+                      <div className="text-[10px] text-muted">Real Estate Agent · Miami, FL</div>
+                    </div>
+                    <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* David R. — Solar */}
+              <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                <div className="relative">
+                  <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                  <p className="text-sm leading-relaxed text-ash">
+                    I don&rsquo;t do math in my head on a kitchen table anymore. I tell the agent the system size and it spits out the commission, dealer fee, and monthly. Done.
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">DR</div>
+                    <div>
+                      <div className="text-[12px] font-bold text-white">David R.</div>
+                      <div className="text-[10px] text-muted">Solar Sales · Orlando, FL</div>
+                    </div>
+                    <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Marcus J. — SaaS */}
+              <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                <div className="relative">
+                  <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                  <p className="text-sm leading-relaxed text-ash">
+                    I run MEDDIC on every deal without thinking about it now. The agent scores my opportunities and tells me which discovery questions I&rsquo;m missing. Pipeline actually moves.
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">MJ</div>
+                    <div>
+                      <div className="text-[12px] font-bold text-white">Marcus J.</div>
+                      <div className="text-[10px] text-muted">SaaS AE · Austin, TX</div>
+                    </div>
+                    <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Lisa T. — Medical Devices */}
+              <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                <div className="relative">
+                  <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                  <p className="text-sm leading-relaxed text-ash">
+                    Getting past the gatekeeper used to be my whole morning. Now the agent preps my intro for the specific surgeon and protocol. I walk in knowing exactly what to lead with.
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">LT</div>
+                    <div>
+                      <div className="text-[12px] font-bold text-white">Lisa T.</div>
+                      <div className="text-[10px] text-muted">Medical Devices · Chicago, IL</div>
+                    </div>
+                    <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Carlos V. — Mortgage */}
+              <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }} />
+                <div className="relative">
+                  <div className="mb-3 font-display text-3xl font-black leading-none text-shine">&ldquo;</div>
+                  <p className="text-sm leading-relaxed text-ash">
+                    Rate objection used to kill my pipeline. Now the agent runs the break-even calc in seconds and shows them why waiting costs more. Three refis saved this month because of it.
+                  </p>
+                  <div className="mt-4 flex items-center gap-3 border-t border-white/10 pt-4">
+                    <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold/20 font-display text-[10px] font-black text-gold-light">CV</div>
+                    <div>
+                      <div className="text-[12px] font-bold text-white">Carlos V.</div>
+                      <div className="text-[10px] text-muted">Mortgage Broker · Phoenix, AZ</div>
+                    </div>
+                    <div className="ml-auto rounded-full border border-gold/30 bg-gold/10 px-2 py-0.5 text-[9px] font-semibold text-gold-light">BETA</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+
           <FadeIn delay={250}>
             <div className="mt-6">
               <RealChat />
@@ -618,12 +1014,9 @@ export default function HomePage() {
                   The deal board
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
                 Every deal.
-                <br />
-                <span className="text-shine font-black">
-                  Every stage. Every dollar.
-                </span>
+                <span className="text-shine font-black"> Every stage. Every dollar.</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-ash md:text-xl">
                 Watch deals flow from objection to close. Your pipeline,
@@ -931,10 +1324,9 @@ export default function HomePage() {
                     Built on the floor
                   </span>
                 </div>
-                <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+                <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
                   Built on the sales floor.
-                  <br />
-                  <span className="text-shine">Not in a boardroom.</span>
+                  <span className="text-shine"> Not in a boardroom.</span>
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
                   My name is Thul. I sell Toyotas at Sun Toyota in Florida. I
@@ -1193,10 +1585,9 @@ export default function HomePage() {
                   Eighteen doors. One brand.
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
                 One agent. Eighteen industries.
-                <br />
-                <span className="text-shine font-black">Zero compromises.</span>
+                <span className="text-shine font-black"> Zero compromises.</span>
               </h2>
             </div>
           </FadeIn>
@@ -1253,9 +1644,9 @@ export default function HomePage() {
                   How it&rsquo;s built
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                A brain. A playbook.{" "}
-                <span className="text-shine font-black">Your voice.</span>
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
+                A brain. A playbook.
+                <span className="text-shine font-black"> Your voice.</span>
               </h2>
             </div>
           </FadeIn>
@@ -1303,12 +1694,12 @@ export default function HomePage() {
                 className="mt-0.5 h-5 w-5 flex-shrink-0 text-[#EA580C]"
                 strokeWidth={2.5}
               />
-              <p className="text-[15px] leading-relaxed text-[#0A0A0F]">
-                Every tier gets full capability.{" "}
-                <span className="font-bold text-[#EA580C]">
-                  Tiers only differ by scale.
-                </span>{" "}
-                No feature gating, ever.
+              <p className="text-[15px] leading-relaxed text-white/90">
+                  Every tier gets full capability.{" "}
+                  <span className="font-bold text-[#F97316]">
+                    Tiers only differ by scale.
+                  </span>{" "}
+                  No feature gating, ever.
               </p>
             </div>
           </FadeIn>
@@ -1405,6 +1796,7 @@ export default function HomePage() {
       </section>
 
       {/* 7 — PRICING SNAPSHOT */}
+      {/* PRICING — Vera's Plan */} 
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
@@ -1416,103 +1808,104 @@ export default function HomePage() {
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                Less than Starbucks.
+                Your AI employee.
                 <br />
-                <span className="text-shine font-black">More than a coach.</span>
+                <span className="text-shine font-black">$3,000–5,000/month.</span>
               </h2>
+              <p className="mt-4 text-lg text-ash">
+                Handles your deals. Handles your life. Costs less than a part-time assistant — and never takes a day off.
+              </p>
             </div>
           </FadeIn>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                name: "Starter",
-                price: "$29.99",
-                unit: "/ mo",
-                seats: "1 rep",
-                detail: "For the solo closer who wants to make more money this month.",
-              },
-              {
-                name: "Pro",
-                price: "$624.75",
-                unit: "/ mo",
-                seats: "Up to 25 reps",
-                detail:
-                  "For the manager rolling it out to the team. Works out to $24.99/rep.",
-                featured: true,
-              },
-              {
-                name: "Elite",
-                price: "Custom",
-                unit: "",
-                seats: "100+ reps",
-                detail:
-                  "For the dealership. Starting at $19.99/rep — contact for your rate.",
-              },
-            ].map((p, i) => (
-              <FadeIn key={p.name} delay={i * 80}>
-                <div
-                  className={`loud-card rounded-2xl p-7 ${
-                    p.featured
-                      ? "ring-2 ring-deal shadow-[0_0_40px_rgba(16,185,129,0.3)]"
-                      : ""
-                  }`}
-                >
-                  <div
-                    className={`mb-2 text-[10px] font-bold uppercase tracking-[1.5px] ${
-                      p.featured ? "text-gold-light" : "text-ash"
-                    }`}
-                  >
-                    {p.name}
-                    {p.featured && " · Most popular"}
+          <div className="grid gap-6 md:grid-cols-2">
+            <FadeIn delay={0}>
+              <TiltCard maxTilt={4} scale={1.01}>
+                <div className="loud-card rounded-2xl p-8 ring-2 ring-deal shadow-[0_0_40px_rgba(16,185,129,0.3)]">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                    ClosersAssist Agent
                   </div>
-                  <div className="mb-3 text-sm text-ash">{p.seats}</div>
-                  <div className="mb-3 flex items-baseline gap-1">
-                    <span className="font-display text-4xl font-black text-mega">
-                      {p.price}
-                    </span>
-                    <span className="text-sm text-ash">{p.unit}</span>
+                  <div className="mb-4 flex items-baseline gap-1">
+                    <span className="font-display text-5xl font-black text-mega">$3K–$5K</span>
+                    <span className="text-sm text-ash">/ mo</span>
                   </div>
-                  <p className="text-sm leading-relaxed text-ash">
-                    {p.detail}
+                  <ul className="mb-6 space-y-3 text-sm text-ash">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span><strong className="text-white">Business.</strong> Follow-ups, pipeline, contracts, invoices, CRM sync. Closes deals while you sleep.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span><strong className="text-white">Personal.</strong> Calendar, appointments, travel, reminders, newsletters. Your second brain.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span><strong className="text-white">Always on.</strong> Telegram, email, web. Deployed in minutes. Never clocks out.</span>
+                    </li>
+                  </ul>
+                  <Link href="/pricing" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
+                    Deploy My Agent
+                  </Link>
+                </div>
+              </TiltCard>
+            </FadeIn>
+
+            <FadeIn delay={100}>
+              <TiltCard maxTilt={4} scale={1.01}>
+                <div className="loud-card rounded-2xl p-8">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-ash">
+                    What You Get
+                  </div>
+                  <div className="mb-4 flex items-baseline gap-1">
+                    <span className="font-display text-5xl font-black text-white">Everything</span>
+                  </div>
+                  <ul className="mb-6 space-y-3 text-sm text-ash">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Unique personality that evolves with you</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Cross-session memory — never repeats itself</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Morning briefs, weekly reviews, deal tracking</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>No setup fees. No contracts. Month-to-month.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>14-day trial. Cancel anytime.</span>
+                    </li>
+                  </ul>
+                  <p className="text-sm text-muted">
+                    One closed deal pays for months. One saved client pays for years.
                   </p>
                 </div>
-              </FadeIn>
-            ))}
+              </TiltCard>
+            </FadeIn>
           </div>
-
-          <FadeIn delay={300}>
-            <div
-              className="mt-8 flex flex-wrap items-center gap-4 rounded-2xl border border-deal/30 p-6 backdrop-blur"
-              style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.1), rgba(30,30,35,0.6))" }}
-            >
-              <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl shadow-[0_8px_20px_rgba(16,185,129,0.35)]"
-                style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.05))" }}
-              >
-                <Shield
-                  className="h-6 w-6 text-deal-light"
-                  strokeWidth={2.2}
-                />
-              </div>
-              <p className="flex-1 text-[15px] text-white">
-                <span className="font-bold text-shine">
-                  Beat your last month or it&rsquo;s free.
-                </span>{" "}
-                <span className="text-ash">
-                  No contracts. Cancel anytime.
-                </span>
-              </p>
-              <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                Get Started
-              </Link>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
       {/* 7.25 — COMPARISON TABLE */}
       <section className="relative overflow-hidden border-t border-iron loud-bg-alt">
+        {/* Background image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.10] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1600&q=80&auto=format&fit=crop)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        {/* Floating orb */}
+        <div className="absolute top-[20%] right-[5%] w-[350px] h-[350px] rounded-full blur-[120px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 60%)" }} />
+
         <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
           <FadeIn>
             <div className="mb-12 max-w-3xl">
@@ -1522,9 +1915,9 @@ export default function HomePage() {
                   Head to head
                 </span>
               </div>
-              <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-5xl">
-                Your CRM tracks deals.{" "}
-                <span className="text-deal">We close them.</span>
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
+                Your CRM tracks deals.
+                <span className="text-deal"> We close them.</span>
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ash">
                 Everything else was built for managers. This was built for the
@@ -1536,15 +1929,15 @@ export default function HomePage() {
           <FadeIn delay={100}>
             <div className="overflow-hidden rounded-2xl border border-white/10 bg-black/40 backdrop-blur">
               {/* Header row */}
-              <div className="grid grid-cols-4 border-b border-iron">
-                <div className="p-4 text-xs font-medium uppercase tracking-widest text-muted" />
-                <div className="border-l border-iron p-4 text-center text-sm text-ash">
-                  Your CRM
+              <div className="grid grid-cols-4 border-b border-iron bg-white/[0.03]">
+                <div className="p-5 text-xs font-medium uppercase tracking-widest text-muted" />
+                <div className="border-l border-iron p-5 text-center">
+                  <span className="text-sm font-semibold text-ash">Your CRM</span>
                 </div>
-                <div className="border-l border-iron p-4 text-center text-sm text-ash">
-                  Generic AI
+                <div className="border-l border-iron p-5 text-center">
+                  <span className="text-sm font-semibold text-ash">Generic AI</span>
                 </div>
-                <div className="border-l border-iron bg-deal/5 p-4 text-center">
+                <div className="border-l border-iron bg-deal/[0.06] p-5 text-center">
                   <span className="font-display text-sm font-bold text-deal">
                     CLOSERS ASSIST
                   </span>
@@ -1562,17 +1955,19 @@ export default function HomePage() {
               ].map((row, i) => (
                 <div
                   key={row}
-                  className={`grid grid-cols-4 ${i < 5 ? "border-b border-iron" : ""}`}
+                  className={`grid grid-cols-4 transition-colors hover:bg-white/[0.02] ${
+                    i < 5 ? "border-b border-iron" : ""
+                  }`}
                 >
-                  <div className="p-4 text-sm text-bone">{row}</div>
-                  <div className="flex items-center justify-center border-l border-iron p-4 text-lg">
-                    ❌
+                  <div className="p-5 text-sm font-medium text-bone">{row}</div>
+                  <div className="flex items-center justify-center border-l border-iron p-5">
+                    <X className="h-5 w-5 text-red-400/60" strokeWidth={2} />
                   </div>
-                  <div className="flex items-center justify-center border-l border-iron p-4 text-lg">
-                    ❌
+                  <div className="flex items-center justify-center border-l border-iron p-5">
+                    <X className="h-5 w-5 text-red-400/60" strokeWidth={2} />
                   </div>
-                  <div className="flex items-center justify-center border-l border-iron bg-deal/5 p-4 text-lg">
-                    <span className="text-deal">✅</span>
+                  <div className="flex items-center justify-center border-l border-iron bg-deal/[0.06] p-5">
+                    <Check className="h-5 w-5 text-deal" strokeWidth={2.5} />
                   </div>
                 </div>
               ))}
@@ -1592,6 +1987,116 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* 7.3 — ENTERPRISE CTA */}
+      <section className="relative overflow-hidden">
+        <div
+          className="relative border-y border-deal/20"
+          style={{
+            background: "linear-gradient(180deg, #050506 0%, #0a0a0e 100%)",
+          }}
+        >
+          {/* Ambient glows */}
+          <div
+            className="pointer-events-none absolute -top-32 left-1/2 h-64 w-[600px] -translate-x-1/2 rounded-full blur-3xl"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(16,185,129,0.25) 0%, transparent 60%)",
+            }}
+            aria-hidden
+          />
+          <div
+            className="pointer-events-none absolute -bottom-20 right-0 h-48 w-72 rounded-full blur-3xl opacity-50"
+            style={{
+              background:
+                "radial-gradient(circle, rgba(251,191,36,0.2) 0%, transparent 70%)",
+            }}
+            aria-hidden
+          />
+
+          <FadeIn>
+            <div className="relative mx-auto flex max-w-5xl flex-col items-center gap-8 px-6 py-20 text-center md:flex-row md:gap-12 md:py-24 md:text-left">
+              {/* Left: badge + copy */}
+              <div className="flex-1 space-y-5">
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
+                  <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
+                  <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                    Enterprise
+                  </span>
+                </div>
+
+                <h2 className="font-display text-3xl font-black leading-[1.1] tracking-[-0.02em] text-white sm:text-5xl">
+                  Need a dedicated AI closer
+                  <br />
+                  for your{" "}
+                  <span className="text-shine font-black">whole floor?</span>
+                </h2>
+
+                <p className="text-lg leading-relaxed text-ash">
+                  Done-for-you onboarding. Custom scripts. CRM integration.
+                  <br />
+                  <span className="font-semibold text-bone">
+                    $5K/mo · 48-hour setup · White-glove rollout
+                  </span>
+                </p>
+
+                <div className="flex flex-wrap items-center gap-3 pt-2">
+                  <Link
+                    href="/enterprise"
+                    className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-[#050506] shadow-[0_4px_20px_rgba(251,191,36,0.4)] transition-all hover:shadow-[0_6px_28px_rgba(251,191,36,0.6)]"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)",
+                    }}
+                  >
+                    Learn More
+                    <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+                  </Link>
+                  <Link
+                    href="/enterprise"
+                    className="rounded-xl border border-deal/40 px-6 py-3 text-sm font-bold text-deal-light transition-all hover:border-deal hover:bg-deal/10"
+                  >
+                    Book a Call →
+                  </Link>
+                </div>
+              </div>
+
+              {/* Right: stat cards */}
+              <div className="flex-shrink-0 space-y-4">
+                <div className="flex gap-4">
+                  <div className="rounded-2xl border border-white/8 bg-black/60 p-5 text-center backdrop-blur">
+                    <div className="font-display text-3xl font-black text-deal">
+                      $5K
+                    </div>
+                    <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                      / mo
+                    </div>
+                  </div>
+                  <div className="rounded-2xl border border-white/8 bg-black/60 p-5 text-center backdrop-blur">
+                    <div className="font-display text-3xl font-black text-gold-light">
+                      48h
+                    </div>
+                    <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-ash">
+                      Setup
+                    </div>
+                  </div>
+                </div>
+                <div className="rounded-2xl border border-deal/20 bg-black/60 p-5 text-center backdrop-blur">
+                  <div className="font-display text-2xl font-black text-white">
+                    Done-for-you
+                  </div>
+                  <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-deal-light">
+                    Custom scripts · CRM · Rollout
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* 7.4 — NEWSLETTER: From the Floor */}
+      <NewsletterSection />
+
       {/* 7.5 — FOUNDERS CIRCLE */}
       <FoundersCircle formspreeId="mwvargdv" />
 
@@ -1610,16 +2115,17 @@ export default function HomePage() {
             </p>
           </FadeIn>
           <FadeIn delay={300}>
-            <div className="mt-10">
-              <Link href="/pricing" className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg">
-                Get Started — $29.99/mo
-                <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
-              </Link>
-              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. Beat your last month or it&rsquo;s free.</p>
+            <div className="mt-10 max-w-md mx-auto">
+              <EmailCapture
+                placeholder="your@email.com"
+                buttonText="Start Closing More Deals"
+              />
+              <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>
           </FadeIn>
         </div>
       </section>
+      <MobileCTABar />
     </>
   );
 }

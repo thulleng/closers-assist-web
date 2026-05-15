@@ -6,8 +6,13 @@ import {
   UserCog,
   Zap,
   TrendingUp,
+  MessageCircle,
+  Monitor,
+  Smartphone,
+  Send,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import AIAvatar from "@/components/AIAvatar";
 
 export const metadata: Metadata = {
   title: "How It Works",
@@ -49,48 +54,88 @@ const steps = [
 export default function HowItWorksPage() {
   return (
     <>
-      {/* HERO */}
+      {/* HERO — with AI avatar visual */}
       <section className="relative overflow-hidden loud-bg">
         <div className="grid-pattern" />
+        
+        {/* Background image — AI robotic hand reaching toward digital network */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.22] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-20 md:pb-32 md:pt-28">
-          <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
-            <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
-            <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-              How it works
-            </span>
-          </div>
+          <div className="grid gap-12 md:grid-cols-[1fr,auto] md:items-center">
+            {/* Left — copy */}
+            <div>
+              <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  How it works
+                </span>
+              </div>
 
-          <h1 className="font-display text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-white md:text-[72px]">
-            Four steps.
-            <br />
-            <span className="text-shine font-black">Ready to close.</span>
-          </h1>
+              <h1 className="font-display text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-white md:text-[72px]">
+                Four steps.
+                <br />
+                <span className="text-shine font-black">Ready to close.</span>
+              </h1>
 
-          <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
-            No onboarding call. No setup wizard. No data entry. Pick your
-            industry, load your profile, and put it to work the same day.
-          </p>
+              <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
+                No onboarding call. No setup wizard. No data entry. Pick your
+                industry, load your profile, and put it to work the same day.
+              </p>
 
-          <div className="mt-9 flex flex-wrap items-center gap-3">
-            <Link
-              href="/pricing"
-              className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
-            >
-              Get Started
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2.5}
-              />
-            </Link>
-            <Link
-              href="/industries"
-              className="btn-ghost rounded-xl px-6 py-4 text-[15px] font-semibold"
-            >
-              Browse industries
-            </Link>
+              <div className="mt-9 flex flex-wrap items-center gap-3">
+                <Link
+                  href="/pricing"
+                  className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-4 text-[15px]"
+                >
+                  Get Started
+                  <ArrowRight
+                    className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                    strokeWidth={2.5}
+                  />
+                </Link>
+                <Link
+                  href="/industries"
+                  className="btn-ghost rounded-xl px-6 py-4 text-[15px] font-semibold"
+                >
+                  Browse industries
+                </Link>
+              </div>
+            </div>
+
+            {/* Right — AI Avatar visual */}
+            <div className="flex-shrink-0 flex justify-center mt-6 md:mt-0">
+              <AIAvatar variant="holo" size={200} accentColor="mixed" />
+            </div>
           </div>
         </div>
       </section>
+
+      {/* === VISUAL BRIDGE: persistent bg across mid-sections === */}
+      <div className="relative overflow-hidden loud-bg-alt">
+        {/* Background image */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-[0.12] pointer-events-none"
+          style={{
+            backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+          }}
+        />
+        {/* Floating orbs */}
+        <div className="absolute top-[5%] right-[3%] w-[280px] h-[280px] rounded-full blur-[100px] pointer-events-none opacity-50"
+          style={{ background: "radial-gradient(circle, rgba(16,185,129,0.10) 0%, transparent 60%)" }} />
+        <div className="absolute bottom-[15%] left-[5%] w-[220px] h-[220px] rounded-full blur-[100px] pointer-events-none opacity-40"
+          style={{ background: "radial-gradient(circle, rgba(251,191,36,0.06) 0%, transparent 60%)" }} />
+
+      <div className="relative">
 
       {/* 4 STEPS */}
       <section className="relative overflow-hidden loud-bg-alt">
@@ -185,6 +230,92 @@ export default function HowItWorksPage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* HOW TO CHAT */}
+      <section className="border-t border-white/5 loud-bg-alt">
+        <div className="mx-auto max-w-5xl px-6 py-16">
+          <FadeIn>
+            <div className="text-center mb-10">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
+                <MessageCircle className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  Chat anywhere
+                </span>
+              </div>
+              <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
+                Your agent goes{" "}
+                <span className="text-shine font-black">where you go.</span>
+              </h2>
+              <p className="mx-auto mt-4 max-w-xl text-base text-ash">
+                No new tab. No login every time. Your agent is always one tap away — on the lot, at the desk, or on your phone between customers.
+              </p>
+            </div>
+
+            <div className="grid gap-5 md:grid-cols-3">
+              {/* Web */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
+                    <Monitor className="h-7 w-7 text-deal" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Web dashboard</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Sign in once. The chat widget stays with you on every page — objections, follow-ups, deal logging, all without leaving the dashboard.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+                    <span className="text-[11px] font-semibold text-deal-light">Always logged in</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Phone */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
+                    <Smartphone className="h-7 w-7 text-deal" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Phone — same experience</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Pull it up on the lot between customers. Full chat, deal logging, scripts — everything works on mobile. No app to download.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+                    <span className="text-[11px] font-semibold text-deal-light">No app install</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Telegram */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden border border-gold/20 bg-gold/[0.03]">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(251,191,36,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10">
+                    <Send className="h-7 w-7 text-gold" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Telegram — coming soon</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Text your agent like you&rsquo;d text your sales manager. Type &ldquo;sold a Camry&rdquo; and it logs the deal. Ask for a script and it fires back instantly.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gold/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_6px_#FBBF24]" />
+                    <span className="text-[11px] font-semibold text-gold-light">Coming soon</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+      </div></div>{/* close visual bridge */}
 
       {/* FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">

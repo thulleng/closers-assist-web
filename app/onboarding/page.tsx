@@ -1,978 +1,391 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
-import { useRouter } from "next/navigation";
-import { Syne } from "next/font/google";
-import { ArrowRight, ArrowLeft, Check, Zap, X } from "lucide-react";
-import RealChat from "@/components/RealChat";
+import { Suspense, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import { createClient } from "@/lib/supabase/client";
+import {
+  ArrowRight,
+  CheckCircle2,
+  Copy,
+  MessageCircle,
+  Sparkles,
+  Zap,
+  Smartphone,
+  Monitor,
+  ExternalLink,
+  Loader2,
+  Car,
+  Home,
+  Shield,
+  Sun,
+  Laptop,
+  Stethoscope,
+  ShoppingBag,
+  Key,
+  Bug,
+  Clipboard,
+  Building2,
+  Users,
+  Truck,
+  HardHat,
+  Wifi,
+  Briefcase,
+} from "lucide-react";
+import FadeIn from "@/components/FadeIn";
+import Counter from "@/components/Counter";
 
-const syne = Syne({ subsets: ["latin"], weight: ["700", "800"], display: "swap" });
-
-// ─── Types ───────────────────────────────────────────────────────────────────
-
-// Form state — all strings for controlled inputs
-interface OnboardingData {
-  industry: string;
-  firstName: string;
-  lastName: string;
-  company: string;
-  yearsInSales: string;
-  title: string;
-  // Pay plan (stored as strings in form, serialised as numbers on save)
-  draw: string;
-  commissionSplit: string;
-  miniFlat: string;
-  volumeThreshold: string;
-  volumeBonus: string;
-  cxiBonus: string;
-  // Agent customization
-  agentName: string;
-  coachingStyle: string;
-  agentFocus: string;
-  customGoal: string;
-}
-
-const EMPTY: OnboardingData = {
-  industry: "",
-  firstName: "",
-  lastName: "",
-  company: "",
-  yearsInSales: "",
-  title: "",
-  draw: "",
-  commissionSplit: "",
-  miniFlat: "",
-  volumeThreshold: "",
-  volumeBonus: "",
-  cxiBonus: "",
-  agentName: "Closer",
-  coachingStyle: "",
-  agentFocus: "",
-  customGoal: "",
-};
-
-const STORAGE_KEY = "ca_onboarding";
-
-const STEPS = [
-  { id: 1, label: "Industry" },
-  { id: 2, label: "Your Role" },
-  { id: 3, label: "Pay Plan" },
-  { id: 4, label: "Your Agent" },
-  { id: 5, label: "Go Live" },
+const INDUSTRIES = [
+  { id: "auto", label: "Auto Sales", icon: Car },
+  { id: "real-estate", label: "Real Estate", icon: Home },
+  { id: "insurance", label: "Insurance", icon: Shield },
+  { id: "solar", label: "Solar", icon: Sun },
+  { id: "saas", label: "SaaS", icon: Laptop },
+  { id: "medical", label: "Medical Devices", icon: Stethoscope },
+  { id: "retail", label: "Retail (Big Ticket)", icon: ShoppingBag },
+  { id: "rental", label: "Rental", icon: Key },
+  { id: "pest-control", label: "Pest Control", icon: Bug },
+  { id: "project-manager", label: "Project Manager", icon: Clipboard },
+  { id: "roofing", label: "Roofing", icon: HardHat },
+  { id: "hvac", label: "HVAC", icon: Wifi },
+  { id: "home-security", label: "Home Security", icon: Shield },
+  { id: "mortgage", label: "Mortgage & Lending", icon: Building2 },
+  { id: "financial-advisors", label: "Financial Advisors", icon: Briefcase },
+  { id: "recruiting", label: "Recruiting", icon: Users },
+  { id: "telecom", label: "Telecom", icon: Wifi },
+  { id: "other-sales", label: "Other Sales", icon: Briefcase },
 ];
 
-// ─── Industry → dashboard route ───────────────────────────────────────────────
-
-const INDUSTRY_DASHBOARD: Record<string, string> = {
-  "auto":                "/dashboard/auto",
-  "real-estate":         "/dashboard/real-estate",
-  "insurance":           "/dashboard/insurance",
-  "solar":               "/dashboard/solar",
-  "saas":                "/dashboard/saas",
-  "medical":             "/dashboard/medical",
-  "retail":              "/dashboard/retail",
-};
-
-function getDashboard(industry: string) {
-  return INDUSTRY_DASHBOARD[industry] ?? "/dashboard/auto";
-}
-
-// ─── Industry data ────────────────────────────────────────────────────────────
-
-const ALL_INDUSTRIES = [
-  { value: "auto",               icon: "🚗", label: "Automotive",          desc: "Pay plan math, trade valuations, CXI tracking, scripts." },
-  { value: "real-estate",        icon: "🏠", label: "Real Estate",          desc: "Listing prep, buyer nurture, commission splits." },
-  { value: "insurance",          icon: "🛡️", label: "Insurance",            desc: "Book of business, renewals, cross-sell triggers." },
-  { value: "solar",              icon: "☀️", label: "Solar",                desc: "Quote math, utility bill analysis, proposal scripts." },
-  { value: "saas",               icon: "💻", label: "SaaS",                 desc: "Pipeline pulse, discovery questions, demo prep." },
-  { value: "medical",            icon: "🏥", label: "Medical Devices",      desc: "Protocol knowledge, rep-surgeon scripts, territory planning." },
-  { value: "retail",             icon: "🛋️", label: "Retail (Big Ticket)",  desc: "Product specs, financing math, close-the-lap scripts." },
-  { value: "pest-control",       icon: "🐛", label: "Pest Control",         desc: "Service plan objections, seasonal upsells, renewals." },
-  { value: "hvac",               icon: "❄️", label: "HVAC",                 desc: "System upgrades, service agreements, financing." },
-  { value: "roofing",            icon: "🏚️", label: "Roofing",              desc: "Insurance claims, repair-to-replace, storm territory." },
-  { value: "home-security",      icon: "🔒", label: "Home Security",        desc: "Competitor rebuttals, monitoring contracts, smart home." },
-  { value: "mortgage",           icon: "🏦", label: "Mortgage & Lending",   desc: "Rate objections, product explainers, pre-approval pipeline." },
-  { value: "financial-advisors", icon: "📈", label: "Financial Advisors",   desc: "Fee objections, robo-advisor rebuttals, AUM consolidation." },
-  { value: "recruiting",         icon: "👥", label: "Recruiting & Staffing", desc: "Fee objections, candidate prep, counter-offer playbook." },
-  { value: "telecom",            icon: "📡", label: "Telecom & Cell Towers", desc: "Tower leases, enterprise deals, bandwidth upsells." },
-  { value: "rental",             icon: "🔑", label: "Rental",               desc: "Pricing disputes, damage scripts, cancellation pushback." },
-  { value: "project-manager",    icon: "📋", label: "Project Manager",      desc: "SOW defense, change orders, budget objections." },
-  { value: "other-sales",        icon: "🤝", label: "Other Sales",          desc: "Universal objections: price, timing, think about it, ghosting." },
-];
-
-const FEATURED_INDUSTRIES = ALL_INDUSTRIES.slice(0, 5);
-
-// ─── Industry starter prompts ─────────────────────────────────────────────────
-
-const INDUSTRY_STARTERS: Record<string, string[]> = {
-  "auto": [
-    "Customer says $499/mo is too high — what's my play?",
-    "Calculate my commission: $800 front, $400 back, 25% split",
-    "Write a follow-up text for a customer who ghosted after a test drive",
-    "What's the best way to T.O. without losing the customer?",
-  ],
-  "real-estate": [
-    "Buyer says the market is too hot and wants to wait — what's my play?",
-    "Calculate my commission: $450K sale, 3% buyer side, 30% referral split",
-    "Write a follow-up text for a client who ghosted after their third showing",
-    "How do I handle a lowball offer without losing the client?",
-  ],
-  "insurance": [
-    "Prospect says their current rate is lower — what's my play?",
-    "Calculate my commission: $1,200 annual premium at 15% first-year",
-    "Write a follow-up text for a lead who went cold after the quote call",
-    "How do I handle 'I already have coverage' without being pushy?",
-  ],
-  "solar": [
-    "Homeowner says they'll wait until prices drop — what's my play?",
-    "Calculate my commission on a $28K system with a $2K dealer fee",
-    "Write a follow-up text for a homeowner who went cold after the proposal",
-    "How do I overcome 'I need to talk to my spouse'?",
-  ],
-  "saas": [
-    "Prospect says they'll revisit next quarter — what's my play?",
-    "Calculate my commission: $24K ACV at 8% with a 60-day close",
-    "Write a follow-up email for a champion who went silent after the demo",
-    "How do I navigate a multi-stakeholder deal without losing momentum?",
-  ],
-  "medical": [
-    "Provider says they're locked into their current vendor — what's my play?",
-    "Calculate my commission: $80K device sale at 6% with quarterly quota",
-    "Write a follow-up email for a surgeon who went cold after the trial",
-    "How do I get past the gatekeeper to reach the decision maker?",
-  ],
-  "retail": [
-    "Customer says they can get it cheaper online — what's my play?",
-    "How do I upsell without making the customer feel pressured?",
-    "Write a follow-up message for a customer who left without buying",
-    "What's the best way to handle a return that becomes a new sale?",
-  ],
-  "pest-control": [
-    "Customer says they'll think about it after one treatment — what's my play?",
-    "How do I upsell from a one-time treatment to an annual service plan?",
-    "Write a follow-up text for a homeowner who got a quote but went cold",
-    "How do I handle 'I can just buy the spray at Home Depot'?",
-  ],
-  "hvac": [
-    "Homeowner says the system still works and they don't want to replace it — what's my play?",
-    "Calculate my commission on a $9,500 system install at 8%",
-    "Write a follow-up for a lead who went cold after the estimate",
-    "How do I close a service agreement after completing a repair?",
-  ],
-  "roofing": [
-    "Homeowner says they'll wait until after hurricane season — what's my play?",
-    "How do I walk a customer through an insurance claim without overstepping?",
-    "Write a follow-up for a storm-damage lead who hasn't responded",
-    "How do I handle 'the other company quoted me $3K less'?",
-  ],
-  "home-security": [
-    "Customer says ADT is cheaper — what's my play?",
-    "How do I explain monitoring contract terms without losing the customer?",
-    "Write a follow-up text for a homeowner who was interested but went quiet",
-    "How do I upsell smart home integration on a base security package?",
-  ],
-  "mortgage": [
-    "Borrower says they'll wait for rates to drop — what's my play?",
-    "Calculate my commission: $380K loan at 1.2 points origination",
-    "Write a follow-up text for a pre-approval client who went quiet",
-    "How do I handle 'I'm also talking to three other lenders'?",
-  ],
-  "financial-advisors": [
-    "Prospect says they're happy with their current advisor — what's my play?",
-    "Calculate my commission: $250K AUM at 1% advisory fee",
-    "Write a follow-up for a prospect who ghosted after the discovery call",
-    "How do I rebut 'I'll just use a robo-advisor'?",
-  ],
-  "recruiting": [
-    "Client says they'll hire directly to avoid the fee — what's my play?",
-    "Calculate my commission: $90K placement at 18% contingency",
-    "Write a follow-up email for a hiring manager who went cold",
-    "How do I handle a candidate who's weighing a counter-offer?",
-  ],
-  "telecom": [
-    "Business owner says their current provider is good enough — what's my play?",
-    "How do I structure a tower lease conversation with a landowner?",
-    "Write a follow-up for an enterprise prospect who went quiet after the proposal",
-    "How do I upsell from a basic plan to a dedicated bandwidth solution?",
-  ],
-  "rental": [
-    "Tenant says the rent is too high compared to similar units — what's my play?",
-    "How do I handle a dispute about a damage charge without escalating?",
-    "Write a message for a tenant who wants to break their lease early",
-    "How do I re-sign a tenant who's thinking about leaving?",
-  ],
-  "project-manager": [
-    "Client wants to add scope without adjusting the budget — what's my play?",
-    "How do I defend a SOW line item being challenged in a review?",
-    "Write a message pushing back on a deadline change that affects delivery",
-    "How do I handle stakeholders who keep changing requirements mid-sprint?",
-  ],
-  "other-sales": [
-    "Customer says my price is too high — what's my play?",
-    "Customer says 'I need to think about it' — how do I keep the deal alive?",
-    "Write a follow-up message for a prospect who went cold",
-    "How do I handle ghosting after what felt like a solid meeting?",
-  ],
-};
-
-// ─── Option sets ──────────────────────────────────────────────────────────────
-
-const ROLES = [
-  { value: "rep",     label: "Sales Rep" },
-  { value: "manager", label: "Sales Manager" },
-  { value: "finance", label: "Finance Manager" },
-  { value: "gsm",     label: "GSM / GM" },
-];
-
-const CRMS = ["VinSolutions", "DealerSocket", "Reynolds & Reynolds", "Elead", "CDK", "Other", "None"];
-
-const COMMISSION_TYPES = [
-  { value: "flat",       label: "Flat per deal" },
-  { value: "front-pct",  label: "% of front gross" },
-  { value: "total-pct",  label: "% of total gross" },
-  { value: "salary",     label: "Salary + bonus" },
-];
-
-const GOALS = [
-  { value: "objections", label: "🎯  Close more objections", sub: "Get ranked plays for every push-back" },
-  { value: "pay-plan",   label: "💰  Know my pay plan math",  sub: "Real-time commission calc on every deal" },
-  { value: "follow-up",  label: "📲  Follow up dead leads",   sub: "AI-drafted texts that actually get replies" },
-  { value: "all",        label: "🔥  All of the above",        sub: "Let the agent decide based on the moment" },
-];
-
-const COACHING_STYLES = [
-  { value: "direct",      label: "Direct & blunt" },
-  { value: "motivating",  label: "Motivating & energetic" },
-  { value: "analytical",  label: "Calm & analytical" },
-  { value: "mentor",      label: "Mentor-style" },
-];
-
-const FOCUS_OPTIONS = [
-  { value: "closing-rate",        label: "Closing rate" },
-  { value: "follow-up",           label: "Follow-up discipline" },
-  { value: "objection-handling",  label: "Objection handling" },
-  { value: "product-knowledge",   label: "Product knowledge" },
-  { value: "prospecting",         label: "Prospecting" },
-];
-
-// ─── Shared field components ───────────────────────────────────────────────────
-
-function FieldLabel({ children }: { children: React.ReactNode }) {
-  return (
-    <label className="block mb-2 text-ash font-medium" style={{ fontSize: 11, letterSpacing: "0.08em", textTransform: "uppercase" }}>
-      {children}
-    </label>
-  );
-}
-
-function TextInput({ value, onChange, placeholder, autoFocus }: {
-  value: string; onChange: (v: string) => void; placeholder?: string; autoFocus?: boolean;
-}) {
-  return (
-    <input
-      type="text"
-      value={value}
-      onChange={(e) => onChange(e.target.value)}
-      placeholder={placeholder}
-      autoFocus={autoFocus}
-      className="w-full rounded-xl border border-iron bg-slate px-4 py-3.5 text-bone placeholder-muted text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all"
-    />
-  );
-}
-
-function PillGrid({ options, value, onChange, cols = 2 }: {
-  options: { value: string; label: string }[];
-  value: string;
-  onChange: (v: string) => void;
-  cols?: number;
-}) {
-  return (
-    <div className="grid gap-3" style={{ gridTemplateColumns: `repeat(${cols}, 1fr)` }}>
-      {options.map((opt) => {
-        const active = value === opt.value;
-        return (
-          <button key={opt.value} type="button" onClick={() => onChange(opt.value)}
-            className={`rounded-xl border px-4 py-3 text-sm font-medium text-left transition-all ${
-              active ? "border-deal bg-deal/10 text-deal" : "border-iron bg-slate text-ash hover:border-white/25 hover:text-bone"
-            }`}
-          >
-            {active && <span className="mr-1.5">✓</span>}
-            {opt.label}
-          </button>
-        );
-      })}
-    </div>
-  );
-}
-
-// ─── More Industries Modal ─────────────────────────────────────────────────────
-
-function MoreModal({ current, onPick, onClose }: {
-  current: string;
-  onPick: (v: string) => void;
-  onClose: () => void;
-}) {
-  // Close on Escape
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [onClose]);
-
-  return (
-    <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-4" onClick={onClose}>
-      <div className="absolute inset-0 bg-black/70 backdrop-blur-sm" />
-      <div
-        className="relative z-10 w-full max-w-lg rounded-2xl border border-iron bg-slate p-6 max-h-[80vh] overflow-y-auto"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <div className="flex items-center justify-between mb-5">
-          <h2 className={`${syne.className} text-lg font-bold text-white`}>All Industries</h2>
-          <button type="button" onClick={onClose} className="text-ash hover:text-bone transition-colors">
-            <X size={20} />
-          </button>
-        </div>
-        <div className="grid grid-cols-2 gap-2.5">
-          {ALL_INDUSTRIES.map((ind) => {
-            const active = current === ind.value;
-            return (
-              <button
-                key={ind.value}
-                type="button"
-                onClick={() => onPick(ind.value)}
-                className={`flex items-center gap-3 rounded-xl border px-4 py-3 text-sm font-medium text-left transition-all ${
-                  active ? "border-deal bg-deal/10 text-deal" : "border-iron bg-pit text-ash hover:border-white/20 hover:text-bone"
-                }`}
-              >
-                <span className="text-xl">{ind.icon}</span>
-                <span>{ind.label}</span>
-                {active && <Check size={13} className="ml-auto shrink-0" />}
-              </button>
-            );
-          })}
-        </div>
-      </div>
-    </div>
-  );
-}
-
-// ─── Step 1 — Industry Picker ──────────────────────────────────────────────────
-
-function Step1Industry({ value, onPick }: { value: string; onPick: (v: string) => void }) {
-  const [modalOpen, setModalOpen] = useState(false);
-  const closeModal = useCallback(() => setModalOpen(false), []);
-
-  function handlePickFromModal(v: string) {
-    setModalOpen(false);
-    onPick(v);
-  }
-
-  return (
-    <>
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {FEATURED_INDUSTRIES.map((ind) => {
-          const active = value === ind.value;
-          return (
-            <button
-              key={ind.value}
-              type="button"
-              onClick={() => onPick(ind.value)}
-              className={`flex flex-col items-start gap-2 rounded-2xl border p-5 text-left transition-all duration-200 ${
-                active
-                  ? "border-deal bg-deal/10"
-                  : "border-iron bg-slate hover:border-white/20"
-              }`}
-            >
-              <span style={{ fontSize: 40, lineHeight: 1 }}>{ind.icon}</span>
-              <div>
-                <div className={`font-bold text-base leading-tight ${active ? "text-deal" : "text-white"}`}>
-                  {ind.label}
-                </div>
-                <div className="text-xs text-ash mt-0.5 leading-snug">{ind.desc}</div>
-              </div>
-              {active && (
-                <div className="ml-auto mt-auto self-end">
-                  <Check size={15} className="text-deal" />
-                </div>
-              )}
-            </button>
-          );
-        })}
-
-        {/* More → card */}
-        <button
-          type="button"
-          onClick={() => setModalOpen(true)}
-          className="flex flex-col items-start justify-between gap-2 rounded-2xl border border-iron bg-slate p-5 text-left hover:border-white/20 transition-all duration-200"
-        >
-          <span style={{ fontSize: 40, lineHeight: 1 }}>➕</span>
-          <div>
-            <div className="font-bold text-base text-white">More →</div>
-            <div className="text-xs text-ash mt-0.5">13 more verticals</div>
-          </div>
-        </button>
-      </div>
-
-      {modalOpen && (
-        <MoreModal current={value} onPick={handlePickFromModal} onClose={closeModal} />
-      )}
-    </>
-  );
-}
-
-// ─── Step 2 — Your Role ───────────────────────────────────────────────────────
-
-const YEARS_OPTIONS = ["<1", "1–3", "3–5", "5–10", "10+"];
-
-function Step2Role({ data, update }: {
-  data: OnboardingData;
-  update: (k: keyof OnboardingData, v: string) => void;
-}) {
-  const inputCls =
-    "w-full rounded-xl border border-white/20 bg-white/[0.08] px-4 py-3.5 text-white placeholder:text-ash text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all";
-
-  return (
-    <div className="space-y-4">
-      {/* First Name / Last Name */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <FieldLabel>First Name *</FieldLabel>
-          <input
-            type="text"
-            value={data.firstName}
-            onChange={(e) => update("firstName", e.target.value)}
-            placeholder="Thul"
-            autoFocus
-            className={inputCls}
-          />
-        </div>
-        <div>
-          <FieldLabel>Last Name *</FieldLabel>
-          <input
-            type="text"
-            value={data.lastName}
-            onChange={(e) => update("lastName", e.target.value)}
-            placeholder="Nguyen"
-            className={inputCls}
-          />
-        </div>
-      </div>
-
-      {/* Company / Years in Sales */}
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <FieldLabel>Company / Dealership *</FieldLabel>
-          <input
-            type="text"
-            value={data.company}
-            onChange={(e) => update("company", e.target.value)}
-            placeholder="Sun Toyota"
-            className={inputCls}
-          />
-        </div>
-        <div>
-          <FieldLabel>Years in Sales</FieldLabel>
-          <select
-            value={data.yearsInSales}
-            onChange={(e) => update("yearsInSales", e.target.value)}
-            className={`${inputCls} cursor-pointer appearance-none`}
-            style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E")`, backgroundRepeat: "no-repeat", backgroundPosition: "right 16px center" }}
-          >
-            <option value="" disabled className="bg-slate">Select…</option>
-            {YEARS_OPTIONS.map((y) => (
-              <option key={y} value={y} className="bg-slate text-white">{y} years</option>
-            ))}
-          </select>
-        </div>
-      </div>
-
-      {/* Your Title */}
-      <div>
-        <FieldLabel>Your Title *</FieldLabel>
-        <input
-          type="text"
-          value={data.title}
-          onChange={(e) => update("title", e.target.value)}
-          placeholder="e.g. Sales Rep, Finance Manager, Sales Manager"
-          className={inputCls}
-        />
-      </div>
-    </div>
-  );
-}
-
-// ─── Step 3 — Pay Plan ────────────────────────────────────────────────────────
-
-const AVG_FRONT = 1200; // assumed avg front gross per deal for the preview
-
-function calcPayPlan(data: OnboardingData, units = 5) {
-  const draw            = parseFloat(data.draw)            || 0;
-  const commissionSplit = parseFloat(data.commissionSplit) || 0;
-  const miniFlat        = parseFloat(data.miniFlat)        || 0;
-  const volumeThreshold = parseFloat(data.volumeThreshold) || 0;
-  const volumeBonus     = parseFloat(data.volumeBonus)     || 0;
-  const cxiBonus        = parseFloat(data.cxiBonus)        || 0;
-
-  const perDeal    = Math.max(miniFlat, AVG_FRONT * (commissionSplit / 100));
-  const rawComm    = perDeal * units;
-  const commission = Math.max(draw, rawComm);
-  const volEarned  = volumeThreshold > 0 && units >= volumeThreshold ? volumeBonus : 0;
-  const total      = commission + volEarned + cxiBonus;
-
-  return { commission, volEarned, cxiBonus, total };
-}
-
-function PayPlanPreview({ data }: { data: OnboardingData }) {
-  const hasAny = data.draw || data.commissionSplit || data.miniFlat || data.volumeBonus || data.cxiBonus;
-  const { commission, volEarned, cxiBonus, total } = calcPayPlan(data, 5);
-  const fmt = (n: number) => "$" + Math.round(n).toLocaleString();
-
-  return (
-    <div className={`rounded-2xl border transition-all duration-300 overflow-hidden ${hasAny ? "border-deal/40 bg-deal/5" : "border-iron bg-slate/50"}`}>
-      <div className="px-5 py-4 border-b border-white/6 flex items-center justify-between">
-        <span className="font-mono text-[10px] font-semibold uppercase tracking-[1.5px] text-ash">
-          Estimated: 5-unit month
-        </span>
-        {hasAny && <span className="text-[10px] text-muted">~${AVG_FRONT.toLocaleString()} avg front</span>}
-      </div>
-      <div className="px-5 py-4 space-y-2.5">
-        <div className="flex justify-between text-sm">
-          <span className="text-ash">Commission</span>
-          <span className={`font-mono font-medium ${hasAny ? "text-bone" : "text-muted"}`}>
-            {hasAny ? fmt(commission) : "—"}
-          </span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-ash">Volume Bonus</span>
-          <span className={`font-mono font-medium ${volEarned > 0 ? "text-deal" : "text-muted"}`}>
-            {hasAny ? fmt(volEarned) : "—"}
-          </span>
-        </div>
-        <div className="flex justify-between text-sm">
-          <span className="text-ash">CSI / CXI Bonus</span>
-          <span className={`font-mono font-medium ${cxiBonus > 0 ? "text-gold-light" : "text-muted"}`}>
-            {hasAny ? fmt(cxiBonus) : "—"}
-          </span>
-        </div>
-        <div className="h-px bg-white/8 my-1" />
-        <div className="flex justify-between">
-          <span className="text-sm font-semibold text-white">Total</span>
-          <span className={`font-mono text-lg font-bold ${hasAny ? "text-deal" : "text-muted"}`}>
-            {hasAny ? fmt(total) : "$0"}
-          </span>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-function Step3PayPlan({ data, update }: {
-  data: OnboardingData;
-  update: (k: keyof OnboardingData, v: string) => void;
-}) {
-  const inputCls =
-    "w-full rounded-xl border border-white/20 bg-white/[0.08] px-4 py-3.5 text-white placeholder:text-ash text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all";
-
-  return (
-    <div className="space-y-4">
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <FieldLabel>Monthly Draw ($)</FieldLabel>
-          <input type="number" min="0" value={data.draw} onChange={(e) => update("draw", e.target.value)}
-            placeholder="0" className={inputCls} />
-        </div>
-        <div>
-          <FieldLabel>Commission Split (%)</FieldLabel>
-          <input type="number" min="0" max="100" value={data.commissionSplit} onChange={(e) => update("commissionSplit", e.target.value)}
-            placeholder="25" className={inputCls} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <FieldLabel>Mini / Flat Rate ($)</FieldLabel>
-          <input type="number" min="0" value={data.miniFlat} onChange={(e) => update("miniFlat", e.target.value)}
-            placeholder="200" className={inputCls} />
-        </div>
-        <div>
-          <FieldLabel>Volume Bonus Threshold (units)</FieldLabel>
-          <input type="number" min="0" value={data.volumeThreshold} onChange={(e) => update("volumeThreshold", e.target.value)}
-            placeholder="10" className={inputCls} />
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3">
-        <div>
-          <FieldLabel>Volume Bonus Amount ($)</FieldLabel>
-          <input type="number" min="0" value={data.volumeBonus} onChange={(e) => update("volumeBonus", e.target.value)}
-            placeholder="500" className={inputCls} />
-        </div>
-        <div>
-          <FieldLabel>CSI / CXI Bonus ($)</FieldLabel>
-          <input type="number" min="0" value={data.cxiBonus} onChange={(e) => update("cxiBonus", e.target.value)}
-            placeholder="300" className={inputCls} />
-        </div>
-      </div>
-
-      {/* Live preview */}
-      <div className="pt-2">
-        <PayPlanPreview data={data} />
-        <p className="mt-2 text-center text-xs text-muted">
-          Assumes ~$1,200 avg front gross · updates as you type
-        </p>
-      </div>
-    </div>
-  );
-}
-
-// ─── Step 3.5 — Customize Your Agent ─────────────────────────────────────────
-
-function Step3AgentCustomize({ data, update }: {
-  data: OnboardingData;
-  update: (k: keyof OnboardingData, v: string) => void;
-}) {
-  const inputCls =
-    "w-full rounded-xl border border-white/20 bg-white/[0.08] px-4 py-3.5 text-white placeholder:text-ash text-base outline-none focus:border-deal focus:ring-1 focus:ring-deal/40 transition-all";
-
-  return (
-    <div className="space-y-6">
-      {/* Agent Name */}
-      <div>
-        <FieldLabel>Agent Name</FieldLabel>
-        <input
-          type="text"
-          value={data.agentName}
-          onChange={(e) => update("agentName", e.target.value)}
-          placeholder="Closer"
-          className={inputCls}
-        />
-        <p className="mt-1.5 text-xs text-muted">What your AI calls itself in conversations.</p>
-      </div>
-
-      {/* Coaching Style */}
-      <div>
-        <FieldLabel>Coaching Style</FieldLabel>
-        <PillGrid options={COACHING_STYLES} value={data.coachingStyle} onChange={(v) => update("coachingStyle", v)} cols={2} />
-      </div>
-
-      {/* Primary Focus */}
-      <div>
-        <FieldLabel>Primary Focus</FieldLabel>
-        <PillGrid options={FOCUS_OPTIONS} value={data.agentFocus} onChange={(v) => update("agentFocus", v)} cols={2} />
-      </div>
-
-      {/* #1 Goal */}
-      <div>
-        <FieldLabel>My #1 Goal This Month</FieldLabel>
-        <input
-          type="text"
-          value={data.customGoal}
-          onChange={(e) => update("customGoal", e.target.value)}
-          placeholder="e.g. Hit 15 units, Break my personal record"
-          className={inputCls}
-        />
-      </div>
-    </div>
-  );
-}
-
-// ─── Step 4 — Go Live ────────────────────────────────────────────────────────
-
-function Step4GoLive({ data, onFinish }: {
-  data: OnboardingData;
-  onFinish: () => void;
-}) {
-  const starters = INDUSTRY_STARTERS[data.industry] ?? INDUSTRY_STARTERS["other"];
-
-  return (
-    <div className="space-y-5">
-      <RealChat industry={data.industry || "automotive"} starters={starters} />
-
-      <button
-        type="button"
-        onClick={onFinish}
-        className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-4 text-base font-bold"
-      >
-        Go to my Dashboard <ArrowRight size={17} />
-      </button>
-    </div>
-  );
-}
-
-// ─── Page ─────────────────────────────────────────────────────────────────────
-
-export default function OnboardingPage() {
-  const router = useRouter();
-  const [step, setStep] = useState(0);
-  const [data, setData] = useState<OnboardingData>(EMPTY);
-  const [completing, setCompleting] = useState(false);
-
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem(STORAGE_KEY);
-      if (saved) setData(JSON.parse(saved));
-    } catch {}
-  }, []);
-
-  useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-  }, [data]);
-
-  const update = (key: keyof OnboardingData, value: string) =>
-    setData((prev) => ({ ...prev, [key]: value }));
-
-  // Step 1: auto-advance 300ms after industry pick
-  function handleIndustryPick(v: string) {
-    update("industry", v);
-    setTimeout(() => setStep(1), 300);
-  }
-
-  const isLastStep = step === STEPS.length - 1;
-  const progress = ((step + 1) / STEPS.length) * 100;
-
-  function canAdvance() {
-    if (step === 0) return data.industry !== "";
-    if (step === 1) return data.firstName.trim() !== "" && data.lastName.trim() !== "" && data.company.trim() !== "" && data.title.trim() !== "";
-    if (step === 2) return true; // all pay plan fields optional
-    if (step === 3) return true; // all agent customization fields optional
-    if (step === 4) return true; // go live has its own finish button
-    return true;
-  }
-
-  function handleNext() {
-    if (!canAdvance()) return;
-    // Persist on every step transition
-    console.log("Saving onboarding data:", data);
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-    if (isLastStep) {
-      handleFinish();
-    } else {
-      setStep((s) => s + 1);
-    }
-  }
-
-  async function handleFinish() {
-    setCompleting(true);
-
-    const industryLabel =
-      ALL_INDUSTRIES.find((i) => i.value === data.industry)?.label ?? data.industry;
-
-    // localStorage fallback cache — always written regardless of Supabase result
-    const payload = {
-      industry:         data.industry,
-      industryLabel,
-      firstName:        data.firstName,
-      lastName:         data.lastName,
-      company:          data.company,
-      yearsInSales:     data.yearsInSales,
-      title:            data.title,
-      draw:             parseFloat(data.draw)            || 0,
-      commissionSplit:  parseFloat(data.commissionSplit) || 0,
-      miniFlat:         parseFloat(data.miniFlat)        || 0,
-      volumeThreshold:  parseFloat(data.volumeThreshold) || 0,
-      volumeBonus:      parseFloat(data.volumeBonus)     || 0,
-      cxiBonus:         parseFloat(data.cxiBonus)        || 0,
-      agentName:        data.agentName || "Closer",
-      coachingStyle:    data.coachingStyle,
-      agentFocus:       data.agentFocus,
-      customGoal:       data.customGoal,
-      completedAt:      new Date().toISOString(),
-    };
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(payload));
-
-    // Persist to Supabase — requires UNIQUE constraint on agent_profiles.user_id
+function OnboardingContent() {
+  const searchParams = useSearchParams();
+  const email = searchParams?.get("email") || "";
+  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(false);
+
+  async function selectIndustry(id: string) {
+    setSelectedIndustry(id);
+    setSaving(true);
     try {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
-
       if (user) {
-        await supabase.from("agent_profiles").upsert(
-          {
-            user_id:            user.id,
-            first_name:         data.firstName,
-            last_name:          data.lastName,
-            company:            data.company,
-            title:              data.title,
-            industry:           data.industry,
-            draw:               parseFloat(data.draw)            || 0,
-            commission_pct:     parseFloat(data.commissionSplit) || 0,
-            mini_flat:          parseFloat(data.miniFlat)        || 0,
-            volume_bonus:       parseFloat(data.volumeBonus)     || 0,
-            cxi_bonus:          parseFloat(data.cxiBonus)        || 0,
-            agent_name:         data.agentName || "Closer",
-            coaching_style:     data.coachingStyle || "direct",
-            agent_focus:        data.agentFocus || "closing rate",
-            custom_goals:       data.customGoal,
-            updated_at:         new Date().toISOString(),
-          },
-          { onConflict: "user_id" }
-        );
+        await supabase
+          .from("agent_profiles")
+          .update({ industry: id })
+          .eq("user_id", user.id);
       }
-    } catch (err) {
-      // Non-fatal — localStorage cache is still valid, user can proceed
-      console.error("Supabase upsert failed:", err);
+      setSaved(true);
+    } catch {
+      // Save failed — still let them proceed
+      setSaved(true);
     }
-
-    router.push(getDashboard(data.industry));
+    setSaving(false);
   }
 
-  const headings: Record<number, { title: string; sub: string }> = {
-    0: {
-      title: "What do you sell?",
-      sub: "Your agent auto-loads the vocabulary, scripts, and pay plan math for your world.",
-    },
-    1: {
-      title: "Tell us about your floor.",
-      sub: "Takes 60 seconds. Makes your agent 10x more useful.",
-    },
-    2: {
-      title: "How do you get paid?",
-      sub: "Your agent uses this to calculate your real commission on every deal — instantly.",
-    },
-    3: {
-      title: "Customize your agent.",
-      sub: "Set the tone, focus, and goal so every response feels like it was built for you.",
-    },
-    4: {
-      title: "Your agent is ready.",
-      sub: "Ask anything. It knows your industry, your pay plan, your scripts.",
-    },
-  };
-
-  const stepContent: Record<number, React.ReactNode> = {
-    0: <Step1Industry value={data.industry} onPick={handleIndustryPick} />,
-    1: <Step2Role data={data} update={update} />,
-    2: <Step3PayPlan data={data} update={update} />,
-    3: <Step3AgentCustomize data={data} update={update} />,
-    4: <Step4GoLive data={data} onFinish={handleFinish} />,
-  };
-
   return (
-    <div className="min-h-screen bg-pit flex flex-col">
-      {/* Progress bar */}
-      <div className="h-1 w-full bg-white/5">
-        <div className="h-full bg-deal transition-all duration-500 ease-out" style={{ width: `${progress}%` }} />
-      </div>
+    <div className="relative min-h-screen overflow-hidden loud-bg">
+      <div className="grid-pattern" />
+      <div className="grain" />
 
-      {/* Step indicators */}
-      <div className="flex items-center justify-center pt-8 pb-2 px-6">
-        {STEPS.map((s, i) => {
-          const done    = i < step;
-          const current = i === step;
-          return (
-            <div key={s.id} className="flex items-center">
-              {/* Dot + label */}
-              <div className="flex flex-col items-center gap-1.5">
-                <div className={`flex h-4 w-4 items-center justify-center rounded-full border-2 transition-all duration-300 ${
-                  done    ? "border-deal bg-deal" :
-                  current ? "border-deal bg-deal" :
-                            "border-iron bg-transparent"
-                }`}>
-                  {done && <Check size={9} strokeWidth={3.5} className="text-white" />}
-                </div>
-                <span className={`text-[10px] font-medium tracking-wide whitespace-nowrap transition-colors duration-300 ${
-                  current ? "text-deal" : done ? "text-deal/60" : "text-muted"
-                }`}>
-                  {s.label}
-                </span>
-              </div>
-
-              {/* Connecting line */}
-              {i < STEPS.length - 1 && (
-                <div className={`mb-4 h-px w-12 sm:w-20 transition-all duration-500 ${done ? "bg-deal/50" : "bg-iron"}`} />
-              )}
+      <div className="relative mx-auto max-w-4xl px-6 py-20 md:py-28">
+        {/* STEP 1 — Welcome + Industry Selection */}
+        <FadeIn>
+          <div className="text-center">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                {saved ? "Subscription active" : "Step 1 of 2"}
+              </span>
             </div>
-          );
-        })}
-      </div>
-
-      {/* Content */}
-      <div className="flex flex-1 items-start justify-center px-6 pt-8 pb-20">
-        <div className={`w-full ${step === 4 ? "max-w-2xl" : "max-w-lg"}`}>
-          {/* Heading */}
-          <div className="mb-8">
-            <h1
-              className={`${syne.className} text-white leading-tight mb-2`}
-              style={{ fontSize: 48, fontWeight: 800, letterSpacing: "-1px" }}
-            >
-              {headings[step].title}
+            <h1 className="font-display text-[42px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[64px]">
+              {saved ? "Welcome to" : "What do you sell?"}
+              <br />
+              <span className="text-shine font-black">Closers Assist.</span>
             </h1>
-            <p className="text-ash text-base">{headings[step].sub}</p>
+            <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-ash">
+              {saved
+                ? "Your industry is set. Now pick how you want to use it."
+                : "Pick your industry. Your agent loads the right scripts, pay math, and language instantly."}
+            </p>
           </div>
+        </FadeIn>
 
-          {/* Step content with fade */}
-          <div className="animate-fade-in" key={step}>
-            {stepContent[step]}
-          </div>
-
-          {/* Navigation — hidden on step 0 (auto-advances) and step 4 (has its own CTA) */}
-          {step > 0 && step < 4 && (
-            <div className="mt-8">
-              {/* Steps 1–3 (index 1, 2, 3): full-width Next → with Back below */}
-              {(step === 1 || step === 2 || step === 3) ? (
-                <div className="space-y-3">
-                  <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
-                    className={`btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-4 text-base font-bold transition-all ${
-                      !canAdvance() || completing ? "opacity-40 cursor-not-allowed" : ""
+        {/* STEP 1b — Industry Grid */}
+        {!saved && (
+          <FadeIn delay={100}>
+            <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+              {INDUSTRIES.map((ind) => {
+                const Icon = ind.icon;
+                const isSelected = selectedIndustry === ind.id;
+                return (
+                  <button
+                    key={ind.id}
+                    onClick={() => selectIndustry(ind.id)}
+                    disabled={saving}
+                    className={`loud-card rounded-xl p-4 text-center transition-all ${
+                      isSelected
+                        ? "ring-2 ring-deal bg-deal/10"
+                        : "hover:bg-white/[0.04]"
                     }`}
                   >
-                    Next <ArrowRight size={17} />
-                  </button>
-                  <div className="flex items-center justify-between">
-                    <button type="button" onClick={() => setStep((s) => s - 1)}
-                      className="flex items-center gap-1.5 text-sm text-ash hover:text-bone transition-colors py-2"
-                    >
-                      <ArrowLeft size={15} /> Back
-                    </button>
-                    {/* Skip on pay plan (index 2) and agent customization (index 3) */}
-                    {(step === 2 || step === 3) && (
-                      <button type="button" onClick={handleNext}
-                        className="text-sm text-ash hover:text-bone transition-colors py-2 underline underline-offset-2"
-                      >
-                        Skip for now →
-                      </button>
+                    {isSelected && saving ? (
+                      <Loader2 className="h-7 w-7 text-deal animate-spin mx-auto mb-2" />
+                    ) : (
+                      <Icon className={`h-7 w-7 mx-auto mb-2 ${isSelected ? "text-deal" : "text-ash"}`} />
                     )}
+                    <span className={`text-xs font-medium ${isSelected ? "text-deal-light" : "text-ash"}`}>
+                      {ind.label}
+                    </span>
+                  </button>
+                );
+              })}
+            </div>
+          </FadeIn>
+        )}
+
+        {/* STEP 2 — Pick your platform (shown after industry selection) */}
+        {saved && (
+          <>
+            <FadeIn delay={150}>
+              <div className="mt-16 grid gap-5 sm:grid-cols-2">
+                {/* Telegram option */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-7 ring-2 ring-deal/40 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
+                  <div className="absolute right-4 top-4 rounded-full border border-deal/40 bg-deal/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-deal-light">
+                    Fastest
+                  </div>
+                  <div
+                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
+                    style={{
+                      background: "linear-gradient(135deg, #10B981, #059669)",
+                    }}
+                  >
+                    <SendIcon className="h-7 w-7 text-white" />
+                  </div>
+                  <h3 className="mb-2 font-display text-2xl font-black text-white">
+                    Telegram
+                  </h3>
+                  <p className="mb-5 text-sm leading-relaxed text-ash">
+                    Open Telegram on any device. Your agent lives in your chat list
+                    — just like texting a friend. No new app. No login. Instant.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm text-ash">
+                      <Smartphone className="h-4 w-4 text-deal-light" />
+                      Works on phone, tablet, desktop
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-ash">
+                      <Zap className="h-4 w-4 text-deal-light" />
+                      Under 3 seconds per response
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-ash">
+                      <MessageCircle className="h-4 w-4 text-deal-light" />
+                      Feels like texting a closer
+                    </div>
+                  </div>
+                  <a
+                    href="https://t.me/CloseBot"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-deal px-5 py-3.5 text-[15px] font-bold text-white shadow-[0_8px_24px_rgba(16,185,129,0.4)] transition-all hover:shadow-[0_12px_32px_rgba(16,185,129,0.5)]"
+                  >
+                    Open in Telegram
+                    <ExternalLink className="h-4 w-4" />
+                  </a>
+                  <p className="mt-3 text-center text-[11px] text-muted">
+                    Or search{" "}
+                    <span className="font-mono text-deal-light">@CloseBot</span> in
+                    Telegram
+                  </p>
+                </div>
+
+                {/* Web option */}
+                <div className="loud-card group relative overflow-hidden rounded-2xl p-7">
+                  <div
+                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(251,191,36,0.25)]"
+                    style={{
+                      background: "linear-gradient(135deg, #FBBF24, #D97706)",
+                    }}
+                  >
+                    <Monitor className="h-7 w-7 text-[#422006]" />
+                  </div>
+                  <h3 className="mb-2 font-display text-2xl font-black text-white">
+                    Web App
+                  </h3>
+                  <p className="mb-5 text-sm leading-relaxed text-ash">
+                    Full dashboard. Deal board. Commission tracking. Pipeline view.
+                    Everything on one screen when you&rsquo;re at your desk.
+                  </p>
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 text-sm text-ash">
+                      <Monitor className="h-4 w-4 text-gold-light" />
+                      Dashboard + deal board
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-ash">
+                      <Sparkles className="h-4 w-4 text-gold-light" />
+                      Commission tracking &amp; history
+                    </div>
+                    <div className="flex items-center gap-2 text-sm text-ash">
+                      <Copy className="h-4 w-4 text-gold-light" />
+                      Export scripts, plays, and notes
+                    </div>
+                  </div>
+                  <Link
+                    href="/dashboard/auto"
+                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gold-light bg-gold-light/10 px-5 py-3.5 text-[15px] font-bold text-gold-light transition-all hover:bg-gold-light/20"
+                  >
+                    Open Dashboard
+                    <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <p className="mt-3 text-center text-[11px] text-muted">
+                    Best on desktop. Mobile-friendly.
+                  </p>
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* STEP 3 — Quick start checklist */}
+            <FadeIn delay={300}>
+              <div className="mt-20">
+                <div className="mb-8 text-center">
+                  <h2 className="font-display text-3xl font-black text-white sm:text-5xl">
+                    Your first 5 minutes
+                  </h2>
+                  <p className="mt-3 text-ash">
+                    Do these three things and you&rsquo;re dangerous.
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-3">
+                  {[
+                    {
+                      step: "1",
+                      title: "Pick your industry",
+                      body: "Tell the agent what you sell. It loads your world instantly — pay plans, scripts, objections.",
+                      done: true,
+                    },
+                    {
+                      step: "2",
+                      title: "Upload your pay plan",
+                      body: "Snap a photo. The agent reads it. Now every deal math is automatic.",
+                      done: false,
+                    },
+                    {
+                      step: "3",
+                      title: "Use it on a live deal",
+                      body: "Next customer objection you get — type it in. Watch it work in real time.",
+                      done: false,
+                    },
+                  ].map((item) => (
+                    <div key={item.step} className="loud-card rounded-2xl p-6">
+                      <div className="mb-3 flex items-center gap-3">
+                        <div
+                          className={`flex h-8 w-8 items-center justify-center rounded-full font-display text-sm font-black ${
+                            item.done
+                              ? "bg-deal text-white"
+                              : "bg-white/10 text-ash"
+                          }`}
+                        >
+                          {item.done ? "✓" : item.step}
+                        </div>
+                        <h4 className="font-bold text-white">{item.title}</h4>
+                      </div>
+                      <p className="text-sm leading-relaxed text-ash">
+                        {item.body}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* STEP 4 — The numbers */}
+            <FadeIn delay={450}>
+              <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-8 backdrop-blur">
+                <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
+                  Your math, starting now
+                </div>
+                <div className="grid grid-cols-3 gap-3 sm:gap-6">
+                  <div className="text-center">
+                    <Counter
+                      to={29.99}
+                      decimals={2}
+                      prefix="$"
+                      duration={2000}
+                      className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]"
+                    />
+                    <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
+                      Per month
+                    </div>
+                  </div>
+                  <div className="border-x border-white/10 text-center">
+                    <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]">
+                      &lt;3s
+                    </div>
+                    <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
+                      Question to play
+                    </div>
+                  </div>
+                  <div className="text-center">
+                    <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]">
+                      18
+                    </div>
+                    <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
+                      Industries
+                    </div>
                   </div>
                 </div>
-              ) : (
-                <div className="flex items-center justify-between">
-                  <button type="button" onClick={() => setStep((s) => s - 1)}
-                    className="flex items-center gap-2 text-sm text-ash hover:text-bone transition-colors"
-                  >
-                    <ArrowLeft size={16} /> Back
-                  </button>
-                  <button type="button" onClick={handleNext} disabled={!canAdvance() || completing}
-                    className={`btn-loud flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold transition-all ${
-                      !canAdvance() || completing ? "opacity-40 cursor-not-allowed" : ""
-                    }`}
-                  >
-                    {completing ? (
-                      <><Zap size={16} className="animate-pulse" /> Setting up your agent...</>
-                    ) : isLastStep ? (
-                      <><Zap size={16} /> Launch my agent</>
-                    ) : (
-                      <>Continue <ArrowRight size={16} /></>
-                    )}
-                  </button>
-                </div>
-              )}
-            </div>
-          )}
+              </div>
+            </FadeIn>
 
-          {/* Step 1 skip */}
-          {step === 0 && (
-            <p className="text-center mt-8 text-xs text-muted">
-              Already set up?{" "}
-              <button type="button" onClick={() => router.push("/dashboard/auto")}
-                className="text-ash underline underline-offset-2 hover:text-bone transition-colors"
-              >
-                Go to dashboard
-              </button>
-            </p>
-          )}
-        </div>
+            {/* STEP 5 — Pro tip */}
+            <FadeIn delay={600}>
+              <div className="mt-16 text-center">
+                <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2">
+                  <span className="text-sm text-gold-light">💡</span>
+                  <span className="text-sm font-medium text-ash">
+                    Pro tip: Pin the Telegram bot. It&rsquo;s faster than opening an
+                    app.
+                  </span>
+                </div>
+                <div className="mt-8">
+                  <Link
+                    href="/telegram"
+                    className="inline-flex items-center gap-2 text-sm text-ash hover:text-white transition-colors underline underline-offset-4"
+                  >
+                    How to link Telegram to your account
+                    <ArrowRight className="h-3 w-3" />
+                  </Link>
+                </div>
+              </div>
+            </FadeIn>
+          </>
+        )}
       </div>
     </div>
+  );
+}
+
+function SendIcon({ className }: { className?: string }) {
+  return (
+    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
+      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+    </svg>
+  );
+}
+
+export default function OnboardingPage() {
+  return (
+    <Suspense
+      fallback={
+        <div className="flex min-h-screen items-center justify-center loud-bg">
+          <div className="h-8 w-8 animate-spin rounded-full border-2 border-deal border-t-transparent" />
+        </div>
+      }
+    >
+      <OnboardingContent />
+    </Suspense>
   );
 }

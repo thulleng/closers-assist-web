@@ -116,13 +116,10 @@ export default function Footer() {
                   Founder
                 </Link>
               </li>
-<li>
-                <a
-                  href="mailto:thul@closersassist.com"
-                  className="text-ash transition-colors hover:text-deal-light"
-                >
+              <li>
+                <Link href="/contact" className="text-ash transition-colors hover:text-deal-light">
                   Contact
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

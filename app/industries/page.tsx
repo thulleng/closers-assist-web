@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import {
   Car,
   Home as HomeIcon,
@@ -21,6 +20,7 @@ import {
   ArrowRight,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+import GlobeVisual from "@/components/GlobeVisual";
 
 export const metadata: Metadata = {
   title: "Industries",
@@ -36,7 +36,7 @@ const industries = [
     href: "/industries/auto",
     live: true,
     image:
-      "https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=800&q=80&auto=format&fit=crop",
+      "/images/toyota-building.jpg",
   },
   {
     icon: HomeIcon,
@@ -99,7 +99,7 @@ const industries = [
     href: "/industries/pest-control",
     live: true,
     image:
-      "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80&auto=format&fit=crop",
+      "/images/pest_control.jpg",
   },
   {
     icon: Wind,
@@ -194,6 +194,17 @@ export default function IndustriesPage() {
   return (
     <section className="relative overflow-hidden loud-bg">
       <div className="grid-pattern opacity-50" />
+      
+      {/* Background — AI robotic hand digital network */}
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-[0.18] pointer-events-none"
+        style={{
+          backgroundImage: `url(https://images.pexels.com/photos/8386440/pexels-photo-8386440.jpeg?auto=compress&cs=tinysrgb&w=1600)`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+        }}
+      />
+      
       <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
         <FadeIn>
           <div className="mb-14 max-w-3xl">
@@ -203,15 +214,23 @@ export default function IndustriesPage() {
                 Industries
               </span>
             </div>
-            <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-              One agent. Eighteen industries.
-              <br />
-              <span className="text-shine font-black">Zero compromises.</span>
-            </h1>
-            <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
-              A closer is a closer. The industry is the wrapper. Pick yours —
-              Closers Assist auto-loads your world the second you sign up.
-            </p>
+
+            <div className="grid gap-10 lg:grid-cols-[1fr,auto] lg:items-center">
+              <div>
+                <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
+                  One agent. Eighteen industries.
+                  <br />
+                  <span className="text-shine font-black">Zero compromises.</span>
+                </h1>
+                <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
+                  A closer is a closer. The industry is the wrapper. Pick yours —
+                  Closers Assist auto-loads your world the second you sign up.
+                </p>
+              </div>
+              <div className="flex-shrink-0 flex justify-center mt-6 lg:mt-0">
+                <GlobeVisual size={180} accentColor="mixed" />
+              </div>
+            </div>
           </div>
         </FadeIn>
 
@@ -223,12 +242,11 @@ export default function IndustriesPage() {
                 className="loud-card group flex h-full flex-col overflow-hidden rounded-2xl"
               >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <Image
+                <img
                   src={ind.image}
                   alt={ind.name}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
+                  className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
+                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate via-slate/30 to-transparent" />
                 <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-md border border-iron bg-pit/80 backdrop-blur">
