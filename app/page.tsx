@@ -136,23 +136,22 @@ export default function HomePage() {
 
               <div>
                 <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
-                  Close like it&rsquo;s
+                  You can&rsquo;t clone
                   <br />
-                  the last day.
+                  yourself.
                   <br />
                   <span className="text-shine font-black">
-                    Every. Single. Day.
+                    We did.
                   </span>
                 </h1>
               </div>
 
               <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
-                  The AI agent built on the showroom floor. Knows your pay
-                  plan, your scripts, your customers.
+                  An AI employee that handles your deals AND your life.
                   <br />
                   <span className="mt-2 inline-block font-semibold text-gold-light">
-                    $29.99/month. One closed deal pays for 10 years.
+                    Never drops a ball. Never forgets a detail. Never clocks out.
                   </span>
                 </p>
               </div>
@@ -161,7 +160,7 @@ export default function HomePage() {
                 <div className="mt-8 max-w-md">
                   <EmailCapture
                     placeholder="your@email.com"
-                    buttonText="Try It Free"
+                    buttonText="Deploy My Agent"
                   />
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
@@ -602,6 +601,124 @@ export default function HomePage() {
               </div>
             </FadeIn>
           </div>
+        </div>
+      </section>
+
+      {/* WHAT YOUR AGENT DOES — Two columns: Business + Personal */}
+      <section className="relative overflow-hidden loud-bg-alt border-t border-white/5">
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <FadeIn>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  What your agent does
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                One agent.
+                <br />
+                <span className="text-shine font-black">Your entire life. Handled.</span>
+              </h2>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-6 md:grid-cols-2">
+            {/* Closes Deals */}
+            <FadeIn delay={50}>
+              <div className="group relative overflow-hidden rounded-2xl border border-deal/20 bg-black/50 p-8 backdrop-blur transition-all hover:border-deal/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.1)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
+                  💼
+                </div>
+                <h3 className="mb-2 font-display text-2xl font-black text-white">
+                  Closes Deals
+                </h3>
+                <p className="mb-5 text-sm text-ash">Your agent handles the revenue side — so you focus on closing, not admin.</p>
+                <ul className="space-y-3 text-sm text-ash">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Follows up with leads automatically</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Manages pipeline stage-by-stage</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Drafts contracts & invoices</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Syncs with email & CRM</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                    <span>Never lets a cold lead go cold</span>
+                  </li>
+                </ul>
+              </div>
+            </FadeIn>
+
+            {/* Handles Life */}
+            <FadeIn delay={150}>
+              <div className="group relative overflow-hidden rounded-2xl border border-gold/20 bg-black/50 p-8 backdrop-blur transition-all hover:border-gold/40 hover:shadow-[0_0_40px_rgba(251,191,36,0.1)]">
+                <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-gold/15 text-2xl">
+                  🏠
+                </div>
+                <h3 className="mb-2 font-display text-2xl font-black text-white">
+                  Handles Life
+                </h3>
+                <p className="mb-5 text-sm text-ash">Your agent remembers the personal stuff — so you never drop a ball at home.</p>
+                <ul className="space-y-3 text-sm text-ash">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Books appointments & reservations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Reminds you of birthdays & events</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Researches flights & hotels</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Summarizes school newsletters</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
+                    <span>Manages your to-do list</span>
+                  </li>
+                </ul>
+              </div>
+            </FadeIn>
+          </div>
+        </div>
+      </section>
+
+      {/* THE MOAT — Why they can't leave */}
+      <section className="relative overflow-hidden loud-bg border-t border-white/5">
+        <div className="relative mx-auto max-w-4xl px-6 py-16 md:py-24 text-center">
+          <FadeIn>
+            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                The moat
+              </span>
+            </div>
+            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
+              Most AI tools do one thing.
+              <br />
+              <span className="text-shine font-black">Yours does everything.</span>
+            </h2>
+            <p className="text-lg text-ash max-w-2xl mx-auto mb-8">
+              Switch costs? You&rsquo;d have to teach a new AI your entire life. Your deals, your customers, your kid&rsquo;s soccer schedule — it all lives in one brain.
+            </p>
+            <p className="text-lg font-bold text-gold-light">
+              That&rsquo;s the point. We built it that way on purpose.
+            </p>
+          </FadeIn>
         </div>
       </section>
 
@@ -1679,6 +1796,7 @@ export default function HomePage() {
       </section>
 
       {/* 7 — PRICING SNAPSHOT */}
+      {/* PRICING — Vera's Plan */} 
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
@@ -1690,100 +1808,86 @@ export default function HomePage() {
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                Less than Starbucks.
+                Your AI employee.
                 <br />
-                <span className="text-shine font-black">More than a coach.</span>
+                <span className="text-shine font-black">$3,000–5,000/month.</span>
               </h2>
+              <p className="mt-4 text-lg text-ash">
+                Handles your deals. Handles your life. Costs less than a part-time assistant — and never takes a day off.
+              </p>
             </div>
           </FadeIn>
 
-          <div className="grid gap-4 md:grid-cols-3">
-            {[
-              {
-                name: "Starter",
-                price: "$29.99",
-                unit: "/ mo",
-                seats: "1 rep",
-                detail: "For the solo closer who wants to make more money this month.",
-              },
-              {
-                name: "Pro",
-                price: "$624.75",
-                unit: "/ mo",
-                seats: "Up to 25 reps",
-                detail:
-                  "For the manager rolling it out to the team. Works out to $24.99/rep.",
-                featured: true,
-              },
-              {
-                name: "Elite",
-                price: "Custom",
-                unit: "",
-                seats: "100+ reps",
-                detail:
-                  "For the dealership. Starting at $19.99/rep — contact for your rate.",
-              },
-            ].map((p, i) => (
-              <FadeIn key={p.name} delay={i * 80}>
-                <TiltCard maxTilt={6} scale={1.02}>
-                <div
-                  className={`loud-card rounded-2xl p-7 ${
-                    p.featured
-                      ? "ring-2 ring-deal shadow-[0_0_40px_rgba(16,185,129,0.3)]"
-                      : ""
-                  }`}
-                >
-                  <div
-                    className={`mb-2 text-[10px] font-bold uppercase tracking-[1.5px] ${
-                      p.featured ? "text-gold-light" : "text-ash"
-                    }`}
-                  >
-                    {p.name}
-                    {p.featured && " · Most popular"}
+          <div className="grid gap-6 md:grid-cols-2">
+            <FadeIn delay={0}>
+              <TiltCard maxTilt={4} scale={1.01}>
+                <div className="loud-card rounded-2xl p-8 ring-2 ring-deal shadow-[0_0_40px_rgba(16,185,129,0.3)]">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                    ClosersAssist Agent
                   </div>
-                  <div className="mb-3 text-sm text-ash">{p.seats}</div>
-                  <div className="mb-3 flex items-baseline gap-1">
-                    <span className="font-display text-4xl font-black text-mega">
-                      {p.price}
-                    </span>
-                    <span className="text-sm text-ash">{p.unit}</span>
+                  <div className="mb-4 flex items-baseline gap-1">
+                    <span className="font-display text-5xl font-black text-mega">$3K–$5K</span>
+                    <span className="text-sm text-ash">/ mo</span>
                   </div>
-                  <p className="text-sm leading-relaxed text-ash">
-                    {p.detail}
+                  <ul className="mb-6 space-y-3 text-sm text-ash">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span><strong className="text-white">Business.</strong> Follow-ups, pipeline, contracts, invoices, CRM sync. Closes deals while you sleep.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span><strong className="text-white">Personal.</strong> Calendar, appointments, travel, reminders, newsletters. Your second brain.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span><strong className="text-white">Always on.</strong> Telegram, email, web. Deployed in minutes. Never clocks out.</span>
+                    </li>
+                  </ul>
+                  <Link href="/pricing" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
+                    Deploy My Agent
+                  </Link>
+                </div>
+              </TiltCard>
+            </FadeIn>
+
+            <FadeIn delay={100}>
+              <TiltCard maxTilt={4} scale={1.01}>
+                <div className="loud-card rounded-2xl p-8">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-ash">
+                    What You Get
+                  </div>
+                  <div className="mb-4 flex items-baseline gap-1">
+                    <span className="font-display text-5xl font-black text-white">Everything</span>
+                  </div>
+                  <ul className="mb-6 space-y-3 text-sm text-ash">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Unique personality that evolves with you</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Cross-session memory — never repeats itself</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Morning briefs, weekly reviews, deal tracking</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>No setup fees. No contracts. Month-to-month.</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>14-day trial. Cancel anytime.</span>
+                    </li>
+                  </ul>
+                  <p className="text-sm text-muted">
+                    One closed deal pays for months. One saved client pays for years.
                   </p>
                 </div>
-                </TiltCard>
-              </FadeIn>
-            ))}
+              </TiltCard>
+            </FadeIn>
           </div>
-
-          <FadeIn delay={300}>
-            <div
-              className="mt-8 flex flex-wrap items-center gap-4 rounded-2xl border border-deal/30 p-6 backdrop-blur"
-              style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.1), rgba(30,30,35,0.6))" }}
-            >
-              <div
-                className="flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-xl shadow-[0_8px_20px_rgba(16,185,129,0.35)]"
-                style={{ background: "linear-gradient(135deg, rgba(16,185,129,0.25), rgba(16,185,129,0.05))" }}
-              >
-                <Shield
-                  className="h-6 w-6 text-deal-light"
-                  strokeWidth={2.2}
-                />
-              </div>
-              <p className="flex-1 text-[15px] text-white">
-                <span className="font-bold text-shine">
-14-day free trial. Cancel anytime.
-                </span>{" "}
-                <span className="text-ash">
-                  No contracts. Cancel anytime.
-                </span>
-              </p>
-              <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                Get Started
-              </Link>
-            </div>
-          </FadeIn>
         </div>
       </section>
 
