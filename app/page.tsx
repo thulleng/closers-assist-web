@@ -41,6 +41,8 @@ import MobileCTABar from "@/components/MobileCTABar";
 import WaitlistCounter from "@/components/WaitlistCounter";
 import NewsletterSection from "@/components/NewsletterSection";
 import DemoChat from "@/components/DemoChat";
+import FAQ from "@/components/FAQ";
+import TrustStrip from "@/components/TrustStrip";
 
 const industries = [
   {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
@@ -2106,6 +2108,12 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
+
+      {/* 7.28 — FAQ */}
+      <FAQ />
+
+      {/* 7.29 — Trust Strip */}
+      <TrustStrip />
 
       {/* 7.3 — ENTERPRISE CTA */}
       <section className="relative overflow-hidden">

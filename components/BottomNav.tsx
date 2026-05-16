@@ -40,6 +40,12 @@ const DRAWER_LINKS = [
     icon: User,
   },
   {
+    href: "/blog",
+    label: "From the Floor",
+    subtitle: "Real strategy. From a real closer.",
+    icon: BookOpen,
+  },
+  {
     href: "/marketplace",
     label: "Skills Marketplace",
     subtitle: "Add-ons for your agent.",

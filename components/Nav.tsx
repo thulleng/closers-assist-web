@@ -95,6 +95,12 @@ export default function Nav() {
             Founder
           </Link>
           <Link
+            href="/blog"
+            className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
+          >
+            Blog
+          </Link>
+          <Link
             href="/referral"
             className="text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80"
           >
