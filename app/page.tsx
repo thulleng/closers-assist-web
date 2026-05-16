@@ -129,7 +129,7 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    Built by a working rep · Real floor. Real money.
+                    The best AI agent in the business · Built by a working rep
                   </span>
                 </div>
               </div>
@@ -528,6 +528,24 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* POSITIONING STRIP — We're not a tool. We're the best. */}
+      <section className="relative overflow-hidden border-t border-white/5 bg-black">
+        <div className="relative mx-auto max-w-4xl px-6 py-10 text-center md:py-14">
+          <FadeIn>
+            <p className="font-display text-xl font-black leading-snug tracking-[-0.01em] text-white md:text-2xl">
+              We don&rsquo;t build AI <span className="text-ash">tools</span>.
+              {' '}We build <span className="text-shine">AI employees</span> —
+              the only ones in the world that handle
+              {' '}<span className="text-deal-light">your deals</span> AND{' '}
+              <span className="text-gold-light">your life</span>.
+            </p>
+            <p className="mt-3 text-sm font-semibold uppercase tracking-[2px] text-muted">
+              Category-defining · Floor-built · No competition
+            </p>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* THREE BENEFITS — what makes your AI employee unstoppable */}
       <section className="relative overflow-hidden border-t border-white/5">
         <div className="grid-pattern opacity-30" />
@@ -710,15 +728,15 @@ export default function HomePage() {
               </span>
             </div>
             <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
-              Most AI tools do one thing.
+              No other AI company does both.
               <br />
-              <span className="text-shine font-black">Yours does everything.</span>
+              <span className="text-shine font-black">We own this category.</span>
             </h2>
             <p className="text-lg text-ash max-w-2xl mx-auto mb-8">
-              Switch costs? You&rsquo;d have to teach a new AI your entire life. Your deals, your customers, your kid&rsquo;s soccer schedule — it all lives in one brain.
+              Most AI tools handle your work OR your life. We handle both — because your closer doesn&rsquo;t clock out when the deal closes, and neither should your agent. Deals, customers, dentist appointments, soccer schedules — one brain, one employee.
             </p>
             <p className="text-lg font-bold text-gold-light">
-              That&rsquo;s the point. We built it that way on purpose.
+              That&rsquo;s not a feature. That&rsquo;s the company.
             </p>
           </FadeIn>
         </div>
