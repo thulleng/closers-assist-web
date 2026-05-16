@@ -38,7 +38,7 @@ export default function DemoChat() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/demo-chat", {
+      const res = await fetch("/api/chat/clo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: question }),
