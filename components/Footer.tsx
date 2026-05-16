@@ -132,9 +132,6 @@ export default function Footer() {
               floor in New Port Richey, FL.
             </p>
             <div className="mt-3 flex items-center gap-4">
-              <a href="https://x.com/ClosersAssist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
-                X / Twitter
-              </a>
               <a href="https://linkedin.com/company/closersassist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
                 LinkedIn
               </a>
