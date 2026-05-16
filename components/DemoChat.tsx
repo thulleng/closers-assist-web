@@ -20,8 +20,19 @@ export default function DemoChat() {
   const [loading, setLoading] = useState(false);
   const [remaining, setRemaining] = useState(10);
   const [showGreeting, setShowGreeting] = useState(true);
+  const [sessionId, setSessionId] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Generate persistent session ID for per-visitor memory
+  useEffect(() => {
+    let sid = localStorage.getItem("clo_session");
+    if (!sid) {
+      sid = "visitor-" + Math.random().toString(36).slice(2, 10);
+      localStorage.setItem("clo_session", sid);
+    }
+    setSessionId(sid);
+  }, []);
 
   // Auto-scroll to bottom
   useEffect(() => {
@@ -41,7 +52,7 @@ export default function DemoChat() {
       const res = await fetch("/api/chat/clo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question }),
+        body: JSON.stringify({ message: question, session: sessionId }),
       });
       const data = await res.json();
 

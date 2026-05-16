@@ -5,7 +5,7 @@ const CLO_BRIDGE = "http://178.105.161.224:8911/chat";
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { message } = body;
+    const { message, session } = body;
 
     if (!message || typeof message !== "string" || message.length > 600) {
       return NextResponse.json({ error: "Message required (max 600 chars)" }, { status: 400 });
@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
     const res = await fetch(CLO_BRIDGE, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, session }),
       signal: controller.signal,
     });
 
