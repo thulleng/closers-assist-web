@@ -21,7 +21,7 @@ export default function DemoChat() {
   const [remaining, setRemaining] = useState(10);
   const [showGreeting, setShowGreeting] = useState(true);
   const [sessionId, setSessionId] = useState("");
-  const bottomRef = useRef<HTMLDivElement>(null);
+  const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
   // Generate persistent session ID for per-visitor memory
@@ -34,9 +34,11 @@ export default function DemoChat() {
     setSessionId(sid);
   }, []);
 
-  // Auto-scroll to bottom
+  // Auto-scroll chat container only (NOT the page)
   useEffect(() => {
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (chatContainerRef.current) {
+      chatContainerRef.current.scrollTop = chatContainerRef.current.scrollHeight;
+    }
   }, [messages, loading]);
 
   async function sendMessage(text: string) {
@@ -82,7 +84,7 @@ export default function DemoChat() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       {/* Chat area */}
-      <div className="space-y-4 mb-4 max-h-[320px] overflow-y-auto scrollbar-thin">
+      <div ref={chatContainerRef} className="space-y-4 mb-4 max-h-[320px] overflow-y-auto scrollbar-thin overscroll-contain">
         {/* Auto greeting */}
         {showGreeting && messages.length === 0 && (
           <div className="flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-500">
@@ -148,7 +150,6 @@ export default function DemoChat() {
           </div>
         )}
 
-        <div ref={bottomRef} />
       </div>
 
       {/* Suggested questions */}
