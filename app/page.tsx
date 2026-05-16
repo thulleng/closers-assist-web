@@ -833,8 +833,8 @@ export default function HomePage() {
       </section>
 
       {/* DEMO CHAT — Try it live */}
-      <section className="relative overflow-hidden loud-bg">
-        <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center">
+      <section className="relative overflow-hidden loud-bg min-h-screen flex flex-col justify-center">
+        <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center w-full">
           <FadeIn>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
               <span className="relative flex h-2 w-2">

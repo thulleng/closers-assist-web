@@ -71,7 +71,7 @@ export default function DemoChat() {
   return (
     <div className="w-full max-w-2xl mx-auto">
       {/* Chat area */}
-      <div className="space-y-4 mb-4 min-h-[100px]">
+      <div className="space-y-4 mb-4 max-h-[320px] overflow-y-auto scrollbar-thin">
         {/* Auto greeting */}
         {showGreeting && messages.length === 0 && (
           <div className="flex gap-3 animate-in fade-in slide-in-from-bottom-2 duration-500">
