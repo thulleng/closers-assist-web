@@ -83,6 +83,12 @@ export default function Nav() {
             Dashboard
           </Link>
           <Link
+            href="/compare"
+            className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
+          >
+            Compare
+          </Link>
+          <Link
             href="/pricing"
             className="text-sm font-medium text-ash transition-colors hover:text-deal-light"
           >

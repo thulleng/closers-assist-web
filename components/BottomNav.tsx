@@ -34,6 +34,12 @@ const DRAWER_LINKS = [
     icon: BookOpen,
   },
   {
+    href: "/compare",
+    label: "Compare",
+    subtitle: "See how we stack up.",
+    icon: BookOpen,
+  },
+  {
     href: "/founder",
     label: "Founder",
     subtitle: "Built by a working rep.",
