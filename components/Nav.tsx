@@ -8,14 +8,12 @@ import UserMenu from "@/components/UserMenu";
 
 export default function Nav() {
   const [hidden, setHidden] = useState(false);
-  const [scrolled, setScrolled] = useState(false);
   const { user, loading } = useUser();
 
   useEffect(() => {
     let lastY = 0;
     const onScroll = () => {
       const y = window.scrollY;
-      setScrolled(y > 24);
       if (y < 80) {
         setHidden(false);
       } else if (y > lastY + 4) {
@@ -31,12 +29,8 @@ export default function Nav() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b backdrop-blur-md transition-transform transition-colors duration-300 ${
+      className={`sticky top-0 z-50 border-b border-white/10 bg-black/80 backdrop-blur-md transition-transform duration-300 will-change-transform ${
         hidden ? "nav-hidden" : ""
-      } ${
-        scrolled
-          ? "border-white/10 bg-black/80"
-          : "border-transparent bg-black/40"
       }`}
     >
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
