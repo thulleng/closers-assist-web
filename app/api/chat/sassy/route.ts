@@ -11,21 +11,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    const apiSecret = process.env.CLOSERS_API_SECRET || "";
-    if (!apiSecret) {
-      return NextResponse.json(
-        { reply: "Sassy: Bridge not configured yet. Coming soon! 👷‍♀️" },
-        { status: 200 }
-      );
-    }
-
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 25000);
+    const timeout = setTimeout(() => controller.abort(), 55000);
 
     const res = await fetch(SASSY_BRIDGE, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret: apiSecret, message }),
+      body: JSON.stringify({ message }),
       signal: controller.signal,
     });
 
