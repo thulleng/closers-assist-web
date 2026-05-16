@@ -458,13 +458,6 @@ summary {
   }
 }
 
-.btn-loud {
-  animation: cta-glow-ring 2s ease-out infinite;
-}
-.btn-loud:hover {
-  animation: none;
-}
-
 /* ── Enhanced Frosted Glass ── */
 .glass-deep {
   background: rgba(8, 8, 12, 0.7);
