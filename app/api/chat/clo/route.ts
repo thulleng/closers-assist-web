@@ -11,21 +11,13 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message required (max 600 chars)" }, { status: 400 });
     }
 
-    const apiSecret = process.env.CLOSERS_API_SECRET || "";
-    if (!apiSecret) {
-      return NextResponse.json(
-        { reply: "Clo's getting a tune-up. Try me again in a minute! 🔧" },
-        { status: 200 }
-      );
-    }
-
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 55000);
 
     const res = await fetch(CLO_BRIDGE, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ secret: apiSecret, message }),
+      body: JSON.stringify({ message }),
       signal: controller.signal,
     });
 
