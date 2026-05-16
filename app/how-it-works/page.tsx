@@ -301,13 +301,13 @@ export default function HowItWorksPage() {
                   <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-gold/10">
                     <Send className="h-7 w-7 text-gold" strokeWidth={2} />
                   </div>
-                  <h3 className="text-lg font-bold text-bone mb-2">Telegram — coming soon</h3>
+                  <h3 className="text-lg font-bold text-bone mb-2">Telegram — live now</h3>
                   <p className="text-sm text-ash leading-relaxed">
                     Text your agent like you&rsquo;d text your sales manager. Type &ldquo;sold a Camry&rdquo; and it logs the deal. Ask for a script and it fires back instantly.
                   </p>
-                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-gold/10 px-3 py-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_6px_#FBBF24]" />
-                    <span className="text-[11px] font-semibold text-gold-light">Coming soon</span>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+                    <span className="text-[11px] font-semibold text-deal-light">Live now</span>
                   </div>
                 </div>
               </div>

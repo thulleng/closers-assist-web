@@ -77,7 +77,7 @@ export default function HowIBuiltThis() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">What&rsquo;s next</h2>
             <p>
-              Closers Assist is live. $29.99/rep/month. Auto, real estate, insurance, solar, SaaS — 18 industries. Same agent. Same memory. Web today, Telegram soon.
+              Closers Assist is live. $29.99/rep/month. Auto, real estate, insurance, solar, SaaS — 18 industries. Same agent. Same memory. Web + Telegram, live now.
             </p>
             <p>
               I&rsquo;m still on the floor at Sun Toyota. Still selling. Still building between customers. Because the best sales tools aren&rsquo;t built in boardrooms. They&rsquo;re built by people who actually need them.

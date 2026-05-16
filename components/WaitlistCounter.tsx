@@ -1,26 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
 import { Users } from "lucide-react";
 
 export default function WaitlistCounter() {
-  const [count, setCount] = useState(0);
   const target = 47; // current early access signups
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      const interval = setInterval(() => {
-        setCount((prev) => {
-          if (prev >= target) {
-            clearInterval(interval);
-            return target;
-          }
-          return prev + 1;
-        });
-      }, 40);
-      return () => clearInterval(interval);
-    }, 300);
-  }, []);
 
   return (
     <div className="inline-flex items-center gap-3 rounded-full border border-deal/30 bg-deal/[0.04] px-5 py-3 backdrop-blur">
@@ -37,7 +20,7 @@ export default function WaitlistCounter() {
       </div>
       <div>
         <div className="font-mono text-lg font-bold text-deal tabular-nums">
-          {count}
+          {target}
         </div>
         <div className="text-[10px] font-medium uppercase tracking-wider text-ash">
           Closers Deployed

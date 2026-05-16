@@ -227,7 +227,7 @@ export default function PricingPage() {
               { feat: "Calls you out when you're slacking", us: "\"Three minis this week. Last month you turned it around — what's the play today?\"", them: "Agrees with everything you say. Never pushes back." },
               { feat: "Your data stays yours", us: "Never trains on your pay plan, deal history, or customer names. Export anytime.", them: "Your conversations train their models. Read the fine print." },
               { feat: "Built by a working closer", us: "Built on the floor at Sun Toyota by someone who lives off commission.", them: "Built by engineers in San Francisco who've never worked a Saturday on the lot." },
-              { feat: "Chat anywhere, instantly", us: "Web, phone, soon Telegram. Always logged in. Always knows who you are.", them: "Browser tab. Login walls. Context lost when you switch devices." },
+              { feat: "Chat anywhere, instantly", us: "Web, phone, Telegram. Always logged in. Always knows who you are.", them: "Browser tab. Login walls. Context lost when you switch devices." },
             ].map((row, i) => (
               <div
                 key={row.feat}
