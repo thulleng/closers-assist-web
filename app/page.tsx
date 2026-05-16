@@ -837,18 +837,21 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center">
           <FadeIn>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
+              </span>
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                Try it live
+                Live now
               </span>
             </div>
             <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
-              Ask it anything.
+              Meet Clo.
               <br />
-              <span className="text-shine font-black">Right now.</span>
+              <span className="text-shine font-black">She's live.</span>
             </h2>
             <p className="text-ash mb-10 max-w-md mx-auto">
-              Type an objection, a deal question, or a follow-up — see what your AI closer would say. No signup.
+              Ask her anything — pricing, features, whether she can really handle your life AND your deals. She's got opinions. 😏
             </p>
           </FadeIn>
           <FadeIn delay={150}>
