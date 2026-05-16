@@ -148,6 +148,118 @@ export async function POST(req: NextRequest) {
         console.error("Supabase error:", dbErr);
       }
 
+      // ── Step 3: Provision Hetzner VM from golden snapshot ──────────────
+      const hetznerToken = process.env.HETZNER_API_TOKEN;
+      if (hetznerToken && email) {
+        try {
+          console.log(`🚀 Provisioning Hetzner VM for ${email}...`);
+
+          const serverName = `agent-${Date.now()}`;
+          const createRes = await fetch("https://api.hetzner.cloud/v1/servers", {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${hetznerToken}`,
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              name: serverName,
+              server_type: "cx22",
+              image: 386975788,
+              location: "nbg1",
+              start_after_create: true,
+            }),
+          });
+
+          if (!createRes.ok) {
+            const errBody = await createRes.text();
+            throw new Error(`Hetzner create failed: ${createRes.status} ${errBody}`);
+          }
+
+          const { server } = await createRes.json();
+          const serverId: number = server.id;
+          console.log(`📦 Server ${serverId} created, waiting for ready state...`);
+
+          let serverIp: string | null = null;
+          for (let attempt = 0; attempt < 24; attempt++) {
+            await new Promise((r) => setTimeout(r, 5000));
+            const pollRes = await fetch(
+              `https://api.hetzner.cloud/v1/servers/${serverId}`,
+              { headers: { Authorization: `Bearer ${hetznerToken}` } }
+            );
+            if (pollRes.ok) {
+              const { server: s } = await pollRes.json();
+              if (s.status === "running") {
+                serverIp = s.public_net?.ipv4?.ip ?? null;
+                console.log(`✅ Server ${serverId} ready at ${serverIp}`);
+                break;
+              }
+              console.log(`⏳ Server ${serverId} status: ${s.status}`);
+            }
+          }
+
+          if (!serverIp) {
+            throw new Error(`Server ${serverId} did not become ready within 120s`);
+          }
+
+          const supabase = createAdminClient();
+          const { error: profileErr } = await supabase
+            .from("agent_profiles")
+            .upsert(
+              {
+                user_id: userId,
+                hetzner_server_id: serverId,
+                hetzner_server_ip: serverIp,
+                provisioning_status: "provisioned",
+                updated_at: new Date().toISOString(),
+              },
+              { onConflict: "user_id" }
+            );
+
+          if (profileErr) {
+            console.error("Failed to save agent profile:", profileErr);
+          } else {
+            console.log(`💾 Agent profile saved: ${email} → ${serverIp}`);
+          }
+        } catch (provisionErr) {
+          const errMsg =
+            provisionErr instanceof Error ? provisionErr.message : String(provisionErr);
+          console.error("❌ Hetzner provisioning failed:", errMsg);
+
+          try {
+            const supabase = createAdminClient();
+            await supabase.from("agent_profiles").upsert(
+              {
+                user_id: userId,
+                provisioning_status: "provisioning_failed",
+                updated_at: new Date().toISOString(),
+              },
+              { onConflict: "user_id" }
+            );
+          } catch {}
+
+          // Alert Thul via Telegram
+          const botToken = process.env.TELEGRAM_BOT_TOKEN;
+          const chatId = process.env.THUL_TELEGRAM_CHAT_ID;
+          if (botToken && chatId) {
+            try {
+              await fetch(
+                `https://api.telegram.org/bot${botToken}/sendMessage`,
+                {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    chat_id: chatId,
+                    text: `🚨 Provisioning FAILED\nEmail: ${email}\nError: ${errMsg}`,
+                  }),
+                }
+              );
+            } catch {}
+          }
+        }
+      } else if (!hetznerToken) {
+        console.warn("⚠️  HETZNER_API_TOKEN not set — skipping VM provisioning");
+      }
+
       break;
     }
 
