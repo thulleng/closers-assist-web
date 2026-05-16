@@ -31,7 +31,7 @@ export default function Nav() {
 
   return (
     <header
-      className={`sticky top-0 z-50 border-b backdrop-blur-md transition-all duration-300 ${
+      className={`sticky top-0 z-50 border-b backdrop-blur-md transition-transform transition-colors duration-300 ${
         hidden ? "nav-hidden" : ""
       } ${
         scrolled
