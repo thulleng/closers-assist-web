@@ -36,7 +36,7 @@ export default function Footer() {
               The AI agent every closer owns.
               <br />
               <span className="font-semibold text-gold-light">
-                Built on the floor. Priced like a coffee.
+                Built on the floor. Deployed worldwide.
               </span>
             </p>
           </div>
@@ -125,11 +125,24 @@ export default function Footer() {
           </div>
         </div>
 
-        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center">
-          <p className="text-xs text-muted">
-            © {new Date().getFullYear()} Closers Assist. Built on the sales
-            floor in New Port Richey, FL.
-          </p>
+          <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center">
+          <div>
+            <p className="text-xs text-muted">
+              © {new Date().getFullYear()} Closers Assist. Built on the sales
+              floor in New Port Richey, FL.
+            </p>
+            <div className="mt-3 flex items-center gap-4">
+              <a href="https://x.com/ClosersAssist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
+                X / Twitter
+              </a>
+              <a href="https://linkedin.com/company/closersassist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
+                LinkedIn
+              </a>
+              <a href="https://instagram.com/closersassist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
+                Instagram
+              </a>
+            </div>
+          </div>
           <div className="flex gap-6 text-xs">
             <Link href="/privacy" className="text-muted transition-colors hover:text-ash">
               Privacy

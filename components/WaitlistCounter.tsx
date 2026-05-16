@@ -40,7 +40,7 @@ export default function WaitlistCounter() {
           {count}
         </div>
         <div className="text-[10px] font-medium uppercase tracking-wider text-ash">
-          early access signups
+          Closers Deployed
         </div>
       </div>
     </div>

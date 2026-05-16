@@ -1916,22 +1916,55 @@ export default function HomePage() {
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                Your AI employee.
+                Two ways to get
                 <br />
-                <span className="text-shine font-black">$3,000–5,000/month.</span>
+                <span className="text-shine font-black">your closer.</span>
               </h2>
               <p className="mt-4 text-lg text-ash">
-                Handles your deals. Handles your life. Costs less than a part-time assistant — and never takes a day off.
+                Self-serve SaaS or a dedicated AI employee. Same agent — different level of hands-on.
               </p>
             </div>
           </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-2">
+            {/* Card 1: SaaS Self-Serve */}
             <FadeIn delay={0}>
+              <TiltCard maxTilt={4} scale={1.01}>
+                <div className="loud-card rounded-2xl p-8">
+                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-ash">
+                    SaaS · Self-Serve
+                  </div>
+                  <div className="mb-4 flex items-baseline gap-1">
+                    <span className="font-display text-5xl font-black text-white">$29.99</span>
+                    <span className="text-sm text-ash">/ mo</span>
+                  </div>
+                  <ul className="mb-6 space-y-3 text-sm text-ash">
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Deploy from your dashboard in 5 minutes</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Full Skills Marketplace + all integrations</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
+                      <span>Email support · 24-hour response</span>
+                    </li>
+                  </ul>
+                  <Link href="/pricing" className="inline-block rounded-xl border-2 border-white/[0.08] px-6 py-3 text-sm font-bold text-bone transition-all hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white">
+                    Get Started
+                  </Link>
+                </div>
+              </TiltCard>
+            </FadeIn>
+
+            {/* Card 2: Dedicated Agent */}
+            <FadeIn delay={100}>
               <TiltCard maxTilt={4} scale={1.01}>
                 <div className="loud-card rounded-2xl p-8 ring-2 ring-deal shadow-[0_0_40px_rgba(16,185,129,0.3)]">
                   <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                    ClosersAssist Agent
+                    Dedicated Agent · White-Glove
                   </div>
                   <div className="mb-4 flex items-baseline gap-1">
                     <span className="font-display text-5xl font-black text-mega">$3K–$5K</span>
@@ -1940,62 +1973,38 @@ export default function HomePage() {
                   <ul className="mb-6 space-y-3 text-sm text-ash">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span><strong className="text-white">Business.</strong> Follow-ups, pipeline, contracts, invoices, CRM sync. Closes deals while you sleep.</span>
+                      <span><strong className="text-white">Everything in SaaS</strong> — plus done-for-you onboarding</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span><strong className="text-white">Personal.</strong> Calendar, appointments, travel, reminders, newsletters. Your second brain.</span>
+                      <span>Custom scripts, CRM integration, team rollout</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span><strong className="text-white">Always on.</strong> Telegram, email, web. Deployed in minutes. Never clocks out.</span>
+                      <span>Priority support · 48-hour setup · Private Slack</span>
                     </li>
                   </ul>
-                  <Link href="/pricing" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
+                  <Link href="/enterprise" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
                     Deploy My Agent
                   </Link>
                 </div>
               </TiltCard>
             </FadeIn>
-
-            <FadeIn delay={100}>
-              <TiltCard maxTilt={4} scale={1.01}>
-                <div className="loud-card rounded-2xl p-8">
-                  <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-ash">
-                    What You Get
-                  </div>
-                  <div className="mb-4 flex items-baseline gap-1">
-                    <span className="font-display text-5xl font-black text-white">Everything</span>
-                  </div>
-                  <ul className="mb-6 space-y-3 text-sm text-ash">
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>Unique personality that evolves with you</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>Cross-session memory — never repeats itself</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>Morning briefs, weekly reviews, deal tracking</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>No setup fees. No contracts. Month-to-month.</span>
-                    </li>
-                    <li className="flex items-start gap-2">
-                      <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>14-day trial. Cancel anytime.</span>
-                    </li>
-                  </ul>
-                  <p className="text-sm text-muted">
-                    One closed deal pays for months. One saved client pays for years.
-                  </p>
-                </div>
-              </TiltCard>
-            </FadeIn>
           </div>
+
+          {/* Shared features */}
+          <FadeIn delay={200}>
+            <div className="mt-10 text-center">
+              <p className="text-sm text-ash mb-4">Both tiers include —</p>
+              <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-bone/80">
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Unique personality</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Cross-session memory</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Morning briefs & deal tracking</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Built on the floor</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Your data stays yours</span>
+              </div>
+            </div>
+          </FadeIn>
         </div>
       </section>
 
@@ -2059,7 +2068,7 @@ export default function HomePage() {
                 "Built for live deals",
                 "Industry-specific objections",
                 "Remembers your customers",
-                "Under $30/mo",
+                "Flat pricing. No per-deal cut.",
               ].map((row, i) => (
                 <div
                   key={row}
