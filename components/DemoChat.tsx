@@ -175,34 +175,35 @@ export default function DemoChat() {
       {/* Suggested questions */}
       {messages.length === 0 && showGreeting && (
         <div className="mb-4">
-          <p className="text-sm text-gray-400 mb-2.5 text-center font-medium">Or tap a question:</p>
-          <div className="flex flex-wrap gap-2 justify-center">
+          <p className="text-sm text-gray-400 mb-3 text-center font-semibold tracking-wide">Or tap a question:</p>
+          <div className="flex flex-wrap gap-2.5 justify-center">
             {SUGGESTIONS.map((s) => (
               <button
                 key={s.label}
                 onClick={() => sendMessage(s.label)}
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm transition-all disabled:opacity-40"
+                className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-base font-semibold text-white transition-all duration-300 disabled:opacity-40"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  background: "rgba(255,255,255,0.06)",
-                  color: "#d1d5db",
-                  boxShadow: "0 0 12px rgba(16,185,129,0.06), 0 0 2px rgba(255,255,255,0.05)"
+                  border: "1.5px solid rgba(16,185,129,0.35)",
+                  background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,5,6,0.5))",
+                  boxShadow: "0 0 20px rgba(16,185,129,0.12), 0 0 2px rgba(16,185,129,0.1)",
+                  backdropFilter: "blur(8px)",
+                  WebkitBackdropFilter: "blur(8px)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.5)";
-                  e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.background = "rgba(16,185,129,0.08)";
-                  e.currentTarget.style.boxShadow = "0 0 18px rgba(16,185,129,0.2), 0 0 4px rgba(16,185,129,0.15)";
+                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.8)";
+                  e.currentTarget.style.background = "linear-gradient(135deg, rgba(16,185,129,0.15), rgba(5,5,6,0.6))";
+                  e.currentTarget.style.boxShadow = "0 0 35px rgba(16,185,129,0.35), 0 0 8px rgba(16,185,129,0.2)";
+                  e.currentTarget.style.transform = "scale(1.05)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-                  e.currentTarget.style.color = "#d1d5db";
-                  e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                  e.currentTarget.style.boxShadow = "0 0 12px rgba(16,185,129,0.06), 0 0 2px rgba(255,255,255,0.05)";
+                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.35)";
+                  e.currentTarget.style.background = "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,5,6,0.5))";
+                  e.currentTarget.style.boxShadow = "0 0 20px rgba(16,185,129,0.12), 0 0 2px rgba(16,185,129,0.1)";
+                  e.currentTarget.style.transform = "scale(1)";
                 }}
               >
-                <span>{s.icon}</span>
+                <span className="text-lg">{s.icon}</span>
                 <span>{s.label}</span>
               </button>
             ))}
