@@ -1091,7 +1091,7 @@ export default function HomePage() {
               <br />
               <span className="text-pink-300 font-black" style={{ textShadow: "0 0 20px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
               <br />
-              <span className="text-shine font-black text-2xl sm:text-3xl">Let's Explore Together!</span>
+              <span className="text-shine font-black text-3xl sm:text-5xl" style={{ textShadow: "0 0 30px rgba(16,185,129,0.5), 0 0 60px rgba(16,185,129,0.2)" }}>Let's Explore Together!</span>
             </h2>
             <p className="text-xl text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
               Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-semibold">She's got opinions.</span> 😏
