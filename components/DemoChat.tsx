@@ -175,41 +175,53 @@ export default function DemoChat() {
       {/* Suggested questions */}
       {messages.length === 0 && showGreeting && (
         <div className="mb-4">
-          <p className="text-sm text-gray-400 mb-2.5 text-center font-medium">Or tap a question:</p>
-          <div className="flex flex-wrap gap-2 justify-center">
-            {SUGGESTIONS.map((s) => (
+          <p className="text-sm text-gray-400 mb-3 text-center font-semibold tracking-wide">Or tap a question:</p>
+          <div className="flex flex-wrap gap-2.5 justify-center">
+            {SUGGESTIONS.map((s) => {
+              // Color each button based on its topic
+              const colors: Record<string, { border: string; glow: string; bg: string }> = {
+                "💰": { border: "rgba(251,191,36,0.5)", glow: "rgba(251,191,36,0.2)", bg: "rgba(251,191,36,0.06)" },
+                "⚡": { border: "rgba(16,185,129,0.5)", glow: "rgba(16,185,129,0.2)", bg: "rgba(16,185,129,0.06)" },
+                "🤖": { border: "rgba(236,72,153,0.5)", glow: "rgba(236,72,153,0.2)", bg: "rgba(236,72,153,0.06)" },
+                "🏠": { border: "rgba(236,72,153,0.5)", glow: "rgba(236,72,153,0.2)", bg: "rgba(236,72,153,0.06)" },
+                "🚗": { border: "rgba(16,185,129,0.5)", glow: "rgba(16,185,129,0.2)", bg: "rgba(16,185,129,0.06)" },
+                "😏": { border: "rgba(251,191,36,0.5)", glow: "rgba(251,191,36,0.2)", bg: "rgba(251,191,36,0.06)" },
+              };
+              const c = colors[s.icon] || { border: "rgba(16,185,129,0.5)", glow: "rgba(16,185,129,0.2)", bg: "rgba(16,185,129,0.06)" };
+              
+              return (
               <button
                 key={s.label}
                 onClick={() => sendMessage(s.label)}
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 rounded-full px-4 py-2.5 text-sm transition-all disabled:opacity-40"
+                className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-base font-medium transition-all duration-300 disabled:opacity-40"
                 style={{
-                  border: "1px solid rgba(255,255,255,0.2)",
-                  background: "rgba(255,255,255,0.06)",
-                  color: "#d1d5db",
-                  boxShadow: "0 0 12px rgba(16,185,129,0.06), 0 0 2px rgba(255,255,255,0.05)"
+                  border: `1.5px solid ${c.border}`,
+                  background: `linear-gradient(135deg, ${c.bg}, rgba(5,5,6,0.4))`,
+                  color: "#fff",
+                  boxShadow: `0 0 16px ${c.glow}, 0 0 2px rgba(255,255,255,0.1)`,
+                  backdropFilter: "blur(6px)",
+                  WebkitBackdropFilter: "blur(6px)",
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(16,185,129,0.5)";
-                  e.currentTarget.style.color = "#fff";
-                  e.currentTarget.style.background = "rgba(16,185,129,0.08)";
-                  e.currentTarget.style.boxShadow = "0 0 18px rgba(16,185,129,0.2), 0 0 4px rgba(16,185,129,0.15)";
+                  e.currentTarget.style.borderColor = c.border.replace("0.5", "0.9");
+                  e.currentTarget.style.boxShadow = `0 0 30px ${c.glow.replace("0.2", "0.5")}, 0 0 8px ${c.glow}`;
+                  e.currentTarget.style.transform = "scale(1.05)";
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
-                  e.currentTarget.style.color = "#d1d5db";
-                  e.currentTarget.style.background = "rgba(255,255,255,0.06)";
-                  e.currentTarget.style.boxShadow = "0 0 12px rgba(16,185,129,0.06), 0 0 2px rgba(255,255,255,0.05)";
+                  e.currentTarget.style.borderColor = c.border;
+                  e.currentTarget.style.boxShadow = `0 0 16px ${c.glow}, 0 0 2px rgba(255,255,255,0.1)`;
+                  e.currentTarget.style.transform = "scale(1)";
                 }}
               >
-                <span>{s.icon}</span>
+                <span className="text-lg">{s.icon}</span>
                 <span>{s.label}</span>
               </button>
-            ))}
+              );
+            })}
           </div>
         </div>
       )}
-
       {/* Input */}
       <form onSubmit={handleSubmit} className="relative">
         <input
