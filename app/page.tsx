@@ -1089,7 +1089,9 @@ export default function HomePage() {
             <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4">
               Meet Your Real Personal Assistant Today
               <br />
-              <span className="text-shine font-black">Let's Explore Together!</span>
+              <span className="text-pink-300 font-black" style={{ textShadow: "0 0 20px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
+              <br />
+              <span className="text-shine font-black text-2xl sm:text-3xl">Let's Explore Together!</span>
             </h2>
             <p className="text-lg text-ash mb-12 max-w-lg mx-auto leading-relaxed">
               Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-medium">She's got opinions.</span> 😏
