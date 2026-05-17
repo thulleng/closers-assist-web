@@ -82,7 +82,7 @@ export default function DemoChat() {
   }
 
   return (
-    <div className="w-full max-w-2xl mx-auto">
+    <div className="w-full max-w-2xl mx-auto sticky top-20">
       {/* Chat area */}
       <div ref={chatContainerRef} className="space-y-4 mb-4 max-h-[320px] overflow-y-auto scrollbar-thin overscroll-contain">
         {/* Auto greeting */}
