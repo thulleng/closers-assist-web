@@ -980,44 +980,50 @@ export default function HomePage() {
         />
 
         {/* Layer 1.5: Cyberpunk AI image — dramatic hero background */}
-        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.18]"
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.30]"
           style={{
             backgroundImage: "url(/dora-bg.jpg)",
             backgroundSize: "cover",
-            backgroundPosition: "center 40%",
-            filter: "saturate(0.8) brightness(0.9)",
+            backgroundPosition: "center 35%",
+            filter: "saturate(1.15) brightness(1.1) contrast(1.05)",
           }}
         />
-        {/* Dark overlay on top of image for text readability */}
+        {/* Warm gradient overlay — lets the image breathe while keeping text readable */}
         <div className="absolute inset-0 z-[1] pointer-events-none"
           style={{
-            background: "linear-gradient(180deg, rgba(5,5,6,0.7) 0%, rgba(5,5,6,0.3) 40%, rgba(5,5,6,0.5) 100%)"
+            background: "linear-gradient(180deg, rgba(5,5,6,0.45) 0%, rgba(5,5,6,0.15) 35%, rgba(5,5,6,0.2) 60%, rgba(5,5,6,0.5) 100%)"
+          }}
+        />
+        {/* Warm pink wash — makes it feel inviting, not dystopian */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.12]"
+          style={{
+            background: "radial-gradient(ellipse at 50% 40%, rgba(236,72,153,0.4) 0%, transparent 60%)"
           }}
         />
 
         {/* Layer 2: Massive glow orbs — the atmosphere */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
           {/* Central pink/green mega-glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] rounded-full animate-pulse-slow"
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full animate-pulse-slow"
             style={{
-              background: "radial-gradient(circle at 50% 45%, rgba(236,72,153,0.18) 0%, rgba(16,185,129,0.12) 30%, rgba(251,191,36,0.06) 50%, transparent 70%)",
-              filter: "blur(60px)",
+              background: "radial-gradient(circle at 50% 45%, rgba(236,72,153,0.22) 0%, rgba(16,185,129,0.14) 30%, rgba(251,191,36,0.08) 50%, transparent 70%)",
+              filter: "blur(70px)",
               animationDuration: "5s"
             }}
           />
           {/* Secondary warm glow — upper right */}
-          <div className="absolute top-[15%] right-[15%] w-[500px] h-[500px] rounded-full opacity-25 animate-pulse-slow"
+          <div className="absolute top-[15%] right-[15%] w-[550px] h-[550px] rounded-full opacity-30 animate-pulse-slow"
             style={{
-              background: "radial-gradient(circle, rgba(251,191,36,0.25) 0%, rgba(236,72,153,0.1) 40%, transparent 65%)",
-              filter: "blur(55px)",
+              background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(236,72,153,0.12) 40%, transparent 65%)",
+              filter: "blur(60px)",
               animationDuration: "6s"
             }}
           />
           {/* Cool accent — lower left */}
-          <div className="absolute bottom-[20%] left-[10%] w-[350px] h-[350px] rounded-full opacity-20 animate-pulse-slow"
+          <div className="absolute bottom-[20%] left-[10%] w-[400px] h-[400px] rounded-full opacity-25 animate-pulse-slow"
             style={{
-              background: "radial-gradient(circle, rgba(16,185,129,0.3) 0%, rgba(16,185,129,0.08) 50%, transparent 70%)",
-              filter: "blur(45px)",
+              background: "radial-gradient(circle, rgba(16,185,129,0.35) 0%, rgba(16,185,129,0.1) 50%, transparent 70%)",
+              filter: "blur(50px)",
               animationDuration: "4.5s"
             }}
           />
