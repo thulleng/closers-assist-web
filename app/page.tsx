@@ -968,30 +968,153 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DEMO CHAT — Try it live */}
-      <section className="relative overflow-hidden loud-bg">
-        <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center w-full">
+      {/* DEMO CHAT — Meet Dora. She's live. */}
+      <section className="relative overflow-hidden loud-bg min-h-[900px] flex items-center">
+        {/* Background glow orbs */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {/* Large feminine warm glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] rounded-full opacity-30 animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle, rgba(236,72,153,0.25) 0%, rgba(16,185,129,0.15) 35%, transparent 70%)",
+              filter: "blur(40px)",
+              animationDuration: "4s"
+            }}
+          />
+          {/* Secondary gold glow */}
+          <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] rounded-full opacity-20"
+            style={{
+              background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, transparent 60%)",
+              filter: "blur(50px)"
+            }}
+          />
+          {/* Small accent orbs */}
+          <div className="absolute bottom-1/4 left-1/3 w-[200px] h-[200px] rounded-full opacity-25"
+            style={{
+              background: "radial-gradient(circle, rgba(16,185,129,0.4) 0%, transparent 60%)",
+              filter: "blur(30px)"
+            }}
+          />
+        </div>
+
+        {/* AI Face Silhouette — feminine neural network portrait */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none opacity-[0.07]">
+          <svg width="500" height="600" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+            {/* Glow rings behind the face */}
+            <circle cx="250" cy="280" r="180" stroke="url(#faceGradient)" strokeWidth="0.5" opacity="0.5">
+              <animate attributeName="r" values="180;185;180" dur="3s" repeatCount="indefinite" />
+            </circle>
+            <circle cx="250" cy="280" r="200" stroke="url(#faceGradient2)" strokeWidth="0.3" opacity="0.3">
+              <animate attributeName="r" values="200;208;200" dur="4s" repeatCount="indefinite" />
+            </circle>
+            
+            {/* Feminine face silhouette — interconnected nodes */}
+            <defs>
+              <radialGradient id="faceGradient" cx="50%" cy="40%">
+                <stop offset="0%" stopColor="#EC4899" />
+                <stop offset="50%" stopColor="#10B981" />
+                <stop offset="100%" stopColor="#FBBF24" />
+              </radialGradient>
+              <radialGradient id="faceGradient2" cx="50%" cy="40%">
+                <stop offset="0%" stopColor="#10B981" />
+                <stop offset="100%" stopColor="#EC4899" />
+              </radialGradient>
+              <radialGradient id="nodeGlow" cx="50%" cy="50%">
+                <stop offset="0%" stopColor="#EC4899" stopOpacity="0.8" />
+                <stop offset="100%" stopColor="#10B981" stopOpacity="0" />
+              </radialGradient>
+            </defs>
+            
+            {/* Jaw / chin line */}
+            <path d="M160 340 Q160 460 250 480 Q340 460 340 340" stroke="url(#faceGradient)" strokeWidth="0.8" opacity="0.6" />
+            {/* Left cheek / cheekbone */}
+            <path d="M160 340 Q145 290 170 250 Q200 210 250 200" stroke="url(#faceGradient)" strokeWidth="0.8" opacity="0.6" />
+            {/* Right cheek / cheekbone */}
+            <path d="M340 340 Q355 290 330 250 Q300 210 250 200" stroke="url(#faceGradient)" strokeWidth="0.8" opacity="0.6" />
+            {/* Forehead */}
+            <path d="M170 250 Q200 190 250 185 Q300 190 330 250" stroke="url(#faceGradient)" strokeWidth="0.7" opacity="0.5" />
+            {/* Left eye */}
+            <ellipse cx="210" cy="265" rx="22" ry="12" stroke="url(#faceGradient)" strokeWidth="0.8" opacity="0.7" />
+            <ellipse cx="210" cy="265" rx="8" ry="5" fill="url(#faceGradient)" opacity="0.4" />
+            {/* Right eye */}
+            <ellipse cx="290" cy="265" rx="22" ry="12" stroke="url(#faceGradient)" strokeWidth="0.8" opacity="0.7" />
+            <ellipse cx="290" cy="265" rx="8" ry="5" fill="url(#faceGradient)" opacity="0.4" />
+            {/* Nose */}
+            <path d="M250 270 Q245 300 250 315 Q255 300 250 270" stroke="url(#faceGradient)" strokeWidth="0.6" opacity="0.5" />
+            {/* Lips */}
+            <path d="M225 335 Q250 355 275 335" stroke="url(#faceGradient2)" strokeWidth="0.8" opacity="0.6" />
+            <path d="M230 338 Q250 348 270 338" stroke="#EC4899" strokeWidth="0.4" opacity="0.4" />
+            {/* Eyebrows */}
+            <path d="M190 248 Q210 240 230 248" stroke="url(#faceGradient)" strokeWidth="0.6" opacity="0.5" />
+            <path d="M270 248 Q290 240 310 248" stroke="url(#faceGradient)" strokeWidth="0.6" opacity="0.5" />
+            {/* Hair flowing down */}
+            <path d="M170 250 Q155 220 160 190 Q170 160 200 140 Q230 120 250 115 Q270 120 300 140 Q330 160 340 190 Q345 220 330 250" stroke="url(#faceGradient)" strokeWidth="0.5" opacity="0.4" fill="none" />
+            <path d="M165 240 Q145 200 155 165 Q170 135 210 110 Q240 95 250 90" stroke="url(#faceGradient2)" strokeWidth="0.4" opacity="0.3" fill="none" />
+            <path d="M335 240 Q355 200 345 165 Q330 135 290 110 Q260 95 250 90" stroke="url(#faceGradient2)" strokeWidth="0.4" opacity="0.3" fill="none" />
+            
+            {/* Neural network nodes */}
+            {[
+              [250,115],[220,130],[280,130],[200,155],[300,155],[185,190],[315,190],[175,240],[325,240],[170,290],[330,290],[168,340],[332,340],[180,390],[320,390],[200,430],[300,430],[230,460],[270,460],[250,480]
+            ].map(([cx,cy],i) => (
+              <circle key={i} cx={cx} cy={cy} r="2.5" fill="url(#faceGradient)" opacity="0.6">
+                <animate attributeName="opacity" values="0.3;0.8;0.3" dur={`${2 + (i % 3)}s`} repeatCount="indefinite" begin={`${i * 0.1}s`} />
+              </circle>
+            ))}
+          </svg>
+        </div>
+
+        {/* Floating particles */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden">
+          {[...Array(20)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full animate-float"
+              style={{
+                width: `${2 + Math.random() * 4}px`,
+                height: `${2 + Math.random() * 4}px`,
+                left: `${5 + Math.random() * 90}%`,
+                top: `${5 + Math.random() * 90}%`,
+                background: i % 3 === 0 ? '#EC4899' : i % 3 === 1 ? '#10B981' : '#FBBF24',
+                opacity: 0.3 + Math.random() * 0.4,
+                animationDuration: `${3 + Math.random() * 5}s`,
+                animationDelay: `${Math.random() * 3}s`,
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto max-w-3xl px-6 py-20 md:py-28 text-center w-full">
           <FadeIn>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/10 px-4 py-1.5 backdrop-blur">
               <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
+                <span className="absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-400 shadow-[0_0_8px_#EC4899]" />
               </span>
-              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-pink-300">
                 Live now
               </span>
             </div>
-            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
+            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4">
               Meet Dora.
               <br />
               <span className="text-shine font-black">She's live.</span>
             </h2>
-            <p className="text-ash mb-10 max-w-md mx-auto">
-              Ask her anything — pricing, features, whether she can really handle your life AND your deals. She's got opinions. 😏
+            <p className="text-lg text-ash mb-12 max-w-lg mx-auto leading-relaxed">
+              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-medium">She's got opinions.</span> 😏
             </p>
           </FadeIn>
           <FadeIn delay={150}>
-            <DemoChat />
+            <div className="relative">
+              {/* Chat card glow */}
+              <div className="absolute -inset-4 rounded-3xl opacity-30 blur-2xl"
+                style={{
+                  background: "radial-gradient(circle at 50% 0%, rgba(236,72,153,0.3) 0%, rgba(16,185,129,0.15) 40%, transparent 70%)"
+                }}
+              />
+              <div className="relative">
+                <DemoChat />
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>

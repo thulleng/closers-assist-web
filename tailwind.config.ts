@@ -61,6 +61,10 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-8px)" },
         },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "0.3", transform: "scale(1)" },
+          "50%": { opacity: "0.5", transform: "scale(1.05)" },
+        },
         "grid-scroll": {
           "0%": { transform: "translate(0, 0)" },
           "100%": { transform: "translate(48px, 48px)" },
@@ -80,6 +84,7 @@ const config: Config = {
       animation: {
         "pulse-neon": "pulse-neon 2s ease-in-out infinite",
         float: "float 3.5s ease-in-out infinite",
+        "pulse-slow": "pulse-slow 4s ease-in-out infinite",
         "grid-scroll": "grid-scroll 20s linear infinite",
         "scan-line": "scan-line 3s linear infinite",
         glitch: "glitch 0.3s ease-in-out infinite",
