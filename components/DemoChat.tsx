@@ -181,8 +181,8 @@ export default function DemoChat() {
           onChange={(e) => setInput(e.target.value)}
           placeholder={
             messages.length > 0
-              ? "Ask me anything..."
-              : 'Try: "What makes you different from ChatGPT?"'
+              ? "Keep talking — I'm listening..."
+              : 'Ask me anything — I\'m live! Try "What makes you different?"'
           }
           maxLength={600}
           disabled={loading}

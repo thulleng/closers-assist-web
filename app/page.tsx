@@ -1093,9 +1093,17 @@ export default function HomePage() {
               <br />
               <span className="text-shine font-black text-2xl sm:text-3xl">Let's Explore Together!</span>
             </h2>
-            <p className="text-xl text-gray-300 mb-12 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
+            <p className="text-xl text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
               Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-semibold">She's got opinions.</span> 😏
             </p>
+          </FadeIn>
+          {/* Directional cue — tells new users exactly where to start */}
+          <FadeIn delay={100}>
+            <div className="mb-6 flex flex-col items-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/5 px-4 py-1.5 text-sm font-semibold text-deal-light animate-pulse-slow">
+                👇 Start here — ask me anything
+              </span>
+            </div>
           </FadeIn>
           <FadeIn delay={150}>
             <div className="relative">
@@ -1108,6 +1116,12 @@ export default function HomePage() {
               <div className="relative">
                 <DemoChat />
               </div>
+            </div>
+            {/* Secondary CTA — for visitors who don't want to chat */}
+            <div className="mt-8 text-center">
+              <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
+                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans &amp; pricing →</span>
+              </a>
             </div>
           </FadeIn>
         </div>
