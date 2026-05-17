@@ -118,32 +118,19 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg min-h-[900px] flex items-center">
         {/* ===== DRAMATIC BACKGROUND — Dora's World ===== */}
 
-        {/* Layer 1: Vignette overlay — darkens edges, focuses center */}
+        {/* Layer 1: Subtle vignette — keeps edges dark for readability */}
         <div className="absolute inset-0 pointer-events-none z-[1]"
           style={{
-            background: "radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(5,5,6,0.4) 65%, rgba(5,5,6,0.7) 100%)"
+            background: "radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(5,5,6,0.3) 70%, rgba(5,5,6,0.6) 100%)"
           }}
         />
 
-        {/* Layer 1.5: Cyberpunk AI image — dramatic hero background */}
-        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.30]"
+        {/* Layer 1.5: Cyberpunk AI image — 100% REAL, full visibility */}
+        <div className="absolute inset-0 z-[1] pointer-events-none"
           style={{
             backgroundImage: "url(/dora-bg.jpg)",
             backgroundSize: "cover",
             backgroundPosition: "center 35%",
-            filter: "saturate(1.15) brightness(1.1) contrast(1.05)",
-          }}
-        />
-        {/* Warm gradient overlay — lets the image breathe while keeping text readable */}
-        <div className="absolute inset-0 z-[1] pointer-events-none"
-          style={{
-            background: "linear-gradient(180deg, rgba(5,5,6,0.45) 0%, rgba(5,5,6,0.15) 35%, rgba(5,5,6,0.2) 60%, rgba(5,5,6,0.5) 100%)"
-          }}
-        />
-        {/* Warm pink wash — makes it feel inviting, not dystopian */}
-        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.12]"
-          style={{
-            background: "radial-gradient(ellipse at 50% 40%, rgba(236,72,153,0.4) 0%, transparent 60%)"
           }}
         />
 
@@ -222,25 +209,36 @@ export default function HomePage() {
 
         {/* Content */}
         <div className="relative z-10 mx-auto max-w-3xl px-6 py-20 md:py-28 text-center w-full">
+          {/* Frosted glass backdrop — makes content pop against 100% image */}
+          <div className="absolute inset-4 rounded-3xl pointer-events-none"
+            style={{
+              background: "rgba(5,5,6,0.35)",
+              backdropFilter: "blur(3px)",
+              WebkitBackdropFilter: "blur(3px)",
+              border: "1px solid rgba(255,255,255,0.04)",
+            }}
+          />
           <FadeIn>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/10 px-4 py-1.5 backdrop-blur">
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/40 bg-pink-500/15 px-4 py-1.5 backdrop-blur">
               <span className="relative flex h-2 w-2">
                 <span className="absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-400 shadow-[0_0_8px_#EC4899]" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-400 shadow-[0_0_12px_#EC4899]" />
               </span>
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-pink-300">
                 Live now
               </span>
             </div>
-            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4">
+            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4 relative"
+              style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
               Meet Your Real Personal Assistant Today
               <br />
-              <span className="text-pink-300 font-black" style={{ textShadow: "0 0 20px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
+              <span className="text-pink-300 font-black" style={{ textShadow: "0 0 30px rgba(236,72,153,0.6), 0 0 60px rgba(236,72,153,0.3)" }}>— Dora!!!</span>
               <br />
-              <span className="text-shine font-black text-3xl sm:text-5xl" style={{ textShadow: "0 0 30px rgba(16,185,129,0.5), 0 0 60px rgba(16,185,129,0.2)" }}>Let's Explore Together!</span>
+              <span className="text-shine font-black text-3xl sm:text-5xl" style={{ textShadow: "0 0 40px rgba(16,185,129,0.7), 0 0 80px rgba(16,185,129,0.3), 0 2px 8px rgba(0,0,0,0.5)" }}>Let's Explore Together!</span>
             </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
-              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-semibold">She's got opinions.</span> 😏
+            <p className="text-xl text-gray-200 mb-8 max-w-lg mx-auto leading-relaxed font-semibold relative"
+              style={{ textShadow: "0 0 30px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
+              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-bold">She's got opinions.</span> 😏
             </p>
           </FadeIn>
           {/* Directional cue — tells new users exactly where to start */}

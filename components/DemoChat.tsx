@@ -91,10 +91,13 @@ export default function DemoChat() {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-deal to-emerald-400 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_16px_rgba(16,185,129,0.3)]">
               <Sparkles className="h-4 w-4 text-black" />
             </div>
-            <div className="rounded-2xl rounded-tl-md bg-white/[0.10] px-5 py-4 text-base text-gray-200 leading-relaxed max-w-md"
+            <div className="rounded-2xl rounded-tl-md px-5 py-4 text-base text-gray-200 leading-relaxed max-w-md"
               style={{
-                border: "1px solid rgba(16,185,129,0.25)",
-                boxShadow: "0 0 20px rgba(16,185,129,0.08), 0 0 40px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.03)"
+                background: "rgba(5,5,6,0.55)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                border: "1px solid rgba(16,185,129,0.3)",
+                boxShadow: "0 0 30px rgba(16,185,129,0.12), 0 0 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)"
               }}>
               <p className="font-bold text-deal-light mb-1 text-base">Hey! I'm Dora 👋</p>
               <p className="text-gray-300">
@@ -128,13 +131,17 @@ export default function DemoChat() {
                   : "rounded-tl-md text-gray-300"
               }`}
               style={msg.role === "user" ? {
-                border: "1px solid rgba(16,185,129,0.25)",
-                background: "rgba(16,185,129,0.1)",
-                boxShadow: "0 0 12px rgba(16,185,129,0.08)"
+                background: "rgba(16,185,129,0.15)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1px solid rgba(16,185,129,0.3)",
+                boxShadow: "0 0 20px rgba(16,185,129,0.12)"
               } : {
-                border: "1px solid rgba(255,255,255,0.12)",
-                background: "rgba(255,255,255,0.05)",
-                boxShadow: "0 0 12px rgba(255,255,255,0.03)"
+                background: "rgba(5,5,6,0.5)",
+                backdropFilter: "blur(8px)",
+                WebkitBackdropFilter: "blur(8px)",
+                border: "1px solid rgba(255,255,255,0.15)",
+                boxShadow: "0 0 20px rgba(0,0,0,0.3)"
               }}
             >
               {msg.text}
@@ -219,17 +226,19 @@ export default function DemoChat() {
           disabled={loading}
           className="w-full rounded-xl px-5 py-4 pr-14 text-sm text-white placeholder:text-gray-400 focus:outline-none transition-all duration-300 backdrop-blur disabled:opacity-50"
           style={{
-            border: "1px solid rgba(255,255,255,0.18)",
-            background: "rgba(255,255,255,0.06)",
-            boxShadow: "0 0 15px rgba(16,185,129,0.06), 0 0 2px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.02)"
+            background: "rgba(5,5,6,0.5)",
+            backdropFilter: "blur(10px)",
+            WebkitBackdropFilter: "blur(10px)",
+            border: "1px solid rgba(255,255,255,0.2)",
+            boxShadow: "0 0 25px rgba(16,185,129,0.08), 0 0 4px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.03)"
           }}
           onFocus={(e) => {
-            e.currentTarget.style.borderColor = "rgba(16,185,129,0.5)";
-            e.currentTarget.style.boxShadow = "0 0 25px rgba(16,185,129,0.2), 0 0 8px rgba(16,185,129,0.1), inset 0 1px 0 rgba(255,255,255,0.03)";
+            e.currentTarget.style.borderColor = "rgba(16,185,129,0.6)";
+            e.currentTarget.style.boxShadow = "0 0 35px rgba(16,185,129,0.25), 0 0 12px rgba(16,185,129,0.15), inset 0 1px 0 rgba(255,255,255,0.04)";
           }}
           onBlur={(e) => {
-            e.currentTarget.style.borderColor = "rgba(255,255,255,0.18)";
-            e.currentTarget.style.boxShadow = "0 0 15px rgba(16,185,129,0.06), 0 0 2px rgba(255,255,255,0.05), inset 0 1px 0 rgba(255,255,255,0.02)";
+            e.currentTarget.style.borderColor = "rgba(255,255,255,0.2)";
+            e.currentTarget.style.boxShadow = "0 0 25px rgba(16,185,129,0.08), 0 0 4px rgba(255,255,255,0.06), inset 0 1px 0 rgba(255,255,255,0.03)";
           }}
         />
         <button
