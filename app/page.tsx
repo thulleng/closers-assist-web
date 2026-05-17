@@ -114,6 +114,165 @@ const layers = [
 export default function HomePage() {
   return (
     <>
+      {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
+      <section className="relative overflow-hidden loud-bg min-h-[900px] flex items-center">
+        {/* ===== DRAMATIC BACKGROUND — Dora's World ===== */}
+
+        {/* Layer 1: Vignette overlay — darkens edges, focuses center */}
+        <div className="absolute inset-0 pointer-events-none z-[1]"
+          style={{
+            background: "radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(5,5,6,0.4) 65%, rgba(5,5,6,0.7) 100%)"
+          }}
+        />
+
+        {/* Layer 1.5: Cyberpunk AI image — dramatic hero background */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.30]"
+          style={{
+            backgroundImage: "url(/dora-bg.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center 35%",
+            filter: "saturate(1.15) brightness(1.1) contrast(1.05)",
+          }}
+        />
+        {/* Warm gradient overlay — lets the image breathe while keeping text readable */}
+        <div className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            background: "linear-gradient(180deg, rgba(5,5,6,0.45) 0%, rgba(5,5,6,0.15) 35%, rgba(5,5,6,0.2) 60%, rgba(5,5,6,0.5) 100%)"
+          }}
+        />
+        {/* Warm pink wash — makes it feel inviting, not dystopian */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.12]"
+          style={{
+            background: "radial-gradient(ellipse at 50% 40%, rgba(236,72,153,0.4) 0%, transparent 60%)"
+          }}
+        />
+
+        {/* Layer 2: Massive glow orbs — the atmosphere */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+          {/* Central pink/green mega-glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle at 50% 45%, rgba(236,72,153,0.22) 0%, rgba(16,185,129,0.14) 30%, rgba(251,191,36,0.08) 50%, transparent 70%)",
+              filter: "blur(70px)",
+              animationDuration: "5s"
+            }}
+          />
+          {/* Secondary warm glow — upper right */}
+          <div className="absolute top-[15%] right-[15%] w-[550px] h-[550px] rounded-full opacity-30 animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(236,72,153,0.12) 40%, transparent 65%)",
+              filter: "blur(60px)",
+              animationDuration: "6s"
+            }}
+          />
+          {/* Cool accent — lower left */}
+          <div className="absolute bottom-[20%] left-[10%] w-[400px] h-[400px] rounded-full opacity-25 animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle, rgba(16,185,129,0.35) 0%, rgba(16,185,129,0.1) 50%, transparent 70%)",
+              filter: "blur(50px)",
+              animationDuration: "4.5s"
+            }}
+          />
+        </div>
+
+        {/* Layer 3: Hexagonal tech grid — subtle, rotating slowly */}
+        <div className="absolute inset-0 pointer-events-none z-[3] opacity-[0.04]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 20 L55 45 L30 60 L5 45 L5 20 Z' fill='none' stroke='%2310B981' stroke-width='0.4'/%3E%3C/svg%3E")`,
+            backgroundSize: "80px 80px",
+            animation: "subtle-drift 20s linear infinite"
+          }}
+        />
+
+        {/* Layer 4: Radiating light rays from center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[3] w-[900px] h-[900px] opacity-[0.06]"
+          style={{
+            background: "conic-gradient(from 0deg, #EC4899 0deg, transparent 15deg, #10B981 40deg, transparent 55deg, #FBBF24 80deg, transparent 95deg, #EC4899 120deg, transparent 135deg, #10B981 160deg, transparent 175deg, #FBBF24 200deg, transparent 215deg, #EC4899 240deg, transparent 255deg, #10B981 280deg, transparent 295deg, #FBBF24 320deg, transparent 335deg, #EC4899 360deg)",
+            filter: "blur(2px)",
+            animation: "spin 60s linear infinite"
+          }}
+        />
+
+        {/* Layer 5: Removed — replaced by real hero image (dora-bg.jpg) */}
+
+        {/* Layer 6: Floating particles — more, bigger, dramatic */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+          {[...Array(35)].map((_, i) => {
+            const size = 2 + Math.random() * 6;
+            const isBig = i < 6; // first 6 are larger "hero" particles
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full animate-float"
+                style={{
+                  width: `${isBig ? 4 + Math.random() * 6 : size}px`,
+                  height: `${isBig ? 4 + Math.random() * 6 : size}px`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  background: i % 3 === 0 ? '#EC4899' : i % 3 === 1 ? '#10B981' : '#FBBF24',
+                  opacity: isBig ? 0.25 + Math.random() * 0.35 : 0.2 + Math.random() * 0.35,
+                  animationDuration: `${4 + Math.random() * 8}s`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  boxShadow: isBig ? `0 0 ${6 + Math.random() * 8}px currentColor` : 'none',
+                }}
+              />
+            );
+          })}
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto max-w-3xl px-6 py-20 md:py-28 text-center w-full">
+          <FadeIn>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/10 px-4 py-1.5 backdrop-blur">
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75 animate-ping" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-400 shadow-[0_0_8px_#EC4899]" />
+              </span>
+              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-pink-300">
+                Live now
+              </span>
+            </div>
+            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4">
+              Meet Your Real Personal Assistant Today
+              <br />
+              <span className="text-pink-300 font-black" style={{ textShadow: "0 0 20px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
+              <br />
+              <span className="text-shine font-black text-3xl sm:text-5xl" style={{ textShadow: "0 0 30px rgba(16,185,129,0.5), 0 0 60px rgba(16,185,129,0.2)" }}>Let's Explore Together!</span>
+            </h2>
+            <p className="text-xl text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
+              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-semibold">She's got opinions.</span> 😏
+            </p>
+          </FadeIn>
+          {/* Directional cue — tells new users exactly where to start */}
+          <FadeIn delay={100}>
+            <div className="mb-6 flex flex-col items-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/5 px-4 py-1.5 text-sm font-semibold text-deal-light animate-pulse-slow">
+                👇 Start here — ask me anything
+              </span>
+            </div>
+          </FadeIn>
+          <FadeIn delay={150}>
+            <div className="relative">
+              {/* Chat card glow */}
+              <div className="absolute -inset-4 rounded-3xl opacity-30 blur-2xl"
+                style={{
+                  background: "radial-gradient(circle at 50% 0%, rgba(236,72,153,0.3) 0%, rgba(16,185,129,0.15) 40%, transparent 70%)"
+                }}
+              />
+              <div className="relative">
+                <DemoChat />
+              </div>
+            </div>
+            {/* Secondary CTA — for visitors who don't want to chat */}
+            <div className="mt-8 text-center">
+              <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
+                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans &amp; pricing →</span>
+              </a>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* 1 — HERO — LOUD rebuild with 3D money card */}
       <section className="relative overflow-hidden loud-bg bg-ai-gradient">
         <div className="grid-pattern" />
@@ -968,164 +1127,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
-      <section className="relative overflow-hidden loud-bg min-h-[900px] flex items-center">
-        {/* ===== DRAMATIC BACKGROUND — Dora's World ===== */}
-
-        {/* Layer 1: Vignette overlay — darkens edges, focuses center */}
-        <div className="absolute inset-0 pointer-events-none z-[1]"
-          style={{
-            background: "radial-gradient(ellipse at 50% 45%, transparent 30%, rgba(5,5,6,0.4) 65%, rgba(5,5,6,0.7) 100%)"
-          }}
-        />
-
-        {/* Layer 1.5: Cyberpunk AI image — dramatic hero background */}
-        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.30]"
-          style={{
-            backgroundImage: "url(/dora-bg.jpg)",
-            backgroundSize: "cover",
-            backgroundPosition: "center 35%",
-            filter: "saturate(1.15) brightness(1.1) contrast(1.05)",
-          }}
-        />
-        {/* Warm gradient overlay — lets the image breathe while keeping text readable */}
-        <div className="absolute inset-0 z-[1] pointer-events-none"
-          style={{
-            background: "linear-gradient(180deg, rgba(5,5,6,0.45) 0%, rgba(5,5,6,0.15) 35%, rgba(5,5,6,0.2) 60%, rgba(5,5,6,0.5) 100%)"
-          }}
-        />
-        {/* Warm pink wash — makes it feel inviting, not dystopian */}
-        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.12]"
-          style={{
-            background: "radial-gradient(ellipse at 50% 40%, rgba(236,72,153,0.4) 0%, transparent 60%)"
-          }}
-        />
-
-        {/* Layer 2: Massive glow orbs — the atmosphere */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
-          {/* Central pink/green mega-glow */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full animate-pulse-slow"
-            style={{
-              background: "radial-gradient(circle at 50% 45%, rgba(236,72,153,0.22) 0%, rgba(16,185,129,0.14) 30%, rgba(251,191,36,0.08) 50%, transparent 70%)",
-              filter: "blur(70px)",
-              animationDuration: "5s"
-            }}
-          />
-          {/* Secondary warm glow — upper right */}
-          <div className="absolute top-[15%] right-[15%] w-[550px] h-[550px] rounded-full opacity-30 animate-pulse-slow"
-            style={{
-              background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(236,72,153,0.12) 40%, transparent 65%)",
-              filter: "blur(60px)",
-              animationDuration: "6s"
-            }}
-          />
-          {/* Cool accent — lower left */}
-          <div className="absolute bottom-[20%] left-[10%] w-[400px] h-[400px] rounded-full opacity-25 animate-pulse-slow"
-            style={{
-              background: "radial-gradient(circle, rgba(16,185,129,0.35) 0%, rgba(16,185,129,0.1) 50%, transparent 70%)",
-              filter: "blur(50px)",
-              animationDuration: "4.5s"
-            }}
-          />
-        </div>
-
-        {/* Layer 3: Hexagonal tech grid — subtle, rotating slowly */}
-        <div className="absolute inset-0 pointer-events-none z-[3] opacity-[0.04]"
-          style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 20 L55 45 L30 60 L5 45 L5 20 Z' fill='none' stroke='%2310B981' stroke-width='0.4'/%3E%3C/svg%3E")`,
-            backgroundSize: "80px 80px",
-            animation: "subtle-drift 20s linear infinite"
-          }}
-        />
-
-        {/* Layer 4: Radiating light rays from center */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[3] w-[900px] h-[900px] opacity-[0.06]"
-          style={{
-            background: "conic-gradient(from 0deg, #EC4899 0deg, transparent 15deg, #10B981 40deg, transparent 55deg, #FBBF24 80deg, transparent 95deg, #EC4899 120deg, transparent 135deg, #10B981 160deg, transparent 175deg, #FBBF24 200deg, transparent 215deg, #EC4899 240deg, transparent 255deg, #10B981 280deg, transparent 295deg, #FBBF24 320deg, transparent 335deg, #EC4899 360deg)",
-            filter: "blur(2px)",
-            animation: "spin 60s linear infinite"
-          }}
-        />
-
-        {/* Layer 5: Removed — replaced by real hero image (dora-bg.jpg) */}
-
-        {/* Layer 6: Floating particles — more, bigger, dramatic */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
-          {[...Array(35)].map((_, i) => {
-            const size = 2 + Math.random() * 6;
-            const isBig = i < 6; // first 6 are larger "hero" particles
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full animate-float"
-                style={{
-                  width: `${isBig ? 4 + Math.random() * 6 : size}px`,
-                  height: `${isBig ? 4 + Math.random() * 6 : size}px`,
-                  left: `${Math.random() * 100}%`,
-                  top: `${Math.random() * 100}%`,
-                  background: i % 3 === 0 ? '#EC4899' : i % 3 === 1 ? '#10B981' : '#FBBF24',
-                  opacity: isBig ? 0.25 + Math.random() * 0.35 : 0.2 + Math.random() * 0.35,
-                  animationDuration: `${4 + Math.random() * 8}s`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  boxShadow: isBig ? `0 0 ${6 + Math.random() * 8}px currentColor` : 'none',
-                }}
-              />
-            );
-          })}
-        </div>
-
-        {/* Content */}
-        <div className="relative z-10 mx-auto max-w-3xl px-6 py-20 md:py-28 text-center w-full">
-          <FadeIn>
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-pink-400/30 bg-pink-500/10 px-4 py-1.5 backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-pink-400 opacity-75 animate-ping" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-pink-400 shadow-[0_0_8px_#EC4899]" />
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-pink-300">
-                Live now
-              </span>
-            </div>
-            <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4">
-              Meet Your Real Personal Assistant Today
-              <br />
-              <span className="text-pink-300 font-black" style={{ textShadow: "0 0 20px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
-              <br />
-              <span className="text-shine font-black text-3xl sm:text-5xl" style={{ textShadow: "0 0 30px rgba(16,185,129,0.5), 0 0 60px rgba(16,185,129,0.2)" }}>Let's Explore Together!</span>
-            </h2>
-            <p className="text-xl text-gray-300 mb-8 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
-              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-semibold">She's got opinions.</span> 😏
-            </p>
-          </FadeIn>
-          {/* Directional cue — tells new users exactly where to start */}
-          <FadeIn delay={100}>
-            <div className="mb-6 flex flex-col items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/5 px-4 py-1.5 text-sm font-semibold text-deal-light animate-pulse-slow">
-                👇 Start here — ask me anything
-              </span>
-            </div>
-          </FadeIn>
-          <FadeIn delay={150}>
-            <div className="relative">
-              {/* Chat card glow */}
-              <div className="absolute -inset-4 rounded-3xl opacity-30 blur-2xl"
-                style={{
-                  background: "radial-gradient(circle at 50% 0%, rgba(236,72,153,0.3) 0%, rgba(16,185,129,0.15) 40%, transparent 70%)"
-                }}
-              />
-              <div className="relative">
-                <DemoChat />
-              </div>
-            </div>
-            {/* Secondary CTA — for visitors who don't want to chat */}
-            <div className="mt-8 text-center">
-              <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
-                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans &amp; pricing →</span>
-              </a>
-            </div>
-          </FadeIn>
-        </div>
-      </section>
 
       {/* TUTORIAL VIDEO */} 
       <section id="tutorial" className="relative overflow-hidden loud-bg">
