@@ -115,9 +115,8 @@ export default function HomePage() {
   return (
     <>
       {/* 1 — HERO — LOUD rebuild with 3D money card */}
-      <section className="relative overflow-hidden loud-bg bg-ai-gradient">
-        <div className="grid-pattern" />
-        <div className="grain" />
+      <section className="relative overflow-hidden" style={{ background: "#050506" }}>
+        <div className="absolute inset-0 bg-cover bg-center opacity-[0.15]" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1600&q=80&auto=format&fit=crop)" }} />
         <FloatingParticles />
 
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
@@ -835,7 +834,7 @@ export default function HomePage() {
       </section>
 
       {/* DEMO CHAT — Try it live */}
-      <section className="relative overflow-hidden loud-bg">
+      <section className="relative overflow-hidden" style={{ background: "#050506" }}>
         <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center w-full">
           <FadeIn>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
