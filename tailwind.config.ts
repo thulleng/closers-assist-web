@@ -80,6 +80,17 @@ const config: Config = {
           "60%": { transform: "translate(-1px, -1px)" },
           "80%": { transform: "translate(1px, 1px)" },
         },
+        "breathe": {
+          "0%, 100%": { transform: "scale(1)", opacity: "0.14" },
+          "50%": { transform: "scale(1.03)", opacity: "0.17" },
+        },
+        "subtle-drift": {
+          "0%": { transform: "translate(0, 0)" },
+          "25%": { transform: "translate(10px, -5px)" },
+          "50%": { transform: "translate(5px, 10px)" },
+          "75%": { transform: "translate(-5px, 5px)" },
+          "100%": { transform: "translate(0, 0)" },
+        },
       },
       animation: {
         "pulse-neon": "pulse-neon 2s ease-in-out infinite",
@@ -88,6 +99,8 @@ const config: Config = {
         "grid-scroll": "grid-scroll 20s linear infinite",
         "scan-line": "scan-line 3s linear infinite",
         glitch: "glitch 0.3s ease-in-out infinite",
+        "breathe": "breathe 6s ease-in-out infinite",
+        "subtle-drift": "subtle-drift 20s linear infinite",
       },
       backgroundImage: {
         "ai-gradient":
