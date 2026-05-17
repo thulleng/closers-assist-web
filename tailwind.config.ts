@@ -91,6 +91,10 @@ const config: Config = {
           "75%": { transform: "translate(-5px, 5px)" },
           "100%": { transform: "translate(0, 0)" },
         },
+        "kenburns": {
+          "0%": { transform: "scale(1) translate(0, 0)" },
+          "100%": { transform: "scale(1.08) translate(-1%, -0.5%)" },
+        },
       },
       animation: {
         "pulse-neon": "pulse-neon 2s ease-in-out infinite",
@@ -101,6 +105,7 @@ const config: Config = {
         glitch: "glitch 0.3s ease-in-out infinite",
         "breathe": "breathe 6s ease-in-out infinite",
         "subtle-drift": "subtle-drift 20s linear infinite",
+        "kenburns": "kenburns 30s ease-in-out infinite alternate",
       },
       backgroundImage: {
         "ai-gradient":

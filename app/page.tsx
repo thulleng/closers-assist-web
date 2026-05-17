@@ -125,12 +125,21 @@ export default function HomePage() {
           }}
         />
 
-        {/* Layer 1.5: Cyberpunk AI image — 100% REAL, full visibility */}
+        {/* Layer 1.5: Cyberpunk AI image — 100% REAL, Ken Burns motion */}
         <div className="absolute inset-0 z-[1] pointer-events-none"
           style={{
             backgroundImage: "url(/dora-bg.jpg)",
-            backgroundSize: "cover",
+            backgroundSize: "110%",
             backgroundPosition: "center 35%",
+            animation: "kenburns 30s ease-in-out infinite alternate",
+          }}
+        />
+
+        {/* Layer 1.6: Scan lines — subtle cyberpunk feel */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]"
+          style={{
+            background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(16,185,129,0.3) 2px, rgba(16,185,129,0.3) 3px)",
+            animation: "scan-line 8s linear infinite",
           }}
         />
 
@@ -251,10 +260,11 @@ export default function HomePage() {
           </FadeIn>
           <FadeIn delay={150}>
             <div className="relative">
-              {/* Chat card glow */}
-              <div className="absolute -inset-4 rounded-3xl opacity-30 blur-2xl"
+              {/* Chat card glow — animated pulse */}
+              <div className="absolute -inset-4 rounded-3xl blur-2xl"
                 style={{
-                  background: "radial-gradient(circle at 50% 0%, rgba(236,72,153,0.3) 0%, rgba(16,185,129,0.15) 40%, transparent 70%)"
+                  background: "radial-gradient(circle at 50% 0%, rgba(236,72,153,0.35) 0%, rgba(16,185,129,0.2) 40%, transparent 70%)",
+                  animation: "glow-breathe 3s ease-in-out infinite",
                 }}
               />
               <div className="relative">
