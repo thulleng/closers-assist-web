@@ -968,7 +968,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DEMO CHAT — Meet Dora. She's live. */}
+      {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
       <section className="relative overflow-hidden loud-bg min-h-[900px] flex items-center">
         {/* Background glow orbs */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden">
@@ -1095,9 +1095,9 @@ export default function HomePage() {
               </span>
             </div>
             <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-6xl mb-4">
-              Meet Dora.
+              Meet Your Real Personal Assistant Today
               <br />
-              <span className="text-shine font-black">She's live.</span>
+              <span className="text-shine font-black">Let's Explore Together!</span>
             </h2>
             <p className="text-lg text-ash mb-12 max-w-lg mx-auto leading-relaxed">
               Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-medium">She's got opinions.</span> 😏
