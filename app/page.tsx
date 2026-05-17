@@ -826,8 +826,36 @@ export default function HomePage() {
               </div>
             </FadeIn>
 
-            {/* Moat 7: Pricing as a Weapon */}
+            {/* Moat 7: Voice Clone — Sounds like YOU */}
             <FadeIn delay={300}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🗣️</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Sounds like YOU. Not a bot.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  After 50 deals, your agent doesn't just know your scripts — it learns your voice. Your phrases. Your cadence. Your closing style. Competitors give you a generic bot. We clone you.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> Thul's agent writes follow-ups that his own manager couldn't tell apart from Thul. "Hey John — that RAV4 you looked at? Payment came in lower than I thought. Give me 2 minutes Monday."
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 8: Your Data Stays Yours */}
+            <FadeIn delay={350}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🔒</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Your data is YOURS. Forever.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Your scripts. Your pay plan. Your customer conversations. Export anytime. Delete anytime. We never train on your data — unlike every free AI that vacuums up your business and sells it back to you.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> Chatbots trained on customer data get their own customers' objections quoted back to competitors. Your closer's playbook stays YOUR competitive advantage. Always.
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 9: Pricing as a Weapon */}
+            <FadeIn delay={400}>
               <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 lg:col-span-3">
                 <div className="flex flex-col md:flex-row md:items-center gap-4">
                   <div className="text-4xl md:text-5xl shrink-0">⚡</div>
