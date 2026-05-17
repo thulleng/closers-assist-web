@@ -182,7 +182,7 @@ export default function DemoChat() {
                 key={s.label}
                 onClick={() => sendMessage(s.label)}
                 disabled={loading}
-                className="inline-flex items-center gap-2 rounded-full px-5 py-3 text-base font-semibold text-white transition-all duration-300 disabled:opacity-40"
+                className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3.5 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base font-semibold text-white transition-all duration-300 disabled:opacity-40"
                 style={{
                   border: "1.5px solid rgba(16,185,129,0.35)",
                   background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,5,6,0.5))",

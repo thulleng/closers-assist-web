@@ -115,7 +115,7 @@ export default function HomePage() {
   return (
     <>
       {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
-      <section className="relative overflow-hidden loud-bg min-h-[900px] flex items-center">
+      <section className="relative overflow-hidden loud-bg min-h-screen md:min-h-[900px] flex items-center">
         {/* ===== DRAMATIC BACKGROUND — Dora's World ===== */}
 
         {/* Layer 1: Subtle vignette — keeps edges dark for readability */}
@@ -208,7 +208,7 @@ export default function HomePage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 mx-auto max-w-3xl px-6 py-20 md:py-28 text-center w-full">
+        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 py-12 sm:py-20 md:py-28 text-center w-full">
           {/* Frosted glass backdrop — makes content pop against 100% image */}
           <div className="absolute inset-4 rounded-3xl pointer-events-none"
             style={{
@@ -228,15 +228,15 @@ export default function HomePage() {
                 Live now
               </span>
             </div>
-            <h2 className="font-display text-5xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-7xl mb-4 relative"
+            <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
               Meet Your Real Personal Assistant Today
               <br />
               <span className="text-pink-300 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
               <br />
-              <span className="text-shine font-black text-4xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>Let's Explore Together!</span>
+              <span className="text-shine font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>Let's Explore Together!</span>
             </h2>
-            <p className="text-2xl text-gray-200 mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
+            <p className="text-lg sm:text-2xl text-gray-200 mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
               Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-black">She's got opinions.</span> 😏
             </p>
@@ -244,7 +244,7 @@ export default function HomePage() {
           {/* Directional cue — tells new users exactly where to start */}
           <FadeIn delay={100}>
             <div className="mb-6 flex flex-col items-center gap-2">
-              <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-5 py-2 text-base font-bold text-deal-light animate-pulse-slow">
+              <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light animate-pulse-slow">
                 👇 Start here — ask me anything
               </span>
             </div>
