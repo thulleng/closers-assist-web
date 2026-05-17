@@ -979,6 +979,22 @@ export default function HomePage() {
           }}
         />
 
+        {/* Layer 1.5: Cyberpunk AI image — dramatic hero background */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.18]"
+          style={{
+            backgroundImage: "url(/dora-bg.jpg)",
+            backgroundSize: "cover",
+            backgroundPosition: "center 40%",
+            filter: "saturate(0.8) brightness(0.9)",
+          }}
+        />
+        {/* Dark overlay on top of image for text readability */}
+        <div className="absolute inset-0 z-[1] pointer-events-none"
+          style={{
+            background: "linear-gradient(180deg, rgba(5,5,6,0.7) 0%, rgba(5,5,6,0.3) 40%, rgba(5,5,6,0.5) 100%)"
+          }}
+        />
+
         {/* Layer 2: Massive glow orbs — the atmosphere */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
           {/* Central pink/green mega-glow */}
@@ -1025,84 +1041,7 @@ export default function HomePage() {
           }}
         />
 
-        {/* Layer 5: AI Face — large, visible, breathing */}
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[4] opacity-[0.14]"
-          style={{ animation: "breathe 6s ease-in-out infinite" }}>
-          <svg width="700" height="800" viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-            {/* Outer glow rings */}
-            <circle cx="250" cy="270" r="210" stroke="url(#dfg1)" strokeWidth="0.5" opacity="0.35">
-              <animate attributeName="r" values="210;218;210" dur="4s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="250" cy="270" r="230" stroke="url(#dfg2)" strokeWidth="0.3" opacity="0.2">
-              <animate attributeName="r" values="230;240;230" dur="5s" repeatCount="indefinite" />
-            </circle>
-            <circle cx="250" cy="270" r="250" stroke="url(#dfg1)" strokeWidth="0.2" opacity="0.12">
-              <animate attributeName="r" values="250;262;250" dur="6s" repeatCount="indefinite" />
-            </circle>
-
-            <defs>
-              <radialGradient id="dfg1" cx="50%" cy="40%">
-                <stop offset="0%" stopColor="#EC4899" />
-                <stop offset="50%" stopColor="#10B981" />
-                <stop offset="100%" stopColor="#FBBF24" />
-              </radialGradient>
-              <radialGradient id="dfg2" cx="50%" cy="40%">
-                <stop offset="0%" stopColor="#10B981" />
-                <stop offset="100%" stopColor="#EC4899" />
-              </radialGradient>
-              <radialGradient id="dfgHalo" cx="50%" cy="45%">
-                <stop offset="0%" stopColor="#EC4899" stopOpacity="0.15" />
-                <stop offset="40%" stopColor="#10B981" stopOpacity="0.05" />
-                <stop offset="100%" stopColor="transparent" stopOpacity="0" />
-              </radialGradient>
-            </defs>
-
-            {/* Face halo */}
-            <ellipse cx="250" cy="300" rx="180" ry="200" fill="url(#dfgHalo)" opacity="0.5">
-              <animate attributeName="opacity" values="0.3;0.6;0.3" dur="4s" repeatCount="indefinite" />
-            </ellipse>
-
-            {/* Jaw / chin */}
-            <path d="M155 340 Q155 470 250 490 Q345 470 345 340" stroke="url(#dfg1)" strokeWidth="0.9" opacity="0.6" />
-            {/* Left cheek */}
-            <path d="M155 340 Q140 285 165 245 Q200 205 250 195" stroke="url(#dfg1)" strokeWidth="0.9" opacity="0.6" />
-            {/* Right cheek */}
-            <path d="M345 340 Q360 285 335 245 Q300 205 250 195" stroke="url(#dfg1)" strokeWidth="0.9" opacity="0.6" />
-            {/* Forehead */}
-            <path d="M165 245 Q195 180 250 175 Q305 180 335 245" stroke="url(#dfg1)" strokeWidth="0.8" opacity="0.5" />
-            {/* Left eye */}
-            <ellipse cx="207" cy="260" rx="24" ry="13" stroke="url(#dfg1)" strokeWidth="0.9" opacity="0.7" />
-            <ellipse cx="207" cy="260" rx="9" ry="5.5" fill="url(#dfg1)" opacity="0.45" />
-            {/* Right eye */}
-            <ellipse cx="293" cy="260" rx="24" ry="13" stroke="url(#dfg1)" strokeWidth="0.9" opacity="0.7" />
-            <ellipse cx="293" cy="260" rx="9" ry="5.5" fill="url(#dfg1)" opacity="0.45" />
-            {/* Nose */}
-            <path d="M250 265 Q244 298 250 315 Q256 298 250 265" stroke="url(#dfg1)" strokeWidth="0.7" opacity="0.5" />
-            {/* Lips — fuller */}
-            <path d="M220 340 Q250 362 280 340" stroke="url(#dfg2)" strokeWidth="0.9" opacity="0.6" />
-            <path d="M225 343 Q250 353 275 343" stroke="#EC4899" strokeWidth="0.5" opacity="0.45" />
-            {/* Eyebrows */}
-            <path d="M185 242 Q207 233 233 242" stroke="url(#dfg1)" strokeWidth="0.7" opacity="0.5" />
-            <path d="M267 242 Q293 233 315 242" stroke="url(#dfg1)" strokeWidth="0.7" opacity="0.5" />
-            {/* Flowing hair */}
-            <path d="M165 245 Q148 210 155 175 Q168 145 200 120 Q230 100 250 95 Q270 100 300 120 Q332 145 345 175 Q352 210 335 245" stroke="url(#dfg1)" strokeWidth="0.6" opacity="0.4" fill="none" />
-            <path d="M158 230 Q135 185 148 145 Q165 115 205 90 Q240 72 250 68" stroke="url(#dfg2)" strokeWidth="0.5" opacity="0.35" fill="none" />
-            <path d="M342 230 Q365 185 352 145 Q335 115 295 90 Q260 72 250 68" stroke="url(#dfg2)" strokeWidth="0.5" opacity="0.35" fill="none" />
-            {/* Neck / shoulders hint */}
-            <path d="M200 400 Q220 430 250 440 Q280 430 300 400" stroke="url(#dfg1)" strokeWidth="0.4" opacity="0.25" />
-
-            {/* Neural network nodes — more of them, pulsing */}
-            {[
-              [250,92],[220,108],[280,108],[200,130],[300,130],[185,160],[315,160],[175,200],[325,200],[168,250],[332,250],[162,300],[338,300],[158,350],[342,350],[165,400],[335,400],[180,440],[320,440],[200,470],[300,470],[225,490],[275,490],[250,500],
-              // Extra facial nodes
-              [250,200],[230,210],[270,210],[215,230],[285,230],[205,280],[295,280],[210,320],[290,320]
-            ].map(([cx,cy],i) => (
-              <circle key={i} cx={cx} cy={cy} r={i < 24 ? "3" : "2"} fill="url(#dfg1)" opacity="0.55">
-                <animate attributeName="opacity" values="0.25;0.75;0.25" dur={`${2 + (i % 4)}s`} repeatCount="indefinite" begin={`${i * 0.08}s`} />
-              </circle>
-            ))}
-          </svg>
-        </div>
+        {/* Layer 5: Removed — replaced by real hero image (dora-bg.jpg) */}
 
         {/* Layer 6: Floating particles — more, bigger, dramatic */}
         <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
