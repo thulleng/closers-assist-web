@@ -982,7 +982,7 @@ export default function HomePage() {
               </span>
             </div>
             <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
-              Meet Clo.
+              Meet Dora.
               <br />
               <span className="text-shine font-black">She's live.</span>
             </h2>

@@ -92,7 +92,7 @@ export default function DemoChat() {
               <Sparkles className="h-4 w-4 text-black" />
             </div>
             <div className="rounded-2xl rounded-tl-md bg-white/[0.04] border border-white/[0.08] px-5 py-4 text-sm text-gray-200 leading-relaxed max-w-md">
-              <p className="font-semibold text-deal-light mb-1">Hey! I'm Clo 👋</p>
+              <p className="font-semibold text-deal-light mb-1">Hey! I'm Dora 👋</p>
               <p className="text-gray-400">
                 I'm the AI host here at ClosersAssist. I handle sales objections, track commissions, remind you about dentist appointments — basically everything.{" "}
                 <span className="text-white font-medium">What do you do for a living?</span>
