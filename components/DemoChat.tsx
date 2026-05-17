@@ -99,8 +99,8 @@ export default function DemoChat() {
                 border: "1px solid rgba(16,185,129,0.3)",
                 boxShadow: "0 0 30px rgba(16,185,129,0.12), 0 0 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)"
               }}>
-              <p className="font-bold text-deal-light mb-1 text-base">Hey! I'm Dora 👋</p>
-              <p className="text-gray-300">
+              <p className="font-bold text-deal-light mb-1 text-lg">Hey! I'm Dora 👋</p>
+              <p className="text-gray-200 text-base">
                 I'm the AI host here at ClosersAssist. I handle sales objections, track commissions, remind you about dentist appointments — basically everything.{" "}
                 <span className="text-white font-semibold">What do you do for a living?</span>
               </p>
