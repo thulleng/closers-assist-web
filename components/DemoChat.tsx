@@ -91,13 +91,13 @@ export default function DemoChat() {
             <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-deal to-emerald-400 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_16px_rgba(16,185,129,0.3)]">
               <Sparkles className="h-4 w-4 text-black" />
             </div>
-            <div className="rounded-2xl rounded-tl-md bg-white/[0.04] border border-white/[0.08] px-5 py-4 text-sm text-gray-200 leading-relaxed max-w-md">
-              <p className="font-semibold text-deal-light mb-1">Hey! I'm Dora 👋</p>
-              <p className="text-gray-400">
+            <div className="rounded-2xl rounded-tl-md bg-white/[0.08] border border-white/[0.14] px-5 py-4 text-base text-gray-200 leading-relaxed max-w-md shadow-[0_0_20px_rgba(0,0,0,0.3)]">
+              <p className="font-bold text-deal-light mb-1 text-base">Hey! I'm Dora 👋</p>
+              <p className="text-gray-300">
                 I'm the AI host here at ClosersAssist. I handle sales objections, track commissions, remind you about dentist appointments — basically everything.{" "}
-                <span className="text-white font-medium">What do you do for a living?</span>
+                <span className="text-white font-semibold">What do you do for a living?</span>
               </p>
-              <p className="text-xs text-gray-600 mt-2">
+              <p className="text-sm text-gray-500 mt-2 font-medium">
                 (I'm real AI — not a scripted chatbot. Try me. 😏)
               </p>
             </div>
@@ -155,14 +155,14 @@ export default function DemoChat() {
       {/* Suggested questions */}
       {messages.length === 0 && showGreeting && (
         <div className="mb-4">
-          <p className="text-xs text-gray-600 mb-2.5 text-center">Or tap a question:</p>
+          <p className="text-sm text-gray-400 mb-2.5 text-center font-medium">Or tap a question:</p>
           <div className="flex flex-wrap gap-2 justify-center">
             {SUGGESTIONS.map((s) => (
               <button
                 key={s.label}
                 onClick={() => sendMessage(s.label)}
                 disabled={loading}
-                className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.08] bg-white/[0.02] px-3.5 py-2 text-xs text-gray-400 hover:border-deal/40 hover:text-white hover:bg-deal/[0.04] transition-all disabled:opacity-40"
+                className="inline-flex items-center gap-1.5 rounded-full border border-white/[0.18] bg-white/[0.06] px-4 py-2.5 text-sm text-gray-300 hover:border-deal/50 hover:text-white hover:bg-deal/[0.08] transition-all disabled:opacity-40 shadow-[0_0_10px_rgba(0,0,0,0.2)]"
               >
                 <span>{s.icon}</span>
                 <span>{s.label}</span>
@@ -186,7 +186,7 @@ export default function DemoChat() {
           }
           maxLength={600}
           disabled={loading}
-          className="w-full rounded-xl border border-white/10 bg-white/[0.03] px-5 py-4 pr-14 text-sm text-white placeholder:text-gray-500 focus:border-deal/50 focus:outline-none transition-colors backdrop-blur disabled:opacity-50"
+          className="w-full rounded-xl border border-white/[0.15] bg-white/[0.06] px-5 py-4 pr-14 text-sm text-white placeholder:text-gray-400 focus:border-deal/50 focus:outline-none transition-colors backdrop-blur disabled:opacity-50 shadow-[0_0_15px_rgba(0,0,0,0.2)]"
         />
         <button
           type="submit"

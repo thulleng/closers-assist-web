@@ -1093,8 +1093,8 @@ export default function HomePage() {
               <br />
               <span className="text-shine font-black text-2xl sm:text-3xl">Let's Explore Together!</span>
             </h2>
-            <p className="text-lg text-ash mb-12 max-w-lg mx-auto leading-relaxed">
-              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-medium">She's got opinions.</span> 😏
+            <p className="text-xl text-gray-300 mb-12 max-w-lg mx-auto leading-relaxed font-medium" style={{ textShadow: "0 0 30px rgba(0,0,0,0.6)" }}>
+              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-300 font-semibold">She's got opinions.</span> 😏
             </p>
           </FadeIn>
           <FadeIn delay={150}>
