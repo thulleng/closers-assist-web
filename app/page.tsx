@@ -129,7 +129,8 @@ export default function HomePage() {
         <div className="absolute inset-0 z-[1] pointer-events-none"
           style={{
             backgroundImage: "url(/dora-bg.jpg)",
-            backgroundSize: "110%",
+            backgroundSize: "cover",
+            backgroundRepeat: "no-repeat",
             backgroundPosition: "center 35%",
             animation: "kenburns 30s ease-in-out infinite alternate",
           }}
