@@ -97,14 +97,10 @@ export default function DemoChat() {
             ]);
             setDemoStep("done");
 
-            // Step 4: Wait, clear, loop to next
+            // Step 4: Smooth transition to next pair — no clear, no gap
             demoTimeoutRef.current = setTimeout(() => {
-              setDemoMessages([]);
-              setDemoStep("idle");
-              demoTimeoutRef.current = setTimeout(() => {
-                runDemo((index + 1) % DEMO_QA.length);
-              }, 1500);
-            }, 4000);
+              runDemo((index + 1) % DEMO_QA.length);
+            }, 5000);
           }, 1200);
         }, 800);
       }, 800);
