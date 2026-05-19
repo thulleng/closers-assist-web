@@ -242,7 +242,9 @@ export default function DemoChat() {
       {/* ─── CHAT AREA ────────────────────────────────────────── */}
       <div
         ref={chatContainerRef}
-        className="space-y-4 mb-4 max-h-[380px] min-h-[200px] overflow-y-auto scrollbar-thin overscroll-contain rounded-2xl p-4"
+        className={`space-y-4 mb-4 overflow-y-auto scrollbar-thin overscroll-contain rounded-2xl p-4 ${
+          isDemoPlaying ? "h-[380px]" : "max-h-[380px] min-h-[200px]"
+        }`}
         style={{
           background: "rgba(5,5,6,0.35)",
           backdropFilter: "blur(16px)",
