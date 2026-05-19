@@ -526,7 +526,15 @@ summary {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center 35%;
-  animation: kenburns 30s ease-in-out infinite alternate;
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  animation: hero-pan 30s ease-in-out infinite alternate;
+}
+
+@keyframes hero-pan {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-2%, -1%); }
 }
 
 @media (max-width: 767px) {
