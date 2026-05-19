@@ -519,3 +519,19 @@ summary {
   80%  { opacity: 0.6; }
   100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
 }
+
+/* ── Hero Background Image — responsive sizing ── */
+.hero-bg-dora {
+  background-image: url(/dora-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 35%;
+  animation: kenburns 30s ease-in-out infinite alternate;
+}
+
+@media (max-width: 767px) {
+  .hero-bg-dora {
+    background-size: auto 100%;
+    background-position: center top;
+  }
+}

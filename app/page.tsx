@@ -126,15 +126,7 @@ export default function HomePage() {
         />
 
         {/* Layer 1.5: Cyberpunk AI image — 100% REAL, Ken Burns motion */}
-        <div className="absolute inset-0 z-[1] pointer-events-none"
-          style={{
-            backgroundImage: "url(/dora-bg.jpg)",
-            backgroundSize: "cover",
-            backgroundRepeat: "no-repeat",
-            backgroundPosition: "center 35%",
-            animation: "kenburns 30s ease-in-out infinite alternate",
-          }}
-        />
+        <div className="absolute inset-0 z-[1] pointer-events-none hero-bg-dora" />
 
         {/* Layer 1.6: Scan lines — subtle cyberpunk feel */}
         <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]"
