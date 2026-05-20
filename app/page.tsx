@@ -721,14 +721,14 @@ export default function HomePage() {
           <div className="grid gap-6 md:grid-cols-3">
             {/* Benefit 1 — Memory */}
             <FadeIn delay={100}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] h-full flex flex-col">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
                   🧠
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
                   Never forgets a deal
                 </h3>
-                <p className="text-sm leading-relaxed text-ash">
+                <p className="text-sm leading-relaxed text-ash flex-1">
                   Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Closers Assist knows exactly what you said, what they pushed back on, and what closed them last time.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
@@ -739,14 +739,14 @@ export default function HomePage() {
 
             {/* Benefit 2 — Zero setup */}
             <FadeIn delay={200}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] h-full flex flex-col">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
                   ⚡
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
                   Zero setup. Zero training.
                 </h3>
-                <p className="text-sm leading-relaxed text-ash">
+                <p className="text-sm leading-relaxed text-ash flex-1">
                   Pick your industry. Start closing. No prompt engineering. No training period. No IT ticket. You already know how to text — that&rsquo;s the entire interface.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
@@ -757,14 +757,14 @@ export default function HomePage() {
 
             {/* Benefit 3 — Your voice */}
             <FadeIn delay={300}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)]">
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] h-full flex flex-col">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
                   🎯
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
                   Sounds like you. Not a bot.
                 </h3>
-                <p className="text-sm leading-relaxed text-ash">
+                <p className="text-sm leading-relaxed text-ash flex-1">
                   Your scripts. Your style. Your floor. Closers Assist learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
