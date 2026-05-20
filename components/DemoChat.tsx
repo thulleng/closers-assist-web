@@ -20,8 +20,42 @@ export default function DemoChat() {
   const [loading, setLoading] = useState(false);
   const [remaining, setRemaining] = useState(10);
   const [showGreeting, setShowGreeting] = useState(true);
+  const [memoryLoaded, setMemoryLoaded] = useState(false);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+  const visitorRef = useRef<string>("");
+
+  // Persistent visitor ID + load memory from Supabase
+  useEffect(() => {
+    let vid = localStorage.getItem("dora_visitor");
+    if (!vid) {
+      vid = "dora-" + crypto.randomUUID().slice(0, 8);
+      localStorage.setItem("dora_visitor", vid);
+    }
+    visitorRef.current = vid;
+
+    // Load past conversations
+    fetch(`/api/dora/memory?visitor_id=${vid}`)
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.messages?.length > 0) {
+          setMessages(data.messages);
+          setShowGreeting(false);
+        }
+        setMemoryLoaded(true);
+      })
+      .catch(() => setMemoryLoaded(true));
+  }, []);
+
+  // Save messages to Supabase after each exchange
+  function saveMemory(msgs: Message[]) {
+    if (!visitorRef.current) return;
+    fetch("/api/dora/memory", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ visitor_id: visitorRef.current, messages: msgs }),
+    }).catch(() => {});
+  }
 
   // Auto-scroll chat
   useEffect(() => {
@@ -109,6 +143,12 @@ export default function DemoChat() {
                 setRemaining(data.remaining);
               }
               setLoading(false);
+              // Save to Supabase memory
+              saveMemory([
+                ...history,
+                { role: "user", text: question },
+                { role: "clo", text: accumulated },
+              ]);
               return;
             }
 
