@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { createClient } from "@/lib/supabase/server";
 
 const SASSY_BRIDGE = "http://178.105.161.224:8910/chat";
 
@@ -11,13 +12,18 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
+    // Get user for per-user session continuity
+    const supabase = await createClient();
+    const { data: { user } } = await supabase.auth.getUser();
+    const sessionId = user ? `web-${user.id.slice(0, 12)}` : "web-guest";
+
     const controller = new AbortController();
     const timeout = setTimeout(() => controller.abort(), 55000);
 
     const res = await fetch(SASSY_BRIDGE, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
+      body: JSON.stringify({ message, session: sessionId }),
       signal: controller.signal,
     });
 
