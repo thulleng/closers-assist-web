@@ -179,38 +179,15 @@ export default function RealChat({
         throw new Error("API error");
       }
 
-      // Read streaming response — append chunks to last message
-      const reader = res.body?.getReader();
-      if (reader) {
-        const decoder = new TextDecoder();
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          setMessages((prev) => {
-            const updated = [...prev];
-            const last = updated[updated.length - 1];
-            if (last && last.role === "assistant") {
-              updated[updated.length - 1] = {
-                ...last,
-                content: (typeof last.content === "string" ? last.content : "") + chunk,
-              };
-            }
-            return updated;
-          });
-        }
-      } else {
-        // Fallback — non-streaming response
-        const data = await res.json();
-        setMessages((prev) => {
-          const updated = [...prev];
-          updated[updated.length - 1] = {
-            role: "assistant",
-            content: data.reply || "Hey! I'm here 👋",
-          };
-          return updated;
-        });
-      }
+      const data = await res.json();
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = {
+          role: "assistant",
+          content: data.reply || "Hey! I'm here 👋",
+        };
+        return updated;
+      });
     } catch {
       setMessages((prev) => {
         const updated = [...prev];
