@@ -74,13 +74,13 @@ export default function DemoChat() {
       } else {
         setMessages((prev) => [
           ...prev,
-          { role: "clo", text: "I tripped over a cable — try me again? 🔌" },
+          { role: "clo", text: "I'm thinking — try me again? Dora's brain runs on real AI and sometimes needs a sec. ⚡" },
         ]);
       }
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "clo", text: "Connection hiccup — hit me again! ⚡" },
+        { role: "clo", text: "I hit a speed bump — try again! Dora's awake, just took a second too long. 🏎️" },
       ]);
     }
     setLoading(false);

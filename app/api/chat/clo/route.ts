@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 
+export const maxDuration = 30; // Vercel: extend function timeout
+
 const CLO_BRIDGE = "http://178.105.161.224:8911/chat";
 
 export async function POST(req: NextRequest) {
@@ -12,7 +14,7 @@ export async function POST(req: NextRequest) {
     }
 
     const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 55000);
+    const timeout = setTimeout(() => controller.abort(), 25000);
 
     const res = await fetch(CLO_BRIDGE, {
       method: "POST",
@@ -25,7 +27,7 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) {
       return NextResponse.json(
-        { reply: "Clo is gathering her thoughts... ask me again! 💭" },
+        { reply: "Dora is gathering her thoughts — ask me again! 💭" },
         { status: 200 }
       );
     }
@@ -33,9 +35,9 @@ export async function POST(req: NextRequest) {
     const data = await res.json();
     return NextResponse.json({ reply: data.reply || "Hey! I'm here. 👋" });
   } catch (err: any) {
-    console.error("Clo bridge error:", err.message);
+    console.error("Dora bridge error:", err.message);
     return NextResponse.json(
-      { reply: "Connection hiccup — Clo will be right back! ⚡" },
+      { reply: "I hit a speed bump — try again! Dora's awake, just took a second too long. 🏎️" },
       { status: 200 }
     );
   }
