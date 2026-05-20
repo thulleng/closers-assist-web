@@ -1,9 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
-import Anthropic from "@anthropic-ai/sdk";
 
-const ai = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY ?? "",
-});
+const DEEPSEEK_KEY = () => process.env.DEEPSEEK_API_KEY ?? "";
 
 const SYSTEM_PROMPT = `You are Sassy — the ClosersAssist AI agent. You handle questions about sales, pricing, features, and the platform. You are fast, sharp, and direct.
 
@@ -67,30 +64,41 @@ export async function POST(req: NextRequest) {
         systemPrompt += ANONYMOUS_GUARD;
       }
     } catch {
-      // Supabase not available — treat as anonymous
       systemPrompt += ANONYMOUS_GUARD;
     }
 
-    // Call Anthropic directly — Haiku for sub-second consumer chat
-    const res = await ai.messages.create({
-      model: "claude-3-5-haiku-latest",
-      max_tokens: 600,
-      system: systemPrompt,
-      messages: [{ role: "user", content: message }],
+    // Call DeepSeek directly — no bridge, no tools, no memory loading
+    const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${DEEPSEEK_KEY()}`,
+      },
+      body: JSON.stringify({
+        model: "deepseek-chat",
+        max_tokens: 600,
+        temperature: 0.7,
+        messages: [
+          { role: "system", content: systemPrompt },
+          { role: "user", content: message },
+        ],
+      }),
     });
 
-    const reply = res.content
-      .filter((b): b is { type: "text"; text: string } => b.type === "text")
-      .map((b) => b.text)
-      .join(" ")
-      .trim();
+    if (!res.ok) {
+      const errText = await res.text();
+      console.error("DeepSeek API error:", res.status, errText.slice(0, 200));
+      throw new Error(`DeepSeek returned ${res.status}`);
+    }
+
+    const data = await res.json();
+    const reply = data.choices?.[0]?.message?.content?.trim() || "";
 
     const scrubbed = scrub(reply || "Hey! I'm here — what can I help with? 👋");
 
     return NextResponse.json({ reply: scrubbed });
   } catch (err: any) {
     console.error("Sassy direct error:", err.message);
-    // Fallback — still JSON so RealChat doesn't break
     return NextResponse.json(
       { reply: "I hit a snag — try me again in a moment! ⚡" },
       { status: 200 }
