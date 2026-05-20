@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { NextRequest } from "next/server";
 
 // Rate limiting — 20 messages per 4 hours per IP
 const rateLimit = new Map<string, { count: number; reset: number }>();
@@ -41,19 +41,18 @@ BOUNDARIES:
 
 /**
  * Dora — the marketing agent on closersassist.com
- * Direct DeepSeek API call. No bridge. No subprocess. No regex.
+ * Streams DeepSeek response via SSE for typewriter effect.
  */
 export async function POST(req: NextRequest) {
-  // Rate limit check
   const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown";
   const now = Date.now();
   const entry = rateLimit.get(ip);
 
   if (entry && now < entry.reset && entry.count >= MAX_QUESTIONS) {
-    return NextResponse.json({
-      reply: "Alright, you've burned through your free questions — I like the enthusiasm! 🔥 Hit the pricing page and let's get you deployed for real. 14-day free trial, no credit card drama.",
-      remaining: 0,
-    });
+    return new Response(
+      `data: ${JSON.stringify({ reply: "Alright, you've burned through your free questions — I like the enthusiasm! 🔥 Hit the pricing page and let's get you deployed for real. 14-day free trial, no credit card drama.", remaining: 0, done: true })}\n\n`,
+      { headers: { "Content-Type": "text/event-stream", "Cache-Control": "no-cache", Connection: "keep-alive" } }
+    );
   }
 
   if (!entry || now >= entry.reset) {
@@ -61,96 +60,140 @@ export async function POST(req: NextRequest) {
   } else {
     entry.count++;
   }
+  const remaining = MAX_QUESTIONS - (entry?.count || 1);
 
+  const apiKey = process.env.DEEPSEEK_API_KEY;
+  if (!apiKey) {
+    return new Response(
+      `data: ${JSON.stringify({ error: "Dora's thinking — hit me again in a sec! ⚡", done: true })}\n\n`,
+      { headers: { "Content-Type": "text/event-stream" } }
+    );
+  }
+
+  let body: { message?: string; messages?: Array<{ role: string; text?: string; content?: string }> };
   try {
-    const body = await req.json();
-    const { message, messages: history } = body;
+    body = await req.json();
+  } catch {
+    return new Response(
+      `data: ${JSON.stringify({ error: "Bad request", done: true })}\n\n`,
+      { status: 400, headers: { "Content-Type": "text/event-stream" } }
+    );
+  }
 
-    if (!message?.trim()) {
-      return NextResponse.json({ error: "Message required" }, { status: 400 });
-    }
+  const { message, messages: history } = body;
+  if (!message?.trim()) {
+    return new Response(
+      `data: ${JSON.stringify({ error: "Message required", done: true })}\n\n`,
+      { status: 400, headers: { "Content-Type": "text/event-stream" } }
+    );
+  }
 
-    const apiKey = process.env.DEEPSEEK_API_KEY;
-    if (!apiKey) {
-      console.error("DEEPSEEK_API_KEY not set");
-      return NextResponse.json({
-        reply: "Dora's thinking — hit me again in a sec! ⚡",
-        remaining: MAX_QUESTIONS - (entry?.count || 1),
-      });
-    }
+  // Build conversation
+  const chatMessages: Array<{ role: string; content: string }> = [
+    { role: "system", content: DORA_SYSTEM },
+  ];
 
-    // Build conversation: system + history + new message
-    const messages: Array<{ role: string; content: string }> = [
-      { role: "system", content: DORA_SYSTEM },
-    ];
-
-    // Include last 10 messages from conversation history for context
-    if (Array.isArray(history)) {
-      const recent = history.slice(-10);
-      for (const msg of recent) {
-        if (msg.role === "user" || msg.role === "assistant") {
-          messages.push({ role: msg.role, content: msg.text || msg.content || "" });
-        }
+  if (Array.isArray(history)) {
+    for (const msg of history.slice(-10)) {
+      if (msg.role === "user" || msg.role === "assistant" || msg.role === "clo") {
+        const role = msg.role === "clo" ? "assistant" : msg.role;
+        chatMessages.push({ role, content: msg.text || msg.content || "" });
       }
     }
-
-    // Add the current message
-    messages.push({ role: "user", content: message.trim() });
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), 15000);
-
-    const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${apiKey}`,
-      },
-      body: JSON.stringify({
-        model: "deepseek-v4-pro",
-        messages,
-        max_tokens: 400,
-        temperature: 0.85,
-      }),
-      signal: controller.signal,
-    });
-
-    clearTimeout(timeout);
-
-    if (!res.ok) {
-      const errText = await res.text().catch(() => "");
-      console.error(`DeepSeek API error ${res.status}: ${errText.slice(0, 200)}`);
-      return NextResponse.json({
-        reply: "Dora's thinking — hit me again in a sec! ⚡",
-        remaining: MAX_QUESTIONS - (entry?.count || 1),
-      });
-    }
-
-    const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content?.trim();
-
-    if (!reply) {
-      return NextResponse.json({
-        reply: "Dora's thinking — hit me again! ⚡",
-        remaining: MAX_QUESTIONS - (entry?.count || 1),
-      });
-    }
-
-    return NextResponse.json({
-      reply,
-      remaining: MAX_QUESTIONS - (entry?.count || 1),
-    });
-  } catch (err: any) {
-    if (err.name === "AbortError") {
-      return NextResponse.json({
-        reply: "I hit a speed bump — try again! Dora's awake, just took a second too long. 🏎️",
-        remaining: MAX_QUESTIONS - (entry?.count || 1),
-      });
-    }
-    console.error("Dora route error:", err.message);
-    return NextResponse.json({
-      reply: "I hit a speed bump — try again! Dora's awake, just took a second too long. 🏎️",
-      remaining: MAX_QUESTIONS - (entry?.count || 1),
-    });
   }
+
+  chatMessages.push({ role: "user", content: message.trim() });
+
+  const stream = new ReadableStream({
+    async start(controller) {
+      try {
+        const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${apiKey}`,
+          },
+          body: JSON.stringify({
+            model: "deepseek-v4-pro",
+            messages: chatMessages,
+            max_tokens: 400,
+            temperature: 0.85,
+            stream: true,
+          }),
+          signal: AbortSignal.timeout(15000),
+        });
+
+        if (!res.ok) {
+          const errText = await res.text().catch(() => "");
+          console.error(`DeepSeek API error ${res.status}: ${errText.slice(0, 200)}`);
+          controller.enqueue(
+            new TextEncoder().encode(`data: ${JSON.stringify({ error: "Dora's thinking — hit me again in a sec! ⚡", done: true })}\n\n`)
+          );
+          controller.close();
+          return;
+        }
+
+        const reader = res.body?.getReader();
+        if (!reader) {
+          controller.enqueue(
+            new TextEncoder().encode(`data: ${JSON.stringify({ error: "No response stream", done: true })}\n\n`)
+          );
+          controller.close();
+          return;
+        }
+
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || !trimmed.startsWith("data: ")) continue;
+
+            const data = trimmed.slice(6);
+            if (data === "[DONE]") continue;
+
+            try {
+              const parsed = JSON.parse(data);
+              const delta = parsed.choices?.[0]?.delta?.content;
+              if (delta) {
+                controller.enqueue(
+                  new TextEncoder().encode(`data: ${JSON.stringify({ text: delta })}\n\n`)
+                );
+              }
+            } catch {
+              // skip unparseable chunks
+            }
+          }
+        }
+
+        // Final event with remaining count
+        controller.enqueue(
+          new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
+        );
+        controller.close();
+      } catch (err: any) {
+        console.error("Dora stream error:", err.message);
+        controller.enqueue(
+          new TextEncoder().encode(`data: ${JSON.stringify({ error: "I hit a speed bump — try again! 🏎️", done: true })}\n\n`)
+        );
+        controller.close();
+      }
+    },
+  });
+
+  return new Response(stream, {
+    headers: {
+      "Content-Type": "text/event-stream",
+      "Cache-Control": "no-cache",
+      Connection: "keep-alive",
+    },
+  });
 }

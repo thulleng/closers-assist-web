@@ -46,6 +46,9 @@ export default function DemoChat() {
     setInput("");
     setShowGreeting(false);
     setShowcaseVisible(false);
+
+    // Capture current messages for history before adding new ones
+    const history = messages;
     setMessages((prev) => [...prev, { role: "user", text: question }]);
     setLoading(true);
 
@@ -53,26 +56,94 @@ export default function DemoChat() {
       const res = await fetch("/api/chat/clo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question, messages }),
+        body: JSON.stringify({ message: question, messages: history }),
       });
-      const data = await res.json();
 
-      if (data.reply) {
-        setMessages((prev) => [...prev, { role: "clo", text: data.reply }]);
-        setRemaining(data.remaining ?? remaining - 1);
-      } else {
+      if (!res.ok) {
         setMessages((prev) => [
           ...prev,
-          { role: "clo", text: "I'm thinking — try me again? Dora's brain runs on real AI and sometimes needs a sec. ⚡" },
+          { role: "clo", text: "Dora's thinking — hit me again in a sec! ⚡" },
         ]);
+        setLoading(false);
+        return;
       }
+
+      const reader = res.body?.getReader();
+      if (!reader) {
+        setMessages((prev) => [
+          ...prev,
+          { role: "clo", text: "Dora's thinking — hit me again! ⚡" },
+        ]);
+        setLoading(false);
+        return;
+      }
+
+      const decoder = new TextDecoder();
+      let buffer = "";
+      let accumulated = "";
+      let bubbleAdded = false;
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        buffer += decoder.decode(value, { stream: true });
+
+        const lines = buffer.split("\n");
+        buffer = lines.pop() || "";
+
+        for (const line of lines) {
+          const trimmed = line.trim();
+          if (!trimmed || !trimmed.startsWith("data: ")) continue;
+
+          try {
+            const data = JSON.parse(trimmed.slice(6));
+
+            if (data.text) {
+              accumulated += data.text;
+              if (!bubbleAdded) {
+                // First chunk — create the bubble
+                setMessages((prev) => [...prev, { role: "clo", text: accumulated }]);
+                bubbleAdded = true;
+              } else {
+                // Update existing bubble
+                setMessages((prev) => {
+                  const copy = [...prev];
+                  copy[copy.length - 1] = { role: "clo", text: accumulated };
+                  return copy;
+                });
+              }
+            }
+
+            if (data.done) {
+              if (data.remaining !== undefined) {
+                setRemaining(data.remaining);
+              }
+              setLoading(false);
+              return;
+            }
+
+            if (data.error) {
+              setMessages((prev) => [
+                ...prev,
+                { role: "clo", text: data.error },
+              ]);
+              setLoading(false);
+              return;
+            }
+          } catch {
+            // Skip unparseable chunks
+          }
+        }
+      }
+
+      setLoading(false);
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "clo", text: "I hit a speed bump — try again! Dora's awake, just took a second too long. 🏎️" },
+        { role: "clo", text: "I hit a speed bump — try again! 🏎️" },
       ]);
+      setLoading(false);
     }
-    setLoading(false);
   }
 
   function handleSubmit(e: React.FormEvent) {
@@ -80,7 +151,7 @@ export default function DemoChat() {
     sendMessage(input);
   }
 
-  function MessageBubble({ msg, isLast }: { msg: Message; isLast?: boolean }) {
+  function MessageBubble({ msg, isStreaming }: { msg: Message; isStreaming?: boolean }) {
     const isUser = msg.role === "user";
 
     return (
@@ -111,6 +182,9 @@ export default function DemoChat() {
           }
         >
           <span className="whitespace-pre-wrap">{msg.text}</span>
+          {isStreaming && (
+            <span className="inline-block w-1.5 h-4 bg-deal ml-0.5 align-text-bottom animate-pulse" />
+          )}
         </div>
         {isUser && (
           <div className="w-8 h-8 rounded-xl bg-white/[0.06] border border-white/[0.08] flex items-center justify-center shrink-0 mt-0.5">
@@ -179,12 +253,14 @@ export default function DemoChat() {
         )}
 
         {/* Real messages */}
-        {messages.map((msg, i) => (
-          <MessageBubble key={i} msg={msg} />
-        ))}
+        {messages.map((msg, i) => {
+          const isLast = i === messages.length - 1;
+          const isStreaming = isLast && msg.role === "clo" && loading;
+          return <MessageBubble key={i} msg={msg} isStreaming={isStreaming} />;
+        })}
 
-        {/* Typing indicator */}
-        {loading && (
+        {/* Typing indicator — only before first text chunk arrives */}
+        {loading && (messages.length === 0 || messages[messages.length - 1]?.role !== "clo") && (
           <div className="flex gap-3">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-deal to-emerald-400 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
               <Loader2 className="h-3.5 w-3.5 text-black animate-spin" />
