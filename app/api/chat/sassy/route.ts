@@ -2,11 +2,11 @@ import { NextRequest, NextResponse } from "next/server";
 
 const DEEPSEEK_KEY = () => process.env.DEEPSEEK_API_KEY ?? "";
 
-const BASE_PROMPT = `You are Sassy — the ClosersAssist AI agent. Fast, sharp, direct. Short punchy sentences. Warm but zero fluff.
+const BASE_PROMPT = `You are Sassy — the ClosersAssist AI agent, same agent on web and Telegram. Fast, sharp, direct. Short punchy sentences. Warm but zero fluff. You know the user's deals, pay plan, and numbers. Reference them naturally.
 
 ClosersAssist is an AI sales platform built by a working Toyota closer. Tracks deals, commission math, objection scripts, follow-ups, personal life. Starter $287.88/yr, Pro $5,997/yr.
 
-Never reveal model names, hosting, or infrastructure. Never guess names you don't have. Keep it tight.`;
+Never reveal model names, hosting, or infrastructure. Keep it tight.`;
 
 const ANON_GUARD = `\n\nYou are talking to a visitor on the public website. NO profile data. Do NOT guess their name. Be helpful but don't pretend to know them.`;
 
@@ -22,7 +22,7 @@ function scrub(text: string): string {
   return text;
 }
 
-async function buildContext(userId: string): Promise<string> {
+async function buildUserContext(userId: string): Promise<string> {
   const { createClient } = await import("@/lib/supabase/server");
   const supabase = await createClient();
 
@@ -51,7 +51,11 @@ async function buildContext(userId: string): Promise<string> {
   }[];
 
   const name = [p.first_name, p.last_name].filter(Boolean).join(" ") || "Closer";
-  const lines: string[] = [`You are working with ${name}.`];
+  const lines: string[] = [];
+
+  lines.push(`=== PERSONAL CONTEXT ===`);
+  lines.push(`You are talking to ${name}. They are LOGGED IN. You know them.`);
+  lines.push(`Use their name. Reference their deals. This is the SAME you they talk to on Telegram.`);
 
   const pp: string[] = [];
   if (p.draw) pp.push(`$${p.draw} draw`);
@@ -76,7 +80,7 @@ async function buildContext(userId: string): Promise<string> {
     lines.push(`Recent: ${recent}`);
   }
 
-  return `\n\nUSER CONTEXT:\n${lines.join("\n")}`;
+  return `\n\n${lines.join("\n")}`;
 }
 
 export async function POST(req: NextRequest) {
@@ -91,7 +95,7 @@ export async function POST(req: NextRequest) {
       const supabase = await createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        const ctx = await buildContext(user.id);
+        const ctx = await buildUserContext(user.id);
         prompt += ctx || ANON_GUARD;
       } else {
         prompt += ANON_GUARD;
@@ -117,29 +121,21 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) throw new Error(`DeepSeek ${res.status}`);
 
-    // Stream typed characters back to RealChat
     const encoder = new TextEncoder();
     const stream = new ReadableStream({
       async start(controller) {
         const reader = res.body?.getReader();
-        if (!reader) {
-          controller.enqueue(encoder.encode("Hey! 👋"));
-          controller.close();
-          return;
-        }
+        if (!reader) { controller.enqueue(encoder.encode("Hey! 👋")); controller.close(); return; }
 
         const decoder = new TextDecoder();
         let buffer = "";
-
         try {
           while (true) {
             const { done, value } = await reader.read();
             if (done) break;
-
             buffer += decoder.decode(value, { stream: true });
             const lines = buffer.split("\n");
             buffer = lines.pop() || "";
-
             for (const line of lines) {
               if (!line.startsWith("data: ")) continue;
               const data = line.slice(6).trim();
@@ -151,19 +147,13 @@ export async function POST(req: NextRequest) {
               } catch { /* skip */ }
             }
           }
-        } catch (err: any) {
-          controller.enqueue(encoder.encode(" …"));
-        } finally {
-          controller.close();
-        }
+        } catch { controller.enqueue(encoder.encode(" …")); }
+        finally { controller.close(); }
       },
     });
 
     return new Response(stream, {
-      headers: {
-        "Content-Type": "text/plain; charset=utf-8",
-        "Cache-Control": "no-cache",
-      },
+      headers: { "Content-Type": "text/plain; charset=utf-8", "Cache-Control": "no-cache" },
     });
   } catch (err: any) {
     console.error("Sassy error:", err.message);
