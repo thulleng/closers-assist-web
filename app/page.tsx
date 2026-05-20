@@ -1366,6 +1366,11 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
+          <FadeIn delay={250}>
+            <div className="mt-6">
+              <RealChat />
+            </div>
+          </FadeIn>
 
         </div>
       </section>
