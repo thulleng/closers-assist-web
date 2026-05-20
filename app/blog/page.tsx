@@ -10,6 +10,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "three-buyers-on-the-lot",
+    title: "The Three Buyers on Every Lot",
+    date: "May 20, 2026",
+    readTime: "4 min",
+    preview: "After years on the floor at Sun Toyota, I learned there aren't a hundred types of buyers. There are three — and the rep who can read the room in 90 seconds closes all three.",
+    tag: "Customer Psychology",
+  },
+  {
     slug: "sun-toyota-pilot",
     title: "I Run an AI Closer on My Dealership Floor — Here's What Happened in 30 Days",
     date: "May 12, 2026",
