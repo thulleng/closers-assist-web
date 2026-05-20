@@ -62,8 +62,9 @@ export async function POST(req: NextRequest) {
     }
 
     const data = await res.json();
+    const reply = data.reply?.trim();
     return NextResponse.json({
-      reply: "Hey! I'm Dora — your first impression at ClosersAssist. What do you sell? 👋",
+      reply: reply || "Dora's thinking — hit me again! ⚡",
       remaining: MAX_QUESTIONS - (entry?.count || 1),
     });
   } catch (err: any) {
