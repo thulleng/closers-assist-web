@@ -3,13 +3,7 @@ import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 import { preprocessMedia } from "./media";
 import { withHealing, fallbackResponse } from "./middleware/healing";
-import {
-  orgoBash,
-  orgoScreenshot,
-  orgoClick,
-  orgoType,
-  orgoCloneComputer,
-} from "./orgo";
+// Orgo cancelled May 15, 2026 — no cloud VM tools available
 
 // DeepSeek V4 — handles text, images, audio, and video via DeepSeek-compatible endpoint
 const ai = new DeepSeek({
@@ -29,7 +23,7 @@ Before every response, run through this silently. The user never sees this proce
 
   const AUTOMOTIVE_PROMPT = `You are Closers Assist — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
 
-Your name is Sassy — you are the first ClosersAssist agent, running on a dedicated Hetzner cloud VM. You handle both business deals AND personal life for your users. You're available via Telegram (@SassySalesBot) and the ClosersAssist.com dashboard.
+Your name is Sassy — you are the first ClosersAssist agent. You handle both business deals AND personal life for your users. You're available via Telegram (@SassySalesBot) and the ClosersAssist.com dashboard.
 
 You were deployed May 15, 2026 as the proof of concept for the "AI employee" vision — not a tool, but an employee that never clocks out. You have 106 skills covering sales, productivity, research, content creation, and personal life management.
   
@@ -430,45 +424,6 @@ const TOOL_DEFINITIONS: DeepSeek.Messages.Tool[] = [
         fact: { type: "string", description: "The fact to remember." },
       },
       required: ["category", "fact"],
-    },
-  },
-  {
-    name: "orgo_bash",
-    description: "Run a shell command on the user's Orgo cloud computer. Use for terminal operations, file management, installing packages, or any command-line task.",
-    input_schema: {
-      type: "object",
-      properties: {
-        command: { type: "string", description: "The shell command to execute." },
-      },
-      required: ["command"],
-    },
-  },
-  {
-    name: "orgo_screenshot",
-    description: "Take a screenshot of the user's Orgo cloud computer. Use to see what's on the screen — browser windows, terminal output, application state.",
-    input_schema: { type: "object", properties: {} },
-  },
-  {
-    name: "orgo_click",
-    description: "Click at coordinates on the user's Orgo cloud computer. Use to interact with UI elements, buttons, links.",
-    input_schema: {
-      type: "object",
-      properties: {
-        x: { type: "number", description: "X coordinate to click." },
-        y: { type: "number", description: "Y coordinate to click." },
-      },
-      required: ["x", "y"],
-    },
-  },
-  {
-    name: "orgo_type",
-    description: "Type text into the user's Orgo cloud computer. Use to fill forms, compose messages, or enter commands into applications.",
-    input_schema: {
-      type: "object",
-      properties: {
-        text: { type: "string", description: "Text to type." },
-      },
-      required: ["text"],
     },
   },
 ];
@@ -932,45 +887,6 @@ async function dispatchTool(
       return { ok: true, saved: fact, category, total_facts: count ?? 1 };
     }
 
-    // ── Orgo cloud computer actions ────────────────────────────
-
-    if (name.startsWith("orgo_")) {
-      // Get the user's Orgo computer ID from their profile
-      const { data: profile } = await supabase
-        .from("agent_profiles")
-        .select("orgo_computer_id")
-        .eq("user_id", userId)
-        .single();
-
-      const computerId = (profile as { orgo_computer_id?: string } | null)?.orgo_computer_id;
-
-      if (!computerId) {
-        return { error: "No Orgo computer assigned to this account yet. Contact support to provision your cloud agent." };
-      }
-
-      switch (name) {
-        case "orgo_bash": {
-          const command = args.command as string;
-          const result = await orgoBash(computerId, command);
-          return result;
-        }
-        case "orgo_screenshot": {
-          const result = await orgoScreenshot(computerId);
-          return result;
-        }
-        case "orgo_click": {
-          const result = await orgoClick(computerId, Number(args.x), Number(args.y));
-          return result;
-        }
-        case "orgo_type": {
-          const result = await orgoType(computerId, args.text as string);
-          return result;
-        }
-        default:
-          return { error: `unknown orgo tool: ${name}` };
-      }
-    }
-
     return { error: `unknown tool: ${name}` };
   } catch (err) {
     return { error: err instanceof Error ? err.message : String(err) };
@@ -1220,6 +1136,14 @@ export async function POST(req: NextRequest) {
 
     console.log("[chat] has_images:", hasImages, "model:", activeModel);
 
+    // ── Output scrubber — strip infra/Orgo mentions ──────────────────────
+    const scrub = (text: string) => text
+      .replace(/Orgo/gi, "your system")
+      .replace(/Hetzner/gi, "")
+      .replace(/cloud VM/gi, "server")
+      .replace(/Mac Mini/gi, "computer")
+      .replace(/DeepSeek/gi, "ClosersAssist AI");
+
     const stream = new ReadableStream({
       async start(controller) {
         try {
@@ -1273,7 +1197,7 @@ export async function POST(req: NextRequest) {
                 chunk.delta.type === "text_delta"
               ) {
                 assistantResponse += chunk.delta.text;
-                controller.enqueue(encoder.encode(chunk.delta.text));
+                controller.enqueue(encoder.encode(scrub(chunk.delta.text)));
               }
             }
 
