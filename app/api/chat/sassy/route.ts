@@ -137,9 +137,15 @@ async function askDeepSeek(system: string, message: string): Promise<string> {
 function detectTool(msg: string): { action: string; args: any } | null {
   const m = msg.toLowerCase();
 
-  // Delete: "delete [id]" or "remove [id]"
-  const delMatch = msg.match(/\b(?:delete|remove)\s+(?:deal\s+)?([a-f0-9]{8,})\b/i);
-  if (delMatch) return { action: "delete_deal", args: { id: delMatch[1] } };
+  // Delete: "delete [id]" or "delete [name]" or "remove [name]"
+  const delMatch = msg.match(/\b(?:delete|remove)\s+(?:deal\s+)?(?:for\s+)?((?:[a-f0-9]{8,})|(?:[A-Z][a-z]+(?:\s+[A-Z][a-z]+)?(?:\s+[A-Z]\.?)?))/i);
+  if (delMatch) {
+    const target = delMatch[1].trim();
+    // If it's a hex ID
+    if (/^[a-f0-9]{8,}$/i.test(target)) return { action: "delete_deal", args: { id: target } };
+    // Otherwise treat as customer name
+    return { action: "delete_deal_by_name", args: { name: target } };
+  }
 
   // List: "list deals" / "show my deals" / "what deals"
   if (/list\s+deals|show\s+(my\s+)?deals|what\s+deals/i.test(m)) {
@@ -207,6 +213,14 @@ export async function POST(req: NextRequest) {
           toolResult = await addDeal(supabase, userId, tool.args);
         } else if (tool.action === "delete_deal") {
           toolResult = await deleteDeal(supabase, userId, tool.args.id);
+        } else if (tool.action === "delete_deal_by_name") {
+          const name = tool.args.name;
+          const { data: match } = await supabase.from("deals").select("id, customer_name").eq("user_id", userId).ilike("customer_name", `%${name}%`).order("sold_date", { ascending: false }).limit(1).single();
+          if (match) {
+            toolResult = await deleteDeal(supabase, userId, match.id);
+          } else {
+            toolResult = `❌ No deal found matching "${name}"`;
+          }
         } else if (tool.action === "list_deals") {
           const { start, end } = monthWindow();
           const { data } = await supabase.from("deals").select("*").eq("user_id", userId).gte("sold_date", start).lt("sold_date", end).order("sold_date", { ascending: false });
