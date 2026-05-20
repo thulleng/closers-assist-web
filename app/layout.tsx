@@ -3,7 +3,6 @@ import { Inter, Inter_Tight, JetBrains_Mono } from "next/font/google";
 import Nav from "@/components/Nav";
 import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
-import ChatFloat from "@/components/ChatFloat";
 import CursorGlow from "@/components/CursorGlow";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
 import "./globals.css";
@@ -95,7 +94,6 @@ export default function RootLayout({
         <main className="min-h-screen pb-[60px] md:pb-0">{children}</main>
         <Footer />
         <BottomNav />
-        <ChatFloat />
       </body>
     </html>
   );
