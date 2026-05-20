@@ -14,21 +14,12 @@ const SUGGESTIONS = [
   { icon: "😏", label: "What makes this different from ChatGPT?" },
 ];
 
-// Static showcase conversation — shows what Dora can do
-const SHOWCASE: Message[] = [
-  { role: "user", text: "I sell cars. What can this actually do for me?" },
-  { role: "clo", text: "Everything a second brain should. I track your deals, calculate commissions in real time, remind you about follow-ups, and even handle your personal life — dentist appointments, family schedules, the works. One AI that knows both your floor and your life. 😏" },
-  { role: "user", text: "What's the catch?" },
-  { role: "clo", text: "No catch. $29.99/mo, no contract, cancel anytime. The founder is a working rep at Sun Toyota — he built this for himself first. If I don't save you at least one deal a month, you're out $30. That's a lunch." },
-];
-
 export default function DemoChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [remaining, setRemaining] = useState(10);
   const [showGreeting, setShowGreeting] = useState(true);
-  const [showcaseVisible, setShowcaseVisible] = useState(true);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -45,7 +36,6 @@ export default function DemoChat() {
     const question = text.trim();
     setInput("");
     setShowGreeting(false);
-    setShowcaseVisible(false);
 
     // Capture current messages for history before adding new ones
     const history = messages;
@@ -227,29 +217,11 @@ export default function DemoChat() {
             >
               <p className="font-bold text-white mb-1 text-lg">Hey! I'm Dora 👋</p>
               <p className="text-gray-200 text-sm">
-                I'm the AI host here at ClosersAssist. I handle sales objections, track commissions, remind you about dentist appointments — basically everything.{" "}
-                <span className="text-white font-semibold">What do you do for a living?</span>
-              </p>
-              <p className="text-xs text-gray-500 mt-2">
-                (I'm real AI — not a scripted chatbot. Try me. 😏)
+                I'm your AI closer — I handle follow-ups, track commissions, remember everything you'd forget.
+                <span className="text-white font-semibold"> What do you sell?</span>
               </p>
             </div>
           </div>
-        )}
-
-        {/* Static showcase conversation */}
-        {showcaseVisible && messages.length === 0 && (
-          <>
-            <div className="my-4 border-t border-white/5" />
-            {SHOWCASE.map((msg, i) => (
-              <MessageBubble key={i} msg={msg} />
-            ))}
-            <div className="text-center mt-3">
-              <span className="text-[10px] text-gray-500 uppercase tracking-wider">
-                Example conversation — type below to talk to Dora
-              </span>
-            </div>
-          </>
         )}
 
         {/* Real messages */}
@@ -277,35 +249,6 @@ export default function DemoChat() {
           </div>
         )}
       </div>
-
-      {/* ─── SUGGESTED QUESTIONS ───────────────────────────────── */}
-      {messages.length === 0 && (
-        <div className="mb-4">
-          <p className="text-sm text-gray-400 mb-3 text-center font-semibold tracking-wide">
-            Or tap a question:
-          </p>
-          <div className="flex flex-wrap gap-2.5 justify-center">
-            {SUGGESTIONS.map((s) => (
-              <button
-                key={s.label}
-                onClick={() => sendMessage(s.label)}
-                disabled={loading}
-                className="inline-flex items-center gap-1.5 sm:gap-2 rounded-full px-3.5 py-2.5 sm:px-5 sm:py-3 text-sm sm:text-base font-semibold text-white transition-all duration-300 disabled:opacity-40 hover:scale-105"
-                style={{
-                  border: "1.5px solid rgba(16,185,129,0.35)",
-                  background: "linear-gradient(135deg, rgba(16,185,129,0.08), rgba(5,5,6,0.5))",
-                  boxShadow: "0 0 20px rgba(16,185,129,0.12)",
-                  backdropFilter: "blur(8px)",
-                  WebkitBackdropFilter: "blur(8px)",
-                }}
-              >
-                <span className="text-lg">{s.icon}</span>
-                <span>{s.label}</span>
-              </button>
-            ))}
-          </div>
-        </div>
-      )}
 
       {/* ─── INPUT ─────────────────────────────────────────────── */}
       <form onSubmit={handleSubmit} className="relative">
@@ -351,25 +294,42 @@ export default function DemoChat() {
         </button>
       </form>
 
-      {/* ─── GOLD CTA ──────────────────────────────────────────── */}
-      <div className="mt-5 flex flex-col items-center gap-3">
-        <a
-          href="/pricing"
-          className="group inline-flex items-center gap-3 rounded-xl px-8 py-4 text-base font-bold text-black transition-all duration-300 hover:scale-105"
-          style={{
-            background: "linear-gradient(135deg, #FBBF24 0%, #F59E0B 50%, #D97706 100%)",
-            boxShadow: "0 0 40px rgba(251,191,36,0.35), 0 4px 20px rgba(0,0,0,0.3)",
-          }}
-        >
-          Talk to Dora — $29.99/mo
-          <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
-        </a>
-        <p className="flex items-center gap-2 text-xs text-gray-500">
-          <Zap className="h-3 w-3 text-deal/60" />
+      {/* ─── SUGGESTED QUESTIONS ───────────────────────────────── */}
+      {messages.length === 0 && (
+        <div className="flex flex-wrap gap-2 justify-center mt-3">
+          {SUGGESTIONS.map((s) => (
+            <button
+              key={s.label}
+              onClick={() => sendMessage(s.label)}
+              disabled={loading}
+              className="inline-flex items-center gap-1.5 rounded-full px-3 py-1.5 text-xs font-medium text-gray-300 transition-all duration-200 disabled:opacity-40 hover:text-white hover:border-deal/50"
+              style={{
+                border: "1px solid rgba(255,255,255,0.1)",
+                background: "rgba(255,255,255,0.03)",
+              }}
+            >
+              <span>{s.icon}</span>
+              <span>{s.label}</span>
+            </button>
+          ))}
+        </div>
+      )}
+
+      <div className="flex items-center justify-between mt-4">
+        <p className="flex items-center gap-1.5 text-xs text-gray-500">
+          <Zap className="h-3 w-3 text-deal/50" />
           {remaining > 0
             ? `${remaining} free question${remaining !== 1 ? "s" : ""} left`
             : "Ready to deploy? →"}
         </p>
+        {messages.length > 0 && (
+          <a
+            href="/pricing"
+            className="text-xs font-semibold text-deal hover:text-deal-light transition-colors"
+          >
+            See plans & pricing →
+          </a>
+        )}
       </div>
     </div>
   );
