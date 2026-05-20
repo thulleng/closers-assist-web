@@ -28,6 +28,10 @@ export default function ChatFloat() {
 
   const isHome = pathname === "/";
   const isDashboard = pathname.startsWith("/dashboard");
+
+  // Dashboard pages have their own DashboardChat — don't double up
+  if (isDashboard) return null;
+
   const industry = industryFromPath(pathname);
 
   // Close on Escape
