@@ -31,7 +31,7 @@ import PhoneMockup from "@/components/PhoneMockup";
 import FadeIn from "@/components/FadeIn";
 import Counter from "@/components/Counter";
 import LiveScoreboard from "@/components/LiveScoreboard";
-import RealChat from "@/components/RealChat";
+import DemoChat from "@/components/DemoChat";
 import ReviewsSection from "@/components/ReviewsSection";
 import EmailCapture from "@/components/EmailCapture";
 import FoundersCircle from "@/components/FoundersCircle";
@@ -224,22 +224,22 @@ export default function HomePage() {
           <FadeIn>
             <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-              Meet Your Real Personal Assistant Today
+              Meet Clo —
               <br />
-              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>— Sassy!</span>
+              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>Your AI Closer</span>
               <br />
-              <span className="text-shine font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>Let's Explore Together!</span>
+              <span className="text-shine font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>She closes. You collect.</span>
             </h2>
             <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
-              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-200 font-black">She's got opinions.</span> 😏
+              Ask her anything — pricing, how it works, whether she can really handle your deals AND your life. <span className="text-pink-200 font-black">She's got the answers.</span> 😏
             </p>
           </FadeIn>
           {/* Directional cue */}
           <FadeIn delay={100}>
             <div className="mb-6 flex flex-col items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light">
-                👇 Start here — ask me anything
+                👇 Talk to Clo — she's live
               </span>
             </div>
           </FadeIn>
@@ -253,7 +253,7 @@ export default function HomePage() {
                 }}
               />
               <div className="relative">
-                <RealChat />
+                <DemoChat />
               </div>
             </div>
             {/* Secondary CTA — for visitors who don't want to chat */}
