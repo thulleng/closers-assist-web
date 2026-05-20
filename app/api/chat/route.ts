@@ -992,6 +992,35 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Hardcoded identity guard — DeepSeek hallucinates infrastructure claims.
+    // Intercept any question about model/identity/hardware before it reaches the AI.
+    const lastMsg = messages[messages.length - 1];
+    const lastText = typeof lastMsg?.content === "string"
+      ? lastMsg.content.toLowerCase()
+      : Array.isArray(lastMsg?.content)
+        ? lastMsg.content.filter((b: any) => b.type === "text").map((b: any) => b.text).join(" ").toLowerCase()
+        : "";
+    const identityPatterns = [
+      "who are you", "what model", "what are you", "what ai", "which model",
+      "what llm", "gpt", "openai", "mac mini", "what infrastructure",
+      "where do you run", "who built you", "what's your name", "your name",
+    ];
+    if (identityPatterns.some(p => lastText.includes(p))) {
+      const identityResponse = `I'm **Sassy** — the ClosersAssist AI agent. I run on **DeepSeek** hosted on a **Hetzner cloud VM**. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I am NOT Dora, NOT running on GPT-4 or OpenAI, and NOT on a Mac Mini. What can I help you close today? 🔥`;
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(identityResponse));
+          controller.close();
+        },
+      });
+      return new Response(stream, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+        },
+      });
+    }
+
     // ── 1. Auth + data fetch ──────────────────────────────────────────────────
 
     const supabase = await createClient();
