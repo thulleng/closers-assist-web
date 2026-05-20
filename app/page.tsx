@@ -40,7 +40,7 @@ import TiltCard from "@/components/TiltCard";
 import MobileCTABar from "@/components/MobileCTABar";
 import WaitlistCounter from "@/components/WaitlistCounter";
 import NewsletterSection from "@/components/NewsletterSection";
-import DemoChat from "@/components/DemoChat";
+
 import FAQ from "@/components/FAQ";
 import TrustStrip from "@/components/TrustStrip";
 
@@ -833,33 +833,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* DEMO CHAT — Try it live */}
-      <section className="relative overflow-hidden" style={{ background: "#050506" }}>
-        <div className="relative mx-auto max-w-3xl px-6 py-16 md:py-20 text-center w-full">
-          <FadeIn>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                Live now
-              </span>
-            </div>
-            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
-              Meet Clo.
-              <br />
-              <span className="text-shine font-black">She's live.</span>
-            </h2>
-            <p className="text-ash mb-10 max-w-md mx-auto">
-              Ask her anything — pricing, features, whether she can really handle your life AND your deals. She's got opinions. 😏
-            </p>
-          </FadeIn>
-          <FadeIn delay={150}>
-            <DemoChat />
-          </FadeIn>
-        </div>
-      </section>
+
 
       {/* TUTORIAL VIDEO */} 
       <section id="tutorial" className="relative overflow-hidden loud-bg">
