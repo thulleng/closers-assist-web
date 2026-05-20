@@ -36,8 +36,8 @@ export async function updateSession(request: NextRequest) {
 
   const { pathname } = request.nextUrl;
 
-  // Authenticated users hitting the homepage or login page → send to dashboard
-  const isAuthPage = pathname === "/" || pathname === "/login";
+  // Authenticated users on the login page → send to dashboard
+  const isAuthPage = pathname === "/login";
   if (isAuthPage && user) {
     return NextResponse.redirect(new URL("/dashboard/auto", request.url));
   }

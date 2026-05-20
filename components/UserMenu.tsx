@@ -1,9 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useUser } from "@/lib/hooks/useUser";
+import { createBrowserClient } from "@supabase/ssr";
 
 function getInitials(fullName: string | undefined, email: string): string {
   if (fullName) {
@@ -20,7 +20,6 @@ export default function UserMenu() {
   const { user, loading } = useUser();
   const [open, setOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement>(null);
-  const router = useRouter();
 
   // Close on outside click
   useEffect(() => {
@@ -44,9 +43,12 @@ export default function UserMenu() {
 
   async function handleSignOut() {
     setOpen(false);
-    await fetch("/api/auth/signout", { method: "POST" });
-    router.push("/");
-    router.refresh();
+    const supabase = createBrowserClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+    );
+    await supabase.auth.signOut();
+    window.location.href = "/";
   }
 
   return (
