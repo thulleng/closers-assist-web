@@ -28,20 +28,9 @@ export default function DemoChat() {
   const [loading, setLoading] = useState(false);
   const [remaining, setRemaining] = useState(10);
   const [showGreeting, setShowGreeting] = useState(true);
-  const [sessionId, setSessionId] = useState("");
   const [showcaseVisible, setShowcaseVisible] = useState(true);
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
-
-  // Generate persistent session ID
-  useEffect(() => {
-    let sid = localStorage.getItem("dora_session");
-    if (!sid) {
-      sid = "visitor-" + Math.random().toString(36).slice(2, 10);
-      localStorage.setItem("dora_session", sid);
-    }
-    setSessionId(sid);
-  }, []);
 
   // Auto-scroll chat
   useEffect(() => {
@@ -64,18 +53,13 @@ export default function DemoChat() {
       const res = await fetch("/api/chat/clo", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question, session: sessionId }),
+        body: JSON.stringify({ message: question, messages }),
       });
       const data = await res.json();
 
       if (data.reply) {
         setMessages((prev) => [...prev, { role: "clo", text: data.reply }]);
         setRemaining(data.remaining ?? remaining - 1);
-        // Save the Hermes session ID for continuity
-        if (data.session) {
-          setSessionId(data.session);
-          localStorage.setItem("dora_session", data.session);
-        }
       } else {
         setMessages((prev) => [
           ...prev,
