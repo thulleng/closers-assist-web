@@ -103,11 +103,14 @@ async function buildContext(supabase: any, userId: string): Promise<string> {
 }
 
 // ─── Bridge proxy ────────────────────────────────────────────────────────────
-async function askBridge(message: string): Promise<string | null> {
+async function askBridge(message: string, sessionToken?: string): Promise<string | null> {
   try {
+    const body: any = { message };
+    if (sessionToken) body.session = sessionToken;
     const res = await fetch(`${BRIDGE}/chat`, {
-      method: "POST", headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ message }),
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
       signal: AbortSignal.timeout(25000),
     });
     if (!res.ok) return null;
@@ -242,7 +245,7 @@ export async function POST(req: NextRequest) {
         // Now get updated context and ask Sassy to respond naturally
         const ctx = await buildContext(supabase, userId);
         const enrichedMsg = `You just performed this action: ${toolResult}\n\n${ctx}\n\nRespond to the user naturally about what just happened. Keep it short and punchy.`;
-        const reply = await askBridge(enrichedMsg) || await askDeepSeek(SYSTEM, enrichedMsg);
+        const reply = await askBridge(enrichedMsg, userId) || await askDeepSeek(SYSTEM, enrichedMsg);
 
         return new Response(reply, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } });
       }
@@ -259,7 +262,7 @@ export async function POST(req: NextRequest) {
       systemPrompt += "\n\nVisitor on website. Be helpful but general.";
     }
 
-    const reply = await askBridge(enriched) || await askDeepSeek(systemPrompt, enriched);
+    const reply = await askBridge(enriched, userId || undefined) || await askDeepSeek(systemPrompt, enriched);
     return new Response(reply, { status: 200, headers: { "Content-Type": "text/plain; charset=utf-8" } });
   } catch (err: any) {
     console.error("Sassy error:", err.message);
