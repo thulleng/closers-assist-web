@@ -66,6 +66,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({
       reply: reply || "Dora's thinking — hit me again! ⚡",
       remaining: MAX_QUESTIONS - (entry?.count || 1),
+      session: data.session || session || ip,
     });
   } catch (err: any) {
     console.error("Clo bridge error:", err.message);

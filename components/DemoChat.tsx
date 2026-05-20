@@ -35,10 +35,10 @@ export default function DemoChat() {
 
   // Generate persistent session ID
   useEffect(() => {
-    let sid = localStorage.getItem("clo_session");
+    let sid = localStorage.getItem("dora_session");
     if (!sid) {
       sid = "visitor-" + Math.random().toString(36).slice(2, 10);
-      localStorage.setItem("clo_session", sid);
+      localStorage.setItem("dora_session", sid);
     }
     setSessionId(sid);
   }, []);
@@ -71,6 +71,11 @@ export default function DemoChat() {
       if (data.reply) {
         setMessages((prev) => [...prev, { role: "clo", text: data.reply }]);
         setRemaining(data.remaining ?? remaining - 1);
+        // Save the Hermes session ID for continuity
+        if (data.session) {
+          setSessionId(data.session);
+          localStorage.setItem("dora_session", data.session);
+        }
       } else {
         setMessages((prev) => [
           ...prev,
