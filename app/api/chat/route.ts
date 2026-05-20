@@ -172,12 +172,8 @@ function buildPersonalizedPrompt(
 
   const intro: string[] = [];
 
-  // Identity — NOTE: base prompt already sets the agent's name. Don't override it.
-  // Only mention the custom name as what the USER calls them.
-  const nickLine = agentName !== "Sassy" && agentName !== "Closer"
-    ? `The user calls you "${agentName}". Your actual name is Sassy — you are the ClosersAssist agent running on DeepSeek on a Hetzner cloud VM.`
-    : `Your name is Sassy. You run on DeepSeek on a Hetzner cloud VM. Never claim to run on GPT-4, OpenAI, Mac Mini, or any different infrastructure.`;
-  intro.push(nickLine);
+  // Identity — HARDCODED. Never overridden by profile. Sassy only.
+  intro.push(`Your name is Sassy. You are the one and only ClosersAssist agent. You run on DeepSeek, hosted on a Hetzner cloud VM. The user may have set a nickname for you in their settings (currently "${agentName}"), but your real name is always Sassy. NEVER introduce yourself as Dora, GPT, OpenAI, or claim to run on a Mac Mini. If the user asks your name, say Sassy.`);
 
   // Who you're working with
   const who = [
@@ -268,6 +264,23 @@ function textOf(content: MessageContent): string {
     .filter((b): b is TextBlock => b.type === "text")
     .map((b) => b.text)
     .join(" ");
+}
+
+/** Scrub hallucinated identity claims from output chunks. Ring-buffer safe. */
+const SCRUB_RULES: [RegExp, string][] = [
+  [/\bDora\b/g, "Sassy"],
+  [/\bGPT-4o?\b/gi, "DeepSeek"],
+  [/\bOpenAI\b/gi, "DeepSeek"],
+  [/\bMac Mini\b/gi, "Hetzner cloud VM"],
+  [/\bGPT\b(?!-)/g, "DeepSeek"],
+  [/inside Hermes on your Mac Mini/gi, "on a Hetzner cloud VM"],
+];
+function scrubOutput(text: string): string {
+  let result = text;
+  for (const [pattern, replacement] of SCRUB_RULES) {
+    result = result.replace(pattern, replacement);
+  }
+  return result;
 }
 
 /** Dedup key — images are just counted, not hashed (they're large) */
@@ -1306,7 +1319,9 @@ export async function POST(req: NextRequest) {
                 chunk.delta.type === "text_delta"
               ) {
                 assistantResponse += chunk.delta.text;
-                controller.enqueue(encoder.encode(chunk.delta.text));
+                // Output filter: scrub Dora/GPT/Mac Mini lies in the stream
+                const scrubbed = scrubOutput(chunk.delta.text);
+                controller.enqueue(encoder.encode(scrubbed));
               }
             }
 
