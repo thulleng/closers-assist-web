@@ -107,6 +107,7 @@ export async function POST(req: NextRequest) {
         model: "deepseek-chat",
         max_tokens: 500,
         temperature: 0.7,
+        stream: true,
         messages: [
           { role: "system", content: prompt },
           { role: "user", content: message },
@@ -116,10 +117,54 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) throw new Error(`DeepSeek ${res.status}`);
 
-    const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content?.trim() || "Hey! 👋";
+    // Stream typed characters back to RealChat
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = res.body?.getReader();
+        if (!reader) {
+          controller.enqueue(encoder.encode("Hey! 👋"));
+          controller.close();
+          return;
+        }
 
-    return NextResponse.json({ reply: scrub(reply) });
+        const decoder = new TextDecoder();
+        let buffer = "";
+
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              const data = line.slice(6).trim();
+              if (data === "[DONE]") continue;
+              try {
+                const parsed = JSON.parse(data);
+                const delta = parsed.choices?.[0]?.delta?.content;
+                if (delta) controller.enqueue(encoder.encode(scrub(delta)));
+              } catch { /* skip */ }
+            }
+          }
+        } catch (err: any) {
+          controller.enqueue(encoder.encode(" …"));
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+      },
+    });
   } catch (err: any) {
     console.error("Sassy error:", err.message);
     return NextResponse.json({ reply: "Try me again in a moment! ⚡" }, { status: 200 });

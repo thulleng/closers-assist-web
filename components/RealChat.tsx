@@ -175,17 +175,42 @@ export default function RealChat({
         body: JSON.stringify({ message }),
       });
 
-      if (!res.ok) {
-        throw new Error("API error");
-      }
+      if (!res.ok) throw new Error("API error");
 
-      const data = await res.json();
+      // Streaming reader — text types in character by character
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("No stream");
+
+      const decoder = new TextDecoder();
+      let accumulated = "";
+      let lastPaint = Date.now();
+
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        accumulated += decoder.decode(value, { stream: true });
+
+        // Batch paint every ~40ms for smooth typing effect
+        if (Date.now() - lastPaint > 40) {
+          const text = accumulated;
+          setMessages((prev) => {
+            const updated = [...prev];
+            const last = updated[updated.length - 1];
+            if (last && last.role === "assistant") {
+              updated[updated.length - 1] = { ...last, content: text };
+            }
+            return updated;
+          });
+          lastPaint = Date.now();
+        }
+      }
+      // Final paint — flush remaining
       setMessages((prev) => {
         const updated = [...prev];
-        updated[updated.length - 1] = {
-          role: "assistant",
-          content: data.reply || "Hey! I'm here 👋",
-        };
+        const last = updated[updated.length - 1];
+        if (last && last.role === "assistant") {
+          updated[updated.length - 1] = { ...last, content: accumulated };
+        }
         return updated;
       });
     } catch {
