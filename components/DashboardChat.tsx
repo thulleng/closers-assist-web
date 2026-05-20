@@ -39,9 +39,25 @@ export default function DashboardChat() {
 
       if (!res.ok) throw new Error("Failed");
 
-      const data = await res.json();
-      const reply = data.reply || "I'm here! 👋";
-      setMessages((prev) => [...prev, { role: "sassy", text: reply }]);
+      // Streaming read — types in real-time
+      const reader = res.body?.getReader();
+      if (!reader) throw new Error("No stream");
+
+      setMessages((prev) => [...prev, { role: "sassy", text: "" }]);
+
+      const decoder = new TextDecoder();
+      let full = "";
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        full += chunk;
+        setMessages((prev) => {
+          const copy = [...prev];
+          copy[copy.length - 1] = { role: "sassy" as const, text: full };
+          return copy;
+        });
+      }
     } catch {
       setMessages((prev) => [...prev, { role: "sassy", text: "Try me again in a moment! ⚡" }]);
     } finally {
