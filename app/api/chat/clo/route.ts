@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const CLO_BRIDGE = "http://178.105.161.224:8911/chat";
+const CLO_BRIDGE = "http://178.105.161.224:8912/chat";
 
 // Rate limiting — 20 messages per 4 hours per IP
 const rateLimit = new Map<string, { count: number; reset: number }>();
