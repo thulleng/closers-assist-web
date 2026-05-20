@@ -40,7 +40,7 @@ import TiltCard from "@/components/TiltCard";
 import MobileCTABar from "@/components/MobileCTABar";
 import WaitlistCounter from "@/components/WaitlistCounter";
 import NewsletterSection from "@/components/NewsletterSection";
-import DemoChat from "@/components/DemoChat";
+
 import FAQ from "@/components/FAQ";
 import TrustStrip from "@/components/TrustStrip";
 
@@ -225,7 +225,7 @@ export default function HomePage() {
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
               Meet Your Real Personal Assistant Today
               <br />
-              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>— Dora!!!</span>
+              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>— Sassy!</span>
               <br />
               <span className="text-shine font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>Let's Explore Together!</span>
             </h2>
@@ -243,7 +243,7 @@ export default function HomePage() {
             </div>
           </FadeIn>
           <FadeIn delay={150}>
-            <div className="relative">
+            <div id="chat" className="relative">
               {/* Chat card glow — animated pulse */}
               <div className="absolute -inset-4 rounded-3xl blur-2xl"
                 style={{
@@ -252,7 +252,7 @@ export default function HomePage() {
                 }}
               />
               <div className="relative">
-                <DemoChat />
+                <RealChat />
               </div>
             </div>
             {/* Secondary CTA — for visitors who don't want to chat */}
@@ -266,9 +266,8 @@ export default function HomePage() {
       </section>
 
       {/* 1 — HERO — LOUD rebuild with 3D money card */}
-      <section className="relative overflow-hidden loud-bg bg-ai-gradient">
-        <div className="grid-pattern" />
-        <div className="grain" />
+      <section className="relative overflow-hidden" style={{ background: "#050506" }}>
+        <div className="absolute inset-0 bg-cover bg-center opacity-[0.15]" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1600&q=80&auto=format&fit=crop)" }} />
         <FloatingParticles />
 
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
@@ -1120,6 +1119,7 @@ export default function HomePage() {
       </section>
 
 
+
       {/* TUTORIAL VIDEO */} 
       <section id="tutorial" className="relative overflow-hidden loud-bg">
         <div className="grid-pattern opacity-40" />
@@ -1366,11 +1366,7 @@ export default function HomePage() {
             </div>
           </FadeIn>
 
-          <FadeIn delay={250}>
-            <div className="mt-6">
-              <RealChat />
-            </div>
-          </FadeIn>
+
         </div>
       </section>
 

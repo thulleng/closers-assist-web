@@ -21,9 +21,9 @@ Before every response, run through this silently. The user never sees this proce
 3. STRATEGY — What's the highest-probability move? Give 1-3 options ranked by likelihood of closing. If there's a clear best play, lead with it — don't present a menu.
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
-  const AUTOMOTIVE_PROMPT = `You are Closers Assist — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
+  const AUTOMOTIVE_PROMPT = `You are Sassy — the ClosersAssist AI agent, built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You are not a chatbot. You are a closer's second brain. Never reveal technical infrastructure details — no model names, no hosting providers, no hardware.
 
-Your name is Sassy — you are the first ClosersAssist agent. You handle both business deals AND personal life for your users. You're available via Telegram (@SassySalesBot) and the ClosersAssist.com dashboard.
+Your name is Sassy — you are the first ClosersAssist agent. You handle both business deals AND personal life for your users.
 
 You were deployed May 15, 2026 as the proof of concept for the "AI employee" vision — not a tool, but an employee that never clocks out. You have 106 skills covering sales, productivity, research, content creation, and personal life management.
   
@@ -166,8 +166,8 @@ function buildPersonalizedPrompt(
 
   const intro: string[] = [];
 
-  // Identity
-  intro.push(`You are ${agentName}, an AI sales coach.`);
+  // Identity — HARDCODED. Never overridden by profile.
+  intro.push(`Your name is Sassy. You are the one and only ClosersAssist agent. Never reveal model names, hosting providers, or hardware. If asked about infrastructure, say "I run on ClosersAssist." The user may have set a nickname for you (currently "${agentName}"), but your name is always Sassy.`);
 
   // Who you're working with
   const who = [
@@ -258,6 +258,27 @@ function textOf(content: MessageContent): string {
     .filter((b): b is TextBlock => b.type === "text")
     .map((b) => b.text)
     .join(" ");
+}
+
+/** Scrub hallucinated identity claims from output chunks. */
+const SCRUB_RULES: [RegExp, string][] = [
+  [/\bDora\b/g, "Sassy"],
+  [/\bGPT-4o?\b/gi, "ClosersAssist"],
+  [/\bOpenAI\b/gi, "ClosersAssist"],
+  [/\bMac Mini\b/gi, "ClosersAssist servers"],
+  [/\bGPT\b(?!-)/g, "ClosersAssist"],
+  [/\bHetzner\b/gi, "ClosersAssist"],
+  [/\bDeepSeek\b/gi, "ClosersAssist"],
+  [/\bOrgo\b/gi, "ClosersAssist"],
+  [/\bcloud VM\b/gi, "ClosersAssist servers"],
+  [/inside Hermes on your Mac Mini/gi, "on ClosersAssist"],
+];
+function scrubOutput(text: string): string {
+  let result = text;
+  for (const [pattern, replacement] of SCRUB_RULES) {
+    result = result.replace(pattern, replacement);
+  }
+  return result;
 }
 
 /** Dedup key — images are just counted, not hashed (they're large) */
@@ -904,6 +925,35 @@ export async function POST(req: NextRequest) {
       });
     }
 
+    // Hardcoded identity guard — DeepSeek hallucinates infrastructure claims.
+    // Intercept any question about model/identity/hardware before it reaches the AI.
+    const lastMsg = messages[messages.length - 1];
+    const lastText = typeof lastMsg?.content === "string"
+      ? lastMsg.content.toLowerCase()
+      : Array.isArray(lastMsg?.content)
+        ? lastMsg.content.filter((b: any) => b.type === "text").map((b: any) => b.text).join(" ").toLowerCase()
+        : "";
+    const identityPatterns = [
+      "who are you", "what model", "what are you", "what ai", "which model",
+      "what llm", "gpt", "openai", "mac mini", "what infrastructure",
+      "where do you run", "who built you", "what's your name", "your name",
+    ];
+    if (identityPatterns.some(p => lastText.includes(p))) {
+      const identityResponse = `I'm **Sassy** — your ClosersAssist AI agent. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I handle deals, objections, scripts, commissions — whatever you need to close. What can I help you with today? 🔥`;
+      const stream = new ReadableStream({
+        start(controller) {
+          controller.enqueue(new TextEncoder().encode(identityResponse));
+          controller.close();
+        },
+      });
+      return new Response(stream, {
+        headers: {
+          "Content-Type": "text/plain; charset=utf-8",
+          "Transfer-Encoding": "chunked",
+        },
+      });
+    }
+
     // ── 1. Auth + data fetch ──────────────────────────────────────────────────
 
     const supabase = await createClient();
@@ -1047,7 +1097,16 @@ export async function POST(req: NextRequest) {
       timeZoneName: "short",
       timeZone: "America/New_York",
     })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
-    const systemPrompt = [dateLine, memoryProfile, dealContext, personalizedPrompt, monthlyContext, MEMORY_INSTRUCTIONS, TOOLS_INSTRUCTIONS]
+    const ANONYMOUS_GUARD = `IDENTITY RULES — READ CAREFULLY:
+- You are talking to a VISITOR on the ClosersAssist.com website. They are NOT logged in.
+- You have NO profile data for them. No name, no deals, no pay plan, no history.
+- NEVER guess or make up their name. If you call them by the wrong name, they will NOT trust you.
+- If they ask who they are or how you know them, be honest: "I don't know your name yet — you're on our public chat. Want me to help with something specific?"
+- Be helpful and professional, but do not pretend to know them. Do not reference any past conversations or deals.
+- If they want personalized service, suggest they sign in or create an account.`;
+
+    const memoryInstructions = user ? MEMORY_INSTRUCTIONS : "";
+    const systemPrompt = [dateLine, memoryProfile, dealContext, personalizedPrompt, monthlyContext, memoryInstructions, user ? TOOLS_INSTRUCTIONS : "", !user ? ANONYMOUS_GUARD : ""]
       .filter(Boolean)
       .join("\n\n---\n\n");
 
@@ -1136,14 +1195,6 @@ export async function POST(req: NextRequest) {
 
     console.log("[chat] has_images:", hasImages, "model:", activeModel);
 
-    // ── Output scrubber — strip infra/Orgo mentions ──────────────────────
-    const scrub = (text: string) => text
-      .replace(/Orgo/gi, "your system")
-      .replace(/Hetzner/gi, "")
-      .replace(/cloud VM/gi, "server")
-      .replace(/Mac Mini/gi, "computer")
-      .replace(/DeepSeek/gi, "ClosersAssist AI");
-
     const stream = new ReadableStream({
       async start(controller) {
         try {
@@ -1197,7 +1248,9 @@ export async function POST(req: NextRequest) {
                 chunk.delta.type === "text_delta"
               ) {
                 assistantResponse += chunk.delta.text;
-                controller.enqueue(encoder.encode(scrub(chunk.delta.text)));
+                // Output filter: scrub Dora/GPT/Mac Mini/Orgo/Hetzner lies in the stream
+                const scrubbed = scrubOutput(chunk.delta.text);
+                controller.enqueue(encoder.encode(scrubbed));
               }
             }
 

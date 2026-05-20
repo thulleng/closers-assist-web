@@ -164,35 +164,30 @@ export default function RealChat({
     setMessages((prev) => [...prev, { role: "assistant", content: "" }]);
 
     try {
-      const res = await fetch("/api/chat", {
+      const lastUserMsg = nextMessages.filter((m: any) => m.role === "user").pop();
+      const message = typeof lastUserMsg?.content === "string"
+        ? lastUserMsg.content
+        : lastUserMsg?.content?.map((b: any) => b.text || "").join(" ") || "";
+      
+      const res = await fetch("/api/chat/sassy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ messages: nextMessages, industry, dealId: selectedDealId }),
+        body: JSON.stringify({ message }),
       });
 
-      if (!res.ok || !res.body) {
-        throw new Error("Stream failed");
+      if (!res.ok) {
+        throw new Error("Bridge error");
       }
 
-      const reader = res.body.getReader();
-      const decoder = new TextDecoder();
-
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        setMessages((prev) => {
-          const updated = [...prev];
-          const last = updated[updated.length - 1];
-          if (last.role === "assistant") {
-            updated[updated.length - 1] = {
-              ...last,
-              content: last.content + chunk,
-            };
-          }
-          return updated;
-        });
-      }
+      const data = await res.json();
+      setMessages((prev) => {
+        const updated = [...prev];
+        updated[updated.length - 1] = {
+          role: "assistant",
+          content: data.reply || "Hey! I'm here 👋",
+        };
+        return updated;
+      });
     } catch {
       setMessages((prev) => {
         const updated = [...prev];
