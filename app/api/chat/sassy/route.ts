@@ -128,7 +128,7 @@ async function askDeepSeek(system: string, message: string): Promise<string> {
   const res = await fetch(DEEPSEEK, {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
-    body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: message }], max_tokens: 600, temperature: 0.7 }),
+    body: JSON.stringify({ model: "deepseek-v4-pro", messages: [{ role: "system", content: system }, { role: "user", content: message }], max_tokens: 600, temperature: 0.7 }),
     signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`DeepSeek ${res.status}`);
