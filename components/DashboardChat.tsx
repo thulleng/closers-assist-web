@@ -39,25 +39,9 @@ export default function DashboardChat() {
 
       if (!res.ok) throw new Error("Failed");
 
-      // Streaming read
-      const reader = res.body?.getReader();
-      if (!reader) throw new Error("No stream");
-
-      setMessages((prev) => [...prev, { role: "sassy", text: "" }]);
-
-      const decoder = new TextDecoder();
-      let full = "";
-      while (true) {
-        const { done, value } = await reader.read();
-        if (done) break;
-        const chunk = decoder.decode(value, { stream: true });
-        full += chunk;
-        setMessages((prev) => {
-          const copy = [...prev];
-          copy[copy.length - 1] = { role: "sassy" as const, text: full };
-          return copy;
-        });
-      }
+      const data = await res.json();
+      const reply = data.reply || "I'm here! 👋";
+      setMessages((prev) => [...prev, { role: "sassy", text: reply }]);
     } catch {
       setMessages((prev) => [...prev, { role: "sassy", text: "Try me again in a moment! ⚡" }]);
     } finally {
