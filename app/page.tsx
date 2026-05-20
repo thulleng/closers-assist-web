@@ -224,7 +224,7 @@ export default function HomePage() {
           <FadeIn>
             <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-              Meet Clo —
+              Meet Dora —
               <br />
               <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>Your AI Closer</span>
               <br />
@@ -239,7 +239,7 @@ export default function HomePage() {
           <FadeIn delay={100}>
             <div className="mb-6 flex flex-col items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light">
-                👇 Talk to Clo — she's live
+                👇 Talk to Dora — she's live
               </span>
             </div>
           </FadeIn>

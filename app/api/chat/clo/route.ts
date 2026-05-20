@@ -8,8 +8,8 @@ const MAX_QUESTIONS = 20;
 const WINDOW_MS = 4 * 60 * 60 * 1000;
 
 /**
- * Clo — the marketing agent on closersassist.com
- * Proxies to the Clo Hermes bridge on Hetzner :8911.
+ * Dora — the marketing agent on closersassist.com
+ * Proxies to the Dora Hermes bridge on Hetzner :8911.
  * Per-visitor session memory via session token.
  */
 export async function POST(req: NextRequest) {
@@ -56,20 +56,20 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) {
       return NextResponse.json({
-        reply: "Clo's thinking — hit me again in a sec! ⚡",
+        reply: "Dora's thinking — hit me again in a sec! ⚡",
         remaining: MAX_QUESTIONS - (entry?.count || 1),
       });
     }
 
     const data = await res.json();
     return NextResponse.json({
-      reply: data.reply || "Hey! I'm Clo — your first impression at ClosersAssist. What do you sell? 👋",
+      reply: "Hey! I'm Dora — your first impression at ClosersAssist. What do you sell? 👋",
       remaining: MAX_QUESTIONS - (entry?.count || 1),
     });
   } catch (err: any) {
     console.error("Clo bridge error:", err.message);
     return NextResponse.json({
-      reply: "I hit a speed bump — try again! Clo's awake, just took a second too long. 🏎️",
+      reply: "I hit a speed bump — try again! Dora's awake, just took a second too long. 🏎️",
       remaining: MAX_QUESTIONS - (entry?.count || 1),
     });
   }
