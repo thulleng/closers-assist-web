@@ -144,6 +144,7 @@ export async function POST(req: NextRequest) {
 
         const decoder = new TextDecoder();
         let buffer = "";
+        let anyText = false;
 
         while (true) {
           const { done, value } = await reader.read();
@@ -164,6 +165,7 @@ export async function POST(req: NextRequest) {
               const parsed = JSON.parse(data);
               const delta = parsed.choices?.[0]?.delta?.content;
               if (delta) {
+                anyText = true;
                 controller.enqueue(
                   new TextEncoder().encode(`data: ${JSON.stringify({ text: delta })}\n\n`)
                 );
@@ -175,6 +177,13 @@ export async function POST(req: NextRequest) {
         }
 
         // Final event with remaining count
+        // Edge-case guard: if DeepSeek returned zero text (content filter block),
+        // inject a graceful fallback so the UI doesn't hang on "thinking..."
+        if (!anyText) {
+          controller.enqueue(
+            new TextEncoder().encode(`data: ${JSON.stringify({ text: "Hmm — that one tripped my filter. Try rewording, or ask me something else! 😏" })}\n\n`)
+          );
+        }
         controller.enqueue(
           new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
         );
