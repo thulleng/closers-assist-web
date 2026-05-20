@@ -52,22 +52,16 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Message required" }, { status: 400 });
     }
 
-    // Build system prompt — add anonymous guard for non-logged-in users
     let systemPrompt = SYSTEM_PROMPT;
-
     try {
       const { createClient } = await import("@/lib/supabase/server");
       const supabase = await createClient();
       const { data: { user } } = await supabase.auth.getUser();
-      
-      if (!user) {
-        systemPrompt += ANONYMOUS_GUARD;
-      }
+      if (!user) systemPrompt += ANONYMOUS_GUARD;
     } catch {
       systemPrompt += ANONYMOUS_GUARD;
     }
 
-    // Call DeepSeek directly — no bridge, no tools, no memory loading
     const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -78,6 +72,7 @@ export async function POST(req: NextRequest) {
         model: "deepseek-chat",
         max_tokens: 600,
         temperature: 0.7,
+        stream: true,
         messages: [
           { role: "system", content: systemPrompt },
           { role: "user", content: message },
@@ -87,18 +82,70 @@ export async function POST(req: NextRequest) {
 
     if (!res.ok) {
       const errText = await res.text();
-      console.error("DeepSeek API error:", res.status, errText.slice(0, 200));
-      throw new Error(`DeepSeek returned ${res.status}`);
+      console.error("DeepSeek stream error:", res.status, errText.slice(0, 200));
+      return NextResponse.json(
+        { reply: "I hit a snag — try me again! ⚡" },
+        { status: 200 }
+      );
     }
 
-    const data = await res.json();
-    const reply = data.choices?.[0]?.message?.content?.trim() || "";
+    // Stream SSE chunks back to the client
+    const encoder = new TextEncoder();
+    const stream = new ReadableStream({
+      async start(controller) {
+        const reader = res.body?.getReader();
+        if (!reader) {
+          controller.enqueue(encoder.encode("Hey! I'm here — what can I help with? 👋"));
+          controller.close();
+          return;
+        }
 
-    const scrubbed = scrub(reply || "Hey! I'm here — what can I help with? 👋");
+        const decoder = new TextDecoder();
+        let buffer = "";
 
-    return NextResponse.json({ reply: scrubbed });
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            buffer += decoder.decode(value, { stream: true });
+            const lines = buffer.split("\n");
+            buffer = lines.pop() || "";
+
+            for (const line of lines) {
+              if (!line.startsWith("data: ")) continue;
+              const data = line.slice(6).trim();
+              if (data === "[DONE]") continue;
+
+              try {
+                const parsed = JSON.parse(data);
+                const delta = parsed.choices?.[0]?.delta?.content;
+                if (delta) {
+                  controller.enqueue(encoder.encode(scrub(delta)));
+                }
+              } catch {
+                // Skip non-JSON lines
+              }
+            }
+          }
+        } catch (err: any) {
+          console.error("Stream read error:", err.message);
+          controller.enqueue(encoder.encode(" …"));
+        } finally {
+          controller.close();
+        }
+      },
+    });
+
+    return new Response(stream, {
+      headers: {
+        "Content-Type": "text/plain; charset=utf-8",
+        "Cache-Control": "no-cache",
+        "X-Content-Type-Options": "nosniff",
+      },
+    });
   } catch (err: any) {
-    console.error("Sassy direct error:", err.message);
+    console.error("Sassy stream error:", err.message);
     return NextResponse.json(
       { reply: "I hit a snag — try me again in a moment! ⚡" },
       { status: 200 }
