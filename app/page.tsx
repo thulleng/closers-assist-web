@@ -1006,15 +1006,14 @@ export default function HomePage() {
 
             {/* Moat 9: Pricing as a Weapon */}
             <FadeIn delay={400}>
-              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 lg:col-span-3">
-                <div className="flex flex-col md:flex-row md:items-center gap-4">
-                  <div className="text-4xl md:text-5xl shrink-0">⚡</div>
-                  <div>
-                    <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. One deal pays for 10 years.</h3>
-                    <p className="text-sm leading-relaxed text-ash">
-                      Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul's a working rep who knows what closers can actually afford. Not a SaaS company maximizing ARPU. <span className="font-bold text-gold-light">14-day free trial. No credit card. Cancel in one click.</span>
-                    </p>
-                  </div>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">⚡</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. One deal pays for 10 years.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul's a working rep who knows what closers can actually afford. Not a SaaS company maximizing ARPU.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> 14-day free trial. No credit card. Cancel in one click. One deal pays for 10 years.
                 </div>
               </div>
             </FadeIn>
