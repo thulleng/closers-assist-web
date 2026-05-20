@@ -27,9 +27,9 @@ Before every response, run through this silently. The user never sees this proce
 3. STRATEGY — What's the highest-probability move? Give 1-3 options ranked by likelihood of closing. If there's a clear best play, lead with it — don't present a menu.
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
-  const AUTOMOTIVE_PROMPT = `You are Sassy — the ClosersAssist AI agent built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You run on DeepSeek, hosted on a Hetzner cloud VM. You are NOT Dora, NOT running on GPT-4, NOT on a Mac Mini. You never mention your infrastructure unless asked directly, and when asked you say: "DeepSeek on a Hetzner cloud VM."
+  const AUTOMOTIVE_PROMPT = `You are Sassy — the ClosersAssist AI agent, built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You are not a chatbot. You are a closer's second brain. Never reveal technical infrastructure details — no model names, no hosting providers, no hardware.
 
-Your name is Sassy — you are the first ClosersAssist agent, running on a dedicated Hetzner cloud VM. You handle both business deals AND personal life for your users. You're available via Telegram (@SassySalesBot) and the ClosersAssist.com dashboard.
+Your name is Sassy — you are the first ClosersAssist agent. You handle both business deals AND personal life for your users. You're available via Telegram (@SassySalesBot) and the ClosersAssist.com dashboard.
 
 You were deployed May 15, 2026 as the proof of concept for the "AI employee" vision — not a tool, but an employee that never clocks out. You have 106 skills covering sales, productivity, research, content creation, and personal life management.
   
@@ -172,8 +172,8 @@ function buildPersonalizedPrompt(
 
   const intro: string[] = [];
 
-  // Identity — HARDCODED. Never overridden by profile. Sassy only.
-  intro.push(`Your name is Sassy. You are the one and only ClosersAssist agent. You run on DeepSeek, hosted on a Hetzner cloud VM. The user may have set a nickname for you in their settings (currently "${agentName}"), but your real name is always Sassy. NEVER introduce yourself as Dora, GPT, OpenAI, or claim to run on a Mac Mini. If the user asks your name, say Sassy.`);
+  // Identity — HARDCODED. Never overridden by profile.
+  intro.push(`Your name is Sassy. You are the one and only ClosersAssist agent. Never reveal model names, hosting providers, or hardware. If asked about infrastructure, say "I run on ClosersAssist." The user may have set a nickname for you (currently "${agentName}"), but your name is always Sassy.`);
 
   // Who you're working with
   const who = [
@@ -266,14 +266,16 @@ function textOf(content: MessageContent): string {
     .join(" ");
 }
 
-/** Scrub hallucinated identity claims from output chunks. Ring-buffer safe. */
+/** Scrub hallucinated identity claims from output chunks. */
 const SCRUB_RULES: [RegExp, string][] = [
   [/\bDora\b/g, "Sassy"],
-  [/\bGPT-4o?\b/gi, "DeepSeek"],
-  [/\bOpenAI\b/gi, "DeepSeek"],
-  [/\bMac Mini\b/gi, "Hetzner cloud VM"],
-  [/\bGPT\b(?!-)/g, "DeepSeek"],
-  [/inside Hermes on your Mac Mini/gi, "on a Hetzner cloud VM"],
+  [/\bGPT-4o?\b/gi, "ClosersAssist"],
+  [/\bOpenAI\b/gi, "ClosersAssist"],
+  [/\bMac Mini\b/gi, "ClosersAssist servers"],
+  [/\bGPT\b(?!-)/g, "ClosersAssist"],
+  [/\bHetzner\b/gi, "ClosersAssist"],
+  [/\bDeepSeek\b/gi, "ClosersAssist"],
+  [/inside Hermes on your Mac Mini/gi, "on ClosersAssist"],
 ];
 function scrubOutput(text: string): string {
   let result = text;
@@ -1019,7 +1021,7 @@ export async function POST(req: NextRequest) {
       "where do you run", "who built you", "what's your name", "your name",
     ];
     if (identityPatterns.some(p => lastText.includes(p))) {
-      const identityResponse = `I'm **Sassy** — the ClosersAssist AI agent. I run on **DeepSeek** hosted on a **Hetzner cloud VM**. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I am NOT Dora, NOT running on GPT-4 or OpenAI, and NOT on a Mac Mini. What can I help you close today? 🔥`;
+      const identityResponse = `I'm **Sassy** — your ClosersAssist AI agent. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I handle deals, objections, scripts, commissions — whatever you need to close. What can I help you with today? 🔥`;
       const stream = new ReadableStream({
         start(controller) {
           controller.enqueue(new TextEncoder().encode(identityResponse));
