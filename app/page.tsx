@@ -1244,12 +1244,6 @@ export default function HomePage() {
           {/* ── Real reviews from the floor (DB-driven, pending → approved flow) ── */}
           <ReviewsSection />
 
-          <FadeIn delay={250}>
-            <div className="mt-6">
-              <RealChat />
-            </div>
-          </FadeIn>
-
         </div>
       </section>
 
