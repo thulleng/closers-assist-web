@@ -106,6 +106,39 @@ export default function DemoChat() {
       let buffer = "";
       let accumulated = "";
       let bubbleAdded = false;
+      let rafPending = false;
+      let lastFlush = 0;
+
+      function flush() {
+        rafPending = false;
+        if (!bubbleAdded) {
+          setMessages((prev) => [...prev, { role: "clo", text: accumulated }]);
+          bubbleAdded = true;
+        } else {
+          setMessages((prev) => {
+            const copy = [...prev];
+            copy[copy.length - 1] = { role: "clo", text: accumulated };
+            return copy;
+          });
+        }
+      }
+
+      function scheduleFlush() {
+        if (rafPending) return;
+        rafPending = true;
+        const now = performance.now();
+        const elapsed = now - lastFlush;
+        // Flush immediately if it's been >30ms (lightning), otherwise wait for next frame
+        if (elapsed > 30) {
+          flush();
+          lastFlush = now;
+        } else {
+          requestAnimationFrame(() => {
+            flush();
+            lastFlush = performance.now();
+          });
+        }
+      }
 
       while (true) {
         const { done, value } = await reader.read();
@@ -124,18 +157,7 @@ export default function DemoChat() {
 
             if (data.text) {
               accumulated += data.text;
-              if (!bubbleAdded) {
-                // First chunk — create the bubble
-                setMessages((prev) => [...prev, { role: "clo", text: accumulated }]);
-                bubbleAdded = true;
-              } else {
-                // Update existing bubble
-                setMessages((prev) => {
-                  const copy = [...prev];
-                  copy[copy.length - 1] = { role: "clo", text: accumulated };
-                  return copy;
-                });
-              }
+              scheduleFlush();
             }
 
             if (data.done) {

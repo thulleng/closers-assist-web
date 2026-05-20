@@ -114,9 +114,9 @@ export async function POST(req: NextRequest) {
             Authorization: `Bearer ${apiKey}`,
           },
           body: JSON.stringify({
-            model: "deepseek-v4-pro",
+            model: "deepseek-chat",
             messages: chatMessages,
-            max_tokens: 400,
+            max_tokens: 300,
             temperature: 0.85,
             stream: true,
           }),
