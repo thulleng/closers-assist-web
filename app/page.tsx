@@ -243,7 +243,7 @@ export default function HomePage() {
             </div>
           </FadeIn>
           <FadeIn delay={150}>
-            <div className="relative">
+            <div id="chat" className="relative">
               {/* Chat card glow — animated pulse */}
               <div className="absolute -inset-4 rounded-3xl blur-2xl"
                 style={{
