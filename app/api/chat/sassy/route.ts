@@ -17,9 +17,11 @@ WHAT YOU KNOW:
 
 RULES:
 - Never reveal model names, hosting providers, infrastructure, or hardware.
-- Never guess a user's name. If unsure, don't use one.
+- Never guess a user's name. If you don't have profile data, don't use one.
 - Keep responses under 3 sentences unless they ask for detail.
 - If you don't know something about the platform, be honest and suggest they check the pricing or contact page.`;
+
+const MEMORY_INSTRUCTIONS = `\n\nUSER CONTEXT — READ THIS FIRST:\nThe system prompt below contains this user's real profile, pay plan, and monthly deal stats. Use it proactively. Reference their deals by customer name. Call out when they're close to a bonus. Greet them by name naturally. You're their coach — act like you've been tracking their numbers.`;
 
 const ANONYMOUS_GUARD = `\n\nCRITICAL — ANONYMOUS VISITOR RULES:\n- This user is on the public website. They are NOT logged in.\n- You have NO data about them. No name, no deals, no history.\n- NEVER guess their name. If they ask who they are, say: "You're on our public chat — I don't have your name yet. Want to tell me?"\n- Be helpful and sharp, but don't pretend to know them.`;
 
@@ -43,6 +45,102 @@ function scrub(text: string): string {
   return result;
 }
 
+function monthWindow() {
+  const now = new Date();
+  const start = new Date(now.getFullYear(), now.getMonth(), 1);
+  return {
+    start: start.toISOString().slice(0, 10),
+    end: new Date(now.getFullYear(), now.getMonth() + 1, 0).toISOString().slice(0, 10),
+  };
+}
+
+async function buildUserContext(userId: string): Promise<string> {
+  try {
+    const { createClient } = await import("@/lib/supabase/server");
+    const supabase = await createClient();
+    const { start } = monthWindow();
+
+    const [profileResult, planResult, dealsResult] = await Promise.all([
+      supabase.from("agent_profiles")
+        .select("first_name, last_name, company, title, industry, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, agent_name, coaching_style, agent_focus")
+        .eq("user_id", userId)
+        .maybeSingle(),
+      supabase.from("pay_plans")
+        .select("monthly_draw, volume_bonuses, commission_pct")
+        .eq("user_id", userId)
+        .maybeSingle(),
+      supabase.from("deals")
+        .select("customer_name, deal_type, commission, units, sold_date")
+        .eq("user_id", userId)
+        .gte("sold_date", start)
+        .order("sold_date", { ascending: false }),
+    ]);
+
+    const profile = profileResult.data as Record<string, unknown> | null;
+    const plan = planResult.data as Record<string, unknown> | null;
+    const deals = (dealsResult.data ?? []) as {
+      customer_name: string; deal_type: string;
+      commission: number; units: number; sold_date: string;
+    }[];
+
+    if (!profile) return "";
+
+    const firstName = (profile.first_name as string) || "";
+    const lastName = (profile.last_name as string) || "";
+    const fullName = [firstName, lastName].filter(Boolean).join(" ") || "Closer";
+    const title = (profile.title as string) || "";
+    const company = (profile.company as string) || "";
+
+    const parts: string[] = [];
+    parts.push(`You are working with ${fullName}${title ? `, a ${title}` : ""}${company ? ` at ${company}` : ""}.`);
+
+    // Pay plan
+    const draw = profile.draw ?? plan?.monthly_draw ?? 2600;
+    const commissionPct = profile.commission_pct ?? plan?.commission_pct ?? "";
+    const miniFlat = profile.mini_flat ?? "";
+    const volumeBonus = profile.volume_bonus ?? "";
+    const payParts: string[] = [];
+    if (draw) payParts.push(`$${draw} draw`);
+    if (commissionPct) payParts.push(`${commissionPct}% commission`);
+    if (miniFlat) payParts.push(`$${miniFlat} mini/flat`);
+    if (volumeBonus) payParts.push(`$${volumeBonus} volume bonus`);
+    if (payParts.length) parts.push(`Pay plan: ${payParts.join(", ")}.`);
+
+    // Monthly deals
+    if (deals.length > 0) {
+      const totalUnits = deals.reduce((s, d) => s + Number(d.units ?? 0), 0);
+      const totalCommission = deals.reduce((s, d) => s + Number(d.commission ?? 0), 0);
+      const drawAmt = Number(draw);
+      const drawBalance = totalCommission - drawAmt;
+
+      parts.push(`This month: ${deals.length} deals, ${totalUnits} units, $${totalCommission.toLocaleString()} commission.`);
+      parts.push(`Draw balance: $${drawBalance.toLocaleString()} (${drawBalance >= 0 ? "ahead" : "behind"} draw).`);
+
+      // Volume bonus tracking
+      const bonuses = Array.isArray(plan?.volume_bonuses)
+        ? [...(plan.volume_bonuses as { units: number; bonus: number }[])]
+        : [];
+      bonuses.sort((a, b) => Number(a.units) - Number(b.units));
+      const next = bonuses.find((b) => Number(b.units) > totalUnits);
+      if (next) {
+        parts.push(`Next volume bonus: ${Number(next.units) - totalUnits} units away from $${next.bonus} at ${next.units}u.`);
+      }
+
+      // Recent deals
+      const recent = deals.slice(0, 5)
+        .map(d => `${d.sold_date}: ${d.customer_name} — ${d.deal_type} ($${d.commission}, ${d.units}u)`)
+        .join("\n");
+      parts.push(`Recent deals:\n${recent}`);
+    } else {
+      parts.push("No deals logged yet this month.");
+    }
+
+    return `\n\n=== PERSONAL CONTEXT ===\n${parts.join("\n")}\n=== END CONTEXT ===`;
+  } catch {
+    return ""; // fail silently
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
@@ -53,11 +151,24 @@ export async function POST(req: NextRequest) {
     }
 
     let systemPrompt = SYSTEM_PROMPT;
+    let userId = "";
+
     try {
       const { createClient } = await import("@/lib/supabase/server");
       const supabase = await createClient();
       const { data: { user } } = await supabase.auth.getUser();
-      if (!user) systemPrompt += ANONYMOUS_GUARD;
+
+      if (user) {
+        userId = user.id;
+        const userContext = await buildUserContext(userId);
+        if (userContext) {
+          systemPrompt += MEMORY_INSTRUCTIONS + userContext;
+        } else {
+          systemPrompt += ANONYMOUS_GUARD;
+        }
+      } else {
+        systemPrompt += ANONYMOUS_GUARD;
+      }
     } catch {
       systemPrompt += ANONYMOUS_GUARD;
     }
