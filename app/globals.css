@@ -70,8 +70,13 @@ summary {
     box-shadow:
       0 0 80px rgba(16, 185, 129, 0.7),
       0 0 160px rgba(16, 185, 129, 0.35),
-      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+      inset 0 1px 0 rgba(255, 255, 255, 0.3);
   }
+}
+
+@keyframes glow-breathe {
+  0%, 100% { opacity: 0.25; }
+  50% { opacity: 0.45; }
 }
 .glow-pulse { animation: glow-pulse 2.8s ease-in-out infinite; }
 
@@ -513,4 +518,28 @@ summary {
   10%  { opacity: 1; }
   80%  { opacity: 0.6; }
   100% { transform: translateY(-100vh) translateX(20px); opacity: 0; }
+}
+
+/* ── Hero Background Image — responsive sizing ── */
+.hero-bg-dora {
+  background-image: url(/dora-bg.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center 35%;
+  image-rendering: auto;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  animation: hero-pan 30s ease-in-out infinite alternate;
+}
+
+@keyframes hero-pan {
+  0% { transform: translate(0, 0); }
+  100% { transform: translate(-2%, -1%); }
+}
+
+@media (max-width: 767px) {
+  .hero-bg-dora {
+    background-size: 180%;
+    background-position: 75% 35%;
+  }
 }

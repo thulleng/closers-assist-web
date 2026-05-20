@@ -61,6 +61,10 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0px)" },
           "50%": { transform: "translateY(-8px)" },
         },
+        "pulse-slow": {
+          "0%, 100%": { opacity: "0.3", transform: "scale(1)" },
+          "50%": { opacity: "0.5", transform: "scale(1.05)" },
+        },
         "grid-scroll": {
           "0%": { transform: "translate(0, 0)" },
           "100%": { transform: "translate(48px, 48px)" },
@@ -76,13 +80,32 @@ const config: Config = {
           "60%": { transform: "translate(-1px, -1px)" },
           "80%": { transform: "translate(1px, 1px)" },
         },
+        "breathe": {
+          "0%, 100%": { transform: "scale(1)", opacity: "0.14" },
+          "50%": { transform: "scale(1.03)", opacity: "0.17" },
+        },
+        "subtle-drift": {
+          "0%": { transform: "translate(0, 0)" },
+          "25%": { transform: "translate(10px, -5px)" },
+          "50%": { transform: "translate(5px, 10px)" },
+          "75%": { transform: "translate(-5px, 5px)" },
+          "100%": { transform: "translate(0, 0)" },
+        },
+        "kenburns": {
+          "0%": { transform: "scale(1) translate(0, 0)" },
+          "100%": { transform: "scale(1.08) translate(-1%, -0.5%)" },
+        },
       },
       animation: {
         "pulse-neon": "pulse-neon 2s ease-in-out infinite",
         float: "float 3.5s ease-in-out infinite",
+        "pulse-slow": "pulse-slow 4s ease-in-out infinite",
         "grid-scroll": "grid-scroll 20s linear infinite",
         "scan-line": "scan-line 3s linear infinite",
         glitch: "glitch 0.3s ease-in-out infinite",
+        "breathe": "breathe 6s ease-in-out infinite",
+        "subtle-drift": "subtle-drift 20s linear infinite",
+        "kenburns": "kenburns 30s ease-in-out infinite alternate",
       },
       backgroundImage: {
         "ai-gradient":

@@ -114,6 +114,157 @@ const layers = [
 export default function HomePage() {
   return (
     <>
+      {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
+      <section className="relative overflow-hidden loud-bg min-h-screen md:min-h-[900px] flex items-center">
+        {/* ===== DRAMATIC BACKGROUND — Dora's World ===== */}
+
+        {/* Layer 1: Subtle vignette — keeps edges dark for readability */}
+        <div className="absolute inset-0 pointer-events-none z-[1]"
+          style={{
+            background: "radial-gradient(ellipse at 50% 45%, transparent 40%, rgba(5,5,6,0.3) 70%, rgba(5,5,6,0.6) 100%)"
+          }}
+        />
+
+        {/* Layer 1.5: Cyberpunk AI image — 100% REAL, Ken Burns motion */}
+        <div className="absolute inset-0 z-[1] pointer-events-none hero-bg-dora" />
+
+        {/* Layer 1.6: Scan lines — subtle cyberpunk feel */}
+        <div className="absolute inset-0 z-[1] pointer-events-none opacity-[0.03]"
+          style={{
+            background: "repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(16,185,129,0.3) 2px, rgba(16,185,129,0.3) 3px)",
+            animation: "scan-line 8s linear infinite",
+          }}
+        />
+
+        {/* Layer 2: Massive glow orbs — the atmosphere */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[2]">
+          {/* Central pink/green mega-glow */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[900px] h-[900px] rounded-full animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle at 50% 45%, rgba(236,72,153,0.22) 0%, rgba(16,185,129,0.14) 30%, rgba(251,191,36,0.08) 50%, transparent 70%)",
+              filter: "blur(70px)",
+              animationDuration: "5s"
+            }}
+          />
+          {/* Secondary warm glow — upper right */}
+          <div className="absolute top-[15%] right-[15%] w-[550px] h-[550px] rounded-full opacity-30 animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle, rgba(251,191,36,0.3) 0%, rgba(236,72,153,0.12) 40%, transparent 65%)",
+              filter: "blur(60px)",
+              animationDuration: "6s"
+            }}
+          />
+          {/* Cool accent — lower left */}
+          <div className="absolute bottom-[20%] left-[10%] w-[400px] h-[400px] rounded-full opacity-25 animate-pulse-slow"
+            style={{
+              background: "radial-gradient(circle, rgba(16,185,129,0.35) 0%, rgba(16,185,129,0.1) 50%, transparent 70%)",
+              filter: "blur(50px)",
+              animationDuration: "4.5s"
+            }}
+          />
+        </div>
+
+        {/* Layer 3: Hexagonal tech grid — subtle, rotating slowly */}
+        <div className="absolute inset-0 pointer-events-none z-[3] opacity-[0.04]"
+          style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 5 L55 20 L55 45 L30 60 L5 45 L5 20 Z' fill='none' stroke='%2310B981' stroke-width='0.4'/%3E%3C/svg%3E")`,
+            backgroundSize: "80px 80px",
+            animation: "subtle-drift 20s linear infinite"
+          }}
+        />
+
+        {/* Layer 4: Radiating light rays from center */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 pointer-events-none z-[3] w-[900px] h-[900px] opacity-[0.06]"
+          style={{
+            background: "conic-gradient(from 0deg, #EC4899 0deg, transparent 15deg, #10B981 40deg, transparent 55deg, #FBBF24 80deg, transparent 95deg, #EC4899 120deg, transparent 135deg, #10B981 160deg, transparent 175deg, #FBBF24 200deg, transparent 215deg, #EC4899 240deg, transparent 255deg, #10B981 280deg, transparent 295deg, #FBBF24 320deg, transparent 335deg, #EC4899 360deg)",
+            filter: "blur(2px)",
+            animation: "spin 60s linear infinite"
+          }}
+        />
+
+        {/* Layer 5: Removed — replaced by real hero image (dora-bg.jpg) */}
+
+        {/* Layer 6: Floating particles — more, bigger, dramatic */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[5]">
+          {[...Array(35)].map((_, i) => {
+            const size = 2 + Math.random() * 6;
+            const isBig = i < 6; // first 6 are larger "hero" particles
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full animate-float"
+                style={{
+                  width: `${isBig ? 4 + Math.random() * 6 : size}px`,
+                  height: `${isBig ? 4 + Math.random() * 6 : size}px`,
+                  left: `${Math.random() * 100}%`,
+                  top: `${Math.random() * 100}%`,
+                  background: i % 3 === 0 ? '#EC4899' : i % 3 === 1 ? '#10B981' : '#FBBF24',
+                  opacity: isBig ? 0.25 + Math.random() * 0.35 : 0.2 + Math.random() * 0.35,
+                  animationDuration: `${4 + Math.random() * 8}s`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  boxShadow: isBig ? `0 0 ${6 + Math.random() * 8}px currentColor` : 'none',
+                }}
+              />
+            );
+          })}
+        </div>
+
+        {/* Content */}
+        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 py-12 sm:py-20 md:py-28 text-center w-full">
+          {/* Frosted glass backdrop — makes content pop against 100% image */}
+          <div className="absolute inset-4 rounded-3xl pointer-events-none"
+            style={{
+              background: "rgba(5,5,6,0.35)",
+              backdropFilter: "blur(3px)",
+              WebkitBackdropFilter: "blur(3px)",
+              border: "1px solid rgba(255,255,255,0.04)",
+            }}
+          />
+          <FadeIn>
+            <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
+              style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
+              Meet Your Real Personal Assistant Today
+              <br />
+              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>— Sassy!</span>
+              <br />
+              <span className="text-shine font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>Let's Explore Together!</span>
+            </h2>
+            <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
+              style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
+              Ask her anything — pricing, features, whether she can really handle your life AND your deals. <span className="text-pink-200 font-black">She's got opinions.</span> 😏
+            </p>
+          </FadeIn>
+          {/* Directional cue */}
+          <FadeIn delay={100}>
+            <div className="mb-6 flex flex-col items-center gap-2">
+              <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light">
+                👇 Start here — ask me anything
+              </span>
+            </div>
+          </FadeIn>
+          <FadeIn delay={150}>
+            <div className="relative">
+              {/* Chat card glow — animated pulse */}
+              <div className="absolute -inset-4 rounded-3xl blur-2xl"
+                style={{
+                  background: "radial-gradient(circle at 50% 0%, rgba(236,72,153,0.35) 0%, rgba(16,185,129,0.2) 40%, transparent 70%)",
+                  animation: "glow-breathe 3s ease-in-out infinite",
+                }}
+              />
+              <div className="relative">
+                <RealChat />
+              </div>
+            </div>
+            {/* Secondary CTA — for visitors who don't want to chat */}
+            <div className="mt-8 text-center">
+              <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
+                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans &amp; pricing →</span>
+              </a>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* 1 — HERO — LOUD rebuild with 3D money card */}
       <section className="relative overflow-hidden" style={{ background: "#050506" }}>
         <div className="absolute inset-0 bg-cover bg-center opacity-[0.15]" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1600&q=80&auto=format&fit=crop)" }} />
@@ -718,26 +869,160 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* THE MOAT — Why they can't leave */}
+      {/* THE UNCOPYABLE EDGE — 7 moats competitors can't touch */}
       <section className="relative overflow-hidden loud-bg border-t border-white/5">
-        <div className="relative mx-auto max-w-4xl px-6 py-16 md:py-24 text-center">
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
           <FadeIn>
-            <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
-              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                The moat
-              </span>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+                <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                  The uncopyable edge
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-4">
+                They can copy our features.
+                <br />
+                <span className="text-shine font-black">They can't copy this.</span>
+              </h2>
+              <p className="text-lg text-ash max-w-2xl mx-auto">
+                Every AI company claims to be different. Here's what makes it true — backed by results, not marketing.
+              </p>
             </div>
-            <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl mb-6">
-              No other AI company does both.
-              <br />
-              <span className="text-shine font-black">We own this category.</span>
-            </h2>
-            <p className="text-lg text-ash max-w-2xl mx-auto mb-8">
-              Most AI tools handle your work OR your life. We handle both — because your closer doesn&rsquo;t clock out when the deal closes, and neither should your agent. Deals, customers, dentist appointments, soccer schedules — one brain, one employee.
-            </p>
-            <p className="text-lg font-bold text-gold-light">
-              That&rsquo;s not a feature. That&rsquo;s the company.
+          </FadeIn>
+
+          <div className="grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+            {/* Moat 1: Dual-Domain */}
+            <FadeIn delay={0}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🧠</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Deals + Life. One brain.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  No other AI agent handles your professional AND personal life. Your closer doesn't clock out when the deal closes — neither does your agent.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> "I forgot my wife's birthday. My agent reminded me at 9 AM with a gift idea based on something she mentioned 3 months ago." — Beta user
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 2: Built on the Floor */}
+            <FadeIn delay={50}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🏗️</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Built on a Toyota lot. Not a boardroom.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Thul Leng closes cars 6 days a week at Sun Toyota. He built ClosersAssist between customers — not with VC money. Every play in our agent comes from a real floor.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> The RAV4 XLE demo on our homepage? Actual deal math from Thul's floor. Not a mockup. Not a simulation.
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 3: Your Pay Plan */}
+            <FadeIn delay={100}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">💰</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Knows YOUR pay plan. Tracks real bonus tiers.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Not generic commission tracking. Your agent learns YOUR specific pay plan — stair-step bonuses, spiffs, backend gross targets — and pushes you toward the next tier.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> "You're at 11 units. One more = $1,500 bonus. 3 days left. The Ramirez deal is warm — here's a follow-up text."
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 4: Memory That Outlasts Your CRM */}
+            <FadeIn delay={150}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🔄</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">6-month memory. Zero data entry.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  CRM data goes stale. Your agent remembers every customer, every objection, every close — automatically. Six months later, a customer walks back in and your agent knows exactly what worked last time.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> "Stephen Cunningham is back. Last visit: March. Objection was payment. You closed him with the 36-month reframe. He bought a RAV4 XLE at $499/mo."
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 5: The 2AM Test */}
+            <FadeIn delay={200}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🕐</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Passes the 2 AM test. Every time.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Message your agent at 2 AM. Sunday morning. Christmas Eve. It responds — no ticket, no queue, no business hours. Your closer doesn't clock out. Neither does your agent.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> A lead submitted at 11:47 PM. Agent followed up at 11:48 PM. Deal closed at 12:15 AM. The rep was asleep. The agent wasn't.
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 6: Floor-Tested Plays */}
+            <FadeIn delay={250}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🎯</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Real plays. Real floor. Real closes.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Every objection handler comes from actual deals — not theory. "This play worked on a RAV4 XLE last Tuesday." We know because Thul was there.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> Customer: "$499/mo is too high." Agent gives 3 plays. Reframe to $115/wk wins. Close rate on price objections: 64%.
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 7: Voice Clone — Sounds like YOU */}
+            <FadeIn delay={300}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🗣️</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Sounds like YOU. Not a bot.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  After 50 deals, your agent doesn't just know your scripts — it learns your voice. Your phrases. Your cadence. Your closing style. Competitors give you a generic bot. We clone you.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> Thul's agent writes follow-ups that his own manager couldn't tell apart from Thul. "Hey John — that RAV4 you looked at? Payment came in lower than I thought. Give me 2 minutes Monday."
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 8: Your Data Stays Yours */}
+            <FadeIn delay={350}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
+                <div className="mb-3 text-3xl">🔒</div>
+                <h3 className="mb-2 font-display text-lg font-black text-white">Your data is YOURS. Forever.</h3>
+                <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
+                  Your scripts. Your pay plan. Your customer conversations. Export anytime. Delete anytime. We never train on your data — unlike every free AI that vacuums up your business and sells it back to you.
+                </p>
+                <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
+                  <span className="font-bold text-gold-light">Real result:</span> Chatbots trained on customer data get their own customers' objections quoted back to competitors. Your closer's playbook stays YOUR competitive advantage. Always.
+                </div>
+              </div>
+            </FadeIn>
+
+            {/* Moat 9: Pricing as a Weapon */}
+            <FadeIn delay={400}>
+              <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 lg:col-span-3">
+                <div className="flex flex-col md:flex-row md:items-center gap-4">
+                  <div className="text-4xl md:text-5xl shrink-0">⚡</div>
+                  <div>
+                    <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. One deal pays for 10 years.</h3>
+                    <p className="text-sm leading-relaxed text-ash">
+                      Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul's a working rep who knows what closers can actually afford. Not a SaaS company maximizing ARPU. <span className="font-bold text-gold-light">14-day free trial. No credit card. Cancel in one click.</span>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+          </div>
+
+          <FadeIn delay={400}>
+            <p className="mt-10 text-center text-lg font-bold text-gold-light">
+              That's not a feature list. That's the company.
             </p>
           </FadeIn>
         </div>
