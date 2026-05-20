@@ -211,7 +211,7 @@ export default function HomePage() {
         </div>
 
         {/* Content */}
-        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 py-12 sm:py-20 md:py-28 text-center w-full">
+        <div className="relative z-10 mx-auto max-w-3xl px-4 sm:px-6 py-8 sm:py-12 md:py-16 text-center w-full">
           {/* Frosted glass backdrop — makes content pop against 100% image */}
           <div className="absolute inset-4 rounded-3xl pointer-events-none"
             style={{
@@ -228,7 +228,7 @@ export default function HomePage() {
               <br />
               <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>Your AI Closer</span>
               <br />
-              <span className="text-shine font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(16,185,129,0.8), 0 0 100px rgba(16,185,129,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>She closes. You collect.</span>
+              <span className="text-orange-400 font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>She closes. You collect.</span>
             </h2>
             <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
