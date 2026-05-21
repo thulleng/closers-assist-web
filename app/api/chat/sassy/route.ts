@@ -16,32 +16,19 @@ function monthWindow() {
 }
 
 async function buildContext(supabase: any, userId: string): Promise<string> {
-  const { start, end, label } = monthWindow();
+  const { start, label } = monthWindow();
   const [profile, dealsRes] = await Promise.all([
-    supabase.from("agent_profiles").select("first_name, last_name, company, draw, industry, agent_name, commission_pct").eq("user_id", userId).maybeSingle(),
-    supabase.from("deals").select("customer_name, deal_type, commission, units, sold_date, id").eq("user_id", userId).gte("sold_date", start).lt("sold_date", end).order("sold_date", { ascending: false }),
+    supabase.from("agent_profiles").select("first_name, last_name, company, draw, industry").eq("user_id", userId).maybeSingle(),
+    supabase.from("deals").select("units, commission").eq("user_id", userId).gte("sold_date", start).order("sold_date", { ascending: false }),
   ]);
 
   const p = profile.data; const deals = dealsRes.data ?? [];
   const name = p ? [p.first_name, p.last_name].filter(Boolean).join(" ") : "User";
   const draw = p?.draw || 2600;
+  const totalUnits = (deals as any[]).reduce((s: number, d: any) => s + (d.units || 0), 0);
+  const totalComm = (deals as any[]).reduce((s: number, d: any) => s + (d.commission || 0), 0);
 
-  const lines: string[] = [];
-  lines.push(`User: ${name}${p?.company ? ` at ${p.company}` : ""}. $${draw} draw. Industry: ${p?.industry || "auto"}.`);
-  lines.push(`Month: ${label}`);
-
-  if (deals.length) {
-    const u = deals.reduce((s: number, d: any) => s + (d.units || 0), 0);
-    const c = deals.reduce((s: number, d: any) => s + (d.commission || 0), 0);
-    const bal = c - draw;
-    lines.push(`${deals.length} deals | ${u}u | $${c.toLocaleString()} commission | ${bal >= 0 ? "+" : ""}$${bal.toLocaleString()} vs draw`);
-    const recent = deals.slice(0, 10).map((d: any) => `${d.sold_date}: ${d.customer_name} — ${d.deal_type} $${d.commission} (${d.units}u)`).join("\n");
-    lines.push(`\n${recent}`);
-  } else {
-    lines.push("No deals this month.");
-  }
-
-  return `\n[DASHBOARD DATA]\n${lines.join("\n")}\n[END DATA]`;
+  return `\n[REFERENCE ONLY — do not mention unless asked]\nUser: ${name}${p?.company ? ` @ ${p.company}` : ""}. ${p?.industry || "auto"} industry. $${draw} draw.\nMonth: ${label}. ${deals.length} deals, ${totalUnits}u, $${totalComm.toLocaleString()} commission. Use Supabase for details.\n[/REFERENCE]`;
 }
 
 // ─── Bridge proxy (bridge handles auto-provisioning internally) ──────────────
