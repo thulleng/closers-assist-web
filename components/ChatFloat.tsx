@@ -84,7 +84,7 @@ export default function ChatFloat() {
           ref={drawerRef}
           className={`
             fixed z-50 flex flex-col transition-all duration-300 ease-out
-            bottom-[56px] left-0 right-0 h-[85vh]
+            bottom-[56px] left-0 right-0 h-[calc(100vh-56px)]
             md:bottom-6 md:right-6 md:left-auto md:w-[420px] md:h-[600px] md:rounded-2xl
             ${open ? "translate-y-0 opacity-100 pointer-events-auto" : "translate-y-4 opacity-0 pointer-events-none"}
           `}
