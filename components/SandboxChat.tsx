@@ -17,6 +17,12 @@ const SUGGESTIONS = [
   "I need a payment quote on a $45K truck at 6.9% for 72 months",
 ];
 
+const CAPABILITIES = [
+  "📷 Send images — I'll read documents, screenshots, pay plans",
+  "🎥 Send videos — I'll watch and summarize customer walkarounds",
+  "🎤 Send voice notes — I'll transcribe and reply",
+];
+
 export default function SandboxChat() {
   const pathname = usePathname();
   const [messages, setMessages] = useState<Message[]>([]);
@@ -105,10 +111,18 @@ export default function SandboxChat() {
         {/* Messages */}
         <div className="overflow-y-auto px-4 py-3 space-y-3" style={{ maxHeight: "340px" }}>
           {messages.length === 0 && !loading && (
-            <div className="text-center py-6">
-              <p className="text-xs text-muted mb-4">
-                Talk to the real agent. Try deals, objections, math — no signup needed.
+            <div className="text-center py-4">
+              <p className="text-xs text-muted mb-3">
+                Talk to the real agent. Send images, videos, or voice notes — I'll
+                handle them.
               </p>
+              <div className="flex flex-col gap-1.5 items-center mb-4">
+                {CAPABILITIES.map((c, i) => (
+                  <span key={i} className="text-[11px] text-muted/70">
+                    {c}
+                  </span>
+                ))}
+              </div>
               <div className="flex flex-wrap gap-1.5 justify-center">
                 {SUGGESTIONS.map((s) => (
                   <button
