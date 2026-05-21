@@ -16,6 +16,21 @@ function fmtNum(n: number, decimals = 1): string {
   return n.toLocaleString(undefined, { minimumFractionDigits: 0, maximumFractionDigits: decimals });
 }
 
+/** Shorten last name to initial. "Kevin Michael" → "Kevin M." — "Adams, J." → "Adams J." — leaves business names as-is. */
+function shortenCustomer(name: string): string {
+  // "Adams, J." → "Adams J." 
+  if (name.includes(",")) {
+    return name.replace(",", "").trim();
+  }
+  // "Kevin Michael" → "Kevin M."
+  const parts = name.trim().split(/\s+/);
+  if (parts.length >= 2 && !name.toLowerCase().includes("inc") && !name.toLowerCase().includes("co.") && !name.toLowerCase().includes("llc")) {
+    const last = parts[parts.length - 1];
+    return parts.slice(0, -1).join(" ") + " " + last.charAt(0).toUpperCase() + ".";
+  }
+  return name; // business name or single word
+}
+
 export default function IncomeTracker({ data }: { data: DashboardData }) {
   // ── Extract values ──────────────────────────────────────────────────────────
   const unitsMetric = data.metrics[0];       // UNITS SOLD
@@ -366,7 +381,7 @@ export default function IncomeTracker({ data }: { data: DashboardData }) {
                           {d.type.label}
                         </span>
                         <div className="min-w-0">
-                          <div className="text-[13px] text-bone font-medium truncate">{d.customer}</div>
+                          <div className="text-[13px] text-bone font-medium truncate">{shortenCustomer(d.customer)}</div>
                           <div className="text-[10px] text-muted">{unitsText}</div>
                         </div>
                       </div>
