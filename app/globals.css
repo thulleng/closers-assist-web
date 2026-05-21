@@ -525,7 +525,7 @@ summary {
   background-image: url(/dora-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center 35%;
+  background-position: center 45%;
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -539,7 +539,7 @@ summary {
 
 @media (max-width: 767px) {
   .hero-bg-dora {
-    background-size: 180%;
-    background-position: 75% 35%;
+    background-size: 250%;
+    background-position: 50% 45%;
   }
 }
