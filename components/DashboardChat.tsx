@@ -1,20 +1,27 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { Send, Sparkles, ChevronDown } from "lucide-react";
+import { Send, Sparkles, ChevronUp, ChevronDown, Plus, Calculator, Trophy } from "lucide-react";
 
 interface Message {
   role: "user" | "sassy";
   text: string;
 }
 
+const QUICK_ACTIONS = [
+  { icon: "📊", label: "How am I doing this month?" },
+  { icon: "➕", label: "Log a deal" },
+  { icon: "🧮", label: "Commission on $3,200 front?" },
+  { icon: "🏆", label: "How close to next bonus?" },
+];
+
 export default function DashboardChat() {
   const [messages, setMessages] = useState<Message[]>([
-    { role: "sassy", text: "Hey! 👋 I'm your agent. Ask me anything — add a deal, check your progress to the next bonus, calculate a commission split. I'm the same agent from Telegram." },
+    { role: "sassy", text: "Hey! 👋 I'm your agent. Ask me anything." },
   ]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [collapsed, setCollapsed] = useState(false);
+  const [collapsed, setCollapsed] = useState(true); // START COLLAPSED
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -22,11 +29,11 @@ export default function DashboardChat() {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages]);
 
-  const send = async () => {
-    const text = input.trim();
-    if (!text || loading) return;
+  const send = async (text?: string) => {
+    const msg = (text || input).trim();
+    if (!msg || loading) return;
 
-    setMessages((prev) => [...prev, { role: "user", text }]);
+    setMessages((prev) => [...prev, { role: "user", text: msg }]);
     setInput("");
     setLoading(true);
 
@@ -34,101 +41,121 @@ export default function DashboardChat() {
       const res = await fetch("/api/chat/sassy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: text }),
+        body: JSON.stringify({ message: msg }),
       });
-
-      if (!res.ok) throw new Error("Failed");
-
       const reply = await res.text();
-      setMessages((prev) => [...prev, { role: "sassy" as const, text: reply || "I'm here! 👋" }]);
+      setMessages((prev) => [...prev, { role: "sassy", text: reply }]);
     } catch {
-      setMessages((prev) => [...prev, { role: "sassy", text: "Try me again in a moment! ⚡" }]);
+      setMessages((prev) => [...prev, { role: "sassy", text: "Try me again! ⚡" }]);
     } finally {
       setLoading(false);
     }
   };
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" && !e.shiftKey) {
-      e.preventDefault();
-      send();
-    }
-  };
+  if (collapsed) {
+    return (
+      <div className="fixed bottom-20 right-4 z-40 md:bottom-6">
+        <button
+          onClick={() => setCollapsed(false)}
+          className="flex items-center gap-2 rounded-full bg-deal px-4 py-3 text-sm font-bold text-black shadow-lg shadow-deal/30 transition-all hover:scale-105 active:scale-95"
+        >
+          <Sparkles className="h-4 w-4" />
+          Chat with Sassy
+          <ChevronUp className="h-4 w-4" />
+        </button>
+      </div>
+    );
+  }
 
   return (
-    <div className="fixed bottom-0 right-0 z-40 w-full lg:w-[420px] xl:w-[480px]">
-      {/* Collapse toggle */}
-      <button
-        onClick={() => setCollapsed(!collapsed)}
-        className="flex w-full items-center justify-between rounded-t-2xl border border-b-0 border-white/10 bg-black/90 px-5 py-3 backdrop-blur-xl"
-      >
-        <div className="flex items-center gap-2">
-          <Sparkles className="h-4 w-4 text-neon-green" strokeWidth={2} />
-          <span className="text-sm font-semibold text-white">Your Agent</span>
-          {loading && (
-            <span className="flex h-1.5 w-1.5">
-              <span className="absolute inline-flex h-1.5 w-1.5 animate-ping rounded-full bg-neon-green opacity-75" />
-              <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-neon-green" />
-            </span>
-          )}
-        </div>
-        <ChevronDown
-          className={`h-4 w-4 text-ash transition-transform ${collapsed ? "" : "rotate-180"}`}
-          strokeWidth={2}
-        />
-      </button>
+    <div className="fixed inset-x-0 bottom-0 z-40 mx-auto max-w-2xl px-4 pb-20 md:pb-6">
+      {/* Backdrop */}
+      <div className="absolute inset-0 -top-10 bg-black/40 backdrop-blur-sm rounded-t-3xl" />
 
-      {!collapsed && (
-        <div className="border border-white/10 bg-black/95 backdrop-blur-xl">
-          {/* Messages */}
-          <div className="h-[320px] overflow-y-auto px-4 py-3 space-y-3">
-            {messages.map((m, i) => (
-              <div
-                key={i}
-                className={`flex ${m.role === "user" ? "justify-end" : "justify-start"}`}
-              >
-                <div
-                  className={`max-w-[85%] rounded-2xl px-4 py-2.5 text-sm leading-relaxed ${
-                    m.role === "user"
-                      ? "bg-neon-green/15 text-bone border border-neon-green/20"
-                      : "bg-white/5 text-ash border border-white/5"
-                  }`}
-                >
-                  {m.text || (loading && i === messages.length - 1 ? "..." : m.text)}
-                </div>
-              </div>
-            ))}
-            <div ref={bottomRef} />
-          </div>
-
-          {/* Input */}
-          <div className="border-t border-white/5 px-4 py-3">
-            <div className="flex items-center gap-2">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={handleKeyDown}
-                placeholder="Add a deal, check bonus, math..."
-                className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-2.5 text-sm text-white placeholder:text-white/20 focus:border-neon-green/50 focus:outline-none focus:ring-1 focus:ring-neon-green/30"
-                disabled={loading}
-                autoFocus
-              />
-              <button
-                onClick={send}
-                disabled={loading || !input.trim()}
-                className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-neon-green text-black transition-all hover:bg-neon-green/80 disabled:opacity-30 disabled:cursor-not-allowed"
-              >
-                <Send className="h-4 w-4" strokeWidth={2.5} />
-              </button>
+      <div className="relative flex flex-col" style={{ maxHeight: "60vh" }}>
+        {/* Header */}
+        <div className="flex items-center justify-between px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-deal to-emerald-400">
+              <Sparkles className="h-3.5 w-3.5 text-black" />
             </div>
-            <p className="mt-2 text-center text-[10px] text-white/15">
-              Same agent as Telegram. Ask me to add deals, check your bonus ladder, run commission math.
-            </p>
+            <span className="text-sm font-bold text-white">Your Agent</span>
           </div>
+          <button
+            onClick={() => setCollapsed(true)}
+            className="rounded-full p-2 text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <ChevronDown className="h-5 w-5" />
+          </button>
         </div>
-      )}
+
+        {/* Messages */}
+        <div className="overflow-y-auto px-4 space-y-2" style={{ maxHeight: "calc(60vh - 130px)" }}>
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                className={`rounded-2xl px-4 py-2.5 text-sm leading-relaxed max-w-[85%] ${
+                  msg.role === "user"
+                    ? "bg-deal/20 border border-deal/30 text-white rounded-br-md"
+                    : "bg-white/5 border border-white/10 text-gray-200 rounded-tl-md"
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
+          ))}
+          {loading && (
+            <div className="flex justify-start">
+              <div className="rounded-2xl rounded-tl-md bg-white/5 border border-white/10 px-4 py-2.5">
+                <span className="text-sm text-gray-400">Sassy is thinking...</span>
+              </div>
+            </div>
+          )}
+          <div ref={bottomRef} />
+        </div>
+
+        {/* Quick actions — only when no user messages yet */}
+        {messages.length <= 1 && (
+          <div className="px-4 py-2 flex flex-wrap gap-1.5">
+            {QUICK_ACTIONS.map((a) => (
+              <button
+                key={a.label}
+                onClick={() => send(a.label)}
+                disabled={loading}
+                className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-300 hover:border-deal/40 hover:text-white transition-colors disabled:opacity-40"
+              >
+                <span>{a.icon}</span>
+                <span className="hidden sm:inline">{a.label.length > 25 ? a.label.slice(0, 25) + "..." : a.label}</span>
+                <span className="sm:hidden">{a.label.split(" ").slice(0, 2).join(" ")}</span>
+              </button>
+            ))}
+          </div>
+        )}
+
+        {/* Input */}
+        <form
+          onSubmit={(e) => { e.preventDefault(); send(); }}
+          className="flex items-center gap-2 px-4 py-3"
+        >
+          <input
+            ref={inputRef}
+            type="text"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Add a deal, check bonus, math..."
+            maxLength={400}
+            disabled={loading}
+            className="flex-1 rounded-xl bg-white/5 border border-white/10 px-4 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-deal/50 transition-colors disabled:opacity-40"
+          />
+          <button
+            type="submit"
+            disabled={loading || !input.trim()}
+            className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-deal text-black font-bold transition-all hover:bg-deal-light disabled:opacity-40 disabled:cursor-not-allowed"
+          >
+            <Send className="h-4 w-4" />
+          </button>
+        </form>
+      </div>
     </div>
   );
 }
