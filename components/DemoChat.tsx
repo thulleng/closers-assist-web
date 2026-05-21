@@ -92,7 +92,7 @@ export default function DemoChat() {
       const res = await fetch(chatEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: question, messages: history }),
+        body: JSON.stringify({ message: question, messages: history, session: visitorRef.current }),
       });
 
       if (!res.ok) {
