@@ -16,14 +16,23 @@ const QUICK_ACTIONS = [
 ];
 
 export default function DashboardChat() {
-  const [messages, setMessages] = useState<Message[]>([
-    { role: "sassy", text: "Hey! 👋 I'm your agent. Ask me anything." },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
-  const [collapsed, setCollapsed] = useState(true); // START COLLAPSED
+  const [collapsed, setCollapsed] = useState(true);
+  const [visitorId, setVisitorId] = useState("");
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Persistent visitor ID for session continuity
+  useEffect(() => {
+    let vid = localStorage.getItem("sassy_dashboard_visitor");
+    if (!vid) {
+      vid = "sassy-dash-" + crypto.randomUUID().slice(0, 8);
+      localStorage.setItem("sassy_dashboard_visitor", vid);
+    }
+    setVisitorId(vid);
+  }, []);
 
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -41,10 +50,11 @@ export default function DashboardChat() {
       const res = await fetch("/api/chat/sassy", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ message: msg }),
+        body: JSON.stringify({ message: msg, session: visitorId }),
       });
       const data = await res.json();
-      setMessages((prev) => [...prev, { role: "sassy", text: data.reply || data.text || JSON.stringify(data) }]);
+      const reply = data.reply || data.error || data.text || "Try me again! ⚡";
+      setMessages((prev) => [...prev, { role: "sassy", text: reply }]);
     } catch {
       setMessages((prev) => [...prev, { role: "sassy", text: "Try me again! ⚡" }]);
     } finally {
@@ -91,6 +101,15 @@ export default function DashboardChat() {
 
         {/* Messages */}
         <div className="overflow-y-auto px-4 space-y-2" style={{ maxHeight: "calc(60vh - 130px)" }}>
+          {messages.length === 0 && !loading && (
+            <div className="flex justify-start">
+              <div className="rounded-2xl rounded-tl-md bg-white/5 border border-white/10 px-4 py-2.5">
+                <span className="text-sm text-gray-200">
+                  Sassy. Deals, life, both. What do you need handled?
+                </span>
+              </div>
+            </div>
+          )}
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div
@@ -115,7 +134,7 @@ export default function DashboardChat() {
         </div>
 
         {/* Quick actions — only when no user messages yet */}
-        {messages.length <= 1 && (
+        {messages.length === 0 && (
           <div className="px-4 py-2 flex flex-wrap gap-1.5">
             {QUICK_ACTIONS.map((a) => (
               <button
