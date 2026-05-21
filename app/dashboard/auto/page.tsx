@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Car, Download, Settings2 } from "lucide-react";
 import IncomeTracker from "@/components/IncomeTracker";
-import DashboardChat from "@/components/DashboardChat";
 import { autoDashboardSample } from "@/lib/dashboard-data-auto";
 import { buildAutoDashboard } from "@/lib/dashboard-data-auto-live";
 import { createClient } from "@/lib/supabase/server";
@@ -118,8 +117,7 @@ export default async function AutoDashboardPage() {
         </section>
       )}
 
-      {/* Sassy — personal AI agent */}
-      <DashboardChat />
+      {/* Sassy lives on Telegram — chat with her there for deals and life */}
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { Send, Sparkles, X, Zap } from "lucide-react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 interface Message {
   role: "user" | "sassy";
@@ -17,6 +18,7 @@ const SUGGESTIONS = [
 ];
 
 export default function SandboxChat() {
+  const pathname = usePathname();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
@@ -25,6 +27,9 @@ export default function SandboxChat() {
   const [open, setOpen] = useState(false);
   const bottomRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Don't show on dashboard — logged-in users use Telegram
+  if (pathname?.startsWith("/dashboard")) return null;
 
   useEffect(() => {
     if (open) setTimeout(() => inputRef.current?.focus(), 300);
@@ -59,7 +64,6 @@ export default function SandboxChat() {
     }
   };
 
-  // Closed state — floating button
   if (!open) {
     return (
       <div className="fixed bottom-24 right-4 z-40 md:bottom-8">
@@ -76,7 +80,6 @@ export default function SandboxChat() {
 
   return (
     <div className="fixed inset-x-0 bottom-0 z-50 mx-auto max-w-md px-3 pb-4 md:pb-6 md:right-4 md:left-auto md:bottom-8 md:w-96 md:px-0">
-      {/* Panel */}
       <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-pit/95 backdrop-blur-xl shadow-2xl shadow-black/60">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
@@ -145,7 +148,6 @@ export default function SandboxChat() {
             </div>
           )}
 
-          {/* Trial ended banner */}
           {done && messages.length > 0 && (
             <div className="rounded-xl border border-gold-light/30 bg-gold-light/10 p-4 text-center">
               <p className="text-sm font-bold text-gold-light mb-1">Liked it?</p>
@@ -165,7 +167,6 @@ export default function SandboxChat() {
           <div ref={bottomRef} />
         </div>
 
-        {/* Input */}
         {!done && (
           <form
             onSubmit={(e) => { e.preventDefault(); send(); }}
