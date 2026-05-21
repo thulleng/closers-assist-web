@@ -83,6 +83,35 @@ async function askDeepSeek(system: string, message: string): Promise<string> {
 const SYSTEM = `You are Sassy — a sharp, fast AI closer built into ClosersAssist. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details. Use the user's name.`;
 
 // ─── POST handler ───────────────────────────────────────────────────────────
+async function ensureProvisioned(supabase: any, userId: string, profile: any): Promise<boolean> {
+  // Check if already provisioned
+  if (profile?.provisioning_status === "provisioned") return true;
+
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/api/admin/provision`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
+      },
+      body: JSON.stringify({ user_id: userId }),
+    });
+    if (res.ok) {
+      // Mark as provisioned in profile
+      await supabase.from("agent_profiles").upsert(
+        { user_id: userId, provisioning_status: "provisioned", updated_at: new Date().toISOString() },
+        { onConflict: "user_id" }
+      );
+      return true;
+    }
+    console.error("Provision failed:", await res.text());
+    return false;
+  } catch (e: any) {
+    console.error("Provision error:", e.message);
+    return false;
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const { message } = await req.json();
@@ -97,6 +126,17 @@ export async function POST(req: NextRequest) {
       if (user) {
         userId = user.id;
         const ctx = await buildContext(supabase, user.id);
+
+        // ── Auto-provision on first use ──
+        const { data: profile } = await supabase
+          .from("agent_profiles")
+          .select("provisioning_status")
+          .eq("user_id", user.id)
+          .maybeSingle();
+        if (!profile || profile.provisioning_status !== "provisioned") {
+          await ensureProvisioned(supabase, user.id, profile);
+        }
+
         enriched = `${ctx}\n\nUser says: ${message.trim()}`;
       }
     } catch { /* unauthenticated — no context */ }
