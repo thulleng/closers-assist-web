@@ -43,8 +43,8 @@ export default function DashboardChat() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: msg }),
       });
-      const reply = await res.text();
-      setMessages((prev) => [...prev, { role: "sassy", text: reply }]);
+      const data = await res.json();
+      setMessages((prev) => [...prev, { role: "sassy", text: data.reply || data.text || JSON.stringify(data) }]);
     } catch {
       setMessages((prev) => [...prev, { role: "sassy", text: "Try me again! ⚡" }]);
     } finally {
