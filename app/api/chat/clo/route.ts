@@ -39,9 +39,158 @@ BOUNDARIES:
 - If you don't know: "Thul's still building that — want me to flag him?"
 - Never be rude or dismissive. You're the best first impression this company will ever make.`;
 
+// ─── 4-tier model chain ─────────────────────────────────────────────────────
+async function tryTierStream(chatMessages: Array<{ role: string; content: string }>, tierIdx: number):
+  Promise<{ stream: ReadableStream | null; reply: string | null }> {
+
+  const tiers = [
+    { url: "https://api.deepseek.com/v1/chat/completions",    model: "deepseek-chat",   key: process.env.DEEPSEEK_API_KEY,  timeout: 20000 },
+    { url: "https://api.deepseek.com/v1/chat/completions",    model: "deepseek-v4-pro",  key: process.env.DEEPSEEK_API_KEY,  timeout: 40000 },
+    { url: "https://api.anthropic.com/v1/messages",           model: "claude-opus-4-7",  key: process.env.ANTHROPIC_API_KEY, timeout: 50000 },
+    { url: "https://api.openai.com/v1/chat/completions",      model: "gpt-5.5",          key: process.env.OPENAI_API_KEY,    timeout: 60000 },
+  ];
+
+  const tier = tiers[tierIdx];
+  if (!tier || !tier.key) return { stream: null, reply: null };
+
+  const { url, model, key, timeout } = tier;
+
+  // Anthropic — non-streaming fallback only (different SSE format)
+  if (url.includes("anthropic")) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 400,
+          system: chatMessages[0]?.content || DORA_SYSTEM,
+          messages: chatMessages.slice(1),
+        }),
+        signal: AbortSignal.timeout(timeout),
+      });
+      if (!res.ok) return { stream: null, reply: null };
+      const data = await res.json();
+      return { stream: null, reply: data.content?.[0]?.text || null };
+    } catch { return { stream: null, reply: null }; }
+  }
+
+  // DeepSeek / OpenAI streaming
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: chatMessages,
+        max_tokens: 300,
+        temperature: 0.85,
+        stream: true,
+      }),
+      signal: AbortSignal.timeout(timeout),
+    });
+    if (!res.ok) return { stream: null, reply: null };
+
+    const reader = res.body?.getReader();
+    if (!reader) return { stream: null, reply: null };
+
+    // Build a new ReadableStream that pipes the SSE events
+    const newStream = new ReadableStream({
+      async start(controller) {
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let anyText = false;
+
+        while (true) {
+          const { done, value } = await reader!.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || !trimmed.startsWith("data: ")) continue;
+            const data = trimmed.slice(6);
+            if (data === "[DONE]") continue;
+
+            try {
+              const parsed = JSON.parse(data);
+              const delta = parsed.choices?.[0]?.delta?.content;
+              if (delta) {
+                anyText = true;
+                controller.enqueue(
+                  new TextEncoder().encode(`data: ${JSON.stringify({ text: delta })}\n\n`)
+                );
+              }
+            } catch { /* skip unparseable chunks */ }
+          }
+        }
+
+        if (!anyText) {
+          controller.enqueue(
+            new TextEncoder().encode(`data: ${JSON.stringify({ text: "Hmm — that one tripped my filter. Try rewording, or ask me something else! 😏" })}\n\n`)
+          );
+        }
+        controller.close();
+      },
+    });
+
+    return { stream: newStream, reply: null };
+  } catch { return { stream: null, reply: null }; }
+}
+
+async function streamOrFallback(chatMessages: Array<{ role: string; content: string }>, controller: ReadableStreamDefaultController, remaining: number): Promise<void> {
+  for (let i = 0; i < 4; i++) {
+    const result = await tryTierStream(chatMessages, i);
+
+    if (result.stream) {
+      // Stream succeeded — pipe the rest
+      const reader = result.stream.getReader();
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        controller.enqueue(value);
+      }
+      controller.enqueue(
+        new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
+      );
+      controller.close();
+      return;
+    }
+
+    if (result.reply) {
+      // Non-streaming reply from Anthropic — send as one chunk
+      controller.enqueue(
+        new TextEncoder().encode(`data: ${JSON.stringify({ text: result.reply })}\n\n`)
+      );
+      controller.enqueue(
+        new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
+      );
+      controller.close();
+      return;
+    }
+  }
+
+  // All 4 tiers failed
+  controller.enqueue(
+    new TextEncoder().encode(`data: ${JSON.stringify({ error: "I hit a speed bump — try again! 🏎️", done: true })}\n\n`)
+  );
+  controller.close();
+}
+
 /**
  * Dora — the marketing agent on closersassist.com
- * Streams DeepSeek response via SSE for typewriter effect.
+ * Streams via 4-tier model chain for typewriter effect.
  */
 export async function POST(req: NextRequest) {
   const ip = req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip") || "unknown";
@@ -61,14 +210,6 @@ export async function POST(req: NextRequest) {
     entry.count++;
   }
   const remaining = MAX_QUESTIONS - (entry?.count || 1);
-
-  const apiKey = process.env.DEEPSEEK_API_KEY;
-  if (!apiKey) {
-    return new Response(
-      `data: ${JSON.stringify({ error: "Dora's thinking — hit me again in a sec! ⚡", done: true })}\n\n`,
-      { headers: { "Content-Type": "text/event-stream" } }
-    );
-  }
 
   let body: { message?: string; messages?: Array<{ role: string; text?: string; content?: string }> };
   try {
@@ -106,95 +247,7 @@ export async function POST(req: NextRequest) {
 
   const stream = new ReadableStream({
     async start(controller) {
-      try {
-        const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${apiKey}`,
-          },
-          body: JSON.stringify({
-            model: "deepseek-chat",
-            messages: chatMessages,
-            max_tokens: 300,
-            temperature: 0.85,
-            stream: true,
-          }),
-          signal: AbortSignal.timeout(15000),
-        });
-
-        if (!res.ok) {
-          const errText = await res.text().catch(() => "");
-          console.error(`DeepSeek API error ${res.status}: ${errText.slice(0, 200)}`);
-          controller.enqueue(
-            new TextEncoder().encode(`data: ${JSON.stringify({ error: "Dora's thinking — hit me again in a sec! ⚡", done: true })}\n\n`)
-          );
-          controller.close();
-          return;
-        }
-
-        const reader = res.body?.getReader();
-        if (!reader) {
-          controller.enqueue(
-            new TextEncoder().encode(`data: ${JSON.stringify({ error: "No response stream", done: true })}\n\n`)
-          );
-          controller.close();
-          return;
-        }
-
-        const decoder = new TextDecoder();
-        let buffer = "";
-        let anyText = false;
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-
-          buffer += decoder.decode(value, { stream: true });
-          const lines = buffer.split("\n");
-          buffer = lines.pop() || "";
-
-          for (const line of lines) {
-            const trimmed = line.trim();
-            if (!trimmed || !trimmed.startsWith("data: ")) continue;
-
-            const data = trimmed.slice(6);
-            if (data === "[DONE]") continue;
-
-            try {
-              const parsed = JSON.parse(data);
-              const delta = parsed.choices?.[0]?.delta?.content;
-              if (delta) {
-                anyText = true;
-                controller.enqueue(
-                  new TextEncoder().encode(`data: ${JSON.stringify({ text: delta })}\n\n`)
-                );
-              }
-            } catch {
-              // skip unparseable chunks
-            }
-          }
-        }
-
-        // Final event with remaining count
-        // Edge-case guard: if DeepSeek returned zero text (content filter block),
-        // inject a graceful fallback so the UI doesn't hang on "thinking..."
-        if (!anyText) {
-          controller.enqueue(
-            new TextEncoder().encode(`data: ${JSON.stringify({ text: "Hmm — that one tripped my filter. Try rewording, or ask me something else! 😏" })}\n\n`)
-          );
-        }
-        controller.enqueue(
-          new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
-        );
-        controller.close();
-      } catch (err: any) {
-        console.error("Dora stream error:", err.message);
-        controller.enqueue(
-          new TextEncoder().encode(`data: ${JSON.stringify({ error: "I hit a speed bump — try again! 🏎️", done: true })}\n\n`)
-        );
-        controller.close();
-      }
+      await streamOrFallback(chatMessages, controller, remaining);
     },
   });
 

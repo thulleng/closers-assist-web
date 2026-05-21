@@ -2,7 +2,81 @@ import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
 const BRIDGE = "http://178.105.161.224:8910";
-const DEEPSEEK = "https://api.deepseek.com/v1/chat/completions";
+
+// ─── 4-tier model chain ─────────────────────────────────────────────────────
+interface Tier {
+  url: string;
+  model: string;
+  key: string | undefined;
+  timeout: number;
+}
+
+function pickTier(n: number): Tier | null {
+  const tiers: Tier[] = [
+    { url: "https://api.deepseek.com/v1/chat/completions",    model: "deepseek-chat",   key: process.env.DEEPSEEK_API_KEY,  timeout: 20000 },
+    { url: "https://api.deepseek.com/v1/chat/completions",    model: "deepseek-v4-pro",  key: process.env.DEEPSEEK_API_KEY,  timeout: 40000 },
+    { url: "https://api.anthropic.com/v1/messages",           model: "claude-opus-4-7",  key: process.env.ANTHROPIC_API_KEY, timeout: 50000 },
+    { url: "https://api.openai.com/v1/chat/completions",      model: "gpt-5.5",          key: process.env.OPENAI_API_KEY,    timeout: 60000 },
+  ];
+  return tiers[n] ?? null;
+}
+
+async function tryTier(system: string, message: string, tierIdx: number): Promise<string | null> {
+  const tier = pickTier(tierIdx);
+  if (!tier || !tier.key) return null;
+
+  const { url, model, key, timeout } = tier;
+
+  // Anthropic uses a different API format
+  if (url.includes("anthropic")) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 600,
+          system,
+          messages: [{ role: "user", content: message }],
+        }),
+        signal: AbortSignal.timeout(timeout),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.content?.[0]?.text || null;
+    } catch { return null; }
+  }
+
+  // OpenAI / DeepSeek compatible format
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
+      body: JSON.stringify({
+        model,
+        messages: [{ role: "system", content: system }, { role: "user", content: message }],
+        max_tokens: 600,
+        temperature: 0.7,
+      }),
+      signal: AbortSignal.timeout(timeout),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || null;
+  } catch { return null; }
+}
+
+async function askChain(system: string, message: string): Promise<string> {
+  for (let i = 0; i < 4; i++) {
+    const reply = await tryTier(system, message, i);
+    if (reply) return reply;
+  }
+  return "I'm catching my breath \u2014 try me again! \u26a1";
+}
 
 // ─── Context builder ─────────────────────────────────────────────────────────
 function monthWindow() {
@@ -31,7 +105,7 @@ async function buildContext(supabase: any, userId: string): Promise<string> {
   return `\n[REFERENCE ONLY — do not mention unless asked]\nUser: ${name}${p?.company ? ` @ ${p.company}` : ""}. ${p?.industry || "auto"} industry. $${draw} draw.\nMonth: ${label}. ${deals.length} deals, ${totalUnits}u, $${totalComm.toLocaleString()} commission. Use Supabase for details.\n[/REFERENCE]`;
 }
 
-// ─── Bridge proxy (bridge handles auto-provisioning internally) ──────────────
+// ─── Bridge proxy ────────────────────────────────────────────────────────────
 async function askBridge(message: string, userId?: string, profile?: any): Promise<string | null> {
   try {
     const body: any = { message };
@@ -43,7 +117,7 @@ async function askBridge(message: string, userId?: string, profile?: any): Promi
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(65000),
+      signal: AbortSignal.timeout(120000),
     });
     if (!res.ok) return null;
     const data = await res.json();
@@ -53,22 +127,7 @@ async function askBridge(message: string, userId?: string, profile?: any): Promi
   } catch { return null; }
 }
 
-// ─── DeepSeek fallback ──────────────────────────────────────────────────────
-async function askDeepSeek(system: string, message: string): Promise<string> {
-  const key = process.env.DEEPSEEK_API_KEY;
-  if (!key) return "I'm catching my breath — try me again! ⚡";
-  const res = await fetch(DEEPSEEK, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
-    body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: message }], max_tokens: 600, temperature: 0.7 }),
-    signal: AbortSignal.timeout(15000),
-  });
-  if (!res.ok) throw new Error(`DeepSeek ${res.status}`);
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || "Hey! 👋";
-}
-
-const SYSTEM = `You are Sassy — a sharp, fast AI closer built into ClosersAssist. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details.`;
+const SYSTEM = `You are Sassy \u2014 a sharp, fast AI closer built into ClosersAssist. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details.`;
 
 // ─── POST handler ───────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {
@@ -96,9 +155,9 @@ export async function POST(req: NextRequest) {
       }
     } catch { /* unauthenticated */ }
 
-    // Bridge handles auto-provisioning internally — no separate API call needed
+    // Bridge first (has tools + memory), then chain through all 4 tiers
     const reply = await askBridge(enriched, userId || undefined, profile || undefined)
-      || await askDeepSeek(SYSTEM, enriched);
+      || await askChain(SYSTEM, enriched);
 
     return new Response(reply, {
       status: 200,
@@ -106,7 +165,7 @@ export async function POST(req: NextRequest) {
     });
   } catch (err: any) {
     console.error("Sassy error:", err.message);
-    return new Response("Try me again in a moment! ⚡", {
+    return new Response("Try me again in a moment! \u26a1", {
       status: 200,
       headers: { "Content-Type": "text/plain; charset=utf-8" },
     });
