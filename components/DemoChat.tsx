@@ -25,17 +25,26 @@ export default function DemoChat() {
   const inputRef = useRef<HTMLInputElement>(null);
   const visitorRef = useRef<string>("");
 
+  // Thul mode — ?agent=sassy routes to Sassy's brain
+  const isThulMode =
+    typeof window !== "undefined" &&
+    new URLSearchParams(window.location.search).get("agent") === "sassy";
+  const chatEndpoint = isThulMode ? "/api/chat/sassy" : "/api/chat/clo";
+  const agentName = isThulMode ? "Sassy" : "Clo";
+  const visitorKey = isThulMode ? "sassy_visitor" : "dora_visitor";
+
   // Persistent visitor ID + load memory from Supabase
   useEffect(() => {
-    let vid = localStorage.getItem("dora_visitor");
+    let vid = localStorage.getItem(visitorKey);
     if (!vid) {
-      vid = "dora-" + crypto.randomUUID().slice(0, 8);
-      localStorage.setItem("dora_visitor", vid);
+      vid = (isThulMode ? "sassy-" : "dora-") + crypto.randomUUID().slice(0, 8);
+      localStorage.setItem(visitorKey, vid);
     }
     visitorRef.current = vid;
 
-    // Load past conversations
-    fetch(`/api/dora/memory?visitor_id=${vid}`)
+    // Load past conversations (skip for Sassy mode — bridge handles persistence)
+    if (!isThulMode) {
+      fetch(`/api/dora/memory?visitor_id=${vid}`)
       .then((r) => r.json())
       .then((data) => {
         if (data.messages?.length > 0) {
@@ -45,6 +54,9 @@ export default function DemoChat() {
         setMemoryLoaded(true);
       })
       .catch(() => setMemoryLoaded(true));
+    } else {
+      setMemoryLoaded(true);
+    }
   }, []);
 
   // Save messages to Supabase after each exchange
@@ -77,7 +89,7 @@ export default function DemoChat() {
     setLoading(true);
 
     try {
-      const res = await fetch("/api/chat/clo", {
+      const res = await fetch(chatEndpoint, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: question, messages: history }),
@@ -86,7 +98,7 @@ export default function DemoChat() {
       if (!res.ok) {
         setMessages((prev) => [
           ...prev,
-          { role: "clo", text: "Dora's thinking — hit me again in a sec! ⚡" },
+          { role: "clo", text: `${agentName}'s thinking — hit me again in a sec! ⚡` },
         ]);
         setLoading(false);
         return;
@@ -96,7 +108,7 @@ export default function DemoChat() {
       if (!reader) {
         setMessages((prev) => [
           ...prev,
-          { role: "clo", text: "Dora's thinking — hit me again! ⚡" },
+          { role: "clo", text: `${agentName}'s thinking — hit me again! ⚡` },
         ]);
         setLoading(false);
         return;
@@ -165,12 +177,14 @@ export default function DemoChat() {
                 setRemaining(data.remaining);
               }
               setLoading(false);
-              // Save to Supabase memory
-              saveMemory([
+              // Save to Supabase memory (skip for Sassy mode — bridge handles it)
+              if (!isThulMode) {
+                saveMemory([
                 ...history,
                 { role: "user", text: question },
                 { role: "clo", text: accumulated },
               ]);
+              }
               return;
             }
 
@@ -280,7 +294,7 @@ export default function DemoChat() {
                 boxShadow: "0 0 30px rgba(16,185,129,0.12), 0 0 60px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.04)",
               }}
             >
-              <p className="font-bold text-white mb-1 text-lg">Hey! I'm Dora 👋</p>
+              <p className="font-bold text-white mb-1 text-lg">Hey! I'm {agentName} 👋</p>
               <p className="text-gray-200 text-sm">
                 I'm your AI closer — I handle follow-ups, track commissions, remember everything you'd forget.
                 <span className="text-white font-semibold"> What do you sell?</span>
@@ -309,7 +323,7 @@ export default function DemoChat() {
                 border: "1px solid rgba(255,255,255,0.12)",
               }}
             >
-              <span className="text-sm text-gray-400">Dora is thinking...</span>
+              <span className="text-sm text-gray-400">{agentName} is thinking...</span>
             </div>
           </div>
         )}
