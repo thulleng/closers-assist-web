@@ -368,24 +368,57 @@ Be direct, practical, zero fluff. The person texting you is between customers. G
       content: processedText,
     });
 
-    // ── Call AI ──
-    const { default: DeepSeek } = await import("@anthropic-ai/sdk");
-    const deepseek = new DeepSeek({
-      apiKey: process.env.DEEPSEEK_API_KEY || "",
-      baseURL: "https://api.deepseek.com/anthropic",
-    });
+    // ── Build compact context + proxy to VM Sassy bridge ──
+    const contextLines: string[] = [];
+    contextLines.push(`[USER: ${fullName || firstName}${company ? ` @ ${company}` : ""} | ${industry}]`);
+    if (payParts.length) contextLines.push(`Pay: ${payParts.join(", ")}`);
+    if (deals && deals.length > 0) {
+      const dealSummary = deals.map((d: any) =>
+        `${d.customer_name}: ${d.deal_type || "deal"} $${d.front_gross || 0}`
+      ).join(" | ");
+      contextLines.push(`MTD: ${deals.length} deals — ${dealSummary}`);
+    }
+    // Inject recent memory (last 5 turns) so the bridge has context
+    if (memory && memory.length > 0) {
+      const recent = memory.slice(0, 5).reverse()
+        .map((m: any) => `${m.role === "user" ? "REP" : "SASSY"}: ${(m.content || "").slice(0, 150)}`)
+        .join("\n");
+      contextLines.push(`Recent:\n${recent}`);
+    }
+    const bridgeMessage = `${contextLines.join("\n")}\n---\n${processedText}`;
 
-    const response = await deepseek.messages.create({
-      model: "deepseek-chat",
-      max_tokens: 1000,
-      system: systemPrompt,
-      messages: [{ role: "user", content: processedText || "" }],
-    });
-
-    const replyText =
-      response.content[0]?.type === "text"
+    let replyText = "";
+    try {
+      const bridgeRes = await fetch("http://178.105.161.224:8910/chat", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: bridgeMessage, session: userId }),
+        signal: AbortSignal.timeout(45000),
+      });
+      if (bridgeRes.ok) {
+        const data = await bridgeRes.json();
+        replyText = data.reply || "Got it. What else?";
+      } else {
+        throw new Error(`Bridge ${bridgeRes.status}`);
+      }
+    } catch (bridgeErr: any) {
+      console.error("Bridge fallback:", bridgeErr.message);
+      // Fallback: direct DeepSeek
+      const { default: DeepSeek } = await import("@anthropic-ai/sdk");
+      const deepseek = new DeepSeek({
+        apiKey: process.env.DEEPSEEK_API_KEY || "",
+        baseURL: "https://api.deepseek.com/anthropic",
+      });
+      const response = await deepseek.messages.create({
+        model: "deepseek-chat",
+        max_tokens: 1000,
+        system: systemPrompt,
+        messages: [{ role: "user", content: processedText || "" }],
+      });
+      replyText = response.content[0]?.type === "text"
         ? response.content[0].text
         : "Got it. What else?";
+    }
 
     // ── Save assistant response ──
     await supabase.from("agent_memory").insert({
