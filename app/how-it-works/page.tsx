@@ -252,47 +252,7 @@ export default function HowItWorksPage() {
             </div>
 
             <div className="grid gap-5 md:grid-cols-3">
-              {/* Web */}
-              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
-                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
-                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
-                />
-                <div className="relative">
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
-                    <Monitor className="h-7 w-7 text-deal" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-lg font-bold text-bone mb-2">Web dashboard</h3>
-                  <p className="text-sm text-ash leading-relaxed">
-                    Sign in once. The chat widget stays with you on every page — objections, follow-ups, deal logging, all without leaving the dashboard.
-                  </p>
-                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
-                    <span className="text-[11px] font-semibold text-deal-light">Always logged in</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Phone */}
-              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
-                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
-                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
-                />
-                <div className="relative">
-                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
-                    <Smartphone className="h-7 w-7 text-deal" strokeWidth={2} />
-                  </div>
-                  <h3 className="text-lg font-bold text-bone mb-2">Phone — same experience</h3>
-                  <p className="text-sm text-ash leading-relaxed">
-                    Pull it up on the lot between customers. Full chat, deal logging, scripts — everything works on mobile. No app to download.
-                  </p>
-                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
-                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
-                    <span className="text-[11px] font-semibold text-deal-light">No app install</span>
-                  </div>
-                </div>
-              </div>
-
-              {/* Telegram */}
+              {/* Telegram — Primary */}
               <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden border border-gold/20 bg-gold/[0.03]">
                 <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
                   style={{ background: "radial-gradient(circle, rgba(251,191,36,0.2), transparent 70%)" }}
@@ -303,11 +263,50 @@ export default function HowItWorksPage() {
                   </div>
                   <h3 className="text-lg font-bold text-bone mb-2">Telegram — live now</h3>
                   <p className="text-sm text-ash leading-relaxed">
-                    Text your agent like you&rsquo;d text your sales manager. Type &ldquo;sold a Camry&rdquo; and it logs the deal. Ask for a script and it fires back instantly.
+                    Your agent lives in Telegram — the app you already have open. Text it like you'd text your manager. Log deals, run commission math, get objection scripts — all without leaving the chat.
                   </p>
                   <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
                     <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
-                    <span className="text-[11px] font-semibold text-deal-light">Live now</span>
+                    <span className="text-[11px] font-semibold text-deal-light">Primary platform</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Website */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
+                    <Monitor className="h-7 w-7 text-deal" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">Web dashboard</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Sign up on the site. Set your industry and pay plan. After that, your agent lives on Telegram — the site is for onboarding, reference, and account settings.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-deal/10 px-3 py-1.5">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+                    <span className="text-[11px] font-semibold text-deal-light">Signup & settings</span>
+                  </div>
+                </div>
+              </div>
+
+              {/* More platforms coming */}
+              <div className="loud-card group rounded-2xl p-6 text-center relative overflow-hidden">
+                <div className="pointer-events-none absolute -right-12 -top-12 h-32 w-32 rounded-full blur-3xl opacity-0 group-hover:opacity-60 transition-opacity"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2), transparent 70%)" }}
+                />
+                <div className="relative">
+                  <div className="mx-auto mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-deal/10">
+                    <Smartphone className="h-7 w-7 text-deal" strokeWidth={2} />
+                  </div>
+                  <h3 className="text-lg font-bold text-bone mb-2">WhatsApp & more</h3>
+                  <p className="text-sm text-ash leading-relaxed">
+                    Same agent on WhatsApp, Slack, and Discord — pick the platform your team already uses. In development now. Telegram is the primary surface today.
+                  </p>
+                  <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-gold/30 px-3 py-1.5">
+                    <span className="text-[11px] font-semibold text-gold">Coming soon</span>
                   </div>
                 </div>
               </div>
