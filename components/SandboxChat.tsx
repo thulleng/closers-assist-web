@@ -1,0 +1,196 @@
+"use client";
+
+import { useState, useRef, useEffect } from "react";
+import { Send, Sparkles, X, Zap } from "lucide-react";
+import Link from "next/link";
+
+interface Message {
+  role: "user" | "sassy";
+  text: string;
+}
+
+const SUGGESTIONS = [
+  "I sold a Camry for $32K — what's my commission?",
+  "Customer says it's too expensive. What do I say?",
+  "Write me a follow-up text for a customer who ghosted",
+  "I need a payment quote on a $45K truck at 6.9% for 72 months",
+];
+
+export default function SandboxChat() {
+  const [messages, setMessages] = useState<Message[]>([]);
+  const [input, setInput] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [remaining, setRemaining] = useState(5);
+  const [done, setDone] = useState(false);
+  const [open, setOpen] = useState(false);
+  const bottomRef = useRef<HTMLDivElement>(null);
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => {
+    if (open) setTimeout(() => inputRef.current?.focus(), 300);
+  }, [open]);
+
+  useEffect(() => {
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
+
+  const send = async (text?: string) => {
+    const msg = (text || input).trim();
+    if (!msg || loading || done) return;
+
+    setMessages((prev) => [...prev, { role: "user", text: msg }]);
+    setInput("");
+    setLoading(true);
+
+    try {
+      const res = await fetch("/api/chat/sandbox", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ message: msg }),
+      });
+      const data = await res.json();
+      setMessages((prev) => [...prev, { role: "sassy", text: data.reply || "..." }]);
+      if (data.remaining !== undefined) setRemaining(data.remaining);
+      if (data.done) setDone(true);
+    } catch {
+      setMessages((prev) => [...prev, { role: "sassy", text: "Try me again! ⚡" }]);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  // Closed state — floating button
+  if (!open) {
+    return (
+      <div className="fixed bottom-24 right-4 z-40 md:bottom-8">
+        <button
+          onClick={() => setOpen(true)}
+          className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-deal to-emerald-400 px-5 py-3 text-sm font-bold text-black shadow-lg shadow-deal/30 transition-all hover:scale-105 active:scale-95"
+        >
+          <Zap className="h-4 w-4" />
+          Try the agent
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <div className="fixed inset-x-0 bottom-0 z-50 mx-auto max-w-md px-3 pb-4 md:pb-6 md:right-4 md:left-auto md:bottom-8 md:w-96 md:px-0">
+      {/* Panel */}
+      <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-pit/95 backdrop-blur-xl shadow-2xl shadow-black/60">
+        {/* Header */}
+        <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-deal to-emerald-400">
+              <Sparkles className="h-3.5 w-3.5 text-black" />
+            </div>
+            <div>
+              <span className="text-sm font-bold text-white">Try Sassy</span>
+              <span className="ml-2 text-[10px] text-muted">
+                {done ? "Trial ended" : `${remaining} free`}
+              </span>
+            </div>
+          </div>
+          <button
+            onClick={() => setOpen(false)}
+            className="rounded-full p-1.5 text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
+          >
+            <X className="h-4 w-4" />
+          </button>
+        </div>
+
+        {/* Messages */}
+        <div className="overflow-y-auto px-4 py-3 space-y-3" style={{ maxHeight: "340px" }}>
+          {messages.length === 0 && !loading && (
+            <div className="text-center py-6">
+              <p className="text-xs text-muted mb-4">
+                Talk to the real agent. Try deals, objections, math — no signup needed.
+              </p>
+              <div className="flex flex-wrap gap-1.5 justify-center">
+                {SUGGESTIONS.map((s) => (
+                  <button
+                    key={s}
+                    onClick={() => send(s)}
+                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-300 hover:border-deal/40 hover:text-white transition-colors"
+                  >
+                    <Zap className="h-3 w-3 text-deal" />
+                    <span className="max-w-[160px] truncate">{s}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {messages.map((msg, i) => (
+            <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
+              <div
+                className={`rounded-2xl px-3.5 py-2 text-sm leading-relaxed max-w-[88%] ${
+                  msg.role === "user"
+                    ? "bg-deal/20 border border-deal/30 text-white rounded-br-md"
+                    : "bg-white/5 border border-white/10 text-gray-200 rounded-tl-md"
+                }`}
+              >
+                {msg.text}
+              </div>
+            </div>
+          ))}
+
+          {loading && (
+            <div className="flex justify-start">
+              <div className="rounded-2xl rounded-tl-md bg-white/5 border border-white/10 px-3.5 py-2">
+                <span className="text-sm text-gray-400">
+                  <span className="animate-pulse">Sassy is thinking</span>...
+                </span>
+              </div>
+            </div>
+          )}
+
+          {/* Trial ended banner */}
+          {done && messages.length > 0 && (
+            <div className="rounded-xl border border-gold-light/30 bg-gold-light/10 p-4 text-center">
+              <p className="text-sm font-bold text-gold-light mb-1">Liked it?</p>
+              <p className="text-xs text-ash mb-3">
+                Sign up free — continue where you left off. No credit card.
+              </p>
+              <Link
+                href="/signup"
+                className="btn-loud inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-bold"
+                onClick={() => setOpen(false)}
+              >
+                <Zap className="h-3 w-3" /> Sign up free
+              </Link>
+            </div>
+          )}
+
+          <div ref={bottomRef} />
+        </div>
+
+        {/* Input */}
+        {!done && (
+          <form
+            onSubmit={(e) => { e.preventDefault(); send(); }}
+            className="flex items-center gap-2 border-t border-white/10 px-4 py-3"
+          >
+            <input
+              ref={inputRef}
+              type="text"
+              value={input}
+              onChange={(e) => setInput(e.target.value)}
+              placeholder="Log a deal, check math, write a script..."
+              maxLength={400}
+              disabled={loading}
+              className="flex-1 rounded-xl bg-white/5 border border-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-deal/50 transition-colors disabled:opacity-40"
+            />
+            <button
+              type="submit"
+              disabled={loading || !input.trim()}
+              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-deal text-black font-bold transition-all hover:bg-deal-light disabled:opacity-40"
+            >
+              <Send className="h-3.5 w-3.5" />
+            </button>
+          </form>
+        )}
+      </div>
+    </div>
+  );
+}

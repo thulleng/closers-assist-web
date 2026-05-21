@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
 import CursorGlow from "@/components/CursorGlow";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
+import SandboxChat from "@/components/SandboxChat";
 import "./globals.css";
 
 const inter = Inter({
@@ -94,6 +95,7 @@ export default function RootLayout({
         <main className="min-h-screen pb-[60px] md:pb-0">{children}</main>
         <Footer />
         <BottomNav />
+        <SandboxChat />
       </body>
     </html>
   );
