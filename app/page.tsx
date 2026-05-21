@@ -1160,7 +1160,7 @@ export default function HomePage() {
         <div className="grid-pattern opacity-50" />
         <div className="relative mx-auto max-w-7xl px-6 py-16 md:py-20">
           <FadeIn>
-            <div className="mb-10 max-w-3xl">
+            <div className="mb-10 text-center">
               <div className="mb-3 flex items-center gap-2">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal" />
                 <span className="text-xs font-medium uppercase tracking-widest text-deal">
@@ -1252,7 +1252,7 @@ export default function HomePage() {
         <div className="grid-pattern" />
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
-            <div className="mb-14 max-w-3xl">
+            <div className="mb-14 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
@@ -1497,7 +1497,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
-            <div className="mb-12 max-w-3xl">
+            <div className="mb-12 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
@@ -1822,7 +1822,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
-            <div className="mb-12 max-w-3xl">
+            <div className="mb-12 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
@@ -1881,7 +1881,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
-            <div className="mb-12 max-w-3xl">
+            <div className="mb-12 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-[#F97316]/30 bg-[#F97316]/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#F97316] shadow-[0_0_8px_#F97316]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-[#EA580C]">
@@ -2047,7 +2047,7 @@ export default function HomePage() {
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="relative mx-auto max-w-7xl px-6 py-20 md:py-28">
           <FadeIn>
-            <div className="mb-12 max-w-3xl">
+            <div className="mb-12 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
@@ -2164,7 +2164,7 @@ export default function HomePage() {
 
         <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
           <FadeIn>
-            <div className="mb-12 max-w-3xl">
+            <div className="mb-12 text-center">
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
