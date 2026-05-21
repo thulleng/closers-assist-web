@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, memo } from "react";
 import { ArrowRight, Loader2, Sparkles, Zap, User } from "lucide-react";
 
 type Message = { role: "user" | "clo"; text: string };
@@ -108,6 +108,7 @@ export default function DemoChat() {
       let bubbleAdded = false;
       let rafPending = false;
       let lastFlush = 0;
+      const FLUSH_MS = 50; // 20fps — smooth enough, cuts repaints by 3x
 
       function flush() {
         rafPending = false;
@@ -128,8 +129,7 @@ export default function DemoChat() {
         rafPending = true;
         const now = performance.now();
         const elapsed = now - lastFlush;
-        // Flush immediately if it's been >30ms (lightning), otherwise wait for next frame
-        if (elapsed > 30) {
+        if (elapsed > FLUSH_MS) {
           flush();
           lastFlush = now;
         } else {
@@ -203,7 +203,7 @@ export default function DemoChat() {
     sendMessage(input);
   }
 
-  function MessageBubble({ msg, isStreaming }: { msg: Message; isStreaming?: boolean }) {
+  const MessageBubble = memo(function MessageBubble({ msg, isStreaming }: { msg: Message; isStreaming?: boolean }) {
     const isUser = msg.role === "user";
 
     return (
@@ -245,7 +245,7 @@ export default function DemoChat() {
         )}
       </div>
     );
-  }
+  });
 
   return (
     <div className="w-full max-w-2xl mx-auto">
@@ -259,6 +259,9 @@ export default function DemoChat() {
           WebkitBackdropFilter: "blur(16px)",
           border: "1px solid rgba(16,185,129,0.2)",
           boxShadow: "0 0 40px rgba(16,185,129,0.08), inset 0 1px 0 rgba(255,255,255,0.03)",
+          transform: "translateZ(0)",          // GPU composite — isolates from page repaints
+          willChange: "transform",             // hints browser to promote to own layer
+          scrollbarGutter: "stable",           // reserve scrollbar space — no layout shift
         }}
       >
         {/* Greeting */}
@@ -357,7 +360,7 @@ export default function DemoChat() {
       </form>
 
       {/* ─── SUGGESTED QUESTIONS ───────────────────────────────── */}
-      {messages.length === 0 && (
+      {messages.length === 0 && memoryLoaded && (
         <div className="flex flex-wrap gap-2 justify-center mt-3">
           {SUGGESTIONS.map((s) => (
             <button
