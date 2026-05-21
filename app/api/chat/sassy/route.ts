@@ -18,7 +18,7 @@ function monthWindow() {
 async function buildContext(supabase: any, userId: string): Promise<string> {
   const { start, end, label } = monthWindow();
   const [profile, dealsRes] = await Promise.all([
-    supabase.from("agent_profiles").select("first_name, last_name, company, draw").eq("user_id", userId).maybeSingle(),
+    supabase.from("agent_profiles").select("first_name, last_name, company, draw, industry, agent_name, commission_pct").eq("user_id", userId).maybeSingle(),
     supabase.from("deals").select("customer_name, deal_type, commission, units, sold_date, id").eq("user_id", userId).gte("sold_date", start).lt("sold_date", end).order("sold_date", { ascending: false }),
   ]);
 
@@ -27,7 +27,7 @@ async function buildContext(supabase: any, userId: string): Promise<string> {
   const draw = p?.draw || 2600;
 
   const lines: string[] = [];
-  lines.push(`User: ${name}${p?.company ? ` at ${p.company}` : ""}. $${draw} draw.`);
+  lines.push(`User: ${name}${p?.company ? ` at ${p.company}` : ""}. $${draw} draw. Industry: ${p?.industry || "auto"}.`);
   lines.push(`Month: ${label}`);
 
   if (deals.length) {
@@ -35,7 +35,6 @@ async function buildContext(supabase: any, userId: string): Promise<string> {
     const c = deals.reduce((s: number, d: any) => s + (d.commission || 0), 0);
     const bal = c - draw;
     lines.push(`${deals.length} deals | ${u}u | $${c.toLocaleString()} commission | ${bal >= 0 ? "+" : ""}$${bal.toLocaleString()} vs draw`);
-    lines.push(`Deal IDs: ${deals.map((d: any) => `${d.customer_name}=${d.id.slice(0, 8)}`).join(", ")}`);
     const recent = deals.slice(0, 10).map((d: any) => `${d.sold_date}: ${d.customer_name} — ${d.deal_type} $${d.commission} (${d.units}u)`).join("\n");
     lines.push(`\n${recent}`);
   } else {
@@ -45,16 +44,19 @@ async function buildContext(supabase: any, userId: string): Promise<string> {
   return `\n[DASHBOARD DATA]\n${lines.join("\n")}\n[END DATA]`;
 }
 
-// ─── Bridge proxy ────────────────────────────────────────────────────────────
-async function askBridge(message: string, sessionToken?: string): Promise<string | null> {
+// ─── Bridge proxy (bridge handles auto-provisioning internally) ──────────────
+async function askBridge(message: string, userId?: string, profile?: any): Promise<string | null> {
   try {
     const body: any = { message };
-    if (sessionToken) body.session = sessionToken;
+    if (userId) {
+      body.session = userId;
+      if (profile) body.profile = profile;
+    }
     const res = await fetch(`${BRIDGE}/chat`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(body),
-      signal: AbortSignal.timeout(30000),
+      signal: AbortSignal.timeout(65000),
     });
     if (!res.ok) return null;
     const data = await res.json();
@@ -71,47 +73,17 @@ async function askDeepSeek(system: string, message: string): Promise<string> {
   const res = await fetch(DEEPSEEK, {
     method: "POST",
     headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
-    body: JSON.stringify({ model: "deepseek-v4-pro", messages: [{ role: "system", content: system }, { role: "user", content: message }], max_tokens: 600, temperature: 0.7 }),
+    body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: message }], max_tokens: 600, temperature: 0.7 }),
     signal: AbortSignal.timeout(15000),
   });
   if (!res.ok) throw new Error(`DeepSeek ${res.status}`);
   const data = await res.json();
-  return data.choices?.[0]?.message?.content || "I'm here! 👋";
+  return data.choices?.[0]?.message?.content || "Hey! 👋";
 }
 
-// ─── System prompt (fallback only) ───────────────────────────────────────────
-const SYSTEM = `You are Sassy — a sharp, fast AI closer built into ClosersAssist. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details. Use the user's name.`;
+const SYSTEM = `You are Sassy — a sharp, fast AI closer built into ClosersAssist. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details.`;
 
 // ─── POST handler ───────────────────────────────────────────────────────────
-async function ensureProvisioned(supabase: any, userId: string, profile: any): Promise<boolean> {
-  // Check if already provisioned
-  if (profile?.provisioning_status === "provisioned") return true;
-
-  try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SITE_URL || "http://localhost:3000"}/api/admin/provision`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Authorization": `Bearer ${process.env.SUPABASE_SERVICE_ROLE_KEY}`,
-      },
-      body: JSON.stringify({ user_id: userId }),
-    });
-    if (res.ok) {
-      // Mark as provisioned in profile
-      await supabase.from("agent_profiles").upsert(
-        { user_id: userId, provisioning_status: "provisioned", updated_at: new Date().toISOString() },
-        { onConflict: "user_id" }
-      );
-      return true;
-    }
-    console.error("Provision failed:", await res.text());
-    return false;
-  } catch (e: any) {
-    console.error("Provision error:", e.message);
-    return false;
-  }
-}
-
 export async function POST(req: NextRequest) {
   try {
     const { message } = await req.json();
@@ -119,29 +91,26 @@ export async function POST(req: NextRequest) {
 
     let enriched = message.trim();
     let userId: string | null = null;
+    let profile: any = null;
 
     try {
       const supabase = await createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
         userId = user.id;
-        const ctx = await buildContext(supabase, user.id);
-
-        // ── Auto-provision on first use ──
-        const { data: profile } = await supabase
+        const { data: p } = await supabase
           .from("agent_profiles")
-          .select("provisioning_status")
+          .select("first_name, last_name, company, draw, industry, agent_name, commission_pct")
           .eq("user_id", user.id)
           .maybeSingle();
-        if (!profile || profile.provisioning_status !== "provisioned") {
-          await ensureProvisioned(supabase, user.id, profile);
-        }
-
+        profile = p;
+        const ctx = await buildContext(supabase, user.id);
         enriched = `${ctx}\n\nUser says: ${message.trim()}`;
       }
-    } catch { /* unauthenticated — no context */ }
+    } catch { /* unauthenticated */ }
 
-    const reply = await askBridge(enriched, userId || undefined) 
+    // Bridge handles auto-provisioning internally — no separate API call needed
+    const reply = await askBridge(enriched, userId || undefined, profile || undefined)
       || await askDeepSeek(SYSTEM, enriched);
 
     return new Response(reply, {
