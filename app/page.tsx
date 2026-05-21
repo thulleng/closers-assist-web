@@ -1892,6 +1892,9 @@ export default function HomePage() {
                 A brain. A playbook.
                 <span className="text-shine font-black"> Your voice.</span>
               </h2>
+              <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ash">
+                Three layers that make your agent sharper than any chatbot. Built on the floor, not in a boardroom.
+              </p>
             </div>
           </FadeIn>
 
