@@ -44,7 +44,7 @@ export default function TermsPage() {
             </h2>
             <p>
               Closers Assist provides AI-powered sales agent software. The
-              service is provided &ldquo;as is&rdquo; — we work hard to keep it
+              service is provided “as is” — we work hard to keep it
               running reliably but can&rsquo;t guarantee 100% uptime. We&rsquo;re
               a small team building fast.
             </p>

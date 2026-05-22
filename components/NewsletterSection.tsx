@@ -40,7 +40,7 @@ export default function NewsletterSection() {
             <span className="text-shine font-black">Every Monday.</span>
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-ash">
-            One email a week. What&apos;s working on the showroom floor right
+            One email a week. What's working on the showroom floor right
             now — objections, scripts, deal math. Written by a working rep.
             Used by working reps.
           </p>
@@ -49,8 +49,8 @@ export default function NewsletterSection() {
           <div className="mt-10 grid gap-4 text-left sm:grid-cols-3">
             {[
               {
-                title: "The &apos;Think About It&apos; Kill",
-                body: "Customer says they need to sleep on it. Here&apos;s the 3-step play that flips it on the spot.",
+                title: "The 'Think About It' Kill",
+                body: "Customer says they need to sleep on it. Here's the 3-step play that flips it on the spot.",
                 tag: "Objections",
               },
               {
@@ -87,7 +87,7 @@ export default function NewsletterSection() {
               <div className="inline-flex items-center gap-3 rounded-xl border border-deal/40 bg-deal/10 px-6 py-4">
                 <span className="text-lg">📬</span>
                 <span className="text-[15px] font-medium text-deal-light">
-                  You&apos;re in. First email Monday.
+                  You're in. First email Monday.
                 </span>
               </div>
             ) : (

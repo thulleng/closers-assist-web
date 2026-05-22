@@ -24,7 +24,7 @@ export default function ReviewCard({ name, rating, review_text, role, company, l
     <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
       {/* Quote mark */}
       <div className="mb-4 text-4xl font-serif leading-none text-gold-light/30 select-none">
-        &ldquo;
+        “
       </div>
 
       {/* Stars */}

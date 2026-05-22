@@ -75,7 +75,7 @@ export default function BlogIndex() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash">
-              No theory. No LinkedIn fluff. No &ldquo;10X your pipeline&rdquo; nonsense.
+              No theory. No LinkedIn fluff. No “10X your pipeline” nonsense.
               Just what actually works on the lot — written between customers at Sun Toyota.
             </p>
           </FadeIn>

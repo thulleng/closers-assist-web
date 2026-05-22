@@ -259,7 +259,7 @@ export default function HomePage() {
             {/* Secondary CTA — for visitors who don't want to chat */}
             <div className="mt-8 text-center">
               <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
-                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans &amp; pricing →</span>
+                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans & pricing →</span>
               </a>
             </div>
           </FadeIn>
@@ -669,7 +669,7 @@ export default function HomePage() {
                 </div>
                 <div className="text-center">
                   <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]">
-                    &lt;3s
+                    <3s
                   </div>
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
                     Question to play
@@ -1068,7 +1068,7 @@ export default function HomePage() {
                   Your industry. Your pay plan. Your scripts. Your goals. Your agent learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  &lt; 2 minutes
+                  < 2 minutes
                 </div>
               </div>
             </FadeIn>
@@ -1204,7 +1204,7 @@ export default function HomePage() {
                 />
                 <div className="relative">
                   <div className="mb-3 font-display text-6xl font-black leading-none text-shine">
-                    &ldquo;
+                    “
                   </div>
                   <p className="text-xl font-semibold leading-snug text-white md:text-2xl">
                     I used to drop follow-ups all the time.{" "}
@@ -1302,7 +1302,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div className="text-[11px] text-ash">
-                      &ldquo;$499/mo too high&rdquo;
+                      “$499/mo too high”
                     </div>
                     <div className="mt-2 flex items-center gap-1.5">
                       <span className="inline-block h-1 w-8 rounded-full bg-warn" />
@@ -1321,7 +1321,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div className="text-[11px] text-ash">
-                      &ldquo;Trade value too low&rdquo;
+                      “Trade value too low”
                     </div>
                     <div className="mt-2 flex items-center gap-1.5">
                       <span className="inline-block h-1 w-8 rounded-full bg-warn" />
@@ -1340,7 +1340,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div className="text-[11px] text-ash">
-                      &ldquo;Need to think&rdquo;
+                      “Need to think”
                     </div>
                   </div>
                 </div>
@@ -1379,7 +1379,7 @@ export default function HomePage() {
                       </span>
                     </div>
                     <div className="mb-2 text-[11px] text-ash">
-                      Numbers approved. F&amp;I next.
+                      Numbers approved. F&I next.
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="flex-1 overflow-hidden rounded-full bg-white/10">
@@ -1669,8 +1669,8 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="mt-5 text-[12px] italic text-muted">
-                  &ldquo;Grinding. Tired. Losing deals I should&rsquo;ve
-                  closed.&rdquo;
+                  “Grinding. Tired. Losing deals I should&rsquo;ve
+                  closed.”
                 </div>
               </div>
 
@@ -1800,8 +1800,8 @@ export default function HomePage() {
                   </div>
                 </div>
                 <div className="relative mt-5 text-[12px] font-semibold italic text-white">
-                  &ldquo;Every lead stays warm. Every objection has a
-                  play.&rdquo;
+                  “Every lead stays warm. Every objection has a
+                  play.”
                 </div>
               </div>
             </div>

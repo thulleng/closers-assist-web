@@ -21,7 +21,7 @@ export default function InvestPage() {
             <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">Investor Brief</span>
           </div>
           <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-6xl">Closers Assist</h1>
-          <p className="mt-4 text-xl text-ash sm:text-2xl">Every closer&apos;s second brain.</p>
+          <p className="mt-4 text-xl text-ash sm:text-2xl">Every closer's second brain.</p>
           <p className="mt-2 text-sm text-muted">Built on the floor at Sun Toyota · Holiday, Florida</p>
         </div>
 
@@ -30,7 +30,7 @@ export default function InvestPage() {
 
         {/* What It Is */}
         <Section title="What It Is">
-          <p>Closers Assist is an AI sales partner that lives in a closer&apos;s pocket. It remembers every customer, handles every objection, logs every deal, writes every follow-up text, and tracks every dollar of commission — before the closer even asks.</p>
+          <p>Closers Assist is an AI sales partner that lives in a closer's pocket. It remembers every customer, handles every objection, logs every deal, writes every follow-up text, and tracks every dollar of commission — before the closer even asks.</p>
           <p className="mt-3">$29.99/month per rep. One deal pays for 10 years. Zero setup, zero prompt engineering. It sounds like YOU, not generic AI.</p>
         </Section>
 
@@ -39,15 +39,15 @@ export default function InvestPage() {
           <ul className="space-y-3">
             <WinItem title="Persistent memory" body="ChatGPT forgets. Closers Assist remembers every customer, every deal, every objection — across weeks and sessions." />
             <WinItem title="Zero setup" body="No prompt engineering. No templates. Reps open the app and start talking. Built for people who sell, not people who configure software." />
-            <WinItem title="Sounds like you" body="Learns your voice, your pay plan, your floor. Not a generic chatbot — a closer&apos;s closer." />
+            <WinItem title="Sounds like you" body="Learns your voice, your pay plan, your floor. Not a generic chatbot — a closer's closer." />
             <WinItem title="Enterprise moat" body="Dedicated AI closer for entire sales floors. $5K/month, done-for-you. CRM-integrated, live in 48 hours." />
           </ul>
         </Section>
 
         {/* Market */}
         <Section title="The Market">
-          <p>22 million commission-based salespeople in the US. Every one of them spends hours writing follow-ups, calculating commissions, and replaying objections in their head. That&apos;s the market.</p>
-          <p className="mt-3">The competitor is ChatGPT — free, generic, forgetful. Closers Assist wins on memory, voice, and zero-friction. A closer opens ChatGPT once and never comes back because it doesn&apos;t know their pay plan. Closers Assist does.</p>
+          <p>22 million commission-based salespeople in the US. Every one of them spends hours writing follow-ups, calculating commissions, and replaying objections in their head. That's the market.</p>
+          <p className="mt-3">The competitor is ChatGPT — free, generic, forgetful. Closers Assist wins on memory, voice, and zero-friction. A closer opens ChatGPT once and never comes back because it doesn't know their pay plan. Closers Assist does.</p>
         </Section>
 
         {/* Traction */}
@@ -71,8 +71,8 @@ export default function InvestPage() {
         {/* The Ask */}
         <Section title="The Opportunity">
           <p>Sales teams are drowning in admin while ChatGPT gives them generic answers. Closers Assist is the first AI that actually knows the closer — their deals, their pay plan, their voice, their floor.</p>
-          <p className="mt-3">The SaaS model funds the machine. Enterprise delivers margin. Every rep who tries it sticks because no other tool remembers their customer&apos;s wife&apos;s name from three weeks ago.</p>
-          <p className="mt-3">This isn&apos;t a chatbot. It&apos;s a closer&apos;s second brain. Built by a closer, for closers.</p>
+          <p className="mt-3">The SaaS model funds the machine. Enterprise delivers margin. Every rep who tries it sticks because no other tool remembers their customer's wife's name from three weeks ago.</p>
+          <p className="mt-3">This isn't a chatbot. It's a closer's second brain. Built by a closer, for closers.</p>
         </Section>
 
         {/* Footer */}

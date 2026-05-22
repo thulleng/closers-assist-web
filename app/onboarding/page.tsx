@@ -226,7 +226,7 @@ function OnboardingContent() {
                     </div>
                     <div className="flex items-center gap-2 text-sm text-ash">
                       <Sparkles className="h-4 w-4 text-gold-light" />
-                      Commission tracking &amp; history
+                      Commission tracking & history
                     </div>
                     <div className="flex items-center gap-2 text-sm text-ash">
                       <Copy className="h-4 w-4 text-gold-light" />
@@ -322,7 +322,7 @@ function OnboardingContent() {
                   </div>
                   <div className="border-x border-white/10 text-center">
                     <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]">
-                      &lt;3s
+                      <3s
                     </div>
                     <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
                       Question to play

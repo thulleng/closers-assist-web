@@ -14,11 +14,11 @@ const faqs: FAQItem[] = [
     q: "How is this different from ChatGPT?",
     a: (
       <>
-        ChatGPT is a general-purpose AI — it doesn&apos;t know your pay plan, your
+        ChatGPT is a general-purpose AI — it doesn't know your pay plan, your
         scripts, your customers, or your industry. Closers Assist is an{" "}
         <strong className="text-white">AI employee</strong> built specifically for
         closers. It knows your commission structure, remembers every customer
-        conversation, and speaks your industry&apos;s language. ChatGPT starts
+        conversation, and speaks your industry's language. ChatGPT starts
         from zero every chat. Closers Assist picks up where you left off.
       </>
     ),
@@ -44,9 +44,9 @@ const faqs: FAQItem[] = [
       <>
         Closers Assist is a <strong className="text-white">co-pilot, not a replacement</strong>{" "}
         for your judgment. It gives you plays, scripts, and math — you make the
-        final call. It&apos;s trained on real sales scripts and objection
+        final call. It's trained on real sales scripts and objection
         handling from working reps, not generic advice from the internet. If it
-        ever gives a play that doesn&apos;t fit your style, you override it.
+        ever gives a play that doesn't fit your style, you override it.
         The agent learns from your corrections.
       </>
     ),
@@ -55,11 +55,11 @@ const faqs: FAQItem[] = [
     q: "My team barely uses our CRM. Why would they use this?",
     a: (
       <>
-        Because it&apos;s <strong className="text-white">Telegram.</strong> Not
+        Because it's <strong className="text-white">Telegram.</strong> Not
         another tab, not another login, not another dashboard. Your team already
         texts — Closers Assist is just another chat. Type a question, get a
-        play. No training. No IT ticket. No &ldquo;where do I click?&rdquo;
-        Reps adopt it in under 2 minutes because there&apos;s nothing to learn.
+        play. No training. No IT ticket. No “where do I click?”
+        Reps adopt it in under 2 minutes because there's nothing to learn.
       </>
     ),
   },
@@ -68,9 +68,9 @@ const faqs: FAQItem[] = [
     a: (
       <>
         You choose to continue or cancel. <strong className="text-white">No surprise billing.</strong>{" "}
-        If you stay, you&apos;re billed monthly starting on day 15. Cancel
-        anytime — no contracts, no early termination fees, no &ldquo;talk to
-        retention.&rdquo; One click and you&apos;re done. Your data is yours to
+        If you stay, you're billed monthly starting on day 15. Cancel
+        anytime — no contracts, no early termination fees, no “talk to
+        retention.” One click and you're done. Your data is yours to
         export.
       </>
     ),
@@ -82,7 +82,7 @@ const faqs: FAQItem[] = [
         <strong className="text-white">18 industries</strong> with live agents
         ready today: Auto, Real Estate, Insurance, Solar, SaaS, Medical
         Devices, Retail (Big Ticket), Pest Control, HVAC, Roofing, Home
-        Security, Mortgage &amp; Lending, Financial Advisors, Recruiting,
+        Security, Mortgage & Lending, Financial Advisors, Recruiting,
         Telecom, Rental, Project Manager, and General Sales. Each industry
         agent ships with industry-specific scripts, objection handling, and
         vocabulary.{" "}
@@ -122,9 +122,9 @@ const faqs: FAQItem[] = [
     a: (
       <>
         <strong className="text-white">Yes. One click.</strong> No retention
-        calls. No &ldquo;are you sure?&rdquo; popups. No contracts. We&apos;re
-        confident enough in the product that we don&apos;t need to trap you. If
-        it doesn&apos;t work for your floor, cancel and walk away. Your data is
+        calls. No “are you sure?” popups. No contracts. We're
+        confident enough in the product that we don't need to trap you. If
+        it doesn't work for your floor, cancel and walk away. Your data is
         exportable before you go.
       </>
     ),
@@ -138,7 +138,7 @@ const faqs: FAQItem[] = [
         <strong className="text-white">priority support with a dedicated rep</strong>{" "}
         who knows your account. The AI also gets smarter over time — it learns
         from your corrections and the questions you ask, so the longer you use
-        it, the less often you&apos;ll need to escalate.
+        it, the less often you'll need to escalate.
       </>
     ),
   },
@@ -166,7 +166,7 @@ export default function FAQ() {
             </span>
           </div>
           <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-            Everything you&apos;d ask
+            Everything you'd ask
             <span className="text-shine font-black"> on a call.</span>
           </h2>
           <p className="mt-4 text-lg leading-relaxed text-ash">

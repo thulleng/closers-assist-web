@@ -44,7 +44,7 @@ export default function HowIBuiltThis() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The CRM graveyard</h2>
             <p>
-              Every sales rep knows this feeling: you open your CRM and it&rsquo;s a graveyard. Hundreds of names. Dozens of &ldquo;thinking about it.&rdquo; A handful of &ldquo;call back next month.&rdquo; And you&rsquo;re supposed to remember who&rsquo;s who, who&rsquo;s warm, and what you said last time.
+              Every sales rep knows this feeling: you open your CRM and it&rsquo;s a graveyard. Hundreds of names. Dozens of “thinking about it.” A handful of “call back next month.” And you&rsquo;re supposed to remember who&rsquo;s who, who&rsquo;s warm, and what you said last time.
             </p>
             <p>
               I tried everything. Spreadsheets. Notes app. Sticky notes on the desk. Nothing worked. The CRM was where leads went to die.
@@ -69,7 +69,7 @@ export default function HowIBuiltThis() {
               I built the first version on my phone. Between customers. I&rsquo;d be standing in the service lane, waiting for an oil change to finish, and I&rsquo;d pull out my phone and add a feature.
             </p>
             <p>
-              The objection handler came from a real customer who said &ldquo;$499 is too high.&rdquo; The follow-up writer came from a real ghost who stopped replying after a test drive. The pay plan calculator came from me staring at a deal jacket at 8pm trying to figure out if it was worth it.
+              The objection handler came from a real customer who said “$499 is too high.” The follow-up writer came from a real ghost who stopped replying after a test drive. The pay plan calculator came from me staring at a deal jacket at 8pm trying to figure out if it was worth it.
             </p>
             <p>
               This isn&rsquo;t a SaaS company that studied the auto industry from a WeWork in San Francisco. This is a Toyota closer who built the tool he wished he had — and then realized every closer needs it.

@@ -201,9 +201,9 @@ export default function EnterprisePage() {
         <div className="rounded-2xl border border-gold/20 bg-gold/[0.03] p-6">
           <p className="text-sm text-ash leading-relaxed">
             <span className="font-semibold text-gold-light">The real pitch: </span>
-            One mini deal — $400 commission — covers a rep&apos;s Closers Assist subscription for over a year. 
+            One mini deal — $400 commission — covers a rep's Closers Assist subscription for over a year. 
             Your lowest closer pays for the whole floor. Every deal after that is pure margin. 
-            This isn&apos;t software ROI math. It&apos;s car math.
+            This isn't software ROI math. It's car math.
           </p>
         </div>
       </section>

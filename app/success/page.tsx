@@ -123,7 +123,7 @@ export default function SuccessPage() {
             Setting up your account...
           </p>
           <p className="text-sm text-gray-500 mb-6">
-            We&apos;re provisioning your agent for{" "}
+            We're provisioning your agent for{" "}
             <span className="text-gray-300 font-medium">{email}</span>
           </p>
           <Loader2 className="w-6 h-6 text-[#10B981] animate-spin mx-auto" />
@@ -144,7 +144,7 @@ export default function SuccessPage() {
           <CheckCircle className="w-9 h-9 text-[#10B981]" />
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-3">You&apos;re in!</h1>
+        <h1 className="text-3xl font-bold text-white mb-3">You're in!</h1>
         <p className="text-gray-400 text-lg mb-6">
           Payment confirmed. Your ClosersAssist subscription is now active.
         </p>
@@ -180,23 +180,23 @@ export default function SuccessPage() {
             </li>
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">2.</span>
-              Click <span className="text-white font-medium">&ldquo;Sign in to ClosersAssist&rdquo;</span>
+              Click <span className="text-white font-medium">“Sign in to ClosersAssist”</span>
             </li>
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">3.</span>
-              You&apos;ll land directly in your agent setup — no password needed
+              You'll land directly in your agent setup — no password needed
             </li>
           </ol>
 
           <p className="text-xs text-gray-600">
-            Didn&apos;t get it? Check spam or{" "}
+            Didn't get it? Check spam or{" "}
             <a
               href={`mailto:thul@closersassist.com?subject=Resend%20magic%20link%20for%20${encodeURIComponent(email || "")}`}
               className="text-[#10B981] hover:underline"
             >
               email us
             </a>
-            . We&apos;ll resend within minutes.
+            . We'll resend within minutes.
           </p>
         </div>
 

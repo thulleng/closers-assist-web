@@ -48,7 +48,7 @@ export default function ServiceLanePlays() {
             </p>
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
               <p className="text-sm italic text-ash">
-                &ldquo;Hey, while you&rsquo;re waiting — I ran your RAV4&rsquo;s trade value real quick. You&rsquo;re sitting on about $4,500 more equity than you probably think. If you&rsquo;ve got 5 minutes, I can show you what a new one looks like at basically the same payment.&rdquo;
+                “Hey, while you&rsquo;re waiting — I ran your RAV4&rsquo;s trade value real quick. You&rsquo;re sitting on about $4,500 more equity than you probably think. If you&rsquo;ve got 5 minutes, I can show you what a new one looks like at basically the same payment.”
               </p>
             </div>
             <p>
@@ -61,11 +61,11 @@ export default function ServiceLanePlays() {
             </p>
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
               <p className="text-sm italic text-ash">
-                &ldquo;Quick thing — a lot of our service customers don&rsquo;t realize their payment could actually go down with a new one. New incentives just dropped. Want me to run the numbers real quick while your oil change finishes? No pressure — just curious if it works in your favor.&rdquo;
+                “Quick thing — a lot of our service customers don&rsquo;t realize their payment could actually go down with a new one. New incentives just dropped. Want me to run the numbers real quick while your oil change finishes? No pressure — just curious if it works in your favor.”
               </p>
             </div>
             <p>
-              <strong className="text-deal">Why it works:</strong> &ldquo;Could go down&rdquo; creates curiosity. &ldquo;No pressure&rdquo; disarms. &ldquo;While your oil change finishes&rdquo; frames it as killing time, not being sold to. And if the math works — you just created a deal out of an oil change.
+              <strong className="text-deal">Why it works:</strong> “Could go down” creates curiosity. “No pressure” disarms. “While your oil change finishes” frames it as killing time, not being sold to. And if the math works — you just created a deal out of an oil change.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">Play 3: The Service Save</h2>
@@ -74,7 +74,7 @@ export default function ServiceLanePlays() {
             </p>
             <div className="rounded-xl border border-white/10 bg-white/[0.03] p-5">
               <p className="text-sm italic text-ash">
-                &ldquo;Just so you know — your first two services are free when you buy new. That&rsquo;s $200 you&rsquo;re about to spend today that you&rsquo;d get back. If the numbers line up, it might make more sense to put this oil change money toward something new. Let me run it quick?&rdquo;
+                “Just so you know — your first two services are free when you buy new. That&rsquo;s $200 you&rsquo;re about to spend today that you&rsquo;d get back. If the numbers line up, it might make more sense to put this oil change money toward something new. Let me run it quick?”
               </p>
             </div>
             <p>

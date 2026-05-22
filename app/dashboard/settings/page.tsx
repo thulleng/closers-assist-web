@@ -548,7 +548,7 @@ export default function SettingsPage() {
                 : "text-ash hover:text-white"
             }`}
           >
-            <span className="hidden sm:inline">Membership &amp; Billing</span>
+            <span className="hidden sm:inline">Membership & Billing</span>
             <span className="sm:hidden">Plan</span>
           </button>
           <button

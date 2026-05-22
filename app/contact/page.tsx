@@ -89,7 +89,7 @@ export default function ContactPage() {
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="mt-0.5 text-deal">→</span>
-                      <span>If you&apos;re a closer, you&apos;ll talk to a closer.</span>
+                      <span>If you're a closer, you'll talk to a closer.</span>
                     </li>
                   </ul>
                 </div>

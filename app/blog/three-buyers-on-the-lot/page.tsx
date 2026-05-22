@@ -53,13 +53,13 @@ export default function ThreeBuyersOnTheLot() {
               <strong className="text-bone">How to spot them:</strong> They walk onto the lot holding a printout. Or they&rsquo;ve got three tabs open on their phone — TrueCar, KBB, and our inventory page. They know the MSRP, the invoice price, and probably the name of the engineer who designed the transmission.
             </p>
             <p>
-              <strong className="text-bone">What they say:</strong> &ldquo;I&rsquo;ve been doing some research.&rdquo; &ldquo;What&rsquo;s your best price?&rdquo; &ldquo;I saw a similar one at [competitor] for $400 less.&rdquo;
+              <strong className="text-bone">What they say:</strong> “I&rsquo;ve been doing some research.” “What&rsquo;s your best price?” “I saw a similar one at [competitor] for $400 less.”
             </p>
             <p>
               <strong className="text-bone">What they actually care about:</strong> Winning. Not the car. Not the payment. The feeling that they got the absolute best deal possible. The Researcher isn&rsquo;t buying a RAV4 — they&rsquo;re buying the satisfaction of knowing nobody got one over on them.
             </p>
             <p>
-              <strong className="text-bone">How to close them:</strong> Give them a win. Not a discount — a win. Say something like: &ldquo;You&rsquo;ve clearly done your homework. Most people don&rsquo;t know about invoice pricing on these. Since you do, let me show you exactly where we land — and here&rsquo;s the part most people miss.&rdquo; Then show them something they didn&rsquo;t find online. A dealer incentive. A loyalty rebate. A service credit. The Researcher needs to feel like they discovered something nobody else has. Give them that feeling and they&rsquo;ll sign.
+              <strong className="text-bone">How to close them:</strong> Give them a win. Not a discount — a win. Say something like: “You&rsquo;ve clearly done your homework. Most people don&rsquo;t know about invoice pricing on these. Since you do, let me show you exactly where we land — and here&rsquo;s the part most people miss.” Then show them something they didn&rsquo;t find online. A dealer incentive. A loyalty rebate. A service credit. The Researcher needs to feel like they discovered something nobody else has. Give them that feeling and they&rsquo;ll sign.
             </p>
             <p>
               <strong className="text-bone">What kills the deal:</strong> Arguing. Negotiating the wrong line item. Telling them their research is wrong. The Researcher will walk over a $200 difference just to prove a point. Don&rsquo;t make it about the money. Make it about them being the smartest person in the room.
@@ -70,24 +70,24 @@ export default function ThreeBuyersOnTheLot() {
               <strong className="text-bone">How to spot them:</strong> They&rsquo;re touching the car before they&rsquo;re talking to you. Running their hand along the dash. Sitting in the driver&rsquo;s seat for 30 seconds just&hellip; sitting. They might have brought their kid or their spouse, and they keep glancing at them for reactions.
             </p>
             <p>
-              <strong className="text-bone">What they say:</strong> &ldquo;I love this color.&rdquo; &ldquo;This feels right.&rdquo; &ldquo;I&rsquo;ve always wanted a Tacoma.&rdquo; Sometimes they don&rsquo;t say much at all — they just keep looking at the car.
+              <strong className="text-bone">What they say:</strong> “I love this color.” “This feels right.” “I&rsquo;ve always wanted a Tacoma.” Sometimes they don&rsquo;t say much at all — they just keep looking at the car.
             </p>
             <p>
               <strong className="text-bone">What they actually care about:</strong> The feeling. The Emotional Buyer is not buying transportation. They&rsquo;re buying who they become in this car. The 4Runner buyer isn&rsquo;t buying an SUV — they&rsquo;re buying weekends camping, off-road capability, being the person who goes places other people can&rsquo;t. The Camry buyer isn&rsquo;t buying a sedan — they&rsquo;re buying reliability, peace of mind, being the smart one in the family.
             </p>
             <p>
-              <strong className="text-bone">How to close them:</strong> Shut up and let the car do the work. Your job is to connect the dots between the car and the feeling they already have. &ldquo;I can tell this is your truck. Let&rsquo;s get you in it.&rdquo; Don&rsquo;t talk specs. Don&rsquo;t talk numbers yet. Talk about what happens after they leave the lot — the road trip, the school pickup, the first time they pull into their own driveway.
+              <strong className="text-bone">How to close them:</strong> Shut up and let the car do the work. Your job is to connect the dots between the car and the feeling they already have. “I can tell this is your truck. Let&rsquo;s get you in it.” Don&rsquo;t talk specs. Don&rsquo;t talk numbers yet. Talk about what happens after they leave the lot — the road trip, the school pickup, the first time they pull into their own driveway.
             </p>
             <p>
-              <strong className="text-bone">What kills the deal:</strong> Logic. Spec sheets. Comparisons. Bringing up a different trim level &ldquo;just in case.&rdquo; The Emotional Buyer made their decision the moment they sat in the seat. If you oversell, you&rsquo;ll talk them out of it. I&rsquo;ve watched reps lose Emotional Buyers by showing them a &ldquo;better option&rdquo; when the buyer already picked their car with their heart. Don&rsquo;t do it.
+              <strong className="text-bone">What kills the deal:</strong> Logic. Spec sheets. Comparisons. Bringing up a different trim level “just in case.” The Emotional Buyer made their decision the moment they sat in the seat. If you oversell, you&rsquo;ll talk them out of it. I&rsquo;ve watched reps lose Emotional Buyers by showing them a “better option” when the buyer already picked their car with their heart. Don&rsquo;t do it.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The Payment Buyer</h2>
             <p>
-              <strong className="text-bone">How to spot them:</strong> First question out of their mouth is about money. &ldquo;What&rsquo;s the monthly on this?&rdquo; &ldquo;Can you get me under $400?&rdquo; They might look at the car for 30 seconds before asking. They might not look at the car at all.
+              <strong className="text-bone">How to spot them:</strong> First question out of their mouth is about money. “What&rsquo;s the monthly on this?” “Can you get me under $400?” They might look at the car for 30 seconds before asking. They might not look at the car at all.
             </p>
             <p>
-              <strong className="text-bone">What they say:</strong> &ldquo;I need to be at $350.&rdquo; &ldquo;What&rsquo;s the cheapest one you got?&rdquo; &ldquo;I don&rsquo;t care about the features, I just need the payment.&rdquo;
+              <strong className="text-bone">What they say:</strong> “I need to be at $350.” “What&rsquo;s the cheapest one you got?” “I don&rsquo;t care about the features, I just need the payment.”
             </p>
             <p>
               <strong className="text-bone">What they actually care about:</strong> Safety. Not the car&rsquo;s safety rating — financial safety. The Payment Buyer is scared of getting in over their head. They&rsquo;ve done the budget math at their kitchen table six times. They know exactly what they can afford — and they&rsquo;re terrified you&rsquo;re going to push them past it.
@@ -96,7 +96,7 @@ export default function ThreeBuyersOnTheLot() {
               <strong className="text-bone">How to close them:</strong> Respect the number. If they say $400, your first quote better come in at $390 — or you better explain exactly why it&rsquo;s at $410, line by line. The Payment Buyer has been burned before. Or watched their parents get burned. Or heard enough dealer horror stories to expect the worst. Show them you&rsquo;re on their side by being the first car salesperson who actually listened to their number. Structure the deal around their payment, not around the car. The car is secondary. The number is primary.
             </p>
             <p>
-              <strong className="text-bone">What kills the deal:</strong> Bumping them. &ldquo;Let me see what I can do&rdquo; and coming back $80 higher. Talking about features they don&rsquo;t care about. Trying to convert them into a Researcher or an Emotional Buyer. They&rsquo;re neither. Sell the payment, not the car.
+              <strong className="text-bone">What kills the deal:</strong> Bumping them. “Let me see what I can do” and coming back $80 higher. Talking about features they don&rsquo;t care about. Trying to convert them into a Researcher or an Emotional Buyer. They&rsquo;re neither. Sell the payment, not the car.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">Why most reps lose two out of three</h2>

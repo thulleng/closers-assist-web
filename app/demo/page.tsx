@@ -54,7 +54,7 @@ export default function DemoPage() {
             <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">Live Demo</span>
           </div>
           <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-6xl">See it work</h1>
-          <p className="mt-4 text-lg text-ash">Every closer&apos;s second brain. In under 2 minutes.</p>
+          <p className="mt-4 text-lg text-ash">Every closer's second brain. In under 2 minutes.</p>
         </div>
 
         {/* Video */}

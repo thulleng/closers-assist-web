@@ -58,13 +58,13 @@ export default function TelegramLinkClient() {
       {status === "done" && (
         <div className="glass-panel rounded-2xl p-10">
           <CheckCircle className="mx-auto h-12 w-12 text-deal" strokeWidth={2} />
-          <h2 className="mt-6 font-display text-2xl font-bold text-white">You&apos;re connected!</h2>
+          <h2 className="mt-6 font-display text-2xl font-bold text-white">You're connected!</h2>
           <p className="mt-2 text-sm text-ash">
             Your Closers Assist agent is now live in Telegram. Go back to the chat and try it:
           </p>
           <div className="mt-4 rounded-xl bg-slate/50 p-4 text-left">
             <code className="text-[13px] text-bone">
-              &ldquo;I just sold a Camry to Jane Foster — full deal, $3,200 front gross&rdquo;
+              “I just sold a Camry to Jane Foster — full deal, $3,200 front gross”
             </code>
           </div>
           <a
@@ -92,7 +92,7 @@ export default function TelegramLinkClient() {
             <ArrowRight className="h-5 w-5" strokeWidth={2.5} />
           </button>
           <p className="mt-3 text-xs text-muted">
-            Make sure you&apos;re signed in to closersassist.com first.
+            Make sure you're signed in to closersassist.com first.
           </p>
         </div>
       )}

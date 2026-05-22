@@ -39,7 +39,7 @@ export default function MiniThatPays() {
               A half mini pays $200. That&rsquo;s the number most reps see. They log it. They move on.
             </p>
             <p>
-              But here&rsquo;s the math most reps never run: that half unit at 10.5 turns into a $500 bonus at 11. That $200 mini just became a $700 deal — and the rep who passed on it because &ldquo;it&rsquo;s just a mini&rdquo; left $500 on the table.
+              But here&rsquo;s the math most reps never run: that half unit at 10.5 turns into a $500 bonus at 11. That $200 mini just became a $700 deal — and the rep who passed on it because “it&rsquo;s just a mini” left $500 on the table.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The bonus ladder is the real game</h2>

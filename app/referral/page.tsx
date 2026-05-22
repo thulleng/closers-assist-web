@@ -66,7 +66,7 @@ function ReferralContent() {
               <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
                 <Users className="h-3.5 w-3.5 text-deal-light" strokeWidth={2.5} />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Refer &amp; Earn
+                  Refer & Earn
                 </span>
               </div>
               <h1 className="font-display text-[42px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[64px]">

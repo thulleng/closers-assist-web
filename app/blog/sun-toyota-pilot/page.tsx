@@ -47,7 +47,7 @@ export default function SunToyotaPilot() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The problem: 200 leads. One closer. A 48-hour clock.</h2>
             <p>
-              Every dealership floor runs on the same math: you get more leads than you can handle. At Sun Toyota, we pull 200 to 250 internet leads a month. Some are real buyers. Most are &ldquo;just looking.&rdquo; A handful are ready today. The problem is you don&rsquo;t know which is which until you follow up.
+              Every dealership floor runs on the same math: you get more leads than you can handle. At Sun Toyota, we pull 200 to 250 internet leads a month. Some are real buyers. Most are “just looking.” A handful are ready today. The problem is you don&rsquo;t know which is which until you follow up.
             </p>
             <p>
               And follow-up is the bottleneck. You call. They don&rsquo;t answer. You text. They reply three days later. You leave a voicemail. They call back while you&rsquo;re on a demo drive. By the time you reconnect, they&rsquo;ve already filled out a form at another store. The 48-hour window on an internet lead is real — and most of us lose half our leads inside it.
@@ -65,13 +65,13 @@ export default function SunToyotaPilot() {
             </p>
             <ul className="list-disc pl-5 space-y-2 text-ash">
               <li><strong className="text-bone">Instant lead response.</strong> When an internet lead hits the CRM, the agent fires a personalized message within 2 minutes. It knows the vehicle they inquired about, the trim, the incentives running that week.</li>
-              <li><strong className="text-bone">Objection handling.</strong> It&rsquo;s trained on real objections from real customers. &ldquo;I&rsquo;m just looking.&rdquo; &ldquo;The payment is too high.&rdquo; &ldquo;I need to talk to my wife.&rdquo; It doesn&rsquo;t give generic responses — it gives scripts that have actually worked on this floor.</li>
+              <li><strong className="text-bone">Objection handling.</strong> It&rsquo;s trained on real objections from real customers. “I&rsquo;m just looking.” “The payment is too high.” “I need to talk to my wife.” It doesn&rsquo;t give generic responses — it gives scripts that have actually worked on this floor.</li>
               <li><strong className="text-bone">Follow-up cadence.</strong> Day 1, Day 3, Day 7, Day 14. Text, then email, then call prompt. The cadence doesn&rsquo;t miss. It doesn&rsquo;t get busy. It doesn&rsquo;t forget.</li>
-              <li><strong className="text-bone">Escalation.</strong> When a lead goes warm — they reply, they ask a real question, they say &ldquo;what&rsquo;s your best price&rdquo; — the agent tags me. I get a notification. I step in. The AI warms them up. I close them.</li>
+              <li><strong className="text-bone">Escalation.</strong> When a lead goes warm — they reply, they ask a real question, they say “what&rsquo;s your best price” — the agent tags me. I get a notification. I step in. The AI warms them up. I close them.</li>
               <li><strong className="text-bone">Pay plan awareness.</strong> The agent knows my bonus ladder. It knows I need 11 units for the $500 bonus and 15 for $1,000. It prioritizes leads that move the unit count — not just the highest gross.</li>
             </ul>
             <p>
-              The agent doesn&rsquo;t replace me. It&rsquo;s not supposed to. It handles the 80% of follow-up that&rsquo;s repetitive — the first touch, the objection response, the &ldquo;just checking in.&rdquo; I handle the close. That&rsquo;s the split.
+              The agent doesn&rsquo;t replace me. It&rsquo;s not supposed to. It handles the 80% of follow-up that&rsquo;s repetitive — the first touch, the objection response, the “just checking in.” I handle the close. That&rsquo;s the split.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The results: 30 days of real numbers</h2>
@@ -117,36 +117,36 @@ export default function SunToyotaPilot() {
 
             <p>
               <strong className="text-deal">Deal 1: The 11pm RAV4 lead.</strong>
-              Customer submitted a lead at 10:47pm on a Tuesday. Asked about a RAV4 XLE Premium. The AI responded at 10:49pm with trim comparisons, current incentives, and a question: &ldquo;Are you trading anything in?&rdquo; They replied at 11:02pm with their trade details. By 8:15am the next morning, I had an appointment on my calendar. That customer bought Friday. If I had waited until the morning to respond — 10 hours later — they would have filled out three more forms and I would have been the fourth call. Speed wins.
+              Customer submitted a lead at 10:47pm on a Tuesday. Asked about a RAV4 XLE Premium. The AI responded at 10:49pm with trim comparisons, current incentives, and a question: “Are you trading anything in?” They replied at 11:02pm with their trade details. By 8:15am the next morning, I had an appointment on my calendar. That customer bought Friday. If I had waited until the morning to respond — 10 hours later — they would have filled out three more forms and I would have been the fourth call. Speed wins.
             </p>
 
             <p>
-              <strong className="text-deal">Deal 2: The &ldquo;just looking&rdquo; that wasn&rsquo;t.</strong>
-              Internet lead comes in. &ldquo;Just looking, not ready to buy.&rdquo; The AI didn&rsquo;t argue. It sent back: &ldquo;Totally get it — no pressure. While you&rsquo;re looking, here&rsquo;s a quick payment estimate on the Camry SE you asked about so you know what the numbers look like when you&rsquo;re ready.&rdquo; The customer replied 4 hours later: &ldquo;Actually that&rsquo;s lower than I thought. Can I come see it?&rdquo; Closed two days later. The AI turned an objection into a payment quote. I would have just moved on.
+              <strong className="text-deal">Deal 2: The “just looking” that wasn&rsquo;t.</strong>
+              Internet lead comes in. “Just looking, not ready to buy.” The AI didn&rsquo;t argue. It sent back: “Totally get it — no pressure. While you&rsquo;re looking, here&rsquo;s a quick payment estimate on the Camry SE you asked about so you know what the numbers look like when you&rsquo;re ready.” The customer replied 4 hours later: “Actually that&rsquo;s lower than I thought. Can I come see it?” Closed two days later. The AI turned an objection into a payment quote. I would have just moved on.
             </p>
 
             <p>
               <strong className="text-deal">Deal 3: The lease turn-in they forgot about.</strong>
-              Customer called in about a Highlander. Mentioned in passing that their current lease was up &ldquo;sometime next month.&rdquo; The AI flagged it and sent a follow-up: &ldquo;Heads up — your lease maturity is actually May 28th. If we do the Highlander now, I can get you into it before your turn-in date and waive the disposition fee. Want me to check numbers?&rdquo; They came in the next day. That&rsquo;s not selling. That&rsquo;s service. And the AI caught a detail I would have missed.
+              Customer called in about a Highlander. Mentioned in passing that their current lease was up “sometime next month.” The AI flagged it and sent a follow-up: “Heads up — your lease maturity is actually May 28th. If we do the Highlander now, I can get you into it before your turn-in date and waive the disposition fee. Want me to check numbers?” They came in the next day. That&rsquo;s not selling. That&rsquo;s service. And the AI caught a detail I would have missed.
             </p>
 
-            <h2 className="mt-10 font-display text-2xl font-bold text-white">The real objection: &ldquo;AI can&rsquo;t sell cars&rdquo;</h2>
+            <h2 className="mt-10 font-display text-2xl font-bold text-white">The real objection: “AI can&rsquo;t sell cars”</h2>
             <p>
-              I hear this from other reps. I hear it from managers. &ldquo;Customers don&rsquo;t want to talk to a robot.&rdquo; &ldquo;You can&rsquo;t build rapport through a bot.&rdquo; &ldquo;Sales is human.&rdquo;
+              I hear this from other reps. I hear it from managers. “Customers don&rsquo;t want to talk to a robot.” “You can&rsquo;t build rapport through a bot.” “Sales is human.”
             </p>
             <p>
-              They&rsquo;re right — and they&rsquo;re missing the point. The AI isn&rsquo;t closing. The AI is handling the grunt work. The 47 &ldquo;just checking in&rdquo; texts. The 23 &ldquo;here&rsquo;s the payment breakdown&rdquo; emails. The 19 &ldquo;did you have any other questions&rdquo; follow-ups. Every one of those used to eat 5 to 10 minutes of my day. Now they eat zero.
+              They&rsquo;re right — and they&rsquo;re missing the point. The AI isn&rsquo;t closing. The AI is handling the grunt work. The 47 “just checking in” texts. The 23 “here&rsquo;s the payment breakdown” emails. The 19 “did you have any other questions” follow-ups. Every one of those used to eat 5 to 10 minutes of my day. Now they eat zero.
             </p>
             <p>
               The AI frees me up to do what I&rsquo;m actually good at: being on the lot, walking the car, reading the customer, closing the deal. That&rsquo;s the split. And here&rsquo;s the part nobody talks about — customers don&rsquo;t care if the follow-up text came from me or my agent. They care that it was fast, relevant, and helpful.
             </p>
             <p>
-              I had exactly one customer in 30 days ask if they were talking to a bot. I told them the truth: &ldquo;My assistant handles the paperwork side so I can focus on getting you the right car. You&rsquo;re talking to me now.&rdquo; They laughed and said &ldquo;makes sense.&rdquo; That was the only objection.
+              I had exactly one customer in 30 days ask if they were talking to a bot. I told them the truth: “My assistant handles the paperwork side so I can focus on getting you the right car. You&rsquo;re talking to me now.” They laughed and said “makes sense.” That was the only objection.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The takeaway: every dealer needs this yesterday</h2>
             <p>
-              Here&rsquo;s what I know after 30 days: the dealership that adopts AI follow-up first wins. Period. Not in five years. Not when the technology is &ldquo;ready.&rdquo; Now.
+              Here&rsquo;s what I know after 30 days: the dealership that adopts AI follow-up first wins. Period. Not in five years. Not when the technology is “ready.” Now.
             </p>
             <p>
               The math is too simple to ignore. If you close one extra deal per month because your AI handled the follow-up you would have missed, that&rsquo;s $3,000 to $5,000 in gross profit — per rep. The tool costs $29.99. One deal pays for 10 years.

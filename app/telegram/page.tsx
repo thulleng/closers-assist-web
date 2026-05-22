@@ -105,7 +105,7 @@ export default async function TelegramPage({
                       <div>
                         <div className="rounded-2xl rounded-tl-sm bg-[#1c1c1e] px-4 py-2.5">
                           <p className="text-[13px] leading-relaxed text-white/90">
-                            Morning Thul. You&apos;re at 7.5 units — 3.5 from the $500 bonus at 11. What&apos;s the play today?
+                            Morning Thul. You're at 7.5 units — 3.5 from the $500 bonus at 11. What's the play today?
                           </p>
                         </div>
                         <span className="mt-1 block text-[9px] text-white/30">8:02 AM</span>
@@ -135,15 +135,15 @@ export default async function TelegramPage({
                           <div className="mt-2 space-y-1.5">
                             <div className="rounded-lg bg-white/5 px-3 py-2">
                               <span className="text-[10px] font-bold text-deal">1. EQUITY PULL</span>
-                              <p className="mt-0.5 text-[11px] text-white/70">Pull their trade value before they walk in. &ldquo;Your RAV4 is worth more than you think.&rdquo;</p>
+                              <p className="mt-0.5 text-[11px] text-white/70">Pull their trade value before they walk in. “Your RAV4 is worth more than you think.”</p>
                             </div>
                             <div className="rounded-lg bg-white/5 px-3 py-2">
                               <span className="text-[10px] font-bold text-deal">2. PAYMENT DROP</span>
-                              <p className="mt-0.5 text-[11px] text-white/70">&ldquo;Your payment could actually go down with a new one. Run the numbers real quick?&rdquo;</p>
+                              <p className="mt-0.5 text-[11px] text-white/70">“Your payment could actually go down with a new one. Run the numbers real quick?”</p>
                             </div>
                             <div className="rounded-lg bg-white/5 px-3 py-2">
                               <span className="text-[10px] font-bold text-deal">3. SERVICE SAVE</span>
-                              <p className="mt-0.5 text-[11px] text-white/70">&ldquo;First two services are free. That&rsquo;s $200 back in your pocket.&rdquo;</p>
+                              <p className="mt-0.5 text-[11px] text-white/70">“First two services are free. That&rsquo;s $200 back in your pocket.”</p>
                             </div>
                           </div>
                         </div>
