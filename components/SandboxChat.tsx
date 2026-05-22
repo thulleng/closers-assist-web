@@ -112,26 +112,26 @@ export default function SandboxChat() {
         <div className="overflow-y-auto px-4 py-3 space-y-3" style={{ maxHeight: "340px" }}>
           {messages.length === 0 && !loading && (
             <div className="text-center py-4">
-              <p className="text-xs text-muted mb-3">
+              <p className="text-sm text-muted mb-3 leading-snug px-2">
                 Talk to the real agent. Send images, videos, or voice notes — I'll
                 handle them.
               </p>
-              <div className="flex flex-col gap-1.5 items-center mb-4">
+              <div className="flex flex-col gap-2 items-center mb-5">
                 {CAPABILITIES.map((c, i) => (
-                  <span key={i} className="text-[11px] text-muted/70">
+                  <span key={i} className="text-sm text-muted/80">
                     {c}
                   </span>
                 ))}
               </div>
-              <div className="flex flex-wrap gap-1.5 justify-center">
+              <div className="flex flex-wrap gap-2 justify-center">
                 {SUGGESTIONS.map((s) => (
                   <button
                     key={s}
                     onClick={() => send(s)}
-                    className="inline-flex items-center gap-1 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-gray-300 hover:border-deal/40 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-sm leading-tight text-gray-300 hover:border-deal/40 hover:text-white transition-colors"
                   >
-                    <Zap className="h-3 w-3 text-deal" />
-                    <span className="max-w-[160px] truncate">{s}</span>
+                    <Zap className="h-4 w-4 shrink-0 text-deal" />
+                    <span className="max-w-[160px] truncate text-sm">{s}</span>
                   </button>
                 ))}
               </div>
@@ -194,14 +194,14 @@ export default function SandboxChat() {
               placeholder="Log a deal, check math, write a script..."
               maxLength={400}
               disabled={loading}
-              className="flex-1 rounded-xl bg-white/5 border border-white/10 px-3.5 py-2.5 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-deal/50 transition-colors disabled:opacity-40"
+              className="flex-1 rounded-xl bg-white/5 border border-white/10 px-4 py-3 text-sm text-white placeholder:text-gray-500 focus:outline-none focus:border-deal/50 transition-colors disabled:opacity-40"
             />
             <button
               type="submit"
               disabled={loading || !input.trim()}
-              className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-deal text-black font-bold transition-all hover:bg-deal-light disabled:opacity-40"
+              className="flex h-11 w-11 shrink-0 items-center justify-center rounded-xl bg-deal text-black font-bold transition-all hover:bg-deal-light disabled:opacity-40"
             >
-              <Send className="h-3.5 w-3.5" />
+              <Send className="h-4 w-4" />
             </button>
           </form>
         )}
