@@ -322,7 +322,7 @@ function OnboardingContent() {
                   </div>
                   <div className="border-x border-white/10 text-center">
                     <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]">
-                      <3s
+                      {"<3s"}
                     </div>
                     <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
                       Question to play

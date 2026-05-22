@@ -204,7 +204,7 @@ export default function HowItWorksPage() {
             <div className="grid gap-8 text-center md:grid-cols-3">
               <div>
                 <div className="font-display text-5xl font-black text-white">
-                  <3s
+                  {"<3s"}
                 </div>
                 <div className="mt-2 text-sm text-ash">
                   Average response time
