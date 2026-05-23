@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
+import { createClient } from "@/lib/supabase/server";
 
 // Shared secret — set via CLOSERS_API_SECRET in Vercel env.
 // This is how Naomi (Thul's chief of staff agent) authenticates.
@@ -9,15 +10,15 @@ type DealType = "half_mini" | "full_mini" | "full_deal" | "street_purchase";
 const VALID_TYPES: DealType[] = ["half_mini", "full_mini", "full_deal", "street_purchase"];
 
 interface LogDealRequest {
-  secret: string;
-  user_id: string;
+  secret?: string;
+  user_id?: string;
   customer_name: string;
   deal_type: DealType;
   vehicle?: string;
   front_gross?: number;
   commission?: number;
   units?: number;
-  sold_date?: string;  // YYYY-MM-DD — defaults to today
+  sold_date?: string;
   notes?: string;
 }
 
@@ -25,15 +26,36 @@ export async function POST(req: NextRequest) {
   try {
     const body: LogDealRequest = await req.json();
 
-    // ── Auth ────────────────────────────────────────────────────────────────
-    if (!API_SECRET || body.secret !== API_SECRET) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+    // ── Auth: support both API secret (agents) and session auth (web) ─────
+    let userId: string | null = null;
+
+    if (body.secret) {
+      // Agent auth — requires secret + user_id
+      if (!API_SECRET || body.secret !== API_SECRET) {
+        return NextResponse.json({ error: "Unauthorized" }, { status: 403 });
+      }
+      userId = body.user_id ?? null;
+    } else {
+      // Session auth — logged-in web user
+      const supabase = await createClient();
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) {
+        return NextResponse.json({ error: "Not authenticated" }, { status: 401 });
+      }
+      userId = user.id;
+    }
+
+    if (!userId) {
+      return NextResponse.json(
+        { error: "user_id is required (or sign in first)" },
+        { status: 400 }
+      );
     }
 
     // ── Validate ────────────────────────────────────────────────────────────
-    if (!body.user_id || !body.customer_name || !body.deal_type) {
+    if (!body.customer_name || !body.deal_type) {
       return NextResponse.json(
-        { error: "user_id, customer_name, and deal_type are required" },
+        { error: "customer_name and deal_type are required" },
         { status: 400 }
       );
     }
@@ -56,7 +78,7 @@ export async function POST(req: NextRequest) {
     const supabase = createAdminClient();
 
     const dealRow = {
-      user_id: body.user_id,
+      user_id: userId,
       customer_name: body.customer_name,
       deal_type: body.deal_type,
       vehicle: body.vehicle ?? null,

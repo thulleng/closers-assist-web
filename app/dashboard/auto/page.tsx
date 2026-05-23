@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft, Car, Download, Settings2 } from "lucide-react";
 import IncomeTracker from "@/components/IncomeTracker";
+import QuickDealLoggerWrapper from "@/components/QuickDealLoggerWrapper";
 import { autoDashboardSample } from "@/lib/dashboard-data-auto";
 import { buildAutoDashboard } from "@/lib/dashboard-data-auto-live";
 import { createClient } from "@/lib/supabase/server";
@@ -94,6 +95,11 @@ export default async function AutoDashboardPage() {
 
       {/* Dashboard itself */}
       <IncomeTracker data={data} />
+
+      {/* Quick Deal Logger — inline on the dashboard */}
+      <section className="mx-auto max-w-[500px] px-4 pb-5">
+        <QuickDealLoggerWrapper />
+      </section>
 
       {/* Footer — only show demo CTA when not authenticated */}
       {isDemo && (
