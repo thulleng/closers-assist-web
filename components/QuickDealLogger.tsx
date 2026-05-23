@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Plus, X, Loader2, CheckCircle2, Car, DollarSign, Hash } from "lucide-react";
+import { Plus, X, Loader2, CheckCircle2, Car, DollarSign, Hash, Share2, Image as ImageIcon } from "lucide-react";
 
 type DealTypeOption = {
   value: string;
@@ -31,6 +31,21 @@ export default function QuickDealLogger({ onDealLogged }: QuickDealLoggerProps) 
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [lastDealData, setLastDealData] = useState<{ customer: string; type: string; commission: string; units: string } | null>(null);
+
+  const DEAL_TYPE_LABELS: Record<string, string> = {
+    half_mini: "Half Mini",
+    full_mini: "Full Mini",
+    full_deal: "Full Deal",
+    street_purchase: "Street Purchase",
+  };
+
+  const DEAL_TYPE_UNITS: Record<string, string> = {
+    half_mini: "0.5",
+    full_mini: "1",
+    full_deal: "1",
+    street_purchase: "0",
+  };
 
   const reset = () => {
     setDealType("full_deal");
@@ -80,6 +95,21 @@ export default function QuickDealLogger({ onDealLogged }: QuickDealLoggerProps) 
       }
 
       setSaved(true);
+
+      // Save deal data for share card
+      const estimatedComm = dealType === "full_deal"
+        ? Math.round(parseFloat(frontGross) * 0.25).toString()
+        : dealType === "full_mini" ? "200"
+        : dealType === "half_mini" ? "100"
+        : "0";
+
+      setLastDealData({
+        customer: customerName.trim(),
+        type: DEAL_TYPE_LABELS[dealType] || dealType,
+        commission: estimatedComm,
+        units: DEAL_TYPE_UNITS[dealType] || "1",
+      });
+
       setTimeout(() => {
         reset();
         setOpen(false);
@@ -209,6 +239,51 @@ export default function QuickDealLogger({ onDealLogged }: QuickDealLoggerProps) 
                 <><Plus className="h-4 w-4" /> Log Deal</>
               )}
             </button>
+
+            {/* Share Card — appears after successfully logging */}
+            {saved && lastDealData && (
+              <div className="rounded-xl border border-deal/20 bg-deal/[0.04] p-4">
+                <div className="flex items-center gap-2 mb-3">
+                  <Share2 className="h-4 w-4 text-deal" strokeWidth={2.2} />
+                  <span className="text-[11px] font-bold uppercase tracking-[1px] text-deal">Share this close</span>
+                </div>
+                <p className="text-xs text-ash mb-3">
+                  Post this to Instagram, Facebook, or Twitter. Your customers see you winning.
+                </p>
+                <div className="flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const params = new URLSearchParams({
+                        customer: lastDealData.customer,
+                        commission: lastDealData.commission,
+                        type: lastDealData.type,
+                        units: lastDealData.units,
+                        rep: "Thul Leng",
+                      });
+                      const url = `/api/share-card?${params.toString()}`;
+                      window.open(url, "_blank");
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-deal/20 hover:bg-deal/30 border border-deal/30 px-3 py-2.5 text-xs font-bold text-deal-light transition-all active:scale-[0.98]"
+                  >
+                    <ImageIcon className="h-3.5 w-3.5" strokeWidth={2.5} />
+                    Share Card
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const text = `Just closed ${lastDealData.customer} — ${lastDealData.type} 🏆\n\nGot my AI closer at closersassist.com`;
+                      const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+                      window.open(url, "_blank");
+                    }}
+                    className="flex-1 flex items-center justify-center gap-2 rounded-xl bg-white/5 hover:bg-white/10 border border-white/10 px-3 py-2.5 text-xs font-bold text-bone transition-all active:scale-[0.98]"
+                  >
+                    <Share2 className="h-3.5 w-3.5" strokeWidth={2.5} />
+                    Post
+                  </button>
+                </div>
+              </div>
+            )}
           </form>
         </div>
       )}
