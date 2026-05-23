@@ -54,7 +54,7 @@ export async function POST(req: NextRequest) {
 
           if (!profile) {
             // Unlinked — send onboarding
-            await sendWhatsApp(from, "👋 Welcome to Closers Assist!\n\nTo connect your account, visit:\nhttps://closersassist.com/whatsapp?phone=" + from);
+            await sendWhatsApp(from, "👋 Welcome to Deal Clozr!\n\nTo connect your account, visit:\nhttps://dealclozr.com/whatsapp?phone=" + from);
             continue;
           }
 

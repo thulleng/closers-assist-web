@@ -24,7 +24,7 @@ const conversations: Conversation[] = [
     avatarGradient: "from-[#10B981] to-[#059669]",
     context: "half mini turned full",
     bubbles: [
-      { side: "in", text: "bro you gotta try this Closers Assist thing" },
+      { side: "in", text: "bro you gotta try this Deal Clozr thing" },
       { side: "out", text: "the ai thing? does it actually work" },
       { side: "in", text: "used it on a $499 RAV4 objection at 8pm" },
       {

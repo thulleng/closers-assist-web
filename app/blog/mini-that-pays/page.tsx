@@ -80,7 +80,7 @@ export default function MiniThatPays() {
               The reps who finish at 20 units don&rsquo;t get there on full deals alone. They stack minis. They count every half. They know exactly how many units they need and exactly what each additional deal is worth — not just in commission, but in bonus progression.
             </p>
             <p>
-              Your CRM doesn&rsquo;t tell you this. ChatGPT doesn&rsquo;t know your bonus ladder. Closers Assist does — in real time, without being asked. That&rsquo;s the difference between a tool that takes notes and a tool that makes you money.
+              Your CRM doesn&rsquo;t tell you this. ChatGPT doesn&rsquo;t know your bonus ladder. Deal Clozr does — in real time, without being asked. That&rsquo;s the difference between a tool that takes notes and a tool that makes you money.
             </p>
           </div>
 

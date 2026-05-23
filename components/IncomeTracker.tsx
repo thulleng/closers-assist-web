@@ -363,7 +363,7 @@ export default function IncomeTracker({ data }: { data: DashboardData }) {
                 <div className="text-4xl mb-2">📭</div>
                 <p className="text-[13px] text-muted font-medium">No deals yet this month</p>
                 <p className="text-[11px] text-muted mt-1">
-                  Tell your Closers Assist agent "I sold a..." to start tracking
+                  Tell your Deal Clozr agent "I sold a..." to start tracking
                 </p>
               </div>
             ) : (

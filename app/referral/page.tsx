@@ -45,7 +45,7 @@ function ReferralContent() {
   const [referralLink, setReferralLink] = useState("");
 
   useEffect(() => {
-    const base = typeof window !== "undefined" ? window.location.origin : "https://closersassist.com";
+    const base = typeof window !== "undefined" ? window.location.origin : "https://dealclozr.com";
     setReferralLink(`${base}/referral?ref=${refCode || "THUL"}`);
   }, [refCode]);
 
@@ -68,7 +68,7 @@ function ReferralContent() {
   };
 
   const shareViaText = () => {
-    const text = `You gotta try this. It's an AI closer that handles deals AND your life. Built by a Toyota rep. https://closersassist.com/referral?ref=${refCode || "THUL"}`;
+    const text = `You gotta try this. It's an AI closer that handles deals AND your life. Built by a Toyota rep. https://dealclozr.com/referral?ref=${refCode || "THUL"}`;
     const smsUrl = `sms:?&body=${encodeURIComponent(text)}`;
     window.open(smsUrl, "_blank");
     setShowShareSheet(false);
@@ -78,7 +78,7 @@ function ReferralContent() {
     if (navigator.share) {
       try {
         await navigator.share({
-          title: "Closers Assist — The AI agent every closer owns.",
+          title: "Deal Clozr — The AI agent every closer owns.",
           text: `You gotta try this. An AI closer that handles deals AND your life. Built by a working rep.`,
           url: referralLink,
         });
@@ -111,7 +111,7 @@ function ReferralContent() {
                 <span className="text-shine font-black">should close more.</span>
               </h1>
               <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-ash">
-                {referrer.name} ({referrer.role}) uses Closers Assist to close
+                {referrer.name} ({referrer.role}) uses Deal Clozr to close
                 more deals. They sent you here because closers share what works.
               </p>
             </div>
@@ -190,7 +190,7 @@ function ReferralContent() {
                 <div className="p-6">
                   <div className="flex items-center gap-2 mb-4">
                     <div className="flex-1 bg-black/40 rounded-xl border border-white/10 px-4 py-3 text-sm text-white/70 font-mono truncate">
-                      {referralLink || "closersassist.com/referral?ref=THUL"}
+                      {referralLink || "dealclozr.com/referral?ref=THUL"}
                     </div>
                     <button
                       onClick={copyLink}
@@ -312,7 +312,7 @@ function ReferralContent() {
                 {
                   step: "02",
                   title: "They sign up",
-                  body: "They get the full Closers Assist experience. No credit card. Instant access.",
+                  body: "They get the full Deal Clozr experience. No credit card. Instant access.",
                 },
                 {
                   step: "03",

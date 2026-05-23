@@ -28,12 +28,12 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Closers Assist — The AI agent every closer owns.",
-    template: "%s · Closers Assist",
+    default: "Deal Clozr — The AI agent every closer owns.",
+    template: "%s · Deal Clozr",
   },
   description:
     "Car. Home. Policy. Panel. Plan. One AI agent, every industry, zero restrictions. Built by a working rep — not a SaaS company. $29.99/rep/mo.",
-  metadataBase: new URL("https://closersassist.com"),
+  metadataBase: new URL("https://dealclozr.com"),
   manifest: "/manifest.json",
   icons: {
     icon: [
@@ -46,11 +46,11 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Closers Assist — The AI agent every closer owns.",
+    title: "Deal Clozr — The AI agent every closer owns.",
     description:
       "One AI agent, every industry, zero restrictions. Built by a working rep.",
-    url: "https://closersassist.com",
-    siteName: "Closers Assist",
+    url: "https://dealclozr.com",
+    siteName: "Deal Clozr",
     locale: "en_US",
     type: "website",
     images: [
@@ -58,13 +58,13 @@ export const metadata: Metadata = {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "Closers Assist — The AI agent every closer owns.",
+        alt: "Deal Clozr — The AI agent every closer owns.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Closers Assist — The AI agent every closer owns.",
+    title: "Deal Clozr — The AI agent every closer owns.",
     description: "One AI agent, every industry, zero restrictions.",
     images: ["/api/og"],
   },

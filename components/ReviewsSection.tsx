@@ -78,7 +78,7 @@ export default function ReviewsSection() {
         <div className="mt-8 rounded-2xl border border-dashed border-white/10 bg-black/30 p-10 text-center">
           <div className="mb-3 text-4xl">⭐</div>
           <h3 className="mb-2 font-display text-lg font-black text-white">No reviews yet</h3>
-          <p className="mb-4 text-sm text-ash">Be the first to share how Closers Assist helped you close more deals.</p>
+          <p className="mb-4 text-sm text-ash">Be the first to share how Deal Clozr helped you close more deals.</p>
           <button
             onClick={() => setShowForm(true)}
             className="inline-flex items-center gap-2 rounded-xl bg-deal px-5 py-2.5 text-sm font-bold text-black transition-all hover:bg-deal-light"

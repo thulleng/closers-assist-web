@@ -3,7 +3,7 @@ import { TrendingUp } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Financial Advisors Sales AI Agent | Closers Assist",
+  title: "Financial Advisors Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for financial advisors. Handle fee objections, articulate your value against robo-advisors, and convert prospects into long-term managed accounts.",
 };

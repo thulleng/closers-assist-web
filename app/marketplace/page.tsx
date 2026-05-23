@@ -41,7 +41,7 @@ const launchSkills: Skill[] = [
   {
     icon: Phone,
     name: "Cold Call Coach",
-    author: "Closers Assist",
+    author: "Deal Clozr",
     category: "Live coaching",
     price: "$4.99",
     priceNote: "/mo",
@@ -52,7 +52,7 @@ const launchSkills: Skill[] = [
   {
     icon: Calculator,
     name: "Deal Math",
-    author: "Closers Assist",
+    author: "Deal Clozr",
     category: "Commission",
     price: "$2.99",
     priceNote: "/mo",
@@ -62,7 +62,7 @@ const launchSkills: Skill[] = [
   {
     icon: Mail,
     name: "Follow-Up Writer",
-    author: "Closers Assist",
+    author: "Deal Clozr",
     category: "Follow-up",
     price: "$3.99",
     priceNote: "/mo",
@@ -72,7 +72,7 @@ const launchSkills: Skill[] = [
   {
     icon: Swords,
     name: "Objection Killer",
-    author: "Closers Assist",
+    author: "Deal Clozr",
     category: "Closing",
     price: "$4.99",
     priceNote: "/mo",
@@ -82,7 +82,7 @@ const launchSkills: Skill[] = [
   {
     icon: LineChart,
     name: "Pipeline Pulse",
-    author: "Closers Assist",
+    author: "Deal Clozr",
     category: "Pipeline",
     price: "Free",
     body: "Daily 60-second stand-up. Who's hot, who's cold, who needs a touch today. Ships free with every tier.",
@@ -91,7 +91,7 @@ const launchSkills: Skill[] = [
   {
     icon: FileSearch,
     name: "Trade Valuator",
-    author: "Closers Assist",
+    author: "Deal Clozr",
     category: "Auto",
     price: "$3.99",
     priceNote: "/mo",
@@ -231,7 +231,7 @@ export default function MarketplacePage() {
                 <span className="text-shine font-black">day one.</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-ash">
-                Built by Closers Assist to anchor the marketplace. Community
+                Built by Deal Clozr to anchor the marketplace. Community
                 skills ship alongside at launch.
               </p>
             </div>
@@ -498,7 +498,7 @@ export default function MarketplacePage() {
           <FadeIn delay={300}>
             <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
               <a
-                href="mailto:thul@closersassist.com?subject=Closers%20Assist%20Launch%20Creator%20Application"
+                href="mailto:thul@dealclozr.com?subject=Closers%20Assist%20Launch%20Creator%20Application"
                 className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base"
               >
                 Apply to be a creator

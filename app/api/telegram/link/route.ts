@@ -61,7 +61,7 @@ export async function POST(req: NextRequest) {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           chat_id,
-          text: `✅ *You're connected, ${name}!*\n\nI'm your Closers Assist agent. I know your pay plan, your deals, and your goals. I'm with you on the lot — right here in Telegram.\n\nTry me: "I just sold a Camry to Jane Foster — full deal, $3,200 front gross"\n\nOr ask: "Where am I at this month?"`,
+          text: `✅ *You're connected, ${name}!*\n\nI'm your Deal Clozr agent. I know your pay plan, your deals, and your goals. I'm with you on the lot — right here in Telegram.\n\nTry me: "I just sold a Camry to Jane Foster — full deal, $3,200 front gross"\n\nOr ask: "Where am I at this month?"`,
           parse_mode: "Markdown",
         }),
       });

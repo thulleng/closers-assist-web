@@ -3,7 +3,7 @@ import { Home } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Roofing Sales AI Agent | Closers Assist",
+  title: "Roofing Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for roofing reps. Insurance claim walkthroughs, repair-to-replace conversations, and storm territory plays that close more roofs.",
 };

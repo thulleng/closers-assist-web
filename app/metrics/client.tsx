@@ -56,7 +56,7 @@ export function MetricsClient() {
 
       <div className="relative mx-auto max-w-6xl px-6 py-16">
         <div className="mb-10">
-          <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-5xl">Closers Assist</h1>
+          <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-5xl">Deal Clozr</h1>
           <p className="mt-2 text-sm text-ash">Internal metrics. Investor-ready.</p>
         </div>
 

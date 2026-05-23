@@ -47,7 +47,7 @@ CREATE TABLE crm_contacts (
 
 ## Zapier Setup
 1. Trigger: "New Lead in DealerCenter" (or whatever CRM)
-2. Action: Webhook POST to https://closersassist.com/api/webhooks/crm
+2. Action: Webhook POST to https://dealclozr.com/api/webhooks/crm
 3. Map fields: First Name → customer_name, Email → email, etc.
 
 ## UI Integration

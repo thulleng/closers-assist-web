@@ -9,7 +9,7 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        // Closers Assist brand tokens
+        // Deal Clozr brand tokens
         pit: "#050506",
         slate: "#141417",
         iron: "#2A2A2F",

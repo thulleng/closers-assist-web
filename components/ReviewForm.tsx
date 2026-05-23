@@ -88,7 +88,7 @@ export default function ReviewForm({ onSubmitted }: ReviewFormProps) {
           value={reviewText}
           onChange={(e) => setReviewText(e.target.value)}
           rows={4}
-          placeholder="How has Closers Assist helped you close more deals?"
+          placeholder="How has Deal Clozr helped you close more deals?"
           className="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3 text-sm text-white placeholder:text-white/20 focus:border-deal/50 focus:outline-none focus:ring-1 focus:ring-deal/30 resize-none"
           maxLength={600}
         />

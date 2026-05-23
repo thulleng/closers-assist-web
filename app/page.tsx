@@ -475,7 +475,7 @@ export default function HomePage() {
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-1.5 text-[13px] font-bold text-white">
-                          Closers Assist
+                          Deal Clozr
                           <span className="inline-flex h-3.5 w-3.5 items-center justify-center rounded-full bg-deal">
                             <svg
                               viewBox="0 0 10 10"
@@ -730,7 +730,7 @@ export default function HomePage() {
                   Never forgets a deal
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Closers Assist knows exactly what you said, what they pushed back on, and what closed them last time.
+                  Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Deal Clozr knows exactly what you said, what they pushed back on, and what closed them last time.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   Persistent memory across sessions
@@ -766,7 +766,7 @@ export default function HomePage() {
                   Sounds like you. Not a bot.
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  Your scripts. Your style. Your floor. Closers Assist learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers.
+                  Your scripts. Your style. Your floor. Deal Clozr learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   Built on Thul&rsquo;s floor at Sun Toyota
@@ -1575,7 +1575,7 @@ export default function HomePage() {
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
                   My name is Thul. I sell Toyotas at Sun Toyota in Florida. I
-                  built Closers Assist because I needed an employee — not
+                  built Deal Clozr because I needed an employee — not
                   another tool. Something that knows my pay
                   plan, my scripts, my objections, my customers.{" "}
                   <span className="font-semibold text-white">
@@ -1698,7 +1698,7 @@ export default function HomePage() {
                     <div className="text-[9px] font-bold uppercase tracking-[1.5px] text-deal-light">
                       Installed
                     </div>
-                    <div className="text-[10px] text-ash">Closers Assist</div>
+                    <div className="text-[10px] text-ash">Deal Clozr</div>
                   </div>
                 </div>
               </div>
@@ -1760,7 +1760,7 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    April 2026 &middot; with Closers Assist
+                    April 2026 &middot; with Deal Clozr
                   </span>
                 </div>
                 <div className="relative mb-1 text-[10px] font-bold uppercase tracking-[2.5px] text-deal-light">
@@ -2195,7 +2195,7 @@ export default function HomePage() {
                 </div>
                 <div className="border-l border-iron bg-deal/[0.06] p-5 text-center">
                   <span className="font-display text-sm font-bold text-deal">
-                    CLOSERS ASSIST
+                    DEAL CLOZR
                   </span>
                 </div>
               </div>

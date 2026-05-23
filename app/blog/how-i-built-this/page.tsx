@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "How I Built an AI Sales Agent Between Customers",
-  description: "I sell Toyotas. I'm not an engineer. Here's how I built Closers Assist on the Sun Toyota floor.",
+  description: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the Sun Toyota floor.",
 };
 
 export default function HowIBuiltThis() {
@@ -39,7 +39,7 @@ export default function HowIBuiltThis() {
               I sell Toyotas at Sun Toyota in New Port Richey, Florida. I am not an engineer. I do not have a CS degree. I have never worked in tech.
             </p>
             <p>
-              I built Closers Assist on the showroom floor — between test drives, T.O.s, and service lane laps. Here&rsquo;s how it happened.
+              I built Deal Clozr on the showroom floor — between test drives, T.O.s, and service lane laps. Here&rsquo;s how it happened.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The CRM graveyard</h2>
@@ -77,7 +77,7 @@ export default function HowIBuiltThis() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">What&rsquo;s next</h2>
             <p>
-              Closers Assist is live. $29.99/rep/month. Auto, real estate, insurance, solar, SaaS — 18 industries. Same agent. Same memory. Web + Telegram, live now.
+              Deal Clozr is live. $29.99/rep/month. Auto, real estate, insurance, solar, SaaS — 18 industries. Same agent. Same memory. Web + Telegram, live now.
             </p>
             <p>
               I&rsquo;m still on the floor at Sun Toyota. Still selling. Still building between customers. Because the best sales tools aren&rsquo;t built in boardrooms. They&rsquo;re built by people who actually need them.

@@ -60,7 +60,7 @@ export default function PhoneMockup() {
           <div className="mb-4 flex items-center gap-2 rounded-md border border-iron bg-pit px-3 py-2">
             <div className="h-2 w-2 rounded-full bg-deal animate-pulse" />
             <span className="font-display text-[11px] font-bold tracking-wider text-bone">
-              CLOSERS ASSIST
+              DEAL CLOZR
             </span>
             <div className="ml-auto flex items-center gap-1 text-[10px] text-ash">
               <Zap className="h-3 w-3 text-deal" strokeWidth={2} />

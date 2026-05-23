@@ -7,7 +7,7 @@ import TelegramLinkClient from "@/components/TelegramLinkClient";
 
 export const metadata: Metadata = {
   title: "Telegram",
-  description: "Closers Assist on Telegram — your AI sales agent follows you to the lot. Same agent, every device.",
+  description: "Deal Clozr on Telegram — your AI sales agent follows you to the lot. Same agent, every device.",
 };
 
 export default async function TelegramPage({

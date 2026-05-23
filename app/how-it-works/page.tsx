@@ -17,7 +17,7 @@ import AIAvatar from "@/components/AIAvatar";
 export const metadata: Metadata = {
   title: "How It Works",
   description:
-    "Four steps. Pick your industry, set up your profile, use it live during deals, and watch it learn your style. Closers Assist is built for the floor.",
+    "Four steps. Pick your industry, set up your profile, use it live during deals, and watch it learn your style. Deal Clozr is built for the floor.",
 };
 
 const steps = [

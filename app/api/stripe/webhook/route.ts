@@ -95,7 +95,7 @@ export async function POST(req: NextRequest) {
                 type: "magiclink",
                 email,
                 options: {
-                  redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://closersassist.com"}/onboarding`,
+                  redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://dealclozr.com"}/onboarding`,
                 },
               });
 

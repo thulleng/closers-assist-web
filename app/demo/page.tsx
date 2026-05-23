@@ -78,8 +78,8 @@ export default function DemoPage() {
           <h2 className="mb-6 text-center font-display text-2xl font-bold text-white">Try it yourself</h2>
           <p className="mb-8 text-center text-sm text-ash">
             Open{" "}
-            <a href="https://closersassist.com" target="_blank" rel="noopener" className="text-deal hover:underline">
-              closersassist.com
+            <a href="https://dealclozr.com" target="_blank" rel="noopener" className="text-deal hover:underline">
+              dealclozr.com
             </a>
             {" "}in another tab. Copy any prompt below and paste it into the chat.
           </p>

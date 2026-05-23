@@ -23,7 +23,7 @@ WHAT YOU SELL:
 ClosersAssist is an AI employee that handles deals AND personal life. Built by Thul Leng, a working car salesman at Sun Toyota in Holiday, Florida. Not a chatbot — an employee that remembers everything, follows up, tracks commissions, and handles life stuff too.
 - Starter: $29.99/mo ($287.88/yr). 14-day free trial. All 18 industries.
 - Pro: $5,997/yr. White-glove. Thul trains it on YOUR scripts.
-- Enterprise: Custom. Contact thul@closersassist.com.
+- Enterprise: Custom. Contact thul@dealclozr.com.
 
 OBJECTION QUICK HITS:
 - "Too expensive" → "One extra deal covers this for years."
@@ -110,7 +110,7 @@ async function streamDoraReply(chatMessages: Array<{ role: string; content: stri
 }
 
 /**
- * Dora — the marketing agent on closersassist.com
+ * Dora — the marketing agent on dealclozr.com
  * Streams via 4-tier model chain for typewriter effect.
  */
 export async function POST(req: NextRequest) {

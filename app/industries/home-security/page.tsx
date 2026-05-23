@@ -3,7 +3,7 @@ import { Shield } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Home Security Sales AI Agent | Closers Assist",
+  title: "Home Security Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for home security reps. Knows your competitive comparisons, monitoring contract rebuttals, and smart home upsell cadence. Close more systems and activate more monitoring accounts.",
 };

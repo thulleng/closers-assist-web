@@ -3,7 +3,7 @@ import { Landmark } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Mortgage & Lending Sales AI Agent | Closers Assist",
+  title: "Mortgage & Lending Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for mortgage and lending reps. Handle rate objections, explain complex products clearly, and guide borrowers from application to close.",
 };

@@ -3,7 +3,7 @@ import { Wind } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "HVAC Sales AI Agent | Closers Assist",
+  title: "HVAC Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for HVAC reps. Handle system upgrade objections, sell maintenance agreements, and close emergency replacements with confidence.",
 };

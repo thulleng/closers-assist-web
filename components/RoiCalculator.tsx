@@ -134,7 +134,7 @@ export default function RoiCalculator() {
       <p className="mt-5 text-sm leading-relaxed text-bone">
         One extra deal pays for{" "}
         <span className="font-medium text-deal">{calc.yearsLabel}</span> of
-        Closers Assist.
+        Deal Clozr.
       </p>
 
       <Link

@@ -191,7 +191,7 @@ export default function SuccessPage() {
           <p className="text-xs text-gray-600">
             Didn't get it? Check spam or{" "}
             <a
-              href={`mailto:thul@closersassist.com?subject=Resend%20magic%20link%20for%20${encodeURIComponent(email || "")}`}
+              href={`mailto:thul@dealclozr.com?subject=Resend%20magic%20link%20for%20${encodeURIComponent(email || "")}`}
               className="text-[#10B981] hover:underline"
             >
               email us
@@ -212,10 +212,10 @@ export default function SuccessPage() {
         <p className="text-gray-600 text-xs mt-8">
           Questions?{" "}
           <a
-            href="mailto:thul@closersassist.com"
+            href="mailto:thul@dealclozr.com"
             className="text-[#10B981] hover:underline"
           >
-            thul@closersassist.com
+            thul@dealclozr.com
           </a>
         </p>
       </div>

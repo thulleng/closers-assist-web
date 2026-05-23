@@ -25,7 +25,7 @@ import GlobeVisual from "@/components/GlobeVisual";
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "One agent. Eighteen industries. Zero compromises. Closers Assist for Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, Retail, Pest Control, HVAC, Roofing, Home Security, Mortgage, Financial Advisors, Recruiting, Telecom, Rental, Project Manager, and Other Sales.",
+    "One agent. Eighteen industries. Zero compromises. Deal Clozr for Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, Retail, Pest Control, HVAC, Roofing, Home Security, Mortgage, Financial Advisors, Recruiting, Telecom, Rental, Project Manager, and Other Sales.",
 };
 
 const industries = [
@@ -224,7 +224,7 @@ export default function IndustriesPage() {
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
                   A closer is a closer. The industry is the wrapper. Pick yours —
-                  Closers Assist auto-loads your world the second you sign up.
+                  Deal Clozr auto-loads your world the second you sign up.
                 </p>
               </div>
               <div className="flex-shrink-0 flex justify-center mt-6 lg:mt-0">

@@ -32,7 +32,7 @@ export function EnterpriseBookingForm() {
       if (!res.ok) throw new Error("Something went wrong");
       setSubmitted(true);
     } catch (err) {
-      setError("Network error. Try again or email thul@closersassist.com.");
+      setError("Network error. Try again or email thul@dealclozr.com.");
     } finally {
       setLoading(false);
     }

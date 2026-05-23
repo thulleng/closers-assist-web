@@ -5,7 +5,7 @@ import FadeIn from "@/components/FadeIn";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Thul Leng, founder of Closers Assist. Built on the floor at Sun Toyota.",
+  description: "Get in touch with Thul Leng, founder of Deal Clozr. Built on the floor at Sun Toyota.",
 };
 
 export default function ContactPage() {
@@ -48,7 +48,7 @@ export default function ContactPage() {
             <div className="mt-12 grid gap-5 md:grid-cols-2">
               {/* Email card */}
               <a
-                href="mailto:thul@closersassist.com"
+                href="mailto:thul@dealclozr.com"
                 className="loud-card group relative overflow-hidden rounded-2xl p-7 text-left transition-all hover:border-deal/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.1)]"
               >
                 <div className="pointer-events-none absolute -right-12 -top-12 h-24 w-24 rounded-full blur-2xl opacity-0 group-hover:opacity-60 transition-opacity"
@@ -59,7 +59,7 @@ export default function ContactPage() {
                   </div>
                   <h2 className="text-lg font-bold text-white">Email directly</h2>
                   <p className="mt-2 text-sm leading-relaxed text-ash">
-                    thul@closersassist.com
+                    thul@dealclozr.com
                   </p>
                   <p className="mt-1 text-xs text-muted">
                     Usually replies same day. Even on Saturdays.

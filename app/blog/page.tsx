@@ -30,7 +30,7 @@ const POSTS = [
     title: "How I Built an AI Sales Agent Between Customers",
     date: "May 8, 2026",
     readTime: "4 min",
-    preview: "I sell Toyotas. I'm not an engineer. Here's how I built Closers Assist on the Sun Toyota floor — between test drives, T.O.s, and service lane laps.",
+    preview: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the Sun Toyota floor — between test drives, T.O.s, and service lane laps.",
     tag: "Founder Story",
   },
   {

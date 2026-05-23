@@ -152,7 +152,7 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
                 <div className="space-y-5 text-[17px] leading-relaxed text-bone">
                   <p>{data.scenario.setup}</p>
                   <p>
-                    You open Closers Assist on your phone. Type:{" "}
+                    You open Deal Clozr on your phone. Type:{" "}
                     <span className="rounded bg-slate px-2 py-0.5 font-mono text-sm text-deal">
                       {data.scenario.query}
                     </span>

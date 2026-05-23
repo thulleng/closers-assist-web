@@ -1,4 +1,4 @@
-# Closers Assist Redesign Plan
+# Deal Clozr Redesign Plan
 
 ## Redesign Location
 `~/Desktop/closers-assist-OLD-BACKUP`
@@ -32,7 +32,7 @@ Deploy via feature branch strategy:
 3. Bring over any new industry pages and components
 4. Test locally with `npm run dev`
 5. Push branch, review, merge to main
-6. Vercel auto-deploys to closersassist.com
+6. Vercel auto-deploys to dealclozr.com
 
 ---
 

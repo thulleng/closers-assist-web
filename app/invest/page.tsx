@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import LiveMetricsStrip from "@/components/LiveMetricsStrip";
 
 export const metadata: Metadata = {
-  title: "Closers Assist — Investor Brief",
+  title: "Deal Clozr — Investor Brief",
   description: "AI closer for commission sales. Built on the floor at Sun Toyota.",
 };
 
@@ -20,7 +20,7 @@ export default function InvestPage() {
             <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
             <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">Investor Brief</span>
           </div>
-          <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-6xl">Closers Assist</h1>
+          <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-6xl">Deal Clozr</h1>
           <p className="mt-4 text-xl text-ash sm:text-2xl">Every closer's second brain.</p>
           <p className="mt-2 text-sm text-muted">Built on the floor at Sun Toyota · Holiday, Florida</p>
         </div>
@@ -30,14 +30,14 @@ export default function InvestPage() {
 
         {/* What It Is */}
         <Section title="What It Is">
-          <p>Closers Assist is an AI sales partner that lives in a closer's pocket. It remembers every customer, handles every objection, logs every deal, writes every follow-up text, and tracks every dollar of commission — before the closer even asks.</p>
+          <p>Deal Clozr is an AI sales partner that lives in a closer's pocket. It remembers every customer, handles every objection, logs every deal, writes every follow-up text, and tracks every dollar of commission — before the closer even asks.</p>
           <p className="mt-3">$29.99/month per rep. One deal pays for 10 years. Zero setup, zero prompt engineering. It sounds like YOU, not generic AI.</p>
         </Section>
 
         {/* Why It Wins */}
         <Section title="Why It Wins">
           <ul className="space-y-3">
-            <WinItem title="Persistent memory" body="ChatGPT forgets. Closers Assist remembers every customer, every deal, every objection — across weeks and sessions." />
+            <WinItem title="Persistent memory" body="ChatGPT forgets. Deal Clozr remembers every customer, every deal, every objection — across weeks and sessions." />
             <WinItem title="Zero setup" body="No prompt engineering. No templates. Reps open the app and start talking. Built for people who sell, not people who configure software." />
             <WinItem title="Sounds like you" body="Learns your voice, your pay plan, your floor. Not a generic chatbot — a closer's closer." />
             <WinItem title="Enterprise moat" body="Dedicated AI closer for entire sales floors. $5K/month, done-for-you. CRM-integrated, live in 48 hours." />
@@ -47,13 +47,13 @@ export default function InvestPage() {
         {/* Market */}
         <Section title="The Market">
           <p>22 million commission-based salespeople in the US. Every one of them spends hours writing follow-ups, calculating commissions, and replaying objections in their head. That's the market.</p>
-          <p className="mt-3">The competitor is ChatGPT — free, generic, forgetful. Closers Assist wins on memory, voice, and zero-friction. A closer opens ChatGPT once and never comes back because it doesn't know their pay plan. Closers Assist does.</p>
+          <p className="mt-3">The competitor is ChatGPT — free, generic, forgetful. Deal Clozr wins on memory, voice, and zero-friction. A closer opens ChatGPT once and never comes back because it doesn't know their pay plan. Deal Clozr does.</p>
         </Section>
 
         {/* Traction */}
         <Section title="Traction">
           <ul className="space-y-3">
-            <TractionItem label="Product" value="Live on closersassist.com — 18 industry verticals, Stripe payments, live AI chat" />
+            <TractionItem label="Product" value="Live on dealclozr.com — 18 industry verticals, Stripe payments, live AI chat" />
             <TractionItem label="Enterprise" value="$5K/mo done-for-you tier with dedicated agent — Sun Toyota pilot launching May 2026" />
             <TractionItem label="Team" value="Solo founder — Thul Leng. Working Toyota closer. Built this between customers on the floor." />
             <TractionItem label="Deals Logged" value="Real closers logging real deals. System tracking units, commissions, and bonus progress." />
@@ -70,15 +70,15 @@ export default function InvestPage() {
 
         {/* The Ask */}
         <Section title="The Opportunity">
-          <p>Sales teams are drowning in admin while ChatGPT gives them generic answers. Closers Assist is the first AI that actually knows the closer — their deals, their pay plan, their voice, their floor.</p>
+          <p>Sales teams are drowning in admin while ChatGPT gives them generic answers. Deal Clozr is the first AI that actually knows the closer — their deals, their pay plan, their voice, their floor.</p>
           <p className="mt-3">The SaaS model funds the machine. Enterprise delivers margin. Every rep who tries it sticks because no other tool remembers their customer's wife's name from three weeks ago.</p>
           <p className="mt-3">This isn't a chatbot. It's a closer's second brain. Built by a closer, for closers.</p>
         </Section>
 
         {/* Footer */}
         <div className="mt-16 border-t border-iron pt-8 text-center">
-          <p className="text-sm text-ash">closersassist.com</p>
-          <p className="mt-1 text-xs text-muted">Thul Leng · thul@closersassist.com · Sun Toyota, Holiday FL</p>
+          <p className="text-sm text-ash">dealclozr.com</p>
+          <p className="mt-1 text-xs text-muted">Thul Leng · thul@dealclozr.com · Sun Toyota, Holiday FL</p>
         </div>
       </div>
     </section>

@@ -7,7 +7,7 @@ async function fetchMetrics() {
 
     const base = process.env.VERCEL_URL
       ? `https://${process.env.VERCEL_URL}`
-      : process.env.NEXT_PUBLIC_SITE_URL || "https://closersassist.com";
+      : process.env.NEXT_PUBLIC_SITE_URL || "https://dealclozr.com";
 
     const res = await fetch(`${base}/api/admin/metrics?secret=${encodeURIComponent(secret)}`);
     const data = await res.json();

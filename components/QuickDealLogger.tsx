@@ -272,7 +272,7 @@ export default function QuickDealLogger({ onDealLogged }: QuickDealLoggerProps) 
                   <button
                     type="button"
                     onClick={() => {
-                      const text = `Just closed ${lastDealData.customer} — ${lastDealData.type} 🏆\n\nGot my AI closer at closersassist.com`;
+                      const text = `Just closed ${lastDealData.customer} — ${lastDealData.type} 🏆\n\nGot my AI closer at dealclozr.com`;
                       const url = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
                       window.open(url, "_blank");
                     }}

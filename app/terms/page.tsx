@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Terms of Service",
-  description: "Closers Assist terms of service.",
+  description: "Deal Clozr terms of service.",
 };
 
 export default function TermsPage() {
@@ -32,7 +32,7 @@ export default function TermsPage() {
               1. Acceptance
             </h2>
             <p>
-              By using Closers Assist, you agree to these terms. If you
+              By using Deal Clozr, you agree to these terms. If you
               don&rsquo;t agree, don&rsquo;t use the service. These terms apply
               to all users — individual reps, team managers, and dealerships.
             </p>
@@ -43,7 +43,7 @@ export default function TermsPage() {
               2. The service
             </h2>
             <p>
-              Closers Assist provides AI-powered sales agent software. The
+              Deal Clozr provides AI-powered sales agent software. The
               service is provided “as is” — we work hard to keep it
               running reliably but can&rsquo;t guarantee 100% uptime. We&rsquo;re
               a small team building fast.
@@ -79,7 +79,7 @@ export default function TermsPage() {
               5. Acceptable use
             </h2>
             <p>
-              Use Closers Assist to close more deals. Don&rsquo;t use it to
+              Use Deal Clozr to close more deals. Don&rsquo;t use it to
               spam customers, scrape data, resell access, or do anything
               illegal. Common sense applies.
             </p>
@@ -102,7 +102,7 @@ export default function TermsPage() {
               7. Limitation of liability
             </h2>
             <p>
-              Closers Assist is a tool. We&rsquo;re not responsible for deals
+              Deal Clozr is a tool. We&rsquo;re not responsible for deals
               you lose, commissions you miss, or advice your agent gives that
               you choose to take. You&rsquo;re the closer — the agent assists.
               Maximum liability is limited to fees paid in the prior 3 months.
@@ -127,10 +127,10 @@ export default function TermsPage() {
             <p>
               Questions? Email{" "}
               <a
-                href="mailto:thul@closersassist.com"
+                href="mailto:thul@dealclozr.com"
                 className="text-deal-light hover:text-white underline"
               >
-                thul@closersassist.com
+                thul@dealclozr.com
               </a>
               .
             </p>
@@ -142,7 +142,7 @@ export default function TermsPage() {
             href="/"
             className="text-sm font-medium text-deal-light transition-colors hover:text-white"
           >
-            ← Back to Closers Assist
+            ← Back to Deal Clozr
           </Link>
         </div>
       </div>

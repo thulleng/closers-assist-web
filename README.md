@@ -1,4 +1,4 @@
-# Closers Assist — Marketing Site
+# Deal Clozr — Marketing Site
 
 The AI agent every closer owns. Car. Home. Policy. Panel. Plan.
 
@@ -83,7 +83,7 @@ The fastest path:
 1. Push this repo to GitHub (new repo — don't reuse the old drivemindai-website repo).
 2. Go to [vercel.com/new](https://vercel.com/new) and import the repo.
 3. Vercel auto-detects Next.js — just click Deploy.
-4. Add custom domain `closersassist.com` in Vercel project settings.
+4. Add custom domain `dealclozr.com` in Vercel project settings.
 5. Update GoDaddy DNS: add the A record + CNAME Vercel gives you.
 
 Total time: ~5 minutes. Free tier is more than enough for the marketing site.

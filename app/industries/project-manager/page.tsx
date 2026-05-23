@@ -55,7 +55,7 @@ const data: IndustryData = {
       "Change order approved. Project stays on track. Client renews the engagement.",
   },
   integrations:
-    "One recovered change order pays for years of Closers Assist. No integration required.",
+    "One recovered change order pays for years of Deal Clozr. No integration required.",
 };
 
 export default function ProjectManagerPage() {

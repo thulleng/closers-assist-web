@@ -1,6 +1,6 @@
 {
-  "name": "Closers Assist",
-  "short_name": "Closers Assist",
+  "name": "Deal Clozr",
+  "short_name": "Deal Clozr",
   "description": "The AI agent every closer owns.",
   "start_url": "/",
   "display": "standalone",

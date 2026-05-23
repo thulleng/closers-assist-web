@@ -3,7 +3,7 @@
 /**
  * AIAvatar — Glowing AI head/profile SVG illustration.
  *
- * Matches the neon green / gold Closers Assist design system.
+ * Matches the neon green / gold Deal Clozr design system.
  * Three variants: "profile" (side view head), "circuit" (geometric face),
  * "holo" (holographic head with data rings).
  *

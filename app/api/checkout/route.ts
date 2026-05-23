@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     // Fresh client per request — no caching, no stale key
     const stripe = new Stripe(key);
 
-    const origin = req.headers.get("origin") ?? "https://closersassist.com";
+    const origin = req.headers.get("origin") ?? "https://dealclozr.com";
 
     console.log("Creating checkout session for priceId:", priceId);
 

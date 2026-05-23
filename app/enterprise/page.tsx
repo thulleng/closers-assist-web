@@ -201,7 +201,7 @@ export default function EnterprisePage() {
         <div className="rounded-2xl border border-gold/20 bg-gold/[0.03] p-6">
           <p className="text-sm text-ash leading-relaxed">
             <span className="font-semibold text-gold-light">The real pitch: </span>
-            One mini deal — $400 commission — covers a rep's Closers Assist subscription for over a year. 
+            One mini deal — $400 commission — covers a rep's Deal Clozr subscription for over a year. 
             Your lowest closer pays for the whole floor. Every deal after that is pure margin. 
             This isn't software ROI math. It's car math.
           </p>
@@ -221,10 +221,10 @@ export default function EnterprisePage() {
         <p className="text-gray-600 text-sm mt-8">
           Prefer email?{" "}
           <a
-            href="mailto:thul@closersassist.com"
+            href="mailto:thul@dealclozr.com"
             className="text-[#10B981] hover:underline"
           >
-            thul@closersassist.com
+            thul@dealclozr.com
           </a>
         </p>
       </section>

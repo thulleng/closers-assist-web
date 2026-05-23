@@ -36,7 +36,7 @@ export async function GET(req: NextRequest) {
 
     const session = await stripe.billingPortal.sessions.create({
       customer: sub.stripe_customer_id,
-      return_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://closersassist.com"}/dashboard/settings`,
+      return_url: `${process.env.NEXT_PUBLIC_SITE_URL || "https://dealclozr.com"}/dashboard/settings`,
     });
 
     return NextResponse.redirect(session.url);

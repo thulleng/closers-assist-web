@@ -22,14 +22,14 @@ export default function Footer() {
                 />
                 <Image
                   src="/logo.png"
-                  alt="Closers Assist"
+                  alt="Deal Clozr"
                   width={32}
                   height={32}
                   className="h-8 w-8 rounded-md"
                 />
               </div>
               <span className="font-display text-[13px] font-black tracking-wider text-white">
-                CLOSERS <span className="text-shine">ASSIST</span>
+                DEAL CLOZR
               </span>
             </div>
             <p className="text-sm leading-relaxed text-ash">
@@ -128,14 +128,14 @@ export default function Footer() {
           <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center">
           <div>
             <p className="text-xs text-muted">
-              © {new Date().getFullYear()} Closers Assist. Built on the sales
+              © {new Date().getFullYear()} Deal Clozr. Built on the sales
               floor in New Port Richey, FL.
             </p>
             <div className="mt-3 flex items-center gap-4">
-              <a href="https://linkedin.com/company/closersassist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
+              <a href="https://linkedin.com/company/dealclozr" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
                 LinkedIn
               </a>
-              <a href="https://instagram.com/closersassist" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
+              <a href="https://instagram.com/dealclozr" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
                 Instagram
               </a>
             </div>

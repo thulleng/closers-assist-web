@@ -425,7 +425,7 @@ export default function RealChat({
           </button>
         </div>
         <p className="mt-2 text-center text-[10px] text-muted">
-          Powered by Closers Assist AI · Shift+Enter for new line
+          Powered by Deal Clozr AI · Shift+Enter for new line
         </p>
       </div>
     </div>

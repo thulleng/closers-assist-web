@@ -81,7 +81,7 @@ export default function DashboardHubPage() {
               </span>
             </h1>
             <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl max-w-2xl">
-              Every Closers Assist rep gets a dashboard that reshapes itself
+              Every Deal Clozr rep gets a dashboard that reshapes itself
               around how they actually earn. Auto sees units and volume
               tiers. Real estate sees cap progress. Solar sees clawback risk.{" "}
               <span className="font-semibold text-gold-light">

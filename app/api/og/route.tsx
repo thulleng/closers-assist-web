@@ -59,7 +59,7 @@ export async function GET() {
               color: "#fff",
             }}
           >
-            CLOSERS
+            DEAL
           </div>
           <div
             style={{
@@ -70,7 +70,7 @@ export async function GET() {
               textShadow: "0 0 20px rgba(16,185,129,0.5)",
             }}
           >
-            ASSIST
+            CLOZR
           </div>
         </div>
 

@@ -112,7 +112,7 @@ export default function FoundersCircle({ formspreeId }: { formspreeId: string })
             Founders Circle
           </h2>
           <p className="mt-3 text-xl font-semibold text-gold-light">
-            Help us build Closers Assist
+            Help us build Deal Clozr
           </p>
           <p className="mt-4 max-w-2xl text-lg leading-relaxed text-ash">
             We&rsquo;re looking for industry pros to test, use, and help improve Closers
@@ -261,7 +261,7 @@ export default function FoundersCircle({ formspreeId }: { formspreeId: string })
 
                 {status === "error" && (
                   <p className="text-sm text-red-400">
-                    Something went wrong. Try again or email thul@closersassist.com.
+                    Something went wrong. Try again or email thul@dealclozr.com.
                   </p>
                 )}
 

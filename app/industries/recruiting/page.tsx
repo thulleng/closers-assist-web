@@ -3,7 +3,7 @@ import { Users } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Recruiting & Staffing Sales AI Agent | Closers Assist",
+  title: "Recruiting & Staffing Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for recruiting and staffing reps. Handle client fee objections, prep candidates for interviews, and close both sides of the placement faster.",
 };

@@ -15,11 +15,11 @@ const faqs: FAQItem[] = [
     a: (
       <>
         ChatGPT is a general-purpose AI — it doesn't know your pay plan, your
-        scripts, your customers, or your industry. Closers Assist is an{" "}
+        scripts, your customers, or your industry. Deal Clozr is an{" "}
         <strong className="text-white">AI employee</strong> built specifically for
         closers. It knows your commission structure, remembers every customer
         conversation, and speaks your industry's language. ChatGPT starts
-        from zero every chat. Closers Assist picks up where you left off.
+        from zero every chat. Deal Clozr picks up where you left off.
       </>
     ),
   },
@@ -42,7 +42,7 @@ const faqs: FAQItem[] = [
     q: "What if the AI gives bad advice on a deal?",
     a: (
       <>
-        Closers Assist is a <strong className="text-white">co-pilot, not a replacement</strong>{" "}
+        Deal Clozr is a <strong className="text-white">co-pilot, not a replacement</strong>{" "}
         for your judgment. It gives you plays, scripts, and math — you make the
         final call. It's trained on real sales scripts and objection
         handling from working reps, not generic advice from the internet. If it
@@ -57,7 +57,7 @@ const faqs: FAQItem[] = [
       <>
         Because it's <strong className="text-white">Telegram.</strong> Not
         another tab, not another login, not another dashboard. Your team already
-        texts — Closers Assist is just another chat. Type a question, get a
+        texts — Deal Clozr is just another chat. Type a question, get a
         play. No training. No IT ticket. No “where do I click?”
         Reps adopt it in under 2 minutes because there's nothing to learn.
       </>

@@ -61,7 +61,7 @@ export default function SunToyotaPilot() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The setup: what the agent actually does</h2>
             <p>
-              I built the agent on Closers Assist — the same platform I launched last month. But this was the first time I ran it as a full pilot on my own floor. Here&rsquo;s what it does:
+              I built the agent on Deal Clozr — the same platform I launched last month. But this was the first time I ran it as a full pilot on my own floor. Here&rsquo;s what it does:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-ash">
               <li><strong className="text-bone">Instant lead response.</strong> When an internet lead hits the CRM, the agent fires a personalized message within 2 minutes. It knows the vehicle they inquired about, the trim, the incentives running that week.</li>
@@ -163,7 +163,7 @@ export default function SunToyotaPilot() {
               The pilot isn&rsquo;t over. I&rsquo;m running month two right now — tracking every lead, every appointment, every deal. I&rsquo;ll post the 60-day update here on the blog. If the numbers hold, I&rsquo;m scaling this to the full floor.
             </p>
             <p>
-              In the meantime, Closers Assist is live. $29.99 per rep per month. Same agent I&rsquo;m running on my floor. Same objection handler. Same follow-up cadence. Same speed-to-lead advantage. Auto, real estate, insurance, solar, SaaS, and 13 more industries — because the follow-up problem isn&rsquo;t unique to car sales.
+              In the meantime, Deal Clozr is live. $29.99 per rep per month. Same agent I&rsquo;m running on my floor. Same objection handler. Same follow-up cadence. Same speed-to-lead advantage. Auto, real estate, insurance, solar, SaaS, and 13 more industries — because the follow-up problem isn&rsquo;t unique to car sales.
             </p>
             <p>
               One deal pays for 10 years. You do the math.

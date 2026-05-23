@@ -3,7 +3,7 @@ import { Radio } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Telecom & Cell Towers Sales AI Agent | Closers Assist",
+  title: "Telecom & Cell Towers Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for telecom reps. Handle tower lease objections, close infrastructure agreements, and upsell bandwidth and service upgrades with confidence.",
 };

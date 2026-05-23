@@ -3,7 +3,7 @@ import { Bug } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Pest Control Sales AI Agent | Closers Assist",
+  title: "Pest Control Sales AI Agent | Deal Clozr",
   description:
     "The AI agent built for pest control reps. Handle service plan objections, upsell quarterly treatments, and never lose a renewal again.",
 };

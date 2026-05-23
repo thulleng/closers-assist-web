@@ -465,7 +465,7 @@ export default function LoginPage() {
             <Zap className="h-5 w-5 text-pit" fill="currentColor" />
           </div>
           <span className="font-display text-xl font-bold tracking-tight text-bone">
-            Closers Assist
+            Deal Clozr
           </span>
         </div>
 

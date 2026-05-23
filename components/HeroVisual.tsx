@@ -1,13 +1,13 @@
 "use client";
 
 /**
- * HeroVisual — Animated AI-themed illustration for Closers Assist.
+ * HeroVisual — Animated AI-themed illustration for Deal Clozr.
  *
  * Dark background, glowing neon-green core, circuit lines radiating outward,
  * floating industry icons orbiting the center. Pure CSS + inline SVG.
  * Zero dependencies. Zero images to load.
  *
- * Matches the closersassist.com design system: neon green #10B981 / #00FF88,
+ * Matches the dealclozr.com design system: neon green #10B981 / #00FF88,
  * pit black #050506, gold accents #FBBF24.
  */
 

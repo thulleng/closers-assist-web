@@ -4,8 +4,8 @@ import type { Metadata } from "next";
 import FadeIn from "@/components/FadeIn";
 
 export const metadata: Metadata = {
-  title: "Compare — Closers Assist vs ChatGPT, CRM, and Hiring an Assistant",
-  description: "See how Closers Assist stacks up against ChatGPT, traditional CRMs, and hiring a human assistant. Built for closers. Not engineers.",
+  title: "Compare — Deal Clozr vs ChatGPT, CRM, and Hiring an Assistant",
+  description: "See how Deal Clozr stacks up against ChatGPT, traditional CRMs, and hiring a human assistant. Built for closers. Not engineers.",
 };
 
 const comparisonRows = [
@@ -119,20 +119,20 @@ const verdicts = [
   {
     vs: "ChatGPT",
     icon: Bot,
-    summary: "ChatGPT is a tool. Closers Assist is an employee.",
-    detail: "ChatGPT gives you answers. Closers Assist remembers your deals, knows your pay plan, speaks your industry, and handles your personal life. One starts from zero every chat. The other picks up where you left off. If you're a closer, the difference is the difference between a calculator and a closer.",
+    summary: "ChatGPT is a tool. Deal Clozr is an employee.",
+    detail: "ChatGPT gives you answers. Deal Clozr remembers your deals, knows your pay plan, speaks your industry, and handles your personal life. One starts from zero every chat. The other picks up where you left off. If you're a closer, the difference is the difference between a calculator and a closer.",
   },
   {
     vs: "Traditional CRM",
     icon: Database,
     summary: "Your CRM tracks deals. We close them.",
-    detail: "CRMs were built for managers — pipeline reports, forecasting, activity tracking. Closers Assist was built for the rep on the floor. It doesn't just log what happened — it tells you what to say next, with your scripts, your math, and your voice. A CRM is a filing cabinet. Closers Assist is the closer standing next to you.",
+    detail: "CRMs were built for managers — pipeline reports, forecasting, activity tracking. Deal Clozr was built for the rep on the floor. It doesn't just log what happened — it tells you what to say next, with your scripts, your math, and your voice. A CRM is a filing cabinet. Deal Clozr is the closer standing next to you.",
   },
   {
     vs: "Hiring an Assistant",
     icon: UserPlus,
     summary: "$29.99/mo vs $3,000/mo. Never calls in sick.",
-    detail: "A human assistant costs $3,000–5,000/month, works 40 hours, takes breaks, forgets things, and can't be on the floor with you during a T.O. Closers Assist costs $29.99/month, works 24/7, never forgets a detail, and is always one tap away on Telegram. For the cost of one lunch, you get an employee who never clocks out.",
+    detail: "A human assistant costs $3,000–5,000/month, works 40 hours, takes breaks, forgets things, and can't be on the floor with you during a T.O. Deal Clozr costs $29.99/month, works 24/7, never forgets a detail, and is always one tap away on Telegram. For the cost of one lunch, you get an employee who never clocks out.",
   },
 ];
 
@@ -160,7 +160,7 @@ export default function ComparePage() {
               <span className="text-shine font-black">everything else.</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash">
-              See exactly how Closers Assist stacks up against ChatGPT, traditional CRMs,
+              See exactly how Deal Clozr stacks up against ChatGPT, traditional CRMs,
               and hiring a human assistant. No marketing. Just the math.
             </p>
           </FadeIn>
@@ -172,13 +172,13 @@ export default function ComparePage() {
         <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
           <FadeIn>
             <div className="grid grid-cols-2 divide-x divide-white/10 rounded-2xl border border-white/5 overflow-hidden bg-black/30">
-              {/* Closers Assist Side */}
+              {/* Deal Clozr Side */}
               <div className="p-6 md:p-10 text-center relative">
                 <div className="absolute inset-0 bg-gradient-to-br from-deal/5 via-transparent to-transparent pointer-events-none" />
                 <div className="relative">
                   <div className="inline-flex items-center gap-2 mb-3">
                     <Check className="h-5 w-5 text-deal" strokeWidth={3} />
-                    <span className="text-[11px] font-bold uppercase tracking-[2px] text-deal-light">Closers Assist</span>
+                    <span className="text-[11px] font-bold uppercase tracking-[2px] text-deal-light">Deal Clozr</span>
                   </div>
                   <div className="text-4xl md:text-5xl font-black text-white font-display leading-[1.1] mt-2">
                     $29.99
@@ -263,7 +263,7 @@ export default function ComparePage() {
                 <div className="grid grid-cols-[1.4fr,1fr,1fr,1fr,1fr] border-b border-iron bg-white/[0.03]">
                   <div className="p-4 text-xs font-medium uppercase tracking-widest text-muted">Feature</div>
                   <div className="border-l border-iron p-4 text-center">
-                    <span className="font-display text-xs font-bold text-deal">CLOSERS ASSIST</span>
+                    <span className="font-display text-xs font-bold text-deal">DEAL CLOZR</span>
                   </div>
                   <div className="border-l border-iron p-4 text-center">
                     <span className="text-xs font-semibold text-ash">ChatGPT</span>
@@ -363,7 +363,7 @@ export default function ComparePage() {
                     <div className="p-5 bg-deal/[0.04]">
                       <div className="mb-2 inline-flex items-center gap-1.5 rounded-full bg-deal/20 px-2.5 py-0.5">
                         <span className="h-1 w-1 rounded-full bg-deal" />
-                        <span className="text-[10px] font-bold uppercase tracking-wider text-deal-light">Closers Assist</span>
+                        <span className="text-[10px] font-bold uppercase tracking-wider text-deal-light">Deal Clozr</span>
                       </div>
                       <p className="text-sm leading-relaxed text-bone">{s.closers}</p>
                     </div>
@@ -433,12 +433,12 @@ export default function ComparePage() {
             <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-6xl">
               One extra deal pays for
               <br />
-              <span className="text-mega-amber font-black">10 years of Closers Assist.</span>
+              <span className="text-mega-amber font-black">10 years of Deal Clozr.</span>
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ash">
               ChatGPT can't close deals. Your CRM can't close deals. A human assistant costs 100x more.
               <br />
-              <span className="font-semibold text-white">Closers Assist closes them with you.</span>
+              <span className="font-semibold text-white">Deal Clozr closes them with you.</span>
             </p>
             <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
               <Link

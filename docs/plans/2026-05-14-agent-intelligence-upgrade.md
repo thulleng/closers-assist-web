@@ -59,7 +59,7 @@ if (shorthand) intro.push(`Shorthand they use: ${shorthand}.`);
 **Step 4: Verify**
 
 ```bash
-curl -X POST https://closersassist.com/api/chat \
+curl -X POST https://dealclozr.com/api/chat \
   -H "Content-Type: application/json" \
   -d '{"messages":[{"role":"user","content":"whats your personality"}],"userId":"test"}'
 ```
@@ -121,7 +121,7 @@ if (recentSessions?.length) {
 
 ```bash
 # Chat twice, then check if agent references first conversation
-curl -X POST https://closersassist.com/api/chat \
+curl -X POST https://dealclozr.com/api/chat \
   -d '{"messages":[{"role":"user","content":"what did we talk about last time?"}],"userId":"test-user"}'
 ```
 
@@ -238,7 +238,7 @@ vercel env add CRON_SECRET --production
 
 ```bash
 curl -H "Authorization: Bearer $(vercel env pull CRON_SECRET)" \
-  https://closersassist.com/api/cron/weekly-learning
+  https://dealclozr.com/api/cron/weekly-learning
 ```
 
 **Step 5: Commit**
@@ -375,7 +375,7 @@ if (stream) {
 To test, temporarily use a bad API key and verify the fallback message arrives:
 
 ```bash
-curl -X POST https://closersassist.com/api/chat \
+curl -X POST https://dealclozr.com/api/chat \
   -H "Content-Type: application/json" \
   -d '{"messages":[{"role":"user","content":"test"}],"userId":"test-heal"}'
 ```
@@ -501,7 +501,7 @@ if (briefs?.length) {
 
 ```bash
 curl -H "Authorization: Bearer $(vercel env pull CRON_SECRET)" \
-  https://closersassist.com/api/cron/morning-brief
+  https://dealclozr.com/api/cron/morning-brief
 ```
 
 **Step 5: Commit**
@@ -595,7 +595,7 @@ if (alerts?.length) {
 **Step 4: Verify & Commit**
 ```bash
 curl -H "Authorization: Bearer $(vercel env pull CRON_SECRET)" \
-  https://closersassist.com/api/cron/unit-watchdog
+  https://dealclozr.com/api/cron/unit-watchdog
 ```
 
 ---
@@ -645,7 +645,7 @@ if (count && count >= 10) {
 **Step 2: Verify**
 ```bash
 curl -H "Authorization: Bearer $CRON_SECRET" \
-  https://closersassist.com/api/cron/weekly-learning
+  https://dealclozr.com/api/cron/weekly-learning
 # Check agent_profiles row — personality_profile should have values
 ```
 

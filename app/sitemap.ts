@@ -1,6 +1,6 @@
 import { MetadataRoute } from "next";
 
-const BASE = "https://closersassist.com";
+const BASE = "https://dealclozr.com";
 
 const staticRoutes = [
   "/",

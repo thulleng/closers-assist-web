@@ -1,5 +1,5 @@
 /**
- * Media processing for Closers Assist chat.
+ * Media processing for Deal Clozr chat.
  *
  * Handles audio transcription (Deepgram STT) and video frame extraction
  * (ffmpeg + DeepSeek Vision). Converts audio/video user uploads to text

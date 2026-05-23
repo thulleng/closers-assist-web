@@ -52,7 +52,7 @@ const TIERS = [
       "Team dashboard — units, leaderboards, CXI tracking",
       "Priority support — 4-hour response",
       "Manager override & audit controls",
-      "Monthly coaching call with a Closers Assist coach",
+      "Monthly coaching call with a Deal Clozr coach",
     ],
   },
   {
@@ -90,11 +90,11 @@ const FAQ = [
   },
   {
     q: "What if my team is bigger than 25 but smaller than 100?",
-    a: "You go to Elite — custom pricing, one conversation. Email thul@closersassist.com and we'll build your rate.",
+    a: "You go to Elite — custom pricing, one conversation. Email thul@dealclozr.com and we'll build your rate.",
   },
   {
     q: "What if I have more than 100 reps?",
-    a: "Email thul@closersassist.com and we'll build a custom enterprise plan with volume pricing. 100+ reps deserve a conversation, not a form.",
+    a: "Email thul@dealclozr.com and we'll build a custom enterprise plan with volume pricing. 100+ reps deserve a conversation, not a form.",
   },
   {
     q: "Is there a per-deal fee or commission cut?",
@@ -572,7 +572,7 @@ export default function PricingPage() {
 14-day free trial. Cancel anytime.
             </h3>
             <p className="text-sm leading-relaxed text-ash">
-              Use Closers Assist for 30 days. If your commission check
+              Use Deal Clozr for 30 days. If your commission check
               doesn&rsquo;t beat your previous month, we refund every dollar.
               No questions. No clawbacks. Cancel in one click.
             </p>

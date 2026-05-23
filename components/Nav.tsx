@@ -45,7 +45,7 @@ export default function Nav() {
             />
             <Image
               src="/logo.png"
-              alt="Closers Assist"
+              alt="Deal Clozr"
               width={36}
               height={36}
               className="h-9 w-9 rounded-md"
@@ -53,7 +53,7 @@ export default function Nav() {
             />
           </div>
           <span className="font-display text-sm font-black tracking-wide text-white">
-            CLOSERS <span className="text-shine">ASSIST</span>
+            DEAL <span className="text-shine">CLOZR</span>
           </span>
         </Link>
 

@@ -112,7 +112,7 @@ export default function ThreeBuyersOnTheLot() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The AI advantage</h2>
             <p>
-              My Closers Assist agent does this automatically now. It reads the lead — the words they use, the questions they ask, the way they phrase things — and adjusts the follow-up style before I even touch the customer.
+              My Deal Clozr agent does this automatically now. It reads the lead — the words they use, the questions they ask, the way they phrase things — and adjusts the follow-up style before I even touch the customer.
             </p>
             <p>
               Researcher lead? It sends trim comparisons and pricing breakdowns. Emotional lead? It sends lifestyle content and owner stories. Payment lead? It sends payment estimates and lease options with the monthly front and center.

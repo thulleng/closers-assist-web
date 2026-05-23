@@ -3,7 +3,7 @@ import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "Privacy Policy",
-  description: "Closers Assist privacy policy — how we handle your data.",
+  description: "Deal Clozr privacy policy — how we handle your data.",
 };
 
 export default function PrivacyPage() {
@@ -32,7 +32,7 @@ export default function PrivacyPage() {
               1. What we collect
             </h2>
             <p>
-              Closers Assist collects information you provide directly — your
+              Deal Clozr collects information you provide directly — your
               name, email address, and any data you upload to your personal
               agent layer (pay plans, scripts, customer notes). We also collect
               standard usage data (pages visited, features used, device type)
@@ -69,8 +69,8 @@ export default function PrivacyPage() {
               4. AI processing
             </h2>
             <p>
-              Your conversations with your Closers Assist agent are processed
-              by DeepSeek&rsquo;s API. By using Closers Assist, you
+              Your conversations with your Deal Clozr agent are processed
+              by DeepSeek&rsquo;s API. By using Deal Clozr, you
               agree to{" "}
               <a
                 href="https://api-docs.deepseek.com/policies/privacy-policy"
@@ -102,10 +102,10 @@ export default function PrivacyPage() {
             <p>
               Questions about privacy? Email us at{" "}
               <a
-                href="mailto:thul@closersassist.com"
+                href="mailto:thul@dealclozr.com"
                 className="text-deal-light hover:text-white underline"
               >
-                thul@closersassist.com
+                thul@dealclozr.com
               </a>
               .
             </p>
@@ -117,7 +117,7 @@ export default function PrivacyPage() {
             href="/"
             className="text-sm font-medium text-deal-light transition-colors hover:text-white"
           >
-            ← Back to Closers Assist
+            ← Back to Deal Clozr
           </Link>
         </div>
       </div>
