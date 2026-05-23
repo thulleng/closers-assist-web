@@ -162,20 +162,21 @@ export async function GET(req: Request) {
             <div
               style={{
                 display: "flex",
-                alignItems: "baseline",
-                gap: 6,
-                marginTop: 12,
+                flexDirection: "column",
+                alignItems: "center",
+                marginTop: 16,
               }}
             >
-              <span style={{ fontSize: 28, color: "#6B7280", fontWeight: 600 }}>Closed at</span>
+              <span style={{ fontSize: 24, color: "#6B7280", fontWeight: 500, marginBottom: 4 }}>
+                Closed at
+              </span>
               <span
                 style={{
-                  fontSize: 72,
+                  fontSize: 80,
                   fontWeight: 900,
-                  background: "linear-gradient(180deg, #00FF88, #10B981)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
+                  color: "#10B981",
                   lineHeight: 1,
+                  letterSpacing: "-0.03em",
                 }}
               >
                 ${parseInt(commission).toLocaleString()}
