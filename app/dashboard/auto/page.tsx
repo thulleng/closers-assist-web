@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArrowLeft, Car, Download, Settings2 } from "lucide-react";
+import { ArrowLeft, Car } from "lucide-react";
 import IncomeTracker from "@/components/IncomeTracker";
 import QuickDealLoggerWrapper from "@/components/QuickDealLoggerWrapper";
+import DashboardTopBarActions from "@/components/DashboardTopBarActions";
 import { autoDashboardSample } from "@/lib/dashboard-data-auto";
 import { buildAutoDashboard } from "@/lib/dashboard-data-auto-live";
 import { createClient } from "@/lib/supabase/server";
@@ -66,29 +67,7 @@ export default async function AutoDashboardPage() {
             All dashboards
           </Link>
           <div className="flex items-center gap-2">
-            <div className="hidden items-center gap-2 sm:flex">
-              <Car className="h-4 w-4 text-neon-green" strokeWidth={2} />
-              <span className="font-mono text-xs font-medium uppercase tracking-widest text-neon-green">
-                Auto
-              </span>
-            </div>
-            <div className="mx-2 h-4 w-px bg-white/10 hidden sm:block" />
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-ash transition-all hover:border-white/20 hover:text-bone hover:bg-white/10"
-              aria-label="Export dashboard"
-            >
-              <Download className="h-3.5 w-3.5" strokeWidth={2} />
-              Export
-            </button>
-            <button
-              type="button"
-              className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-ash transition-all hover:border-white/20 hover:text-bone hover:bg-white/10"
-              aria-label="Pay plan settings"
-            >
-              <Settings2 className="h-3.5 w-3.5" strokeWidth={2} />
-              Pay plan
-            </button>
+            <DashboardTopBarActions deals={data.deals} csvFilename={`closers-assist-deals-${data.period.replace(/\s+/g, "-").toLowerCase()}.csv`} />
           </div>
         </div>
       </section>
