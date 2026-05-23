@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Check, X, Brain, Database, UserPlus, MessageCircle, Shield, Clock, DollarSign, Zap } from "lucide-react";
+import { ArrowRight, Check, X, Brain, Database, UserPlus, MessageCircle, Clock, DollarSign, Zap, Bot, Smartphone, MessageSquare } from "lucide-react";
 import type { Metadata } from "next";
 import FadeIn from "@/components/FadeIn";
 
@@ -28,7 +28,7 @@ const comparisonRows = [
   {
     feature: "Speaks your industry's language",
     closers: true,
-    chatgpt: false,
+    chatgpt: "Generic",
     crm: false,
     human: "After training",
     closersDetail: "18 industries, real vocabulary. Minis, T.O.s, CXI, clawbacks",
@@ -118,7 +118,7 @@ const scenarios = [
 const verdicts = [
   {
     vs: "ChatGPT",
-    icon: Zap,
+    icon: Bot,
     summary: "ChatGPT is a tool. Closers Assist is an employee.",
     detail: "ChatGPT gives you answers. Closers Assist remembers your deals, knows your pay plan, speaks your industry, and handles your personal life. One starts from zero every chat. The other picks up where you left off. If you're a closer, the difference is the difference between a calculator and a closer.",
   },
@@ -163,6 +163,86 @@ export default function ComparePage() {
               See exactly how Closers Assist stacks up against ChatGPT, traditional CRMs,
               and hiring a human assistant. No marketing. Just the math.
             </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* VS Banner: Dora vs ChatGPT */}
+      <section className="relative overflow-hidden border-t border-white/5 bg-zinc-950/80">
+        <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
+          <FadeIn>
+            <div className="grid grid-cols-2 divide-x divide-white/10 rounded-2xl border border-white/5 overflow-hidden bg-black/30">
+              {/* Closers Assist Side */}
+              <div className="p-6 md:p-10 text-center relative">
+                <div className="absolute inset-0 bg-gradient-to-br from-deal/5 via-transparent to-transparent pointer-events-none" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 mb-3">
+                    <Check className="h-5 w-5 text-deal" strokeWidth={3} />
+                    <span className="text-[11px] font-bold uppercase tracking-[2px] text-deal-light">Closers Assist</span>
+                  </div>
+                  <div className="text-4xl md:text-5xl font-black text-white font-display leading-[1.1] mt-2">
+                    $29.99
+                  </div>
+                  <div className="text-sm text-ash mt-2">per rep / month</div>
+                  <ul className="mt-6 space-y-2.5 text-left max-w-xs mx-auto">
+                    <li className="flex items-start gap-2.5 text-sm text-bone">
+                      <Check className="h-4 w-4 text-deal mt-0.5 shrink-0" strokeWidth={3} />
+                      Remembers every customer. Forever.
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-bone">
+                      <Check className="h-4 w-4 text-deal mt-0.5 shrink-0" strokeWidth={3} />
+                      Knows your pay plan down to the tier.
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-bone">
+                      <Check className="h-4 w-4 text-deal mt-0.5 shrink-0" strokeWidth={3} />
+                      Closes deals while you sleep.
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-bone">
+                      <Check className="h-4 w-4 text-deal mt-0.5 shrink-0" strokeWidth={3} />
+                      Handles your personal life too.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              {/* ChatGPT Side */}
+              <div className="p-6 md:p-10 text-center relative">
+                <div className="absolute inset-0 bg-gradient-to-bl from-gray-500/5 via-transparent to-transparent pointer-events-none" />
+                <div className="relative">
+                  <div className="inline-flex items-center gap-2 mb-3">
+                    <X className="h-5 w-5 text-red-400/50" strokeWidth={2.5} />
+                    <span className="text-[11px] font-bold uppercase tracking-[2px] text-ash">ChatGPT</span>
+                  </div>
+                  <div className="text-4xl md:text-5xl font-black text-white/60 font-display leading-[1.1] mt-2">
+                    $20
+                  </div>
+                  <div className="text-sm text-ash mt-2">per month</div>
+                  <ul className="mt-6 space-y-2.5 text-left max-w-xs mx-auto">
+                    <li className="flex items-start gap-2.5 text-sm text-muted">
+                      <X className="h-4 w-4 text-red-400/30 mt-0.5 shrink-0" strokeWidth={2} />
+                      Resets every conversation. No memory.
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-muted">
+                      <X className="h-4 w-4 text-red-400/30 mt-0.5 shrink-0" strokeWidth={2} />
+                      Generic advice. Doesn't know your pay plan.
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-muted">
+                      <X className="h-4 w-4 text-red-400/30 mt-0.5 shrink-0" strokeWidth={2} />
+                      Can't book appointments or log deals.
+                    </li>
+                    <li className="flex items-start gap-2.5 text-sm text-muted">
+                      <X className="h-4 w-4 text-red-400/30 mt-0.5 shrink-0" strokeWidth={2} />
+                      Doesn't know your industry.
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div className="mt-5 text-center">
+              <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-5 py-2">
+                <DollarSign className="h-4 w-4 text-gold-light" strokeWidth={2.5} />
+                <span className="text-sm font-semibold text-gold-light">$10 more than ChatGPT. Infinitely more valuable.</span>
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>
@@ -337,7 +417,7 @@ export default function ComparePage() {
         </div>
       </section>
 
-      {/* ROI Banner */}
+      {/* Bottom Line */}
       <section className="relative overflow-hidden border-t border-white/5"
         style={{ background: "linear-gradient(180deg, #050506 0%, #0a0a0e 100%)" }}>
         <div className="pointer-events-none absolute left-1/2 top-1/2 h-64 w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl opacity-40"
