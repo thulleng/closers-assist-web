@@ -1,380 +1,426 @@
 "use client";
 
-import { Suspense, useState } from "react";
+import { Suspense, useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
-import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { createClient } from "@/lib/supabase/client";
+import Link from "next/link";
 import {
-  ArrowRight,
-  CheckCircle2,
-  Copy,
-  MessageCircle,
-  Sparkles,
-  Zap,
-  Smartphone,
-  Monitor,
-  ExternalLink,
-  Loader2,
-  Car,
-  Home,
-  Shield,
-  Sun,
-  Laptop,
-  Stethoscope,
-  ShoppingBag,
-  Key,
-  Bug,
-  Clipboard,
-  Building2,
-  Users,
-  Truck,
-  HardHat,
-  Wifi,
-  Briefcase,
+  ArrowRight, CheckCircle2, Loader2, Car, MessageCircle, Settings2,
+  Smartphone, DollarSign, Target, Star, Zap, Trophy, Copy, Check,
+  ExternalLink, AlertCircle,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
-import Counter from "@/components/Counter";
+
+// ─── Constants ──────────────────────────────────────────────────────────────
 
 const INDUSTRIES = [
-  { id: "auto", label: "Auto Sales", icon: Car },
-  { id: "real-estate", label: "Real Estate", icon: Home },
-  { id: "insurance", label: "Insurance", icon: Shield },
-  { id: "solar", label: "Solar", icon: Sun },
-  { id: "saas", label: "SaaS", icon: Laptop },
-  { id: "medical", label: "Medical Devices", icon: Stethoscope },
-  { id: "retail", label: "Retail (Big Ticket)", icon: ShoppingBag },
-  { id: "rental", label: "Rental", icon: Key },
-  { id: "pest-control", label: "Pest Control", icon: Bug },
-  { id: "project-manager", label: "Project Manager", icon: Clipboard },
-  { id: "roofing", label: "Roofing", icon: HardHat },
-  { id: "hvac", label: "HVAC", icon: Wifi },
-  { id: "home-security", label: "Home Security", icon: Shield },
-  { id: "mortgage", label: "Mortgage & Lending", icon: Building2 },
-  { id: "financial-advisors", label: "Financial Advisors", icon: Briefcase },
-  { id: "recruiting", label: "Recruiting", icon: Users },
-  { id: "telecom", label: "Telecom", icon: Wifi },
-  { id: "other-sales", label: "Other Sales", icon: Briefcase },
+  { id: "auto", label: "Auto Sales" },
+  { id: "real-estate", label: "Real Estate" },
+  { id: "insurance", label: "Insurance" },
+  { id: "solar", label: "Solar" },
+  { id: "saas", label: "SaaS" },
+  { id: "medical", label: "Medical Devices" },
+  { id: "retail", label: "Retail (Big Ticket)" },
+  { id: "hvac", label: "HVAC" },
+  { id: "roofing", label: "Roofing" },
+  { id: "pest-control", label: "Pest Control" },
+  { id: "home-security", label: "Home Security" },
+  { id: "mortgage", label: "Mortgage & Lending" },
+  { id: "financial-advisors", label: "Financial Advisors" },
+  { id: "recruiting", label: "Recruiting" },
+  { id: "telecom", label: "Telecom" },
+  { id: "rental", label: "Rental" },
+  { id: "project-manager", label: "Project Manager" },
+  { id: "other-sales", label: "Other Sales" },
 ];
 
-function OnboardingContent() {
-  const searchParams = useSearchParams();
-  const email = searchParams?.get("email") || "";
-  const [selectedIndustry, setSelectedIndustry] = useState<string | null>(null);
-  const [saving, setSaving] = useState(false);
-  const [saved, setSaved] = useState(false);
+const COACHING_STYLES = [
+  { value: "direct", label: "Direct & Blunt", desc: "No sugar. Straight to the play." },
+  { value: "motivating", label: "Motivating & Energetic", desc: "Hype you up before every walk." },
+  { value: "analytical", label: "Calm & Analytical", desc: "Break down every number first." },
+  { value: "mentor", label: "Mentor-Style", desc: "Step-by-step like a seasoned closer." },
+];
 
-  async function selectIndustry(id: string) {
-    setSelectedIndustry(id);
+const FOCUS_OPTIONS = [
+  { value: "closing-rate", label: "Closing Rate" },
+  { value: "follow-up", label: "Follow-up Discipline" },
+  { value: "objection-handling", label: "Objection Handling" },
+  { value: "product-knowledge", label: "Product Knowledge" },
+  { value: "prospecting", label: "Prospecting" },
+];
+
+const inputCls =
+  "w-full rounded-xl border border-white/20 bg-white/[0.06] px-4 py-3 text-white placeholder:text-muted text-sm outline-none focus:border-deal/60 focus:ring-1 focus:ring-deal/30 transition-all";
+
+function StepIndicator({ current, total }: { current: number; total: number }) {
+  return (
+    <div className="flex items-center justify-center gap-2 mb-8">
+      {Array.from({ length: total }, (_, i) => (
+        <div key={i} className={`h-1.5 rounded-full transition-all duration-300 ${
+          i <= current ? "w-8 bg-deal" : "w-4 bg-white/10"
+        }`} />
+      ))}
+    </div>
+  );
+}
+
+// ─── Main Component ─────────────────────────────────────────────────────────
+
+function OnboardingContent() {
+  const router = useRouter();
+  const [step, setStep] = useState(0);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  // Form state
+  const [industry, setIndustry] = useState("");
+  const [telegramCopied, setTelegramCopied] = useState(false);
+  const [agentName, setAgentName] = useState("");
+  const [draw, setDraw] = useState("");
+  const [commPct, setCommPct] = useState("");
+  const [miniFlat, setMiniFlat] = useState("");
+  const [volumeBonus, setVolumeBonus] = useState("");
+  const [cxiBonus, setCxiBonus] = useState("");
+  const [coachingStyle, setCoachingStyle] = useState("direct");
+  const [agentFocus, setAgentFocus] = useState("closing-rate");
+  const [customGoals, setCustomGoals] = useState("");
+
+  const saveAll = async () => {
     setSaving(true);
+    setError(null);
     try {
       const supabase = createClient();
       const { data: { user } } = await supabase.auth.getUser();
-      if (user) {
-        await supabase
-          .from("agent_profiles")
-          .update({ industry: id })
-          .eq("user_id", user.id);
-      }
-      setSaved(true);
-    } catch {
-      // Save failed — still let them proceed
-      setSaved(true);
+      if (!user) { setError("Not signed in"); setSaving(false); return; }
+
+      const { error: upsertError } = await supabase
+        .from("agent_profiles")
+        .upsert({
+          user_id: user.id,
+          industry: industry || "auto",
+          agent_name: agentName || "Closer",
+          coaching_style: coachingStyle,
+          agent_focus: agentFocus,
+          custom_goals: customGoals,
+          draw: parseFloat(draw) || 0,
+          commission_pct: parseFloat(commPct) || 0,
+          mini_flat: parseFloat(miniFlat) || 0,
+          volume_bonus: parseFloat(volumeBonus) || 0,
+          cxi_bonus: parseFloat(cxiBonus) || 0,
+          updated_at: new Date().toISOString(),
+        }, { onConflict: "user_id" });
+
+      if (upsertError) throw upsertError;
+      router.push(`/dashboard/${industry || "auto"}`);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Save failed");
+    } finally {
+      setSaving(false);
     }
-    setSaving(false);
-  }
+  };
+
+  const steps = ["Industry", "Telegram", "Pay Plan", "Style", "Start"];
 
   return (
     <div className="relative min-h-screen overflow-hidden loud-bg">
       <div className="grid-pattern" />
       <div className="grain" />
 
-      <div className="relative mx-auto max-w-4xl px-6 py-20 md:py-28">
-        {/* STEP 1 — Welcome + Industry Selection */}
-        <FadeIn>
-          <div className="text-center">
-            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
-              <span className="relative flex h-2 w-2">
-                <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
-                <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
-              </span>
-              <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                {saved ? "Subscription active" : "Step 1 of 2"}
-              </span>
-            </div>
-            <h1 className="font-display text-[42px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[64px]">
-              {saved ? "Welcome to" : "What do you sell?"}
-              <br />
-              <span className="text-shine font-black">Closers Assist.</span>
-            </h1>
-            <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-ash">
-              {saved
-                ? "Your industry is set. Now pick how you want to use it."
-                : "Pick your industry. Your agent loads the right scripts, pay math, and language instantly."}
-            </p>
-          </div>
-        </FadeIn>
+      <div className="relative mx-auto max-w-2xl px-6 py-12 md:py-20">
+        {/* Step indicator */}
+        <StepIndicator current={step} total={steps.length} />
 
-        {/* STEP 1b — Industry Grid */}
-        {!saved && (
-          <FadeIn delay={100}>
-            <div className="mt-12 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
-              {INDUSTRIES.map((ind) => {
-                const Icon = ind.icon;
-                const isSelected = selectedIndustry === ind.id;
-                return (
-                  <button
-                    key={ind.id}
-                    onClick={() => selectIndustry(ind.id)}
-                    disabled={saving}
-                    className={`loud-card rounded-xl p-4 text-center transition-all ${
-                      isSelected
-                        ? "ring-2 ring-deal bg-deal/10"
-                        : "hover:bg-white/[0.04]"
-                    }`}
-                  >
-                    {isSelected && saving ? (
-                      <Loader2 className="h-7 w-7 text-deal animate-spin mx-auto mb-2" />
-                    ) : (
-                      <Icon className={`h-7 w-7 mx-auto mb-2 ${isSelected ? "text-deal" : "text-ash"}`} />
-                    )}
-                    <span className={`text-xs font-medium ${isSelected ? "text-deal-light" : "text-ash"}`}>
-                      {ind.label}
-                    </span>
-                  </button>
-                );
-              })}
+        <div className="text-center mb-8">
+          <h1 className="font-display text-3xl font-black text-white md:text-4xl">
+            {step === 0 && "What do you sell?"}
+            {step === 1 && "Connect Telegram"}
+            {step === 2 && "Set Your Pay Plan"}
+            {step === 3 && "Style & Focus"}
+            {step === 4 && "You're Ready"}
+          </h1>
+          <p className="mt-2 text-sm text-ash">
+            {step === 0 && "Pick your industry. Your agent loads the right language instantly."}
+            {step === 1 && "Your agent works in Telegram. Connect it in one tap."}
+            {step === 2 && "The math that makes your dashboard accurate. Takes 60 seconds."}
+            {step === 3 && "How should your agent talk? What should it push you on?"}
+            {step === 4 && "Everything's set. Let's get you closing."}
+          </p>
+        </div>
+
+        {/* ───────────── STEP 0: INDUSTRY ───────────── */}
+        {step === 0 && (
+          <FadeIn>
+            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+              {INDUSTRIES.map((ind) => (
+                <button
+                  key={ind.id}
+                  onClick={() => { setIndustry(ind.id); setStep(1); }}
+                  className={`rounded-xl border px-3 py-3 text-sm font-medium transition-all text-center ${
+                    industry === ind.id
+                      ? "border-deal/60 bg-deal/10 text-deal"
+                      : "border-white/10 bg-white/[0.03] text-ash hover:border-white/20 hover:text-bone"
+                  }`}
+                >
+                  {ind.label}
+                </button>
+              ))}
             </div>
           </FadeIn>
         )}
 
-        {/* STEP 2 — Pick your platform (shown after industry selection) */}
-        {saved && (
-          <>
-            <FadeIn delay={150}>
-              <div className="mt-16 grid gap-5 sm:grid-cols-2">
-                {/* Telegram option */}
-                <div className="loud-card group relative overflow-hidden rounded-2xl p-7 ring-2 ring-deal/40 shadow-[0_0_40px_rgba(16,185,129,0.2)]">
-                  <div className="absolute right-4 top-4 rounded-full border border-deal/40 bg-deal/20 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-deal-light">
-                    Fastest
-                  </div>
-                  <div
-                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(16,185,129,0.3)]"
-                    style={{
-                      background: "linear-gradient(135deg, #10B981, #059669)",
-                    }}
-                  >
-                    <SendIcon className="h-7 w-7 text-white" />
-                  </div>
-                  <h3 className="mb-2 font-display text-2xl font-black text-white">
-                    Telegram
-                  </h3>
-                  <p className="mb-5 text-sm leading-relaxed text-ash">
-                    Open Telegram on any device. Your agent lives in your chat list
-                    — just like texting a friend. No new app. No login. Instant.
-                  </p>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-sm text-ash">
-                      <Smartphone className="h-4 w-4 text-deal-light" />
-                      Works on phone, tablet, desktop
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-ash">
-                      <Zap className="h-4 w-4 text-deal-light" />
-                      Under 3 seconds per response
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-ash">
-                      <MessageCircle className="h-4 w-4 text-deal-light" />
-                      Feels like texting a closer
-                    </div>
-                  </div>
-                  <a
-                    href="https://t.me/CloseBot"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl bg-deal px-5 py-3.5 text-[15px] font-bold text-white shadow-[0_8px_24px_rgba(16,185,129,0.4)] transition-all hover:shadow-[0_12px_32px_rgba(16,185,129,0.5)]"
-                  >
-                    Open in Telegram
-                    <ExternalLink className="h-4 w-4" />
-                  </a>
-                  <p className="mt-3 text-center text-[11px] text-muted">
-                    Or search{" "}
-                    <span className="font-mono text-deal-light">@CloseBot</span> in
-                    Telegram
-                  </p>
+        {/* ───────────── STEP 1: TELEGRAM ───────────── */}
+        {step === 1 && (
+          <FadeIn>
+            <div className="loud-card rounded-2xl p-6 md:p-8">
+              <div className="flex items-center gap-3 mb-5">
+                <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-deal to-emerald-400">
+                  <MessageCircle className="h-6 w-6 text-white" />
                 </div>
-
-                {/* Web option */}
-                <div className="loud-card group relative overflow-hidden rounded-2xl p-7">
-                  <div
-                    className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl shadow-[0_8px_24px_rgba(251,191,36,0.25)]"
-                    style={{
-                      background: "linear-gradient(135deg, #FBBF24, #D97706)",
-                    }}
-                  >
-                    <Monitor className="h-7 w-7 text-[#422006]" />
-                  </div>
-                  <h3 className="mb-2 font-display text-2xl font-black text-white">
-                    Web App
-                  </h3>
-                  <p className="mb-5 text-sm leading-relaxed text-ash">
-                    Full dashboard. Deal board. Commission tracking. Pipeline view.
-                    Everything on one screen when you&rsquo;re at your desk.
-                  </p>
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-sm text-ash">
-                      <Monitor className="h-4 w-4 text-gold-light" />
-                      Dashboard + deal board
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-ash">
-                      <Sparkles className="h-4 w-4 text-gold-light" />
-                      Commission tracking & history
-                    </div>
-                    <div className="flex items-center gap-2 text-sm text-ash">
-                      <Copy className="h-4 w-4 text-gold-light" />
-                      Export scripts, plays, and notes
-                    </div>
-                  </div>
-                  <Link
-                    href="/dashboard/auto"
-                    className="mt-6 inline-flex w-full items-center justify-center gap-2 rounded-xl border-2 border-gold-light bg-gold-light/10 px-5 py-3.5 text-[15px] font-bold text-gold-light transition-all hover:bg-gold-light/20"
-                  >
-                    Open Dashboard
-                    <ArrowRight className="h-4 w-4" />
-                  </Link>
-                  <p className="mt-3 text-center text-[11px] text-muted">
-                    Best on desktop. Mobile-friendly.
-                  </p>
+                <div>
+                  <div className="text-sm font-bold text-white">Open Telegram</div>
+                  <div className="text-xs text-ash">Search @CloseBot or tap the link</div>
                 </div>
               </div>
-            </FadeIn>
 
-            {/* STEP 3 — Quick start checklist */}
-            <FadeIn delay={300}>
-              <div className="mt-20">
-                <div className="mb-8 text-center">
-                  <h2 className="font-display text-3xl font-black text-white sm:text-5xl">
-                    Your first 5 minutes
-                  </h2>
-                  <p className="mt-3 text-ash">
-                    Do these three things and you&rsquo;re dangerous.
-                  </p>
+              <div className="space-y-3 mb-6">
+                <a
+                  href="https://t.me/CloseBot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Open @CloseBot in Telegram
+                </a>
+
+                <div className="flex items-center gap-2">
+                  <div className="flex-1 border border-white/10 rounded-xl bg-black/30 px-4 py-3 text-sm font-mono text-white/70 truncate">
+                    @CloseBot
+                  </div>
+                  <button
+                    onClick={() => {
+                      navigator.clipboard.writeText("@CloseBot");
+                      setTelegramCopied(true);
+                      setTimeout(() => setTelegramCopied(false), 2000);
+                    }}
+                    className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-ash hover:text-white transition-all"
+                  >
+                    {telegramCopied ? <Check className="h-4 w-4 text-deal" /> : <Copy className="h-4 w-4" />}
+                    {telegramCopied ? "Copied" : "Copy"}
+                  </button>
                 </div>
-                <div className="grid gap-4 sm:grid-cols-3">
-                  {[
-                    {
-                      step: "1",
-                      title: "Pick your industry",
-                      body: "Tell the agent what you sell. It loads your world instantly — pay plans, scripts, objections.",
-                      done: true,
-                    },
-                    {
-                      step: "2",
-                      title: "Upload your pay plan",
-                      body: "Snap a photo. The agent reads it. Now every deal math is automatic.",
-                      done: false,
-                    },
-                    {
-                      step: "3",
-                      title: "Use it on a live deal",
-                      body: "Next customer objection you get — type it in. Watch it work in real time.",
-                      done: false,
-                    },
-                  ].map((item) => (
-                    <div key={item.step} className="loud-card rounded-2xl p-6">
-                      <div className="mb-3 flex items-center gap-3">
-                        <div
-                          className={`flex h-8 w-8 items-center justify-center rounded-full font-display text-sm font-black ${
-                            item.done
-                              ? "bg-deal text-white"
-                              : "bg-white/10 text-ash"
-                          }`}
-                        >
-                          {item.done ? "✓" : item.step}
-                        </div>
-                        <h4 className="font-bold text-white">{item.title}</h4>
-                      </div>
-                      <p className="text-sm leading-relaxed text-ash">
-                        {item.body}
-                      </p>
-                    </div>
+              </div>
+
+              <div className="space-y-2 text-sm text-ash">
+                <div className="flex items-center gap-2">
+                  <Smartphone className="h-4 w-4 text-deal" />
+                  Works on any device — phone, tablet, desktop
+                </div>
+                <div className="flex items-center gap-2">
+                  <Zap className="h-4 w-4 text-deal" />
+                  Under 3 seconds per response
+                </div>
+              </div>
+
+              <button
+                onClick={() => setStep(2)}
+                className="mt-6 w-full flex items-center justify-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-ash hover:text-white hover:border-white/20 transition-all"
+              >
+                I'll do it later — skip for now
+                <ArrowRight className="h-4 w-4" />
+              </button>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ───────────── STEP 2: PAY PLAN ───────────── */}
+        {step === 2 && (
+          <FadeIn>
+            <div className="loud-card rounded-2xl p-6 md:p-8">
+              <div className="space-y-4">
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Monthly Draw ($)</label>
+                    <input type="number" min="0" value={draw} onChange={(e) => setDraw(e.target.value)} placeholder="2600" className={inputCls} />
+                  </div>
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Commission Split (%)</label>
+                    <input type="number" min="0" max="100" value={commPct} onChange={(e) => setCommPct(e.target.value)} placeholder="25" className={inputCls} />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Mini / Flat Rate ($)</label>
+                    <input type="number" min="0" value={miniFlat} onChange={(e) => setMiniFlat(e.target.value)} placeholder="200" className={inputCls} />
+                  </div>
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Volume Bonus ($)</label>
+                    <input type="number" min="0" value={volumeBonus} onChange={(e) => setVolumeBonus(e.target.value)} placeholder="500" className={inputCls} />
+                  </div>
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">CXI / Review Bonus ($)</label>
+                    <input type="number" min="0" value={cxiBonus} onChange={(e) => setCxiBonus(e.target.value)} placeholder="300" className={inputCls} />
+                  </div>
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Agent Name</label>
+                    <input type="text" value={agentName} onChange={(e) => setAgentName(e.target.value)} placeholder="Closer" className={inputCls} />
+                  </div>
+                </div>
+              </div>
+
+              <div className="mt-6 flex gap-3">
+                <button
+                  onClick={() => setStep(1)}
+                  className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-ash hover:text-white transition-all"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={() => setStep(3)}
+                  className="flex-1 btn-loud rounded-xl py-3 text-sm font-bold"
+                >
+                  Next — Style & Focus
+                  <ArrowRight className="h-4 w-4 inline ml-1" />
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ───────────── STEP 3: STYLE & FOCUS ───────────── */}
+        {step === 3 && (
+          <FadeIn>
+            <div className="space-y-5">
+              {/* Coaching Style */}
+              <div className="loud-card rounded-2xl p-6">
+                <label className="block mb-3 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Coaching Style</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {COACHING_STYLES.map((cs) => (
+                    <button
+                      key={cs.value}
+                      onClick={() => setCoachingStyle(cs.value)}
+                      className={`text-left rounded-xl border px-4 py-3 text-sm transition-all ${
+                        coachingStyle === cs.value
+                          ? "border-deal/60 bg-deal/10 text-deal"
+                          : "border-white/10 bg-white/[0.03] text-ash hover:border-white/20 hover:text-bone"
+                      }`}
+                    >
+                      <div className="font-bold">{cs.label}</div>
+                      <div className="text-[10px] text-muted mt-0.5">{cs.desc}</div>
+                    </button>
                   ))}
                 </div>
               </div>
-            </FadeIn>
 
-            {/* STEP 4 — The numbers */}
-            <FadeIn delay={450}>
-              <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-8 backdrop-blur">
-                <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
-                  Your math, starting now
+              {/* Focus */}
+              <div className="loud-card rounded-2xl p-6">
+                <label className="block mb-3 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Primary Focus</label>
+                <div className="grid grid-cols-2 gap-2">
+                  {FOCUS_OPTIONS.map((fo) => (
+                    <button
+                      key={fo.value}
+                      onClick={() => setAgentFocus(fo.value)}
+                      className={`text-left rounded-xl border px-4 py-3 text-sm font-medium transition-all ${
+                        agentFocus === fo.value
+                          ? "border-deal/60 bg-deal/10 text-deal"
+                          : "border-white/10 bg-white/[0.03] text-ash hover:border-white/20 hover:text-bone"
+                      }`}
+                    >
+                      {agentFocus === fo.value && <Check className="h-3 w-3 inline mr-1.5" strokeWidth={3} />}
+                      {fo.label}
+                    </button>
+                  ))}
                 </div>
-                <div className="grid grid-cols-3 gap-3 sm:gap-6">
-                  <div className="text-center">
-                    <Counter
-                      to={29.99}
-                      decimals={2}
-                      prefix="$"
-                      duration={2000}
-                      className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]"
-                    />
-                    <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
-                      Per month
-                    </div>
-                  </div>
-                  <div className="border-x border-white/10 text-center">
-                    <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]">
-                      {"<3s"}
-                    </div>
-                    <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
-                      Question to play
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <div className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[48px]">
-                      18
-                    </div>
-                    <div className="mt-1 text-[9px] font-semibold uppercase tracking-wider text-ash">
-                      Industries
-                    </div>
-                  </div>
+
+                <div className="mt-4">
+                  <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Your #1 Goal This Month</label>
+                  <input
+                    type="text"
+                    value={customGoals}
+                    onChange={(e) => setCustomGoals(e.target.value)}
+                    placeholder="e.g. Hit 15 units"
+                    className={inputCls}
+                  />
                 </div>
               </div>
-            </FadeIn>
 
-            {/* STEP 5 — Pro tip */}
-            <FadeIn delay={600}>
-              <div className="mt-16 text-center">
-                <div className="inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-4 py-2">
-                  <span className="text-sm text-gold-light">💡</span>
-                  <span className="text-sm font-medium text-ash">
-                    Pro tip: Pin the Telegram bot. It&rsquo;s faster than opening an
-                    app.
-                  </span>
-                </div>
-                <div className="mt-8">
-                  <Link
-                    href="/telegram"
-                    className="inline-flex items-center gap-2 text-sm text-ash hover:text-white transition-colors underline underline-offset-4"
-                  >
-                    How to link Telegram to your account
-                    <ArrowRight className="h-3 w-3" />
-                  </Link>
+              <div className="flex gap-3">
+                <button
+                  onClick={() => setStep(2)}
+                  className="flex-1 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-ash hover:text-white transition-all"
+                >
+                  Back
+                </button>
+                <button
+                  onClick={() => setStep(4)}
+                  className="flex-1 btn-loud rounded-xl py-3 text-sm font-bold"
+                >
+                  Review & Finish
+                  <ArrowRight className="h-4 w-4 inline ml-1" />
+                </button>
+              </div>
+            </div>
+          </FadeIn>
+        )}
+
+        {/* ───────────── STEP 4: CONFIRM ───────────── */}
+        {step === 4 && (
+          <FadeIn>
+            <div className="loud-card rounded-2xl p-6 md:p-8 text-center">
+              <div className="flex justify-center mb-6">
+                <div className="w-20 h-20 rounded-full bg-gradient-to-br from-deal to-emerald-400 flex items-center justify-center shadow-[0_0_40px_rgba(16,185,129,0.3)]">
+                  <Trophy className="h-10 w-10 text-white" />
                 </div>
               </div>
-            </FadeIn>
-          </>
+
+              <h2 className="font-display text-3xl font-black text-white mb-2">
+                You're Set Up
+              </h2>
+              <p className="text-sm text-ash mb-6 max-w-md mx-auto">
+                Your agent knows your industry, pay plan, and coaching style.
+                One tap and you're on your dashboard.
+              </p>
+
+              {/* Summary */}
+              <div className="bg-white/[0.03] rounded-xl border border-white/10 p-4 mb-6 text-left space-y-2 text-sm">
+                <div className="flex justify-between"><span className="text-muted">Industry</span><span className="text-bone font-semibold">{INDUSTRIES.find(i => i.id === industry)?.label || "Auto Sales"}</span></div>
+                {draw && <div className="flex justify-between"><span className="text-muted">Monthly Draw</span><span className="text-bone font-semibold">${parseInt(draw).toLocaleString()}</span></div>}
+                {commPct && <div className="flex justify-between"><span className="text-muted">Commission Split</span><span className="text-bone font-semibold">{commPct}%</span></div>}
+                <div className="flex justify-between"><span className="text-muted">Coaching Style</span><span className="text-bone font-semibold">{COACHING_STYLES.find(c => c.value === coachingStyle)?.label}</span></div>
+                <div className="flex justify-between"><span className="text-muted">Primary Focus</span><span className="text-bone font-semibold">{FOCUS_OPTIONS.find(f => f.value === agentFocus)?.label}</span></div>
+                {customGoals && <div className="flex justify-between"><span className="text-muted">Goal</span><span className="text-bone font-semibold">{customGoals}</span></div>}
+              </div>
+
+              {error && (
+                <div className="flex items-center gap-2 rounded-xl border border-red-500/30 bg-red-500/10 px-4 py-3 text-sm text-red-400 mb-4">
+                  <AlertCircle className="h-4 w-4 shrink-0" />
+                  {error}
+                </div>
+              )}
+
+              <button
+                onClick={saveAll}
+                disabled={saving}
+                className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold disabled:opacity-50"
+              >
+                {saving ? (
+                  <><Loader2 className="h-4 w-4 animate-spin" /> Saving...</>
+                ) : (
+                  <><Zap className="h-4 w-4" /> Go to My Dashboard</>
+                )}
+              </button>
+            </div>
+          </FadeIn>
         )}
       </div>
     </div>
   );
 }
 
-function SendIcon({ className }: { className?: string }) {
-  return (
-    <svg viewBox="0 0 24 24" fill="currentColor" className={className}>
-      <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
-    </svg>
-  );
-}
+// ─── Exports ─────────────────────────────────────────────────────────────────
 
 export default function OnboardingPage() {
   return (
