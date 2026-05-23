@@ -146,7 +146,7 @@ export default function SuccessPage() {
 
         <h1 className="text-3xl font-bold text-white mb-3">You're in!</h1>
         <p className="text-gray-400 text-lg mb-6">
-          Payment confirmed. Your ClosersAssist subscription is now active.
+          Payment confirmed. Your Deal Clozr subscription is now active.
         </p>
 
         {/* Magic link card */}
@@ -176,11 +176,11 @@ export default function SuccessPage() {
           <ol className="space-y-2 text-sm text-gray-400 mb-4">
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">1.</span>
-              Open the email from ClosersAssist
+              Open the email from Deal Clozr
             </li>
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">2.</span>
-              Click <span className="text-white font-medium">“Sign in to ClosersAssist”</span>
+              Click <span className="text-white font-medium">“Sign in to Deal Clozr”</span>
             </li>
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">3.</span>

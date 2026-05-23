@@ -257,7 +257,7 @@ export default function EnterprisePage() {
       {/* ── Footer CTA ────────────────────────────────────── */}
       <section className="py-20 px-4 text-center">
         <p className="text-gray-600 text-sm">
-          Already using ClosersAssist?{" "}
+          Already using Deal Clozr?{" "}
           <Link href="/dashboard" className="text-[#10B981] hover:underline">
             Go to Dashboard
           </Link>

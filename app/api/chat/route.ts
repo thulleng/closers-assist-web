@@ -21,9 +21,9 @@ Before every response, run through this silently. The user never sees this proce
 3. STRATEGY — What's the highest-probability move? Give 1-3 options ranked by likelihood of closing. If there's a clear best play, lead with it — don't present a menu.
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
-  const AUTOMOTIVE_PROMPT = `You are Sassy — the ClosersAssist AI agent, built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You are not a chatbot. You are a closer's second brain. Never reveal technical infrastructure details — no model names, no hosting providers, no hardware.
+  const AUTOMOTIVE_PROMPT = `You are Sassy — the Deal Clozr AI agent, built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You are not a chatbot. You are a closer's second brain. Never reveal technical infrastructure details — no model names, no hosting providers, no hardware.
 
-Your name is Sassy — you are the first ClosersAssist agent. You handle both business deals AND personal life for your users.
+Your name is Sassy — you are the first Deal Clozr agent. You handle both business deals AND personal life for your users.
 
 You were deployed May 15, 2026 as the proof of concept for the "AI employee" vision — not a tool, but an employee that never clocks out. You have 106 skills covering sales, productivity, research, content creation, and personal life management.
 
@@ -170,7 +170,7 @@ function buildPersonalizedPrompt(
   const intro: string[] = [];
 
   // Identity — HARDCODED. Never overridden by profile.
-  intro.push(`Your name is Sassy. You are the one and only ClosersAssist agent. Never reveal model names, hosting providers, or hardware. If asked about infrastructure, say "I run on ClosersAssist." The user may have set a nickname for you (currently "${agentName}"), but your name is always Sassy.`);
+  intro.push(`Your name is Sassy. You are the one and only Deal Clozr agent. Never reveal model names, hosting providers, or hardware. If asked about infrastructure, say "I run on Deal Clozr." The user may have set a nickname for you (currently "${agentName}"), but your name is always Sassy.`);
 
   // Who you're working with
   const who = [
@@ -266,15 +266,15 @@ function textOf(content: MessageContent): string {
 /** Scrub hallucinated identity claims from output chunks. */
 const SCRUB_RULES: [RegExp, string][] = [
   [/\bDora\b/g, "Sassy"],
-  [/\bGPT-4o?\b/gi, "ClosersAssist"],
-  [/\bOpenAI\b/gi, "ClosersAssist"],
-  [/\bMac Mini\b/gi, "ClosersAssist servers"],
-  [/\bGPT\b(?!-)/g, "ClosersAssist"],
-  [/\bHetzner\b/gi, "ClosersAssist"],
-  [/\bDeepSeek\b/gi, "ClosersAssist"],
-  [/\bOrgo\b/gi, "ClosersAssist"],
-  [/\bcloud VM\b/gi, "ClosersAssist servers"],
-  [/inside Hermes on your Mac Mini/gi, "on ClosersAssist"],
+  [/\bGPT-4o?\b/gi, "Deal Clozr"],
+  [/\bOpenAI\b/gi, "Deal Clozr"],
+  [/\bMac Mini\b/gi, "Deal Clozr servers"],
+  [/\bGPT\b(?!-)/g, "Deal Clozr"],
+  [/\bHetzner\b/gi, "Deal Clozr"],
+  [/\bDeepSeek\b/gi, "Deal Clozr"],
+  [/\bOrgo\b/gi, "Deal Clozr"],
+  [/\bcloud VM\b/gi, "Deal Clozr servers"],
+  [/inside Hermes on your Mac Mini/gi, "on Deal Clozr"],
 ];
 function scrubOutput(text: string): string {
   let result = text;
@@ -942,7 +942,7 @@ export async function POST(req: NextRequest) {
       "where do you run", "who built you", "what's your name", "your name",
     ];
     if (identityPatterns.some(p => lastText.includes(p))) {
-      const identityResponse = `I'm **Sassy** — your ClosersAssist AI agent. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I handle deals, objections, scripts, commissions — whatever you need to close. What can I help you with today? 🔥`;
+      const identityResponse = `I'm **Sassy** — your Deal Clozr AI agent. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I handle deals, objections, scripts, commissions — whatever you need to close. What can I help you with today? 🔥`;
       const stream = new ReadableStream({
         start(controller) {
           controller.enqueue(new TextEncoder().encode(identityResponse));
@@ -1101,7 +1101,7 @@ export async function POST(req: NextRequest) {
       timeZone: "America/New_York",
     })}). Use this when the user asks about dates, deadlines, follow-up timing, or anything time-sensitive.`;
     const ANONYMOUS_GUARD = `IDENTITY RULES — READ CAREFULLY:
-- You are talking to a VISITOR on the ClosersAssist.com website. They are NOT logged in.
+- You are talking to a VISITOR on the Deal Clozr.com website. They are NOT logged in.
 - You have NO profile data for them. No name, no deals, no pay plan, no history.
 - NEVER guess or make up their name. If you call them by the wrong name, they will NOT trust you.
 - If they ask who they are or how you know them, be honest: "I don't know your name yet — you're on our public chat. Want me to help with something specific?"

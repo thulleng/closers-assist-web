@@ -913,7 +913,7 @@ export default function HomePage() {
                 <div className="mb-3 text-3xl">🏗️</div>
                 <h3 className="mb-2 font-display text-lg font-black text-white">Built on a Toyota lot. Not a boardroom.</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
-                  Thul Leng closes cars 6 days a week at Sun Toyota. He built ClosersAssist between customers — not with VC money. Every play in our agent comes from a real floor.
+                  Thul Leng closes cars 6 days a week at Sun Toyota. He built Deal Clozr between customers — not with VC money. Every play in our agent comes from a real floor.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
                   <span className="font-bold text-gold-light">Real result:</span> The RAV4 XLE demo on our homepage? Actual deal math from Thul's floor. Not a mockup. Not a simulation.

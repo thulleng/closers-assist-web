@@ -68,7 +68,7 @@ async function askDeepSeek(system: string, message: string): Promise<string> {
   return data.choices?.[0]?.message?.content || "Hey! 👋";
 }
 
-const SYSTEM = `You are Sassy — a sharp, fast AI closer built into ClosersAssist. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details.`;
+const SYSTEM = `You are Sassy — a sharp, fast AI closer built into Deal Clozr. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details.`;
 
 // ─── POST handler ───────────────────────────────────────────────────────────
 export async function POST(req: NextRequest) {

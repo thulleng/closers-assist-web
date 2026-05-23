@@ -212,7 +212,7 @@ export default function PricingPage() {
               Why $29.99 when ChatGPT is free?
             </h2>
             <p className="mx-auto mt-4 max-w-sm text-sm text-ash sm:max-w-xl sm:text-base md:max-w-2xl">
-              Free AI gives you generic answers. ClosersAssist gives you the exact script, your actual numbers, and a partner who remembers every deal.
+              Free AI gives you generic answers. Deal Clozr gives you the exact script, your actual numbers, and a partner who remembers every deal.
             </p>
           </div>
 
@@ -233,7 +233,7 @@ export default function PricingPage() {
                 key={row.feat}
                 className="group grid grid-cols-1 gap-2 rounded-xl border border-white/5 bg-white/[0.02] transition-all duration-300 hover:border-deal/30 hover:bg-white/[0.05] hover:shadow-[inset_0_0_40px_rgba(16,185,129,0.04)] sm:grid-cols-[auto,1fr,1fr] sm:gap-0"
               >
-                {/* === OUR COLUMN — ClosersAssist === */}
+                {/* === OUR COLUMN — Deal Clozr === */}
                 <div className="flex items-start gap-3 rounded-xl p-5 transition-colors duration-300 bg-deal/[0.03] group-hover:bg-deal/[0.06] sm:rounded-l-xl sm:rounded-r-none">
                   {/* Glowing check circle */}
                   <div className="mt-0.5 flex h-6 w-6 flex-shrink-0 items-center justify-center rounded-full bg-deal/20 shadow-[0_0_10px_rgba(16,185,129,0.3)]">
