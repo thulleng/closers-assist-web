@@ -249,7 +249,7 @@ export default function HomePage() {
             </div>
             <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-              Meet Dora —
+              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>Meet Dora</span>
               <br />
               <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>Your AI Closer</span>
               <br />
