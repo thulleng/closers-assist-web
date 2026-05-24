@@ -77,6 +77,7 @@ function OnboardingContent() {
   const [industry, setIndustry] = useState("");
   const [telegramCopied, setTelegramCopied] = useState(false);
   const [agentName, setAgentName] = useState("");
+  const [agentGender, setAgentGender] = useState("female");
   const [draw, setDraw] = useState("");
   const [commPct, setCommPct] = useState("");
   const [miniFlat, setMiniFlat] = useState("");
@@ -100,6 +101,7 @@ function OnboardingContent() {
           user_id: user.id,
           industry: industry || "auto",
           agent_name: agentName || "Closer",
+          agent_gender: agentGender,
           coaching_style: coachingStyle,
           agent_focus: agentFocus,
           custom_goals: customGoals,
@@ -267,6 +269,31 @@ function OnboardingContent() {
                   <div>
                     <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Agent Name</label>
                     <input type="text" value={agentName} onChange={(e) => setAgentName(e.target.value)} placeholder="Closer" className={inputCls} />
+                  </div>
+                  <div>
+                    <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Voice</label>
+                    <div className="flex gap-2">
+                      <button
+                        onClick={() => setAgentGender("female")}
+                        className={`flex-1 rounded-xl border py-3 text-sm font-bold transition-all ${
+                          agentGender === "female"
+                            ? "border-pink-400/60 bg-pink-500/15 text-pink-300"
+                            : "border-white/10 bg-white/[0.03] text-ash hover:border-white/20 hover:text-bone"
+                        }`}
+                      >
+                        ♀ Female
+                      </button>
+                      <button
+                        onClick={() => setAgentGender("male")}
+                        className={`flex-1 rounded-xl border py-3 text-sm font-bold transition-all ${
+                          agentGender === "male"
+                            ? "border-blue-400/60 bg-blue-500/15 text-blue-300"
+                            : "border-white/10 bg-white/[0.03] text-ash hover:border-white/20 hover:text-bone"
+                        }`}
+                      >
+                        ♂ Male
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
