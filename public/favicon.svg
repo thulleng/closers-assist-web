@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <linearGradient id="blueG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#4da6ff"/>
+      <stop offset="100%" stop-color="#0055cc"/>
+    </linearGradient>
+    <linearGradient id="purpleG" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#a855f7"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background circle -->
+  <circle cx="256" cy="256" r="240" fill="#0a0a0a"/>
+  <circle cx="256" cy="256" r="240" fill="none" stroke="#1a1a2e" stroke-width="4"/>
+  
+  <!-- D letter - blue -->
+  <rect x="175" y="160" width="28" height="192" rx="8" fill="url(#blueG)"/>
+  <path d="M 203 160 C 270 160 305 190 305 256 C 305 322 270 352 203 352" 
+        stroke="url(#blueG)" stroke-width="28" fill="none" stroke-linecap="round"/>
+  
+  <!-- C letter - purple, overlapping D -->
+  <path d="M 350 180 C 415 210 415 302 350 332" 
+        stroke="url(#purpleG)" stroke-width="28" fill="none" stroke-linecap="round"/>
+</svg>

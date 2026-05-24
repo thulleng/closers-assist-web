@@ -5,6 +5,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "The $200 Mini That Pays $500",
   description: "A half mini is $200. But that half unit at 10.5 turns into a $500 bonus at 11. Here's the math.",
+  openGraph: {
+    title: "The $200 Mini That Pays $500 — Deal Clozr",
+    description: "A half mini pays $200. But that half unit at 10.5 turns into a $500 bonus at 11. Pay plan math every closer needs to know.",
+    images: ["/api/og"],
+  },
 };
 
 export default function MiniThatPays() {

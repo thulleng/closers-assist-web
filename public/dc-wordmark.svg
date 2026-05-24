@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 280 80" width="280" height="80">
+  <defs>
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f6fff"/>
+      <stop offset="100%" stop-color="#7c3aed"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Icon: Diamond being caught/clamped -->
+  <g transform="translate(40, 40)">
+    <!-- Left closing arm -->
+    <path d="M -50 30 Q -60 0 -30 -20 Q -12 -30 10 -32" 
+          stroke="url(#brand)" stroke-width="6" fill="none" 
+          stroke-linecap="round"/>
+    <!-- Right closing arm -->
+    <path d="M 50 30 Q 60 0 30 -20 Q 12 -30 -10 -32" 
+          stroke="url(#brand)" stroke-width="6" fill="none" 
+          stroke-linecap="round"/>
+    <!-- Diamond -->
+    <path d="M 0 -28 L 18 0 L 0 28 L -18 0 Z" 
+          fill="url(#brand)"/>
+    <!-- Diamond highlight -->
+    <path d="M 0 -18 L 10 0 L 0 18 L -10 0 Z" 
+          fill="white" opacity="0.2"/>
+  </g>
+  
+  <!-- Wordmark -->
+  <text x="105" y="36" font-family="'Inter',system-ui,-apple-system,sans-serif" font-size="30" font-weight="800" fill="white" letter-spacing="-1">Deal</text>
+  <text x="105" y="62" font-family="'Inter',system-ui,-apple-system,sans-serif" font-size="20" font-weight="500" fill="rgba(255,255,255,0.5)" letter-spacing="-0.3">Clozr</text>
+</svg>

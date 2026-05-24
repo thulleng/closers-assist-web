@@ -29,7 +29,7 @@ function friendlyError(msg: string): string {
 function LoginForm() {
   const searchParams = useSearchParams();
   const router = useRouter();
-  const next = searchParams?.get("next") ?? "/dashboard/auto";
+  const next = searchParams?.get("next") ?? searchParams?.get("redirect") ?? "/dashboard/auto";
 
   // "password" | "signup" | "magic" | "reset" | "recovery"
   const [mode, setMode] = useState<"password" | "signup" | "magic" | "reset" | "recovery">(

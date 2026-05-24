@@ -5,6 +5,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Three Plays for the Service Lane",
   description: "Oil change customers are the warmest leads on the lot. Three plays that turn service into sales.",
+  openGraph: {
+    title: "Three Plays for the Service Lane — Deal Clozr",
+    description: "Oil change customers are the warmest leads on the lot. Three proven plays that turn service visits into car sales.",
+    images: ["/api/og"],
+  },
 };
 
 export default function ServiceLanePlays() {

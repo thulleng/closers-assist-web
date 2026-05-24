@@ -222,6 +222,21 @@ export default function HomePage() {
             }}
           />
           <FadeIn>
+            {/* Big DC brand mark */}
+            <div className="mb-6 flex justify-center">
+              <div className="relative">
+                <div className="absolute inset-0 rounded-full blur-3xl opacity-60"
+                  style={{ background: "radial-gradient(circle, rgba(15,111,255,0.3) 0%, rgba(124,58,237,0.2) 50%, transparent 70%)" }} />
+                <div className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-full overflow-hidden shadow-[0_0_60px_rgba(15,111,255,0.3),0_0_120px_rgba(124,58,237,0.15)]"
+                  style={{ border: "2px solid rgba(255,255,255,0.08)" }}>
+                  <img
+                    src="/dealclozr-logo.svg"
+                    alt="Deal Clozr"
+                    className="h-full w-full object-cover"
+                  />
+                </div>
+              </div>
+            </div>
             <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
               Meet Dora —
@@ -464,14 +479,19 @@ export default function HomePage() {
                     {/* App header */}
                     <div className="relative z-10 mt-6 flex items-center gap-2.5 border-b border-white/5 px-4 pb-3">
                       <div
-                        className="flex h-9 w-9 items-center justify-center rounded-lg font-display text-[11px] font-black text-white"
+                        className="flex h-9 w-9 items-center justify-center rounded-lg"
                         style={{
                           background:
-                            "linear-gradient(135deg, #10B981, #059669)",
-                          boxShadow: "0 4px 12px rgba(16,185,129,0.4)",
+                            "linear-gradient(135deg, #0f6fff, #7c3aed)",
+                          boxShadow: "0 4px 12px rgba(15,111,255,0.4)",
                         }}
                       >
-                        CA
+                        <svg viewBox="0 0 512 512" className="h-6 w-6">
+                          <circle cx="256" cy="256" r="225" fill="#0a0a0a"/>
+                          <rect x="175" y="160" width="28" height="192" rx="8" fill="white"/>
+                          <path d="M 203 160 C 270 160 305 190 305 256 C 305 322 270 352 203 352" stroke="white" stroke-width="28" fill="none" stroke-linecap="round"/>
+                          <path d="M 350 180 C 415 210 415 302 350 332" stroke="white" stroke-width="28" fill="none" stroke-linecap="round"/>
+                        </svg>
                       </div>
                       <div className="flex-1">
                         <div className="flex items-center gap-1.5 text-[13px] font-bold text-white">
@@ -1139,7 +1159,7 @@ export default function HomePage() {
             </div>
             <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
               <video
-                src="/demo-90s.mp4?v=2"
+                src="/demo-90s.mp4?v=3"
                 controls
                 poster="/images/video-poster.jpg"
                 className="w-full"
@@ -1848,6 +1868,7 @@ export default function HomePage() {
                       src={ind.image}
                       alt={ind.name}
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-pit via-pit/40 to-transparent" />
                     <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 bg-black/60 backdrop-blur shadow-[0_8px_20px_rgba(16,185,129,0.3)]">

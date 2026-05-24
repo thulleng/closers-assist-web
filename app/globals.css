@@ -525,7 +525,7 @@ summary {
   background-image: url(/dora-bg.jpg);
   background-repeat: no-repeat;
   background-size: cover;
-  background-position: center 45%;
+  background-position: 30% 50%;
   image-rendering: auto;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
@@ -534,12 +534,12 @@ summary {
 
 @keyframes hero-pan {
   0% { transform: translate(0, 0); }
-  100% { transform: translate(-2%, -1%); }
+  100% { transform: translate(-1.5%, -0.5%); }
 }
 
 @media (max-width: 767px) {
   .hero-bg-dora {
-    background-size: 250%;
-    background-position: 50% 45%;
+    background-size: 280%;
+    background-position: 35% 50%;
   }
 }

@@ -5,6 +5,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "I Run an AI Closer on My Dealership Floor — Here's What Happened in 30 Days",
   description: "30 days. 247 leads. 43 appointments. The real numbers from running an AI closer at Sun Toyota — and why your floor is next.",
+  openGraph: {
+    title: "I Ran an AI Closer on My Floor for 30 Days — Deal Clozr",
+    description: "247 leads. 43 appointments. Real numbers from running Deal Clozr at Sun Toyota for 30 days.",
+    images: ["/api/og"],
+  },
 };
 
 export default function SunToyotaPilot() {

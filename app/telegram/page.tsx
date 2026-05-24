@@ -261,16 +261,16 @@ export default async function TelegramPage({
 
             <div className="grid gap-4 sm:grid-cols-3">
               {[
-                { name: "WhatsApp", desc: "Webhook live. Meta Business setup pending.", icon: "💬", status: "In development" },
-                { name: "Slack", desc: "For SaaS sales teams who live in channels.", icon: "💜", status: "Coming soon" },
-                { name: "Discord", desc: "For gaming, creator, and community sellers.", icon: "🎮", status: "Coming soon" },
+                { name: "WhatsApp", desc: "Webhook live. Same agent. Same memory. Same plays.", icon: "💬", status: "Live" },
+                { name: "SMS / Text", desc: "Any phone. Any carrier. No app needed.", icon: "📱", status: "Live" },
+                { name: "Telegram", desc: "You're already here. This is it.", icon: "✈️", status: "Live" },
               ].map(({ name, desc, icon, status }) => (
-                <div key={name} className={`rounded-2xl border p-6 text-center transition-opacity ${status === "In development" ? "border-gold/20 bg-gold/5 opacity-80" : "border-white/5 bg-slate/30 opacity-60 hover:opacity-80"}`}>
+                <div key={name} className="rounded-2xl border border-deal/20 bg-deal/5 p-6 text-center">
                   <div className="mb-3 text-3xl">{icon}</div>
                   <h3 className="font-bold text-white">{name}</h3>
-                  <p className="mt-1 text-xs text-muted">{desc}</p>
-                  <span className={`mt-3 inline-block rounded-full border px-3 py-0.5 text-[10px] font-semibold ${status === "In development" ? "border-gold/40 text-gold" : "border-gold/20 text-gold/60"}`}>
-                    {status}
+                  <p className="mt-1 text-xs text-ash">{desc}</p>
+                  <span className="mt-3 inline-block rounded-full border border-deal/40 bg-deal/10 px-3 py-0.5 text-[10px] font-semibold text-deal">
+                    ● {status}
                   </span>
                 </div>
               ))}
@@ -290,7 +290,7 @@ export default async function TelegramPage({
               <span className="text-shine font-black">One agent. One price.</span>
             </h2>
             <p className="mx-auto mt-4 max-w-lg text-lg text-ash">
-              Open Telegram now. Your agent is already there — same memory, same pay plan, same plays.
+              Web + Telegram + WhatsApp + SMS — one agent. One price. Every platform.
             </p>
             <div className="mt-8">
               <a

@@ -1,23 +1,49 @@
-import { updateSession } from "@/lib/supabase/middleware";
-import type { NextRequest } from "next/server";
+import { createServerClient } from "@supabase/ssr";
+import { NextResponse, type NextRequest } from "next/server";
 
 export async function middleware(request: NextRequest) {
-  return updateSession(request);
+  // Only protect dashboard routes
+  const { pathname } = request.nextUrl;
+  if (!pathname.startsWith("/dashboard") && !pathname.startsWith("/api/dashboard")) {
+    return NextResponse.next();
+  }
+
+  // Allow the dashboard landing page and settings through for middleware
+  // (the client component handles auth state)
+  if (pathname === "/dashboard" || pathname === "/dashboard/settings") {
+    return NextResponse.next();
+  }
+
+  // Try reading the Supabase session cookie
+  const supabase = createServerClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      cookies: {
+        getAll() {
+          return request.cookies.getAll();
+        },
+        setAll() {
+          // Middleware cannot set cookies — that is done in the auth callback
+        },
+      },
+    }
+  );
+
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  // If no session, redirect to login (preserve the intended destination)
+  if (!session) {
+    const loginUrl = new URL("/login", request.url);
+    loginUrl.searchParams.set("redirect", pathname);
+    return NextResponse.redirect(loginUrl);
+  }
+
+  return NextResponse.next();
 }
 
 export const config = {
-  matcher: [
-    /*
-     * Match all routes except:
-     * - _next/static  (Next.js static assets)
-     * - _next/image   (Next.js image optimisation)
-     * - favicon.ico, sitemap.xml, robots.txt
-     * - Common image extensions
-     *
-     * Public routes (/, /login, /pricing, /founder, /industries/*, /api/*, /success)
-     * pass through updateSession without redirect — protection is enforced inside
-     * updateSession only for /dashboard/* and /onboarding.
-     */
-    "/((?!_next/static|_next/image|favicon\\.ico|sitemap\\.xml|robots\\.txt|.*\\.(?:svg|png|jpg|jpeg|gif|webp)$).*)",
-  ],
+  matcher: ["/dashboard/:path*", "/api/dashboard/:path*"],
 };

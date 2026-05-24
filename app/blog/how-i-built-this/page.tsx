@@ -5,6 +5,11 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "How I Built an AI Sales Agent Between Customers",
   description: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the Sun Toyota floor.",
+  openGraph: {
+    title: "How I Built an AI Sales Agent Between Customers — Deal Clozr",
+    description: "I sell Toyotas. I'm not an engineer. Here's how Deal Clozr was built between customers on the Sun Toyota floor in New Port Richey, FL.",
+    images: ["/api/og"],
+  },
 };
 
 export default function HowIBuiltThis() {

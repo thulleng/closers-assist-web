@@ -327,12 +327,15 @@ interface FormState {
   miniFlat: string;
   volumeBonus: string;
   cxiBonus: string;
+  whatsappPhone: string;
+  smsPhone: string;
 }
 
 const EMPTY: FormState = {
   agentName: "", coachingStyle: "", agentFocus: "",
   customGoals: "", draw: "", commissionPct: "",
   miniFlat: "", volumeBonus: "", cxiBonus: "",
+  whatsappPhone: "", smsPhone: "",
 };
 
 function AgentSettingsTab() {
@@ -353,7 +356,7 @@ function AgentSettingsTab() {
 
       const { data } = await supabase
         .from("agent_profiles")
-        .select("agent_name, coaching_style, agent_focus, custom_goals, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus")
+        .select("agent_name, coaching_style, agent_focus, custom_goals, draw, commission_pct, mini_flat, volume_bonus, cxi_bonus, whatsapp_phone, sms_phone")
         .eq("user_id", user.id)
         .single();
 
@@ -368,6 +371,8 @@ function AgentSettingsTab() {
           miniFlat:      data.mini_flat      != null ? String(data.mini_flat)      : "",
           volumeBonus:   data.volume_bonus   != null ? String(data.volume_bonus)   : "",
           cxiBonus:      data.cxi_bonus      != null ? String(data.cxi_bonus)      : "",
+          whatsappPhone: data.whatsapp_phone ?? "",
+          smsPhone:      data.sms_phone      ?? "",
         });
       }
       setLoading(false);
@@ -398,6 +403,8 @@ function AgentSettingsTab() {
         mini_flat:      parseFloat(form.miniFlat)      || 0,
         volume_bonus:   parseFloat(form.volumeBonus)   || 0,
         cxi_bonus:      parseFloat(form.cxiBonus)      || 0,
+        whatsapp_phone: form.whatsappPhone || null,
+        sms_phone:      form.smsPhone      || null,
         updated_at:     new Date().toISOString(),
       }, { onConflict: "user_id" });
 
@@ -485,6 +492,25 @@ function AgentSettingsTab() {
                 onChange={(e) => set("cxiBonus", e.target.value)}
                 placeholder="300" className={inputCls} />
             </div>
+          </div>
+        </div>
+      </SectionCard>
+
+      <SectionCard title="Platform Connections">
+        <div className="space-y-4">
+          <div>
+            <FieldLabel>WhatsApp Phone</FieldLabel>
+            <input type="tel" value={form.whatsappPhone}
+              onChange={(e) => set("whatsappPhone", e.target.value)}
+              placeholder="+15551234567" className={inputCls} />
+            <p className="mt-1.5 text-xs text-muted">Text your agent on WhatsApp. Include country code.</p>
+          </div>
+          <div>
+            <FieldLabel>SMS / Text Phone</FieldLabel>
+            <input type="tel" value={form.smsPhone}
+              onChange={(e) => set("smsPhone", e.target.value)}
+              placeholder="+15551234567" className={inputCls} />
+            <p className="mt-1.5 text-xs text-muted">Text your agent from any phone. Include country code.</p>
           </div>
         </div>
       </SectionCard>

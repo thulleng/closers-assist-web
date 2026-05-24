@@ -60,8 +60,8 @@ export default function DemoPage() {
         {/* Video */}
         <div className="mb-16">
           <div className="relative mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
-            <video
-              src="/demo-90s.mp4?v=2"
+<video
+              src="/demo-90s.mp4?v=3"
               controls
               poster="/images/video-poster.jpg"
               className="w-full"
