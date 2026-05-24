@@ -58,7 +58,13 @@ export default function PhoneMockup() {
 
           {/* App header */}
           <div className="mb-4 flex items-center gap-2 rounded-md border border-iron bg-pit px-3 py-2">
-            <div className="h-2 w-2 rounded-full bg-deal animate-pulse" />
+            <div className="h-5 w-5 flex-shrink-0 rounded-full overflow-hidden border border-white/[0.10]">
+              <img
+                src="/logo.png"
+                alt="DC"
+                className="h-full w-full object-cover"
+              />
+            </div>
             <span className="font-display text-[11px] font-bold tracking-wider text-bone">
               DEAL CLOZR
             </span>
