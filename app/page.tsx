@@ -1095,7 +1095,7 @@ export default function HomePage() {
                   Tell us about you
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
-                  Your industry. Your pay plan. Your scripts. Your goals. Your agent learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
+                  Your industry. Your pay plan. Your scripts. Your goals. <span className="font-semibold text-bone">Pick a name</span> — Jake, Maya, Tank, whatever fits. <span className="font-semibold text-bone">Choose male or female.</span> Your agent becomes whoever you need on the floor. Learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   {"< 2 minutes"}
