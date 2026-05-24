@@ -102,14 +102,59 @@ export async function POST(req: NextRequest) {
     }
 
     if (!profile) {
-      const linkCode = Buffer.from(String(chatId))
-        .toString("base64")
-        .replace(/\+/g, "-")
-        .replace(/\//g, "_")
-        .replace(/=+$/, "");
-      await reply(
-        `👋 *Welcome to Deal Clozr!*\n\nTo connect your account, tap below and sign in:\n\nhttps://dealclozr.com/telegram?code=${linkCode}&chat_id=${chatId}\n\nOnce linked, I'll be your AI closer — log deals, handle objections, write follow-ups, all from Telegram.`
-      );
+      try {
+        // ── Default demo: Sun Toyota pay plan ──
+        const demoIntro = `👋 *Welcome to Deal Clozr!*
+
+I'm an AI closer built on the floor at Sun Toyota in New Port Richey, Florida. Here's a preview of what I know:
+
+*🏢 Demo Pay Plan — Sun Toyota*
+• Draw: \\$2,600 bi-weekly
+• Mini/flat: \\$200
+• Full deal: variable (front gross × commission %)
+• Volume bonus: \\$500 at 11 units + 25% retro
+• CXI bonus: \\$250 at 4.8+
+
+*What I do:*
+→ Log deals & track unit count
+→ Handle customer objections word-for-word
+→ Calculate commission & bonus math
+→ Write follow-up texts & emails
+→ Push you toward the next bonus tier
+
+*Ready to try?* Type a question — for example:
+\`\`\`
+I have a customer on a 2019 RAV4 with 60k miles. Trade-in is underwater by \\$3k. How do I handle it?
+\`\`\`
+
+*Want your own agent?* Tap below to connect your account:\n\nhttps://dealclozr.com/telegram?code=***&chat_id=${chatId}\n\nOnce linked, I'll learn YOUR pay plan, YOUR scripts, and YOUR goals. Same agent. Your data.`;
+
+        // Send intro — chunk if needed
+        const maxLen = 4000;
+        if (demoIntro.length <= maxLen) {
+          await reply(demoIntro);
+        } else {
+          const parts: string[] = [];
+          let remaining = demoIntro;
+          while (remaining.length > 0) {
+            if (remaining.length <= maxLen) { parts.push(remaining); break; }
+            let splitAt = remaining.lastIndexOf("\\n", maxLen);
+            if (splitAt === -1 || splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(" ", maxLen);
+            if (splitAt === -1 || splitAt < maxLen / 2) splitAt = maxLen;
+            parts.push(remaining.slice(0, splitAt));
+            remaining = remaining.slice(splitAt).trim();
+          }
+          for (const part of parts) {
+            await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({ chat_id: chatId, text: part, parse_mode: "Markdown" }),
+            });
+          }
+        }
+      } catch (_) {
+        // fallback — silent
+      }
       return NextResponse.json({ ok: true });
     }
 
