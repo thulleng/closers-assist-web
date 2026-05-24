@@ -1,33 +1,22 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f6fff"/>
-      <stop offset="100%" stop-color="#7c3aed"/>
+    <linearGradient id="barFill" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#a855f7"/>
     </linearGradient>
+    <filter id="shadow">
+      <feDropShadow dx="0" dy="6" stdDeviation="10" flood-color="#7c3aed" flood-opacity="0.5"/>
+    </filter>
   </defs>
-  
-  <!-- Outer ring -->
-  <circle cx="256" cy="256" r="240" fill="url(#brand)"/>
-  
-  <!-- Inner circle -->
-  <circle cx="256" cy="256" r="225" fill="#0a0a0a"/>
-  
-  <!-- The mark: A bold stylized "DC" monogram -->
-  
-  <!-- D - vertical stroke -->
-  <rect x="175" y="160" width="32" height="192" rx="10" fill="url(#brand)"/>
-  
-  <!-- D - curved body -->
-  <path d="M 207 160 
-           C 280 160, 320 200, 320 256 
-           C 320 312, 280 352, 207 352" 
-        stroke="url(#brand)" stroke-width="28" fill="none" stroke-linecap="round"/>
-  
-  <!-- C - outer curve -->
-  <path d="M 360 190 
-           C 420 220, 420 292, 360 322" 
-        stroke="url(#brand)" stroke-width="28" fill="none" stroke-linecap="round"/>
-  
-  <!-- Small gap between D and C showing they're separate -->
-  <!-- Clean. Bold. Monogram. -->
+
+  <!-- The ring — dark, closed at bottom, gap at TOP -->
+  <!-- Starts at top-left (10 o'clock, x=100,y=130), arcs clockwise to top-right (2 o'clock, x=412,y=130) -->
+  <path d="M 100 130 
+           A 208 208 0 1 0 412 130" 
+        stroke="#1a1a2e" stroke-width="44" fill="none" stroke-linecap="round"/>
+
+  <!-- The closer bar — thick pill, bridging the top gap between the two open ends -->
+  <g filter="url(#shadow)">
+    <rect x="125" y="108" width="262" height="44" rx="22" fill="url(#barFill)"/>
+  </g>
 </svg>
