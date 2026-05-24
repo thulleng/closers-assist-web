@@ -22,7 +22,7 @@ export default function MobileCTABar() {
           ? "translate-y-0 opacity-100"
           : "translate-y-full opacity-0 pointer-events-none"
       }`}
-      style={{ background: "rgba(5,5,6,0.95)" }}
+      style={{ background: "rgba(5,5,6,0.95)", bottom: "60px" }}
     >
       <Link
         href="/pricing"

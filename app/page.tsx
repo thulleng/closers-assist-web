@@ -247,13 +247,13 @@ export default function HomePage() {
                 </div>
               </div>
             </div>
-            <h2 className="font-display text-4xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
+            <h2 className="font-display text-3xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
               <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>Meet Dora</span>
               <br />
               <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>Your AI Closer</span>
               <br />
-              <span className="text-orange-400 font-black text-2xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>She closes. You collect.</span>
+              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>She closes. You collect.</span>
             </h2>
             <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
