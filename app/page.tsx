@@ -230,14 +230,15 @@ export default function HomePage() {
                 {/* Inner accent glow */}
                 <div className="absolute -inset-2 rounded-full opacity-30 blur-xl"
                   style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 60%)" }} />
-                {/* Logo */}
+                {/* Logo — circular crop with thin border */}
                 <div className="relative" style={{ width: 160, height: 160 }}>
-                  <img
-                    src="/logo.png"
-                    alt="Deal Clozr"
-                    className="h-full w-full"
-                    style={{ filter: "drop-shadow(0 0 24px rgba(99,102,241,0.35))" }}
-                  />
+                  <div className="h-full w-full rounded-full overflow-hidden border border-white/[0.08]">
+                    <img
+                      src="/logo.png"
+                      alt="Deal Clozr"
+                      className="h-full w-full object-cover"
+                    />
+                  </div>
                 </div>
               </div>
             </div>
