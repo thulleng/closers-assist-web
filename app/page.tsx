@@ -228,7 +228,7 @@ export default function HomePage() {
                   style={{ background: "radial-gradient(circle, rgba(15,111,255,0.3) 0%, rgba(124,58,237,0.2) 50%, transparent 70%)" }} />
                 <div className="relative" style={{ width: 120, height: 120 }}>
                   <img
-                    src="/dealclozr-logo.svg"
+                    src="/logo.png"
                     alt="Deal Clozr"
                     className="h-full w-full"
                   />

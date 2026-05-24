@@ -44,11 +44,11 @@ export default function Nav() {
               aria-hidden
             />
             <Image
-              src="/dealclozr-logo.svg"
+              src="/logo.png"
               alt="Deal Clozr"
               width={36}
               height={36}
-              className="h-9 w-9 rounded-full"
+              className="h-9 w-9"
               priority
             />
           </div>

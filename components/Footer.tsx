@@ -21,11 +21,11 @@ export default function Footer() {
                   aria-hidden
                 />
                 <Image
-                  src="/dealclozr-logo.svg"
+                  src="/logo.png"
                   alt="Deal Clozr"
                   width={32}
                   height={32}
-                  className="h-8 w-8 rounded-full"
+                  className="h-8 w-8"
                 />
               </div>
               <span className="font-display text-[13px] font-black tracking-wider text-white">
