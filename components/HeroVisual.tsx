@@ -239,14 +239,14 @@ export default function HeroVisual({
             />
           </svg>
 
-          {/* "CA" text in center */}
+          {/* "DC" text in center */}
           <span
             className="absolute font-display text-[10px] font-black text-pit pointer-events-none select-none"
             style={{
               textShadow: "0 0 6px rgba(0,255,136,0.5)",
             }}
           >
-            CA
+            DC
           </span>
         </div>
       </div>
