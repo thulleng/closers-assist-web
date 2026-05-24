@@ -230,13 +230,18 @@ export default function HomePage() {
                 {/* Inner accent glow */}
                 <div className="absolute -inset-2 rounded-full opacity-30 blur-xl"
                   style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 60%)" }} />
-                {/* Logo — circular crop with thin border */}
+                {/* Logo — circular crop via mask, no square edges */}
                 <div className="relative" style={{ width: 160, height: 160 }}>
-                  <div className="h-full w-full rounded-full overflow-hidden border border-white/[0.08]">
+                  <div className="h-full w-full rounded-full overflow-hidden border border-white/[0.10] shadow-[0_0_30px_rgba(99,102,241,0.25)]"
+                    style={{
+                      WebkitMaskImage: "radial-gradient(circle, white 100%, transparent 100%)",
+                      maskImage: "radial-gradient(circle, white 100%, transparent 100%)"
+                    }}>
                     <img
                       src="/logo.png"
                       alt="Deal Clozr"
-                      className="h-full w-full object-cover"
+                      className="h-full w-full"
+                      style={{ transform: "scale(1.05)" }}
                     />
                   </div>
                 </div>
