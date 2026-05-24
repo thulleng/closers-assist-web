@@ -2,7 +2,7 @@
 
 > **For Hermes:** Use subagent-driven-development skill to implement this plan task-by-task.
 
-**Goal:** Upgrade ClosersAssist agents with persistent cross-session memory, personality consistency, self-learning, self-healing, and proactive behavior — matching the sophistication of a personal AI operator.
+**Goal:** Upgrade Deal Clozr agents with persistent cross-session memory, personality consistency, self-learning, self-healing, and proactive behavior — matching the sophistication of a personal AI operator.
 
 **Architecture:** Layer these capabilities on top of the existing chat route (`app/api/chat/route.ts`), Supabase `agent_memory` table, and deal-tracking infrastructure. Each upgrade is independently deployable and builds on the last.
 

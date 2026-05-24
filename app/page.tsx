@@ -367,7 +367,7 @@ export default function HomePage() {
                     href="#tutorial"
                     className="text-gold-light hover:underline"
                   >
-                    ▶ Watch it close a deal in under 2 minutes
+                    ▶ Watch it close a deal in under 4 minutes
                   </Link>
                 </div>
               </div>

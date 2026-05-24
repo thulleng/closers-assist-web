@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Obsidian → Supabase memory sync for ClosersAssist.
+Obsidian → Supabase memory sync for Deal Clozr.
 Reads Thul's Obsidian vault notes and pushes them as agent_memory
 rows (role='obsidian') so the web and Telegram agents can inject them.
 

@@ -1,5 +1,5 @@
 # Enterprise Sales Call Script — 15 Minutes
-## ClosersAssist Enterprise ($5,000/mo)
+## Deal Clozr Enterprise ($5,000/mo)
 
 **Your voice:** Direct. No fluff. You know their floor better than they think you do.
 You're not selling software — you're giving them a closer who never calls out sick.
