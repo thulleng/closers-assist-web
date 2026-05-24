@@ -222,17 +222,15 @@ export default function HomePage() {
             }}
           />
           <FadeIn>
-            {/* Big DC brand mark */}
             <div className="mb-6 flex justify-center">
               <div className="relative">
                 <div className="absolute inset-0 rounded-full blur-3xl opacity-60"
                   style={{ background: "radial-gradient(circle, rgba(15,111,255,0.3) 0%, rgba(124,58,237,0.2) 50%, transparent 70%)" }} />
-                <div className="relative h-28 w-28 sm:h-36 sm:w-36 rounded-full overflow-hidden shadow-[0_0_60px_rgba(15,111,255,0.3),0_0_120px_rgba(124,58,237,0.15)]"
-                  style={{ border: "2px solid rgba(255,255,255,0.08)" }}>
+                <div className="relative" style={{ width: 120, height: 120 }}>
                   <img
                     src="/dealclozr-logo.svg"
                     alt="Deal Clozr"
-                    className="h-full w-full object-cover"
+                    className="h-full w-full"
                   />
                 </div>
               </div>
