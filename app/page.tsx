@@ -1152,7 +1152,7 @@ export default function HomePage() {
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
                 See exactly how it works
-                <span className="text-shine font-black"> in under 2 minutes.</span>
+                <span className="text-shine font-black"> in under 4 minutes.</span>
               </h2>
             </div>
             <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
@@ -1167,7 +1167,7 @@ export default function HomePage() {
               </video>
             </div>
             <p className="mt-4 text-center text-sm text-ash">
-              From sign-up to your first closed deal — everything you need in under 2 minutes.
+              From sign-up to your first closed deal — everything you need in under 4 minutes.
             </p>
           </FadeIn>
         </div>
