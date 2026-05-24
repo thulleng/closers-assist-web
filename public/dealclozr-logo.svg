@@ -1,34 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
   <defs>
-    <linearGradient id="dGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#0f6fff"/>
-      <stop offset="100%" stop-color="#2563eb"/>
-    </linearGradient>
-    <linearGradient id="cGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#7c3aed"/>
-      <stop offset="100%" stop-color="#a855f7"/>
-    </linearGradient>
-    <linearGradient id="ring" x1="0%" y1="0%" x2="100%" y2="100%">
+    <linearGradient id="brand" x1="0%" y1="0%" x2="100%" y2="100%">
       <stop offset="0%" stop-color="#0f6fff"/>
       <stop offset="100%" stop-color="#7c3aed"/>
     </linearGradient>
   </defs>
   
   <!-- Outer ring -->
-  <circle cx="256" cy="256" r="240" fill="url(#ring)"/>
+  <circle cx="256" cy="256" r="240" fill="url(#brand)"/>
   
   <!-- Inner circle -->
-  <circle cx="256" cy="256" r="222" fill="#0a0a0a"/>
-
-  <!-- DC Monogram — bold text, interlocked feel -->
-  <g transform="translate(246, 252)">
-    <!-- D slightly left, tilted back slightly -->
-    <text x="-75" y="46" font-family="Arial Black, Impact, sans-serif" 
-          font-size="260" font-weight="900" text-anchor="middle"
-          fill="url(#dGrad)" transform="rotate(-5)">D</text>
-    <!-- C slightly right, tilted forward slightly -->
-    <text x="75" y="46" font-family="Arial Black, Impact, sans-serif" 
-          font-size="260" font-weight="900" text-anchor="middle"
-          fill="url(#cGrad)" transform="rotate(5)">C</text>
-  </g>
+  <circle cx="256" cy="256" r="225" fill="#0a0a0a"/>
+  
+  <!-- The mark: A bold stylized "DC" monogram -->
+  
+  <!-- D - vertical stroke -->
+  <rect x="175" y="160" width="32" height="192" rx="10" fill="url(#brand)"/>
+  
+  <!-- D - curved body -->
+  <path d="M 207 160 
+           C 280 160, 320 200, 320 256 
+           C 320 312, 280 352, 207 352" 
+        stroke="url(#brand)" stroke-width="28" fill="none" stroke-linecap="round"/>
+  
+  <!-- C - outer curve -->
+  <path d="M 360 190 
+           C 420 220, 420 292, 360 322" 
+        stroke="url(#brand)" stroke-width="28" fill="none" stroke-linecap="round"/>
+  
+  <!-- Small gap between D and C showing they're separate -->
+  <!-- Clean. Bold. Monogram. -->
 </svg>
