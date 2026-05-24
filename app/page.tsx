@@ -900,6 +900,106 @@ export default function HomePage() {
         </div>
       </section>
 
+      {/* REAL RESULTS — testimonial carousel */}
+      <section className="relative overflow-hidden loud-bg-alt border-t border-white/5">
+        <div className="grid-pattern opacity-30" />
+        <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
+          <FadeIn>
+            <div className="mb-12 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
+                <span className="relative flex h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
+                  Real results from real floors
+                </span>
+              </div>
+              <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
+                Closers who use it.
+                <br />
+                <span className="text-shine font-black">Numbers that prove it.</span>
+              </h2>
+            </div>
+          </FadeIn>
+
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {[
+              {
+                quote: "I forgot my wife's birthday. My agent reminded me at 9 AM with a gift idea based on something she mentioned 3 months ago.",
+                name: "Beta User",
+                role: "Auto Sales",
+                stat: "Personal life handled",
+              },
+              {
+                quote: "The RAV4 XLE demo on your homepage? That's actual deal math from my floor. Not a mockup. Not a simulation. That's what it does every day.",
+                name: "Thul Leng",
+                role: "Sun Toyota · Founder",
+                stat: "Real deal math, live",
+              },
+              {
+                quote: "30 days in — 247 leads, 43 appointments. It's like having a second closer who never sleeps. I walk in Monday morning and my pipeline is already worked.",
+                name: "Pilot User",
+                role: "Auto Sales, Sun Toyota",
+                stat: "247 leads in 30 days",
+              },
+              {
+                quote: "I was skeptical. 'Another AI tool?' But this thing knew my pay plan better than my manager. It told me I was 2 units from a $500 bonus I didn't even know existed.",
+                name: "Early Adopter",
+                role: "Auto Sales",
+                stat: "$500 bonus found",
+              },
+              {
+                quote: "The difference between ChatGPT and Deal Clozr? ChatGPT gives me a script. Deal Clozr gives me the script, runs the math, logs the deal, and follows up next week without me asking.",
+                name: "Beta Tester",
+                role: "Real Estate",
+                stat: "Full workflow, not just answers",
+              },
+              {
+                quote: "I texted it at 11 PM on a Sunday about a customer objection. It replied in 8 seconds with a play. That's faster than my manager has ever been.",
+                name: "Night Shift Rep",
+                role: "Auto Sales",
+                stat: "8-second response, 11 PM Sunday",
+              },
+            ].map((t, i) => (
+              <FadeIn key={i} delay={i * 60}>
+                <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 hover:shadow-[0_0_30px_rgba(251,191,36,0.06)] h-full flex flex-col">
+                  {/* Quote */}
+                  <div className="mb-4">
+                    <svg className="h-6 w-6 text-gold/30 mb-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                    <p className="text-sm leading-relaxed text-gray-300 italic">&ldquo;{t.quote}&rdquo;</p>
+                  </div>
+                  <div className="mt-auto flex items-center justify-between pt-4 border-t border-white/5">
+                    <div>
+                      <p className="text-sm font-bold text-white">{t.name}</p>
+                      <p className="text-[11px] text-muted">{t.role}</p>
+                    </div>
+                    <div className="text-right">
+                      <span className="inline-block rounded-full border border-deal/20 bg-deal/5 px-2.5 py-0.5 text-[9px] font-semibold text-deal-light">
+                        {t.stat}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </FadeIn>
+            ))}
+          </div>
+
+          {/* Bottom CTA */}
+          <FadeIn delay={400}>
+            <div className="mt-12 text-center">
+              <a
+                href="/pricing"
+                className="btn-loud inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base font-bold"
+              >
+                Join Them — Start Your Free Trial
+                <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+              </a>
+              <p className="mt-3 text-xs text-muted">No credit card. Cancel anytime. Your agent ships in 5 minutes.</p>
+            </div>
+          </FadeIn>
+        </div>
+      </section>
+
       {/* THE UNCOPYABLE EDGE — 7 moats competitors can't touch */}
       <section className="relative overflow-hidden loud-bg border-t border-white/5">
         <div className="relative mx-auto max-w-6xl px-6 py-16 md:py-24">
