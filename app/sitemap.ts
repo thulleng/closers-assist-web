@@ -24,6 +24,7 @@ const staticRoutes = [
   "/privacy",
   "/success",
   "/tools/pay-plan-calculator",
+  "/tools/roi-calculator",
 ];
 
 const industries = [
