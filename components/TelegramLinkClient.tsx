@@ -68,7 +68,7 @@ export default function TelegramLinkClient() {
             </code>
           </div>
           <a
-            href="https://t.me/ClosersAssistBot"
+            href="https://t.me/DealClozrBot"
             target="_blank"
             rel="noopener noreferrer"
             className="btn-loud mt-6 inline-flex items-center gap-2 rounded-xl px-6 py-4 text-base"

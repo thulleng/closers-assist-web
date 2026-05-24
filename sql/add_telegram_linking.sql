@@ -1,5 +1,5 @@
 -- Add telegram_chat_id to agent_profiles for Telegram bot integration
--- Users link their Telegram account by starting a chat with @ClosersAssistBot
+-- Users link their Telegram account by starting a chat with @DealClozrBot
 
 ALTER TABLE agent_profiles 
 ADD COLUMN IF NOT EXISTS telegram_chat_id BIGINT UNIQUE;

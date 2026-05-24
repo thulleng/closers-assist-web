@@ -70,7 +70,7 @@ export default async function TelegramPage({
 
               <div className="mt-8 flex flex-wrap gap-4">
                 <a
-                  href="https://t.me/ClosersAssistBot"
+                  href="https://t.me/DealClozrBot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
@@ -81,7 +81,7 @@ export default async function TelegramPage({
               </div>
 
               <p className="mt-4 text-sm text-muted">
-                Search <span className="font-mono text-deal-light">@ClosersAssistBot</span> on Telegram. Same AI engine. Web + Telegram — one agent.
+                Search <span className="font-mono text-deal-light">@DealClozrBot</span> on Telegram. Same AI engine. Web + Telegram — one agent.
               </p>
             </FadeIn>
 
@@ -294,7 +294,7 @@ export default async function TelegramPage({
             </p>
             <div className="mt-8">
               <a
-                href="https://t.me/ClosersAssistBot"
+                href="https://t.me/DealClozrBot"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
