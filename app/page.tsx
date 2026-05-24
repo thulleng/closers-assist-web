@@ -222,15 +222,21 @@ export default function HomePage() {
             }}
           />
           <FadeIn>
-            <div className="mb-6 flex justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 rounded-full blur-3xl opacity-60"
-                  style={{ background: "radial-gradient(circle, rgba(15,111,255,0.3) 0%, rgba(124,58,237,0.2) 50%, transparent 70%)" }} />
-                <div className="relative" style={{ width: 120, height: 120 }}>
+            <div className="mb-8 flex justify-center">
+              <div className="relative group">
+                {/* Outer glow ring */}
+                <div className="absolute -inset-4 rounded-full opacity-40 blur-2xl transition-all duration-700 group-hover:opacity-60 group-hover:blur-3xl"
+                  style={{ background: "radial-gradient(circle, rgba(99,102,241,0.4) 0%, rgba(139,92,246,0.25) 40%, transparent 70%)" }} />
+                {/* Inner accent glow */}
+                <div className="absolute -inset-2 rounded-full opacity-30 blur-xl"
+                  style={{ background: "radial-gradient(circle, rgba(16,185,129,0.2) 0%, transparent 60%)" }} />
+                {/* Logo */}
+                <div className="relative" style={{ width: 160, height: 160 }}>
                   <img
                     src="/logo.png"
                     alt="Deal Clozr"
                     className="h-full w-full"
+                    style={{ filter: "drop-shadow(0 0 24px rgba(99,102,241,0.35))" }}
                   />
                 </div>
               </div>
