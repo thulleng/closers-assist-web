@@ -379,8 +379,8 @@ export default function HomePage() {
             </div>
 
             {/* RIGHT COLUMN — 3D money card visual + AI core */}
-            <div>
-              <div className="relative mx-auto h-[260px] sm:h-[400px] md:h-[620px] w-full max-w-[200px] sm:max-w-[320px] md:max-w-[380px]">
+            <div className="mb-8 lg:mb-0">
+              <div className="relative mx-auto h-[320px] sm:h-[400px] md:h-[620px] w-full max-w-[200px] sm:max-w-[320px] md:max-w-[380px]">
                 {/* AI Core visual — layered behind the phone */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-90 max-w-full overflow-hidden">
                   <HeroVisual />
@@ -678,7 +678,7 @@ export default function HomePage() {
 
           {/* HUGE stat strip — the math closers can't argue with */}
           <div>
-            <div className="mt-20 rounded-2xl border border-white/8 bg-black/40 p-5 sm:p-8 backdrop-blur">
+            <div className="mt-16 sm:mt-20 rounded-2xl border border-white/8 bg-black/40 p-5 sm:p-8 backdrop-blur">
               <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
                 The math closers can&rsquo;t argue with
               </div>

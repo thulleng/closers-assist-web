@@ -72,7 +72,7 @@ export default function SandboxChat() {
 
   if (!open) {
     return (
-      <div className="fixed bottom-24 right-4 z-40 md:bottom-8">
+      <div className="fixed bottom-36 right-4 z-40 md:bottom-8">
         <button
           onClick={() => setOpen(true)}
           className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-deal to-emerald-400 px-5 py-3 text-sm font-bold text-black shadow-lg shadow-deal/30 transition-all hover:scale-105 active:scale-95"
