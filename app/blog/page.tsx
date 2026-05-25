@@ -10,6 +10,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "the-90-second-t-o",
+    title: "The 90-Second T.O.",
+    date: "May 27, 2026",
+    readTime: "4 min",
+    preview: "A T.O. isn't a failure — it's a tool. Here's exactly when to pull it, how to hand it off, and the three signals that tell you the window is open before the deal tips.",
+    tag: "Floor Strategy",
+  },
+  {
     slug: "three-buyers-on-the-lot",
     title: "The Three Buyers on Every Lot",
     date: "May 20, 2026",
