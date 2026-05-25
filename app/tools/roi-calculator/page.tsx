@@ -50,7 +50,7 @@ export default function LTVCalculator() {
               </div>
               <div>
                 <label className="block mb-1.5 text-[10px] font-bold uppercase tracking-[0.1em] text-ash">Deal Clozr Monthly Cost ($)</label>
-                <input type="number" value={monthlyCost} onChange={(e) => setMonthlyCost(e.target.value)}
+                <input type="number" step="0.01" defaultValue="29.99" value={Number(monthlyCost).toFixed(2)} onChange={(e) => setMonthlyCost(e.target.value)}
                   className="w-full rounded-xl border border-white/20 bg-white/[0.06] px-4 py-3 text-white text-sm outline-none focus:border-deal/60 transition-all" />
               </div>
             </div>

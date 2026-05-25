@@ -6,7 +6,7 @@ import { createClient } from "@/lib/supabase/server";
 // Protected: requires SUPABASE_SERVICE_ROLE_KEY in Authorization header.
 
 const PROVISION_API = "http://178.105.161.224:8911/provision";
-const PROVISION_KEY = process.env.PROVISION_API_KEY || "closersassist-provision-2026";
+const PROVISION_KEY = process.env.PROVISION_API_KEY || "dealclozr-provision-2026";
 
 export async function POST(req: NextRequest) {
   try {
