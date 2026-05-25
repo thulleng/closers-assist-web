@@ -8,6 +8,7 @@ import {
   Mail,
   Loader2,
   RefreshCw,
+  Send,
 } from "lucide-react";
 
 export default function SuccessPage() {
@@ -16,6 +17,8 @@ export default function SuccessPage() {
   const [loading, setLoading] = useState(true);
   const [polling, setPolling] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [resending, setResending] = useState(false);
+  const [resent, setResent] = useState(false);
 
   const sessionId =
     typeof window !== "undefined"
@@ -48,11 +51,9 @@ export default function SuccessPage() {
         setLoading(false);
         setPolling(false);
       } else if (data.status === "paid" || data.status === "complete") {
-        // Payment confirmed but account not provisioned yet — keep polling
         setLoading(false);
         setTimeout(() => checkSession(), 2000);
       } else {
-        // Payment not yet confirmed
         setLoading(false);
         setPolling(false);
         setError("Payment still processing. This can take a moment.");
@@ -63,6 +64,22 @@ export default function SuccessPage() {
       setLoading(false);
       setPolling(false);
     }
+  }
+
+  async function handleResendMagicLink() {
+    if (!email) return;
+    setResending(true);
+    try {
+      const r = await fetch("/api/auth/resend-magic-link", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      if (r.ok) {
+        setResent(true);
+      }
+    } catch {}
+    setResending(false);
   }
 
   useEffect(() => {
@@ -84,25 +101,51 @@ export default function SuccessPage() {
     );
   }
 
-  // ── Error state ──────────────────────────────────────────────────────
-  if (error && !email) {
+  // ── Payment still processing (will auto-retry) ───────────────────────
+  if (error && !email && polling) {
     return (
       <main className="min-h-screen bg-[#050506] flex items-center justify-center px-4">
         <div className="max-w-md w-full text-center">
-          <div className="mx-auto w-16 h-16 bg-yellow-500/10 rounded-full flex items-center justify-center mb-6">
-            <RefreshCw className="w-9 h-9 text-yellow-500" />
+          <Loader2 className="w-10 h-10 text-[#10B981] animate-spin mx-auto mb-6" />
+          <h1 className="text-2xl font-bold text-white mb-2">
+            Processing your payment
+          </h1>
+          <p className="text-gray-400 text-sm mb-6">
+            Stripe is confirming your payment. Almost done.
+          </p>
+          <div className="flex items-center justify-center gap-2 text-xs text-gray-600">
+            <Loader2 className="w-3 h-3 animate-spin" />
+            Checking automatically...
+          </div>
+        </div>
+      </main>
+    );
+  }
+
+  // ── Genuine error (no session, network failure) ──────────────────────
+  if (error && !email && !polling) {
+    return (
+      <main className="min-h-screen bg-[#050506] flex items-center justify-center px-4">
+        <div className="max-w-md w-full text-center">
+          <div className="mx-auto w-16 h-16 bg-[#10B981]/10 rounded-full flex items-center justify-center mb-6">
+            <CheckCircle className="w-9 h-9 text-[#10B981]" />
           </div>
           <h1 className="text-2xl font-bold text-white mb-3">
-            Almost there
+            Your payment is processing
           </h1>
-          <p className="text-gray-400 text-sm mb-8">{error}</p>
-          <button
-            onClick={checkSession}
-            className="inline-flex items-center gap-2 bg-[#10B981] text-black font-semibold px-6 py-3 rounded-lg hover:bg-[#059669] transition-colors"
-          >
-            <RefreshCw className="w-4 h-4" />
-            Check again
-          </button>
+          <p className="text-gray-400 text-sm mb-6">
+            We're setting everything up. You'll get an email with a login link
+            within a minute — no password needed.
+          </p>
+          <p className="text-xs text-gray-600">
+            Questions?{" "}
+            <a
+              href="mailto:thul@dealclozr.com"
+              className="text-[#10B981] hover:underline"
+            >
+              thul@dealclozr.com
+            </a>
+          </p>
         </div>
       </main>
     );
@@ -120,16 +163,18 @@ export default function SuccessPage() {
             Payment confirmed!
           </h1>
           <p className="text-gray-400 text-lg mb-2">
-            Setting up your account...
+            Spinning up your agent...
           </p>
           <p className="text-sm text-gray-500 mb-6">
-            We're provisioning your agent for{" "}
             <span className="text-gray-300 font-medium">{email}</span>
           </p>
-          <Loader2 className="w-6 h-6 text-[#10B981] animate-spin mx-auto" />
-          <p className="text-xs text-gray-600 mt-4">
-            {polling ? "This usually takes under 10 seconds." : "Checking..."}
-          </p>
+          <div className="flex flex-col items-center gap-3">
+            <Loader2 className="w-6 h-6 text-[#10B981] animate-spin" />
+            <p className="text-xs text-gray-600">
+              Your AI agent is being provisioned. You&apos;ll get a login link
+              as soon as it&apos;s ready — usually under 60 seconds.
+            </p>
+          </div>
         </div>
       </main>
     );
@@ -144,9 +189,10 @@ export default function SuccessPage() {
           <CheckCircle className="w-9 h-9 text-[#10B981]" />
         </div>
 
-        <h1 className="text-3xl font-bold text-white mb-3">You're in!</h1>
+        <h1 className="text-3xl font-bold text-white mb-3">You&apos;re in!</h1>
         <p className="text-gray-400 text-lg mb-6">
-          Payment confirmed. Your Deal Clozr subscription is now active.
+          Your Deal Clozr subscription is active. Your agent is being provisioned
+          and will be ready in under a minute.
         </p>
 
         {/* Magic link card */}
@@ -180,27 +226,52 @@ export default function SuccessPage() {
             </li>
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">2.</span>
-              Click <span className="text-white font-medium">“Sign in to Deal Clozr”</span>
+              Click <span className="text-white font-medium">&ldquo;Sign in to Deal Clozr&rdquo;</span>
             </li>
             <li className="flex gap-2">
               <span className="text-[#10B981] font-bold shrink-0">3.</span>
-              You'll land directly in your agent setup — no password needed
+              You&apos;ll land directly in your agent setup — no password needed
             </li>
           </ol>
 
-          <p className="text-xs text-gray-600">
-            Didn't get it? Check spam or{" "}
-            <a
-              href={`mailto:thul@dealclozr.com?subject=Resend%20magic%20link%20for%20${encodeURIComponent(email || "")}`}
-              className="text-[#10B981] hover:underline"
+          <div className="border-t border-white/[0.06] pt-4 space-y-3">
+            {/* Resend magic link */}
+            <button
+              onClick={handleResendMagicLink}
+              disabled={resending || resent}
+              className="w-full flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:border-white/[0.15] transition-all disabled:opacity-50"
             >
-              email us
-            </a>
-            . We'll resend within minutes.
-          </p>
+              {resent ? (
+                <>
+                  <CheckCircle className="w-4 h-4 text-[#10B981]" />
+                  Magic link resent — check your inbox
+                </>
+              ) : resending ? (
+                <>
+                  <Loader2 className="w-4 h-4 animate-spin" />
+                  Sending...
+                </>
+              ) : (
+                <>
+                  <Send className="w-4 h-4" />
+                  Didn&apos;t get it? Resend magic link
+                </>
+              )}
+            </button>
+
+            <p className="text-xs text-gray-600">
+              Check your spam folder if you don&apos;t see it. Still stuck?{" "}
+              <a
+                href={`mailto:thul@dealclozr.com?subject=Magic%20link%20for%20${encodeURIComponent(email || "")}`}
+                className="text-[#10B981] hover:underline"
+              >
+                Email Thul directly
+              </a>
+            </p>
+          </div>
         </div>
 
-        {/* Fallback CTA */}
+        {/* Already have password? */}
         <Link
           href="/login"
           className="inline-flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors"

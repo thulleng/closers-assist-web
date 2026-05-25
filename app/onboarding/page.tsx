@@ -193,7 +193,7 @@ function OnboardingContent() {
                   className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  Open @CloseBot in Telegram
+                  Open @DealClozrBot in Telegram
                 </a>
 
                 <div className="flex items-center gap-2">
@@ -419,6 +419,29 @@ function OnboardingContent() {
                 <div className="flex justify-between"><span className="text-muted">Coaching Style</span><span className="text-bone font-semibold">{COACHING_STYLES.find(c => c.value === coachingStyle)?.label}</span></div>
                 <div className="flex justify-between"><span className="text-muted">Primary Focus</span><span className="text-bone font-semibold">{FOCUS_OPTIONS.find(f => f.value === agentFocus)?.label}</span></div>
                 {customGoals && <div className="flex justify-between"><span className="text-muted">Goal</span><span className="text-bone font-semibold">{customGoals}</span></div>}
+              </div>
+
+              {/* Telegram CTA — agent is already live */}
+              <div className="bg-[#10B981]/[0.04] border border-[#10B981]/20 rounded-xl p-5 mb-6 text-center">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Smartphone className="h-5 w-5 text-[#10B981]" />
+                  <h3 className="text-white font-bold text-sm">Your agent is already live</h3>
+                </div>
+                <p className="text-xs text-gray-400 mb-3">
+                  Open Telegram and start closing. Your agent knows your pay plan, your style, and your floor.
+                </p>
+                <a
+                  href="https://t.me/DealClozrBot"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 rounded-lg bg-[#0088cc] px-5 py-2.5 text-sm font-bold text-white hover:bg-[#0099dd] transition-colors"
+                >
+                  <ExternalLink className="h-4 w-4" />
+                  Open @DealClozrBot on Telegram
+                </a>
+                <p className="mt-2 text-[10px] text-gray-600">
+                  Your dashboard tracks everything automatically after setup.
+                </p>
               </div>
 
               {error && (
