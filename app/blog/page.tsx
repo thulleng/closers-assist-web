@@ -18,6 +18,14 @@ const POSTS = [
     tag: "Floor Strategy",
   },
   {
+    slug: "to-that-saved-the-deal",
+    title: "The T.O. That Saved a $4,800 Deal — Here's What I Actually Said",
+    date: "May 25, 2026",
+    readTime: "4 min",
+    preview: "Customer was walking. Manager was busy. Here's the T.O. I ran on myself that saved a deal — and why most T.O.s fail before you even open your mouth.",
+    tag: "Floor Strategy",
+  },
+  {
     slug: "three-buyers-on-the-lot",
     title: "The Three Buyers on Every Lot",
     date: "May 20, 2026",

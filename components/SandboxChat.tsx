@@ -89,49 +89,51 @@ export default function SandboxChat() {
       <div className="flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-pit/95 backdrop-blur-xl shadow-2xl shadow-black/60">
         {/* Header */}
         <div className="flex items-center justify-between border-b border-white/10 px-4 py-3">
-          <div className="flex items-center gap-2">
-            <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-gradient-to-br from-deal to-emerald-400">
-              <Sparkles className="h-3.5 w-3.5 text-black" />
+          <div className="flex items-center gap-2.5">
+            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-deal to-emerald-400 shadow-lg shadow-deal/20">
+              <Sparkles className="h-4 w-4 text-black" />
             </div>
             <div>
               <span className="text-sm font-bold text-white">Try Sassy</span>
-              <span className="ml-2 text-[10px] text-muted">
-                {done ? "Trial ended" : `${remaining} free`}
-              </span>
+              {!done && (
+                <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-deal/10 border border-deal/20 px-2 py-0.5 text-[10px] font-semibold text-deal-light">
+                  <span className="h-1 w-1 rounded-full bg-deal animate-pulse" />
+                  {remaining} free left
+                </span>
+              )}
             </div>
           </div>
           <button
             onClick={() => setOpen(false)}
             className="rounded-full p-1.5 text-gray-400 hover:bg-white/10 hover:text-white transition-colors"
+            aria-label="Close chat"
           >
             <X className="h-4 w-4" />
           </button>
         </div>
 
         {/* Messages */}
-        <div className="overflow-y-auto px-4 py-3 space-y-3" style={{ maxHeight: "340px" }}>
+        <div className="overflow-y-auto px-4 py-4 space-y-3" style={{ maxHeight: "360px" }}>
           {messages.length === 0 && !loading && (
-            <div className="text-center py-4">
-              <p className="text-sm text-muted mb-3 leading-snug px-2">
-                Talk to the real agent. Send images, videos, or voice notes — I'll
-                handle them.
+            <div className="text-center py-2">
+              <p className="text-[13px] text-muted mb-4 leading-relaxed px-1">
+                Talk to the real agent. Send images, videos, or voice notes — I'll handle them.
               </p>
-              <div className="flex flex-col gap-2 items-center mb-5">
+              <div className="flex flex-col gap-1.5 items-center mb-5">
                 {CAPABILITIES.map((c, i) => (
-                  <span key={i} className="text-sm text-muted/80">
-                    {c}
-                  </span>
+                  <span key={i} className="text-xs text-muted/70">{c}</span>
                 ))}
               </div>
+              <p className="text-[10px] font-semibold uppercase tracking-wider text-muted/50 mb-3">Try asking</p>
               <div className="flex flex-wrap gap-2 justify-center">
                 {SUGGESTIONS.map((s) => (
                   <button
                     key={s}
                     onClick={() => send(s)}
-                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-sm leading-tight text-gray-300 hover:border-deal/40 hover:text-white transition-colors"
+                    className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/5 px-3.5 py-2 text-xs leading-snug text-gray-300 hover:border-deal/40 hover:text-white hover:bg-deal/5 transition-all"
                   >
-                    <Zap className="h-4 w-4 shrink-0 text-deal" />
-                    <span className="max-w-[160px] truncate text-sm">{s}</span>
+                    <Zap className="h-3.5 w-3.5 shrink-0 text-deal" />
+                    <span className="max-w-[160px] truncate">{s}</span>
                   </button>
                 ))}
               </div>
@@ -141,7 +143,7 @@ export default function SandboxChat() {
           {messages.map((msg, i) => (
             <div key={i} className={`flex ${msg.role === "user" ? "justify-end" : "justify-start"}`}>
               <div
-                className={`rounded-2xl px-3.5 py-2 text-sm leading-relaxed max-w-[88%] ${
+                className={`rounded-2xl px-3.5 py-2 text-sm leading-relaxed max-w-[88%] break-words ${
                   msg.role === "user"
                     ? "bg-deal/20 border border-deal/30 text-white rounded-br-md"
                     : "bg-white/5 border border-white/10 text-gray-200 rounded-tl-md"
@@ -154,23 +156,28 @@ export default function SandboxChat() {
 
           {loading && (
             <div className="flex justify-start">
-              <div className="rounded-2xl rounded-tl-md bg-white/5 border border-white/10 px-3.5 py-2">
-                <span className="text-sm text-gray-400">
-                  <span className="animate-pulse">Sassy is thinking</span>...
-                </span>
+              <div className="rounded-2xl rounded-tl-md bg-white/5 border border-white/10 px-4 py-3">
+                <div className="flex items-center gap-2">
+                  <span className="flex gap-1">
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal animate-bounce" style={{ animationDelay: "0ms" }} />
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal animate-bounce" style={{ animationDelay: "150ms" }} />
+                    <span className="h-1.5 w-1.5 rounded-full bg-deal animate-bounce" style={{ animationDelay: "300ms" }} />
+                  </span>
+                  <span className="text-xs text-gray-400">Sassy is thinking</span>
+                </div>
               </div>
             </div>
           )}
 
           {done && messages.length > 0 && (
-            <div className="rounded-xl border border-gold-light/30 bg-gold-light/10 p-4 text-center">
-              <p className="text-sm font-bold text-gold-light mb-1">Liked it?</p>
+            <div className="rounded-xl border border-gold-light/30 bg-gradient-to-br from-gold-light/10 to-gold-light/5 p-4 text-center">
+              <p className="text-sm font-bold text-gold-light mb-1">Liked what you saw?</p>
               <p className="text-xs text-ash mb-3">
-                Sign up free — continue where you left off. No credit card.
+                Sign up free — pick up right where you left off. No credit card.
               </p>
               <Link
                 href="/signup"
-                className="btn-loud inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-bold"
+                className="btn-loud inline-flex items-center gap-1.5 rounded-lg px-5 py-2.5 text-xs font-bold"
                 onClick={() => setOpen(false)}
               >
                 <Zap className="h-3 w-3" /> Sign up free
