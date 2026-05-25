@@ -101,15 +101,32 @@ function CircuitLine({ angle, radius, isVisible }: { angle: number; radius: numb
 }
 
 export default function HeroVisual({
-  size = 400,
+  size,
   className = "",
 }: {
   size?: number;
   className?: string;
 }) {
   const [visible, setVisible] = useState(false);
+  const [viewportSize, setViewportSize] = useState<number | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const radius = size * 0.38;
+
+  // Auto-detect viewport for responsive sizing when no explicit size
+  useEffect(() => {
+    if (size) return; // explicit size — no detection needed
+    const update = () => {
+      const w = window.innerWidth;
+      if (w < 640) setViewportSize(200);
+      else if (w < 768) setViewportSize(320);
+      else setViewportSize(420);
+    };
+    update();
+    window.addEventListener("resize", update);
+    return () => window.removeEventListener("resize", update);
+  }, [size]);
+
+  const effectiveSize = size || viewportSize || 400;
+  const radius = effectiveSize * 0.38;
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 200);
@@ -120,14 +137,14 @@ export default function HeroVisual({
     <div
       ref={containerRef}
       className={`relative mx-auto ${className}`}
-      style={{ width: size, height: size }}
+      style={{ width: effectiveSize, height: effectiveSize }}
     >
       {/* Ambient glow behind core */}
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full pointer-events-none"
         style={{
-          width: size * 0.7,
-          height: size * 0.7,
+          width: effectiveSize * 0.7,
+          height: effectiveSize * 0.7,
           background: "radial-gradient(circle, rgba(0,255,136,0.18) 0%, transparent 60%)",
           animation: "pulse-glow 3s ease-in-out infinite",
         }}
@@ -137,8 +154,8 @@ export default function HeroVisual({
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed pointer-events-none"
         style={{
-          width: size * 0.9,
-          height: size * 0.9,
+          width: effectiveSize * 0.9,
+          height: effectiveSize * 0.9,
           borderColor: "rgba(0,255,136,0.1)",
           animation: "spin-slower 60s linear infinite",
         }}
@@ -148,8 +165,8 @@ export default function HeroVisual({
       <div
         className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-dashed pointer-events-none"
         style={{
-          width: size * 0.65,
-          height: size * 0.65,
+          width: effectiveSize * 0.65,
+          height: effectiveSize * 0.65,
           borderColor: "rgba(251,191,36,0.08)",
           animation: "spin-slow 40s linear infinite reverse",
         }}
@@ -189,8 +206,8 @@ export default function HeroVisual({
         <div
           className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full"
           style={{
-            width: size * 0.2,
-            height: size * 0.2,
+            width: effectiveSize * 0.2,
+            height: effectiveSize * 0.2,
             background: "radial-gradient(circle, rgba(0,255,136,0.3) 0%, transparent 70%)",
             animation: "pulse-glow 2s ease-in-out infinite",
           }}
@@ -200,8 +217,8 @@ export default function HeroVisual({
         <div className="relative flex items-center justify-center">
           {/* Hexagon container */}
           <svg
-            width={size * 0.18}
-            height={size * 0.18}
+            width={effectiveSize * 0.18}
+            height={effectiveSize * 0.18}
             viewBox="0 0 100 100"
             className="drop-shadow-[0_0_30px_rgba(0,255,136,0.5)]"
           >

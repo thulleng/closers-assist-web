@@ -383,7 +383,7 @@ export default function HomePage() {
               <div className="relative mx-auto h-[260px] sm:h-[400px] md:h-[620px] w-full max-w-[200px] sm:max-w-[320px] md:max-w-[380px]">
                 {/* AI Core visual — layered behind the phone */}
                 <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 z-0 opacity-90 max-w-full overflow-hidden">
-                  <HeroVisual size={420} />
+                  <HeroVisual />
                 </div>
 
                 {/* Ambient green glow behind phone */}
