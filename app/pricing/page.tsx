@@ -6,6 +6,7 @@ import { Shield, Check, User, Users, Building2, ArrowRight, X } from "lucide-rea
 import FadeIn from "@/components/FadeIn";
 import TiltCard from "@/components/TiltCard";
 import DealFlowVisual from "@/components/DealFlowVisual";
+import { useLang } from "@/lib/LangContext";
 
 type Billing = "monthly" | "annual";
 type Buyer = "solo" | "team" | "dealership";
@@ -21,7 +22,6 @@ const TIERS = [
     unit: "rep",
     seats: 1,
     tagline: "For the solo closer who wants to make more money this month.",
-    cta: "Get Started",
     href: "/pricing",
     monthlyPriceId: "price_1TP9nMJzG6xU26F9ii7RlgCf",
     annualPriceId: "price_1TXA7OJzG6xU26F9OQy2HVB9",
@@ -43,7 +43,6 @@ const TIERS = [
     unit: "team",
     seats: 25,
     tagline: "For the sales manager rolling it out to the whole team.",
-    cta: "Get Started",
     href: "/pricing",
     monthlyPriceId: "price_1TP9oGJzG6xU26F9N8yjczSE",
     annualPriceId: "price_1TXA96JzG6xU26F97H06sQkr",
@@ -65,7 +64,6 @@ const TIERS = [
     unit: "team",
     seats: 100,
     tagline: "For the dealership, brokerage, or agency rolling out at scale.",
-    cta: "Talk to sales",
     href: "/enterprise",
     features: [
       "Everything in Pro — for up to 100 reps",
@@ -133,6 +131,7 @@ async function startCheckout(priceId: string): Promise<string | null> {
 }
 
 export default function PricingPage() {
+  const { tl } = useLang();
   const [billing, setBilling] = useState<Billing>("monthly");
   const [selectedBuyer, setSelectedBuyer] = useState<Buyer | null>(null);
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
@@ -163,21 +162,16 @@ export default function PricingPage() {
               <div className="mb-3 inline-flex items-center justify-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5 md:justify-start">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Pricing
+                  {tl("nav.pricing")}
                 </span>
               </div>
               <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-                Pick the plan that
+                {tl("pricing.title1")}
                 <br />
-                <span className="text-shine font-black">fits your floor.</span>
+                <span className="text-shine font-black">{tl("pricing.title2")}</span>
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl md:mx-0">
-                One extra deal covers your subscription for years.{" "}
-                <span className="font-semibold text-gold-light">
-                  No feature gating.
-                </span>{" "}
-                Every tier ships the same full agent — tiers differ by team size
-                and support, never by capability.
+                {tl("pricing.subtitle")}
               </p>
             </div>
 
@@ -209,7 +203,7 @@ export default function PricingPage() {
               </span>
             </div>
             <h2 className="font-display text-xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
-              Why $29.99 when ChatGPT is free?
+              {tl("pricing.whyTitle")}
             </h2>
             <p className="mx-auto mt-4 max-w-sm text-sm text-ash sm:max-w-xl sm:text-base md:max-w-2xl">
               Free AI gives you generic answers. Deal Clozr gives you the exact script, your actual numbers, and a partner who remembers every deal.
@@ -295,19 +289,19 @@ export default function PricingPage() {
             {
               id: "solo" as Buyer,
               icon: User,
-              label: "I'm a solo rep",
+              label: tl("pricing.solo"),
               sub: "Just me",
             },
             {
               id: "team" as Buyer,
               icon: Users,
-              label: "I run a team",
+              label: tl("pricing.team"),
               sub: "2–25 reps",
             },
             {
               id: "dealership" as Buyer,
               icon: Building2,
-              label: "I run a dealership",
+              label: tl("pricing.dealership"),
               sub: "26+ reps",
             },
           ].map((b) => {
@@ -345,7 +339,7 @@ export default function PricingPage() {
               billing === "monthly" ? "bg-deal text-pit" : "text-bone"
             }`}
           >
-            Monthly
+            {tl("pricing.monthly")}
           </button>
           <button
             onClick={() => setBilling("annual")}
@@ -353,7 +347,7 @@ export default function PricingPage() {
               billing === "annual" ? "bg-deal text-pit" : "text-bone"
             }`}
           >
-            Annual — save 20%
+            {tl("pricing.annual")}
           </button>
         </div>
       </section>
@@ -499,7 +493,7 @@ export default function PricingPage() {
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                         Redirecting…
                       </span>
-                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : tier.cta}
+                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : tier.id === "elite" ? tl("pricing.talkSales") : tl("pricing.getStarted")}
                   </button>
                 )}
                 {!("monthlyPriceId" in tier) && (
@@ -511,7 +505,7 @@ export default function PricingPage() {
                         : "border-2 border-white/[0.08] text-bone hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white"
                     }`}
                   >
-                    {tier.cta}
+                    {tier.id === "elite" ? tl("pricing.talkSales") : tl("pricing.getStarted")}
                   </Link>
                 )}
               </div>
@@ -569,7 +563,7 @@ export default function PricingPage() {
           </div>
           <div>
             <h3 className="mb-1 text-xl font-medium text-bone">
-14-day free trial. Cancel anytime.
+              {tl("pricing.trial")}
             </h3>
             <p className="text-sm leading-relaxed text-ash">
               Use Deal Clozr for 30 days. If your commission check
@@ -646,7 +640,7 @@ export default function PricingPage() {
                 onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })}
                 className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
               >
-                Get Started — ${billing === "annual" ? "23.99" : "29.99"}/mo
+                {tl("pricing.getStarted")} — ${billing === "annual" ? "23.99" : "29.99"}/mo
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </button>
               <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -47,6 +49,7 @@ import {
   LazyFloatingParticles,
 } from "@/lib/lazy-imports";
 import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
+import { useLang } from "@/lib/LangContext";
 
 const industryIconMap: Record<string, React.ReactNode> = {
   Car: <Car className="h-5 w-5" />,
@@ -73,6 +76,7 @@ const layerIconMap: Record<string, React.ReactNode> = {
 };
 
 export default function HomePage() {
+  const { tl } = useLang();
   return (
     <>
       {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
@@ -212,22 +216,22 @@ export default function HomePage() {
             </div>
             <h2 className="font-display text-3xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>Meet Dora</span>
+              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>{tl("hero.dora.meet")}</span>
               <br />
-              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>Your AI Closer</span>
+              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>{tl("hero.dora.subtitle")}</span>
               <br />
-              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>She closes. You collect.</span>
+              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>{tl("hero.dora.tagline")}</span>
             </h2>
             <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
-              Ask her anything — pricing, how it works, whether she can really handle your deals AND your life. <span className="text-pink-200 font-black">She's got the answers.</span> 😏
+              {tl("hero.dora.body")} <span className="text-pink-200 font-black">{tl("hero.dora.gotAnswers")}</span> 😏
             </p>
           </FadeIn>
           {/* Directional cue */}
           <FadeIn delay={100}>
             <div className="mb-6 flex flex-col items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light">
-                👇 Talk to Dora — she's live
+                {tl("hero.dora.cta")}
               </span>
             </div>
           </FadeIn>
@@ -247,7 +251,7 @@ export default function HomePage() {
             {/* Secondary CTA — for visitors who don't want to chat */}
             <div className="mt-8 text-center">
               <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
-                Or skip the chat — <span className="text-deal underline underline-offset-4">see plans & pricing →</span>
+                {tl("hero.dora.skip")}
               </a>
             </div>
           </FadeIn>
@@ -270,38 +274,32 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    The best AI agent in the business · Built by a working rep
+                    {tl("hero2.badge")}
                   </span>
                 </div>
               </div>
 
               <div>
                 <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
-                  You can&rsquo;t clone
-                  <br />
-                  yourself.
+                  {tl("hero2.title1")}
                   <br />
                   <span className="text-shine font-black">
-                    We did.
+                    {tl("hero2.title2")}
                   </span>
                 </h1>
               </div>
 
               <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
-                  An AI employee that handles your deals AND your life.
-                  <br />
-                  <span className="mt-2 inline-block font-semibold text-gold-light">
-                    Never drops a ball. Never forgets a detail. Never clocks out.
-                  </span>
+                  {tl("hero2.subtitle")}
                 </p>
               </div>
 
               <div>
                 <div className="mt-8 max-w-md">
                   <EmailCapture
-                    placeholder="your@email.com"
-                    buttonText="Deploy My Agent"
+                    placeholder={tl("hero2.email")}
+                    buttonText={tl("hero2.cta")}
                   />
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
@@ -310,27 +308,27 @@ export default function HomePage() {
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    No credit card
+                    {tl("hero2.trust1")}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    No contracts. Cancel anytime.
+                    {tl("hero2.trust2")}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    Cancel in 1 click
+                    {tl("hero2.trust3")}
                   </span>
                   <Link
                     href="#tutorial"
                     className="text-gold-light hover:underline"
                   >
-                    ▶ Watch it close a deal in under 4 minutes
+                    {tl("hero2.watch")}
                   </Link>
                 </div>
               </div>
@@ -643,13 +641,13 @@ export default function HomePage() {
           <div>
             <div className="mt-16 sm:mt-20 rounded-2xl border border-white/8 bg-black/40 p-5 sm:p-8 backdrop-blur">
               <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
-                The math closers can&rsquo;t argue with
+                {tl("hero2.statsTitle")}
               </div>
               <div className="grid grid-cols-3 gap-3 sm:gap-6">
                 <div className="text-center">
                   <Counter to={18} duration={2000} className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]" />
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    Industries
+                    {tl("hero2.industries")}
                   </div>
                 </div>
                 <div className="border-x border-white/10 text-center">
@@ -657,7 +655,7 @@ export default function HomePage() {
                     24/7
                   </div>
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    Always on
+                    {tl("hero2.alwaysOn")}
                   </div>
                 </div>
                 <div className="text-center">
@@ -665,7 +663,7 @@ export default function HomePage() {
                     {"<3s"}
                   </div>
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    Question to play
+                    {tl("hero2.questionToPlay")}
                   </div>
                 </div>
               </div>
@@ -701,13 +699,13 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                  Why closers choose us
+                  {tl("benefits.badge")}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                More than a bot.
+                {tl("benefits.title1")}
                 <br />
-                <span className="text-shine font-black">This is your employee.</span>
+                <span className="text-shine font-black">{tl("benefits.title2")}</span>
               </h2>
             </div>
           </FadeIn>
@@ -720,13 +718,13 @@ export default function HomePage() {
                   🧠
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  Never forgets a deal
+                  {tl("benefits.never.title")}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Deal Clozr knows exactly what you said, what they pushed back on, and what closed them last time.
+                  {tl("benefits.never.body")}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  Persistent memory across sessions
+                  {tl("benefits.never.tag")}
                 </div>
               </div>
             </FadeIn>
@@ -738,13 +736,13 @@ export default function HomePage() {
                   ⚡
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  Zero setup. Zero training.
+                  {tl("benefits.zero.title")}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  Pick your industry. Start closing. No prompt engineering. No training period. No IT ticket. You already know how to text — that&rsquo;s the entire interface.
+                  {tl("benefits.zero.body")}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  Close your first deal in under 2 minutes
+                  {tl("benefits.zero.tag")}
                 </div>
               </div>
             </FadeIn>
@@ -756,13 +754,13 @@ export default function HomePage() {
                   🎯
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  Sounds like you. Not a bot.
+                  {tl("benefits.voice.title")}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  Your scripts. Your style. Your floor. Deal Clozr learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers.
+                  {tl("benefits.voice.body")}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  Built on Thul&rsquo;s floor at Sun Toyota
+                  {tl("benefits.voice.tag")}
                 </div>
               </div>
             </FadeIn>
@@ -778,13 +776,13 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  What your agent does
+                  {tl("agent.badge")}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                One agent.
+                {tl("agent.title1")}
                 <br />
-                <span className="text-shine font-black">Your entire life. Handled.</span>
+                <span className="text-shine font-black">{tl("agent.title2")}</span>
               </h2>
             </div>
           </FadeIn>
@@ -797,29 +795,29 @@ export default function HomePage() {
                   💼
                 </div>
                 <h3 className="mb-2 font-display text-2xl font-black text-white">
-                  Closes Deals
+                  {tl("agent.deals.title")}
                 </h3>
-                <p className="mb-5 text-sm text-ash">Your agent handles the revenue side — so you focus on closing, not admin.</p>
+                <p className="mb-5 text-sm text-ash">{tl("agent.deals.subtitle")}</p>
                 <ul className="space-y-3 text-sm text-ash">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>Follows up with leads automatically</span>
+                    <span>{tl("agent.deals.followup")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>Manages pipeline stage-by-stage</span>
+                    <span>{tl("agent.deals.pipeline")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>Drafts contracts & invoices</span>
+                    <span>{tl("agent.deals.contracts")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>Syncs with email & CRM</span>
+                    <span>{tl("agent.deals.crm")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>Never lets a cold lead go cold</span>
+                    <span>{tl("agent.deals.cold")}</span>
                   </li>
                 </ul>
               </div>
@@ -832,29 +830,29 @@ export default function HomePage() {
                   🏠
                 </div>
                 <h3 className="mb-2 font-display text-2xl font-black text-white">
-                  Handles Life
+                  {tl("agent.life.title")}
                 </h3>
-                <p className="mb-5 text-sm text-ash">Your agent remembers the personal stuff — so you never drop a ball at home.</p>
+                <p className="mb-5 text-sm text-ash">{tl("agent.life.subtitle")}</p>
                 <ul className="space-y-3 text-sm text-ash">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>Books appointments & reservations</span>
+                    <span>{tl("agent.life.appointments")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>Reminds you of birthdays & events</span>
+                    <span>{tl("agent.life.birthdays")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>Researches flights & hotels</span>
+                    <span>{tl("agent.life.travel")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>Summarizes school newsletters</span>
+                    <span>{tl("agent.life.newsletters")}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>Manages your to-do list</span>
+                    <span>{tl("agent.life.todos")}</span>
                   </li>
                 </ul>
               </div>
@@ -1096,7 +1094,7 @@ export default function HomePage() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  How it works
+                  {tl("nav.howItWorks")}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
@@ -2096,7 +2094,7 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Pricing
+                  {tl("nav.pricing")}
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
@@ -2137,7 +2135,7 @@ export default function HomePage() {
                     </li>
                   </ul>
                   <Link href="/pricing" className="inline-block rounded-xl border-2 border-white/[0.08] px-6 py-3 text-sm font-bold text-bone transition-all hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white">
-                    Get Started
+                    {tl("pricing.getStarted")}
                   </Link>
                 </div>
               </TiltCard>
@@ -2169,7 +2167,7 @@ export default function HomePage() {
                     </li>
                   </ul>
                   <Link href="/enterprise" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
-                    Deploy My Agent
+                    {tl("hero2.cta")}
                   </Link>
                 </div>
               </TiltCard>
@@ -2278,7 +2276,7 @@ export default function HomePage() {
           <FadeIn delay={200}>
             <div className="mt-10 text-center">
               <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                Get Started
+                {tl("pricing.getStarted")}
               </Link>
               <p className="mt-4 text-sm text-muted">
                 14-day free trial. No credit card required.
@@ -2327,7 +2325,7 @@ export default function HomePage() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
                   <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                    Enterprise
+                    {tl("nav.enterprise")}
                   </span>
                 </div>
 
@@ -2362,7 +2360,7 @@ export default function HomePage() {
                     href="/enterprise"
                     className="rounded-xl border border-deal/40 px-6 py-3 text-sm font-bold text-deal-light transition-all hover:border-deal hover:bg-deal/10"
                   >
-                    Book a Call →
+                    {tl("enterprise.book")} →
                   </Link>
                 </div>
               </div>
@@ -2427,8 +2425,8 @@ export default function HomePage() {
           <FadeIn delay={300}>
             <div className="mt-10 max-w-md mx-auto">
               <EmailCapture
-                placeholder="your@email.com"
-                buttonText="Deploy My Agent"
+                placeholder={tl("hero2.email")}
+                buttonText={tl("hero2.cta")}
               />
               <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>

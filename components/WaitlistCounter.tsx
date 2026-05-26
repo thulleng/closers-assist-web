@@ -1,8 +1,10 @@
 "use client";
 
 import { Users } from "lucide-react";
+import { useLang } from "@/lib/LangContext";
 
 export default function WaitlistCounter() {
+  const { tl } = useLang();
   const target = 47; // current early access signups
 
   return (
@@ -23,7 +25,7 @@ export default function WaitlistCounter() {
           {target}
         </div>
         <div className="text-[10px] font-medium uppercase tracking-wider text-ash">
-          Closers Deployed
+          {tl("hero2.closersDeployed")}
         </div>
       </div>
     </div>

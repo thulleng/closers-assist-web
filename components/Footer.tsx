@@ -1,7 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useLang } from "@/lib/LangContext";
 
 export default function Footer() {
+  const { tl } = useLang();
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black">
       <div
@@ -33,17 +37,13 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed text-ash">
-              The AI agent every closer owns.
-              <br />
-              <span className="font-semibold text-gold-light">
-                Built on the floor. Deployed worldwide.
-              </span>
+              {tl("footer.tagline")}
             </p>
           </div>
 
           <div>
             <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-              Product
+              {tl("footer.product")}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -71,7 +71,7 @@ export default function Footer() {
 
           <div>
             <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-              Industries
+              {tl("footer.industries")}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -100,7 +100,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/industries" className="font-semibold text-deal-light transition-colors hover:text-white">
-                  All 18 industries →
+                  {tl("footer.allIndustries")}
                 </Link>
               </li>
             </ul>
@@ -108,7 +108,7 @@ export default function Footer() {
 
           <div>
             <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-              Company
+              {tl("footer.company")}
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -142,10 +142,10 @@ export default function Footer() {
           </div>
           <div className="flex gap-6 text-xs">
             <Link href="/privacy" className="text-muted transition-colors hover:text-ash">
-              Privacy
+              {tl("footer.privacy")}
             </Link>
             <Link href="/terms" className="text-muted transition-colors hover:text-ash">
-              Terms
+              {tl("footer.terms")}
             </Link>
           </div>
         </div>
