@@ -203,9 +203,24 @@ export default function PricingPage() {
             <h2 className="font-display text-xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
               Why $29.99 when ChatGPT is free?
             </h2>
-            <p className="mx-auto mt-4 max-w-sm text-sm text-ash sm:max-w-xl sm:text-base md:max-w-2xl">
-              Free AI gives you generic answers. Deal Clozr gives you the exact script, your actual numbers, and a partner who remembers every deal.
+            <p className="mx-auto mb-10 max-w-2xl text-left text-sm text-ash md:text-center">
+              You're not paying for AI. You're paying for an employee who knows exactly what a "mini" is — and how to turn 10.5 units into a $500 bonus you didn't know existed.
             </p>
+
+            {/* Ask Dora CTA */}
+            <div className="mb-12 flex justify-center">
+              <button
+                onClick={() => {
+                  const btn = document.getElementById("try-agent-btn");
+                  if (btn) btn.click();
+                }}
+                className="group inline-flex items-center gap-2 rounded-xl border border-deal/30 bg-deal/5 px-5 py-3 text-sm font-semibold text-deal-light hover:bg-deal/10 hover:border-deal/50 transition-all"
+              >
+                <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gradient-to-br from-deal to-emerald-400 text-xs font-bold text-black">D</span>
+                Ask Dora — she's live right now
+                <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </button>
+            </div>
           </div>
 
           {/* Comparison rows */}

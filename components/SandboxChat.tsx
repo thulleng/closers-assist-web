@@ -74,6 +74,7 @@ export default function SandboxChat() {
     return (
       <div className="fixed bottom-36 right-4 z-40 md:bottom-8">
         <button
+          id="try-agent-btn"
           onClick={() => setOpen(true)}
           className="group flex items-center gap-2 rounded-full bg-gradient-to-r from-deal to-emerald-400 px-5 py-3 text-sm font-bold text-black shadow-lg shadow-deal/30 transition-all hover:scale-105 active:scale-95"
         >
@@ -94,7 +95,7 @@ export default function SandboxChat() {
               <Sparkles className="h-4 w-4 text-black" />
             </div>
             <div>
-              <span className="text-sm font-bold text-white">Try Sassy</span>
+              <span className="text-sm font-bold text-white">Try Dora</span>
               {!done && (
                 <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-deal/10 border border-deal/20 px-2 py-0.5 text-[10px] font-semibold text-deal-light">
                   <span className="h-1 w-1 rounded-full bg-deal animate-pulse" />

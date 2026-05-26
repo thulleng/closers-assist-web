@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef, memo } from "react";
 import { ArrowRight, Loader2, Sparkles, Zap, User } from "lucide-react";
 
-type Message = { role: "user" | "clo"; text: string };
+type Message = { role: "user" | "dora"; text: string };
 
 const SUGGESTIONS = [
   { icon: "💰", label: "How much does it cost?" },
@@ -30,7 +30,7 @@ export default function DemoChat() {
     typeof window !== "undefined" &&
     new URLSearchParams(window.location.search).get("agent") === "sassy";
   const chatEndpoint = isThulMode ? "/api/chat/sassy" : "/api/chat/clo";
-  const agentName = isThulMode ? "Sassy" : "Clo";
+  const agentName = isThulMode ? "Sassy" : "Dora";
   const visitorKey = isThulMode ? "sassy_visitor" : "dora_visitor";
 
   // Persistent visitor ID + load memory from Supabase
@@ -98,7 +98,7 @@ export default function DemoChat() {
       if (!res.ok) {
         setMessages((prev) => [
           ...prev,
-          { role: "clo", text: `${agentName}'s thinking — hit me again in a sec! ⚡` },
+          { role: "dora", text: `${agentName}'s thinking — hit me again in a sec! ⚡` },
         ]);
         setLoading(false);
         return;
@@ -108,7 +108,7 @@ export default function DemoChat() {
       if (!reader) {
         setMessages((prev) => [
           ...prev,
-          { role: "clo", text: `${agentName}'s thinking — hit me again! ⚡` },
+          { role: "dora", text: `${agentName}'s thinking — hit me again! ⚡` },
         ]);
         setLoading(false);
         return;
@@ -125,12 +125,12 @@ export default function DemoChat() {
       function flush() {
         rafPending = false;
         if (!bubbleAdded) {
-          setMessages((prev) => [...prev, { role: "clo", text: accumulated }]);
+          setMessages((prev) => [...prev, { role: "dora", text: accumulated }]);
           bubbleAdded = true;
         } else {
           setMessages((prev) => {
             const copy = [...prev];
-            copy[copy.length - 1] = { role: "clo", text: accumulated };
+            copy[copy.length - 1] = { role: "dora", text: accumulated };
             return copy;
           });
         }
@@ -182,7 +182,7 @@ export default function DemoChat() {
                 saveMemory([
                 ...history,
                 { role: "user", text: question },
-                { role: "clo", text: accumulated },
+                { role: "dora", text: accumulated },
               ]);
               }
               return;
@@ -191,7 +191,7 @@ export default function DemoChat() {
             if (data.error) {
               setMessages((prev) => [
                 ...prev,
-                { role: "clo", text: data.error },
+                { role: "dora", text: data.error },
               ]);
               setLoading(false);
               return;
@@ -206,7 +206,7 @@ export default function DemoChat() {
     } catch {
       setMessages((prev) => [
         ...prev,
-        { role: "clo", text: "I hit a speed bump — try again! 🏎️" },
+        { role: "dora", text: "I hit a speed bump — try again! 🏎️" },
       ]);
       setLoading(false);
     }
@@ -306,12 +306,12 @@ export default function DemoChat() {
         {/* Real messages */}
         {messages.map((msg, i) => {
           const isLast = i === messages.length - 1;
-          const isStreaming = isLast && msg.role === "clo" && loading;
+          const isStreaming = isLast && msg.role === "dora" && loading;
           return <MessageBubble key={i} msg={msg} isStreaming={isStreaming} />;
         })}
 
         {/* Typing indicator — only before first text chunk arrives */}
-        {loading && (messages.length === 0 || messages[messages.length - 1]?.role !== "clo") && (
+        {loading && (messages.length === 0 || messages[messages.length - 1]?.role !== "dora") && (
           <div className="flex gap-3">
             <div className="w-8 h-8 rounded-xl bg-gradient-to-br from-deal to-emerald-400 flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
               <Loader2 className="h-3.5 w-3.5 text-black animate-spin" />
