@@ -870,13 +870,13 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
                 <span className="relative flex h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                  Real results from real floors
+                  {tl("results.badge")}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                Closers who use it.
+                {tl("results.title1")}
                 <br />
-                <span className="text-shine font-black">Numbers that prove it.</span>
+                <span className="text-shine font-black">{tl("results.title2")}</span>
               </h2>
             </div>
           </FadeIn>
@@ -915,10 +915,10 @@ export default function HomePage() {
                 href="/pricing"
                 className="btn-loud inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base font-bold"
               >
-                Join Them — Start Your Free Trial
+                {tl("results.joinCta")}
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </a>
-              <p className="mt-3 text-xs text-muted">No credit card. Cancel anytime. Your agent ships in 5 minutes.</p>
+              <p className="mt-3 text-xs text-muted">{tl("results.trialNote")}</p>
             </div>
           </FadeIn>
         </div>
@@ -1063,12 +1063,12 @@ export default function HomePage() {
             <FadeIn delay={400}>
               <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
                 <div className="mb-3 text-3xl">⚡</div>
-                <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. One deal pays for 10 years.</h3>
+                <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. {tl("roi.title1")} {tl("roi.title2")}</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
                   Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul's a working rep who knows what closers can actually afford. Not a SaaS company maximizing ARPU.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
-                  <span className="font-bold text-gold-light">Real result:</span> 14-day free trial. No credit card. Cancel in one click. One deal pays for 10 years.
+                  <span className="font-bold text-gold-light">Real result:</span> 14-day free trial. No credit card. Cancel in one click. {tl("roi.title1")} {tl("roi.title2")}
                 </div>
               </div>
             </FadeIn>
@@ -1094,13 +1094,13 @@ export default function HomePage() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("nav.howItWorks")}
+                  {tl("hiw.badge")}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                Your agent is live
+                {tl("hiw.title1")}
                 <br />
-                <span className="text-shine font-black">in 5 minutes.</span>
+                <span className="text-shine font-black">{tl("hiw.title2")}</span>
               </h2>
             </div>
           </FadeIn>
@@ -1116,13 +1116,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  Tell us about you
+                  {tl("hiw.step1.title")}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
                   Your industry. Your pay plan. Your scripts. Your goals. <span className="font-semibold text-bone">Pick a name</span> — Jake, Maya, Tank, whatever fits. <span className="font-semibold text-bone">Choose male or female.</span> Your agent becomes whoever you need on the floor. Learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {"< 2 minutes"}
+                  {tl("hiw.step1.tag")}
                 </div>
               </div>
             </FadeIn>
@@ -1137,13 +1137,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  Deploy on Telegram
+                  {tl("hiw.step2.title")}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
                   One click. Your agent goes live on Telegram — the app you already use. No new dashboard to learn. No software to install. Just open Telegram and start talking to your closer.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  Instant
+                  {tl("hiw.step2.tag")}
                 </div>
               </div>
             </FadeIn>
@@ -1158,13 +1158,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  Start closing. Start living.
+                  {tl("hiw.step3.title")}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
                   Your agent handles follow-ups, remembers every customer, drafts your responses, tracks your commissions — <span className="font-semibold text-bone">and</span> books your dentist appointment. You focus on the floor.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  Day 1 value
+                  {tl("hiw.step3.tag")}
                 </div>
               </div>
             </FadeIn>
@@ -1183,12 +1183,12 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Watch the walkthrough
+                  {tl("tutorial.badge")}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                See exactly how it works
-                <span className="text-shine font-black"> in under 4 minutes.</span>
+                {tl("tutorial.title1")}
+                <span className="text-shine font-black">{tl("tutorial.title2")}</span>
               </h2>
             </div>
             <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
@@ -1203,7 +1203,7 @@ export default function HomePage() {
               </video>
             </div>
             <p className="mt-4 text-center text-sm text-ash">
-              From sign-up to your first closed deal — everything you need in under 4 minutes.
+              {tl("tutorial.caption")}
             </p>
           </FadeIn>
         </div>
@@ -1555,16 +1555,15 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                  Live ROI calculator
+                  {tl("roi.badge")}
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                One deal pays for{" "}
-                <span className="text-mega-amber font-black">10 years.</span>
+                {tl("roi.title1")}{" "}
+                <span className="text-mega-amber font-black">{tl("roi.title2")}</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-ash md:text-xl">
-                Drag the sliders. Watch the green number. This is the math,
-                not a pitch.
+                {tl("roi.subtitle")}
               </p>
             </div>
           </FadeIn>
@@ -1622,7 +1621,7 @@ export default function HomePage() {
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    Built on the floor
+                    {tl("founderSection.badge")}
                   </span>
                 </div>
                 <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
@@ -1642,7 +1641,7 @@ export default function HomePage() {
                   href="/founder"
                   className="mt-8 inline-flex items-center gap-1 text-[15px] font-bold text-gold-light transition-all hover:gap-2"
                 >
-                  Read the full story
+                  {tl("founderSection.readStory")}
                   <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
                 </Link>
               </div>
@@ -1951,7 +1950,7 @@ export default function HomePage() {
                 <span className="text-shine font-black"> Your voice.</span>
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ash">
-                Three layers that make your agent sharper than any chatbot. Built on the floor, not in a boardroom.
+                Three layers that make your agent sharper than any chatbot. {tl("founderSection.badge")}, not in a boardroom.
               </p>
             </div>
           </FadeIn>
@@ -2094,7 +2093,7 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("nav.pricing")}
+                  {tl("hpPricing.badge")}
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
@@ -2177,12 +2176,12 @@ export default function HomePage() {
           {/* Shared features */}
           <FadeIn delay={200}>
             <div className="mt-10 text-center">
-              <p className="text-sm text-ash mb-4">Both tiers include —</p>
+              <p className="text-sm text-ash mb-4">{tl("hpPricing.included")}</p>
               <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-bone/80">
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Unique personality</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Cross-session memory</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Morning briefs & deal tracking</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Built on the floor</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> {tl("founderSection.badge")}</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Your data stays yours</span>
               </div>
             </div>
@@ -2211,11 +2210,11 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  Head to head
+                  {tl("comparison.badge")}
                 </span>
               </div>
               <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
-                Your CRM tracks deals.
+                {tl("comparison.crm")} tracks deals.
                 <span className="text-deal"> We close them.</span>
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ash">
@@ -2231,14 +2230,14 @@ export default function HomePage() {
               <div className="grid grid-cols-4 border-b border-iron bg-white/[0.03]">
                 <div className="p-5 text-xs font-medium uppercase tracking-widest text-muted" />
                 <div className="border-l border-iron p-5 text-center">
-                  <span className="text-sm font-semibold text-ash">Your CRM</span>
+                  <span className="text-sm font-semibold text-ash">{tl("comparison.crm")}</span>
                 </div>
                 <div className="border-l border-iron p-5 text-center">
-                  <span className="text-sm font-semibold text-ash">Generic AI</span>
+                  <span className="text-sm font-semibold text-ash">{tl("comparison.genericAI")}</span>
                 </div>
                 <div className="border-l border-iron bg-deal/[0.06] p-5 text-center">
                   <span className="font-display text-sm font-bold text-deal">
-                    DEAL CLOZR
+                    {tl("comparison.dealClozr")}
                   </span>
                 </div>
               </div>
@@ -2325,7 +2324,7 @@ export default function HomePage() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
                   <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                    {tl("nav.enterprise")}
+                    {tl("enterpriseCta.badge")}
                   </span>
                 </div>
 
@@ -2412,9 +2411,9 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
           <FadeIn>
             <h2 className="font-display text-5xl font-black leading-[0.95] tracking-[-0.03em] text-white md:text-7xl">
-              Your agent is waiting.
+              {tl("finalCta.title1")}
               <br />
-              <span className="text-shine font-black">Deploy yours in 5 minutes.</span>
+              <span className="text-shine font-black">{tl("finalCta.title2")}</span>
             </h2>
           </FadeIn>
           <FadeIn delay={150}>

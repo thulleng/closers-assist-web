@@ -235,4 +235,57 @@ export const t: Record<string, Record<Lang, string>> = {
   "sandbox.liked": { en: "Liked what you saw?", es: "¿Te gustó lo que viste?", fr: "Vous avez aimé ?" },
   "sandbox.signup": { en: "Sign up free — pick up right where you left off. No credit card.", es: "Regístrate gratis — continúa justo donde lo dejaste. Sin tarjeta.", fr: "Inscrivez-vous gratuitement — reprenez là où vous en étiez. Sans CB." },
   "sandbox.signupBtn": { en: "Sign up free", es: "Regístrate gratis", fr: "S'inscrire gratuitement" },
+  // ═══════════════════════════════════════════
+  // HOMEPAGE — REAL RESULTS SECTION
+  // ═══════════════════════════════════════════
+  "results.badge": { en: "Real results from real floors", es: "Resultados reales de pisos reales", fr: "R\u00E9sultats r\u00E9els de vrais terrains" },
+  "results.title1": { en: "Closers who use it.", es: "Vendedores que lo usan.", fr: "Les closers qui l'utilisent." },
+  "results.title2": { en: "Numbers that prove it.", es: "N\u00FAmeros que lo prueban.", fr: "Des chiffres qui le prouvent." },
+  "results.joinCta": { en: "Join Them \u2014 Start Your Free Trial", es: "\u00DAnete \u2014 Comienza tu Prueba Gratis", fr: "Rejoignez-les \u2014 Essayez Gratuitement" },
+  "results.trialNote": { en: "No credit card. Cancel anytime. Your agent ships in 5 minutes.", es: "Sin tarjeta. Cancela cuando quieras. Tu agente se despliega en 5 minutos.", fr: "Sans CB. Annulez quand vous voulez. Votre agent est pr\u00EAt en 5 minutes." },
+
+  // HOMEPAGE — HOW IT WORKS
+  "hiw.badge": { en: "How it works", es: "C\u00F3mo funciona", fr: "Comment \u00E7a marche" },
+  "hiw.title1": { en: "Your agent is live", es: "Tu agente est\u00E1 en vivo", fr: "Votre agent est en direct" },
+  "hiw.title2": { en: "in 5 minutes.", es: "en 5 minutos.", fr: "en 5 minutes." },
+  "hiw.step1.title": { en: "Tell us about you", es: "Cu\u00E9ntanos sobre ti", fr: "Parlez-nous de vous" },
+  "hiw.step1.tag": { en: "< 2 minutes", es: "< 2 minutos", fr: "< 2 minutes" },
+  "hiw.step2.title": { en: "Deploy on Telegram", es: "Despliega en Telegram", fr: "D\u00E9ployez sur Telegram" },
+  "hiw.step2.tag": { en: "Instant", es: "Instant\u00E1neo", fr: "Instantan\u00E9" },
+  "hiw.step3.title": { en: "Start closing. Start living.", es: "Empieza a cerrar. Empieza a vivir.", fr: "Commencez \u00E0 closer. Commencez \u00E0 vivre." },
+  "hiw.step3.tag": { en: "Day 1 value", es: "Valor desde el d\u00EDa 1", fr: "Valeur d\u00E8s le jour 1" },
+
+  // HOMEPAGE — TUTORIAL
+  "tutorial.badge": { en: "Watch the walkthrough", es: "Mira el recorrido", fr: "Regardez la d\u00E9mo" },
+  "tutorial.title1": { en: "See exactly how it works", es: "Mira exactamente c\u00F3mo funciona", fr: "Voyez exactement comment \u00E7a marche" },
+  "tutorial.title2": { en: " in under 4 minutes.", es: " en menos de 4 minutos.", fr: " en moins de 4 minutes." },
+  "tutorial.caption": { en: "From sign-up to your first closed deal \u2014 everything you need in under 4 minutes.", es: "Del registro a tu primer trato cerrado \u2014 todo lo que necesitas en menos de 4 minutos.", fr: "De l'inscription \u00E0 votre premi\u00E8re vente conclue \u2014 tout ce qu'il vous faut en moins de 4 minutes." },
+
+  // HOMEPAGE — ROI
+  "roi.badge": { en: "Live ROI calculator", es: "Calculadora de ROI en vivo", fr: "Calculateur de ROI en direct" },
+  "roi.title1": { en: "One deal pays for", es: "Un trato paga por", fr: "Une vente paie pour" },
+  "roi.title2": { en: "10 years.", es: "10 a\u00F1os.", fr: "10 ans." },
+  "roi.subtitle": { en: "Drag the sliders. Watch the green number. This is the math, not a pitch.", es: "Arrastra los controles. Mira el n\u00FAmero verde. Esto son matem\u00E1ticas, no un discurso de ventas.", fr: "D\u00E9placez les curseurs. Regardez le nombre vert. Ce sont les maths, pas un argumentaire." },
+
+  // HOMEPAGE — FOUNDER
+  "founderSection.badge": { en: "Built on the floor", es: "Construido en el piso", fr: "Cr\u00E9\u00E9 sur le terrain" },
+  "founderSection.readStory": { en: "Read the full story", es: "Lee la historia completa", fr: "Lire l'histoire compl\u00E8te" },
+
+  // HOMEPAGE — PRICING SNAPSHOT
+  "hpPricing.badge": { en: "Pricing", es: "Precios", fr: "Tarifs" },
+  "hpPricing.included": { en: "Both tiers include \u2014", es: "Ambos niveles incluyen \u2014", fr: "Les deux niveaux incluent \u2014" },
+
+  // HOMEPAGE — COMPARISON
+  "comparison.badge": { en: "Head to head", es: "Cara a cara", fr: "Face \u00E0 face" },
+  "comparison.crm": { en: "Your CRM", es: "Tu CRM", fr: "Votre CRM" },
+  "comparison.genericAI": { en: "Generic AI", es: "IA Gen\u00E9rica", fr: "IA G\u00E9n\u00E9rique" },
+  "comparison.dealClozr": { en: "DEAL CLOZR", es: "DEAL CLOZR", fr: "DEAL CLOZR" },
+
+  // HOMEPAGE — ENTERPRISE CTA
+  "enterpriseCta.badge": { en: "Enterprise", es: "Empresarial", fr: "Entreprise" },
+
+  // HOMEPAGE — FINAL CTA
+  "finalCta.title1": { en: "Your agent is waiting.", es: "Tu agente te espera.", fr: "Votre agent vous attend." },
+  "finalCta.title2": { en: "Deploy yours in 5 minutes.", es: "Despliega el tuyo en 5 minutos.", fr: "D\u00E9ployez le v\u00F4tre en 5 minutes." },
+
 };
