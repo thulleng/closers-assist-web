@@ -6,6 +6,7 @@ import BottomNav from "@/components/BottomNav";
 import CursorGlow from "@/components/CursorGlow";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
 import SandboxChat from "@/components/SandboxChat";
+import { LangProvider } from "@/lib/LangContext";
 import "./globals.css";
 
 const inter = Inter({
@@ -24,6 +25,7 @@ const jetbrains = JetBrains_Mono({
   subsets: ["latin"],
   variable: "--font-jetbrains",
   display: "swap",
+  preload: false,
 });
 
 export const metadata: Metadata = {
@@ -87,13 +89,15 @@ export default function RootLayout({
       className={`${inter.variable} ${interTight.variable} ${jetbrains.variable}`}
     >
       <body className="bg-pit text-bone font-sans antialiased">
-        <CursorGlow />
-        <ScrollRevealObserver />
-        <Nav />
-        <main className="min-h-screen pb-[60px] md:pb-0">{children}</main>
-        <Footer />
-        <BottomNav />
-        <SandboxChat />
+        <LangProvider>
+          <CursorGlow />
+          <ScrollRevealObserver />
+          <Nav />
+          <main className="min-h-screen pb-[60px] md:pb-0">{children}</main>
+          <Footer />
+          <BottomNav />
+          <SandboxChat />
+        </LangProvider>
       </body>
     </html>
   );

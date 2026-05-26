@@ -1,5 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
+import dynamic from "next/dynamic";
 import {
   Car,
   Home as HomeIcon,
@@ -26,48 +27,28 @@ import {
   ClipboardList,
   Handshake,
 } from "lucide-react";
-import RoiCalculator from "@/components/RoiCalculator";
-import PhoneMockup from "@/components/PhoneMockup";
 import FadeIn from "@/components/FadeIn";
 import Counter from "@/components/Counter";
-import LiveScoreboard from "@/components/LiveScoreboard";
-import DemoChat from "@/components/DemoChat";
-import ReviewsSection from "@/components/ReviewsSection";
 import EmailCapture from "@/components/EmailCapture";
-import FoundersCircle from "@/components/FoundersCircle";
-import HeroVisual from "@/components/HeroVisual";
-import FloatingParticles from "@/components/FloatingParticles";
-import TiltCard from "@/components/TiltCard";
-import MobileCTABar from "@/components/MobileCTABar";
 import WaitlistCounter from "@/components/WaitlistCounter";
-import NewsletterSection from "@/components/NewsletterSection";
+import HeroVisual from "@/components/HeroVisual";
+import TiltCard from "@/components/TiltCard";
+import {
+  LazyDemoChat,
+  LazyLiveScoreboard,
+  LazyReviewsSection,
+  LazyFAQ,
+  LazyRoiCalculator,
+  LazyPhoneMockup,
+  LazyTrustStrip,
+  LazyMobileCTABar,
+  LazyNewsletterSection,
+  LazyFoundersCircle,
+  LazyFloatingParticles,
+} from "@/lib/lazy-imports";
+import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
 
-import FAQ from "@/components/FAQ";
-import TrustStrip from "@/components/TrustStrip";
-
-const industries = [
-  {href:"/industries/auto",name:"Auto",icon:"Car",copy:"Pay plan math, trade valuations, CXI tracking, follow-up scripts.",live:true,image:"https://images.unsplash.com/photo-1552519507-da3b142c6e3d?w=600"},
-  {href:"/industries/real-estate",name:"Real Estate",icon:"Home",copy:"Listing prep, buyer nurture, commission splits, open house follow-ups.",live:true,image:"https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=600"},
-  {href:"/industries/insurance",name:"Insurance",icon:"Shield",copy:"Book of business, renewal tracking, cross-sell triggers, policy Q&A.",live:true,image:"https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=600"},
-  {href:"/industries/solar",name:"Solar",icon:"Sun",copy:"Quote math, utility bill analysis, proposal scripts, objection handling.",live:true,image:"https://images.unsplash.com/photo-1509391366360-2e959784a276?w=600"},
-  {href:"/industries/saas",name:"SaaS",icon:"Monitor",copy:"Pipeline pulse, discovery questions, demo prep, procurement maze.",live:true,image:"https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600"},
-  {href:"/industries/medical",name:"Medical Devices",icon:"HeartPulse",copy:"Protocol knowledge, rep-surgeon scripts, territory planning.",live:true,image:"https://images.unsplash.com/photo-1576091160550-2173dba999ef?w=600"},
-  {href:"/industries/retail",name:"Retail (Big Ticket)",icon:"ShoppingBag",copy:"Product specs, financing math, close-the-lap scripts for furniture and appliances.",live:true,image:"https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=600"},
-  {href:"/industries/pest-control",name:"Pest Control",icon:"Bug",copy:"Service plan objections, seasonal upsells, renewal retention scripts.",live:true,image:"/images/pest_control.jpg"},
-  {href:"/industries/hvac",name:"HVAC",icon:"Wind",copy:"System upgrade objections, service agreements, financing calculator.",live:true,image:"https://images.unsplash.com/photo-1732395805034-e0bf859665e5?w=600"},
-  {href:"/industries/roofing",name:"Roofing",icon:"Home",copy:"Insurance claim walkthroughs, repair-to-replace closer, storm territory playbook.",live:true,image:"https://images.unsplash.com/photo-1635424824849-1b09bdcc55b1?w=600"},
-  {href:"/industries/home-security",name:"Home Security",icon:"Shield",copy:"Competitor rebuttals, monitoring contract scripts, smart home upsell playbook.",live:true,image:"https://images.unsplash.com/photo-1558002038-1055907df827?w=600"},
-  {href:"/industries/mortgage",name:"Mortgage & Lending",icon:"Landmark",copy:"Rate objections, product explainers, pre-approval pipeline.",live:true,image:"https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=600"},
-  {href:"/industries/financial-advisors",name:"Financial Advisors",icon:"TrendingUp",copy:"Fee objections, robo-advisor rebuttals, AUM consolidation scripts.",live:true,image:"https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600"},
-  {href:"/industries/recruiting",name:"Recruiting & Staffing",icon:"Users",copy:"Fee objections, candidate prep, job order closer, counter-offer playbook.",live:true,image:"https://images.unsplash.com/photo-1521791136064-7986c2920216?w=600"},
-  {href:"/industries/telecom",name:"Telecom & Cell Towers",icon:"Radio",copy:"Tower lease objections, enterprise deal coach, bandwidth upsell playbook.",live:true,image:"https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=600"},
-  {href:"/industries/rental",name:"Rental",icon:"KeyRound",copy:"Pricing disputes, damage deposit scripts, cancellation pushback, 5-star review asks.",live:true,image:"https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=600"},
-  {href:"/industries/project-manager",name:"Project Manager",icon:"ClipboardList",copy:"SOW defense, change order closer, budget objections, verbal-yes-to-signed-contract.",live:true,image:"https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=600"},
-  {href:"/industries/other-sales",name:"Other Sales",icon:"Handshake",copy:"Universal objections: price, timing, think about it, decision-maker stalls, ghosting.",live:true,image:"https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=600"},
-];
-
-
-const iconMap: Record<string, React.ReactNode> = {
+const industryIconMap: Record<string, React.ReactNode> = {
   Car: <Car className="h-5 w-5" />,
   Home: <HomeIcon className="h-5 w-5" />,
   Shield: <Shield className="h-5 w-5" />,
@@ -85,32 +66,11 @@ const iconMap: Record<string, React.ReactNode> = {
   ClipboardList: <ClipboardList className="h-5 w-5" />,
   Handshake: <Handshake className="h-5 w-5" />,
 };
-
-
-
-const layers = [
-  {
-    icon: Brain,
-    tag: "LAYER 1",
-    title: "Core Brain",
-    body: "Closing fundamentals, objection handling, follow-up logic. Built by us. Gets smarter every week.",
-    image: "https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=600",
-  },
-  {
-    icon: Puzzle,
-    tag: "LAYER 2",
-    title: "Industry Pack",
-    body: "Auto-loaded by role. Your world, your vocabulary, your math — from minute one.",
-    image: "https://images.unsplash.com/photo-1560472354-b33ff0c44a43?w=600",
-  },
-  {
-    icon: UserCog,
-    tag: "LAYER 3",
-    title: "Your Layer",
-    body: "Pay plan, scripts, brochures, CRM data, memory. Unlimited. Uncapped. Yours.",
-    image: "https://images.unsplash.com/photo-1552664730-d307ca884978?w=600",
-  },
-];
+const layerIconMap: Record<string, React.ReactNode> = {
+  Brain: <Brain className="h-5 w-5 text-[#EA580C]" strokeWidth={2.2} />,
+  Puzzle: <Puzzle className="h-5 w-5 text-[#EA580C]" strokeWidth={2.2} />,
+  UserCog: <UserCog className="h-5 w-5 text-[#EA580C]" strokeWidth={2.2} />,
+};
 
 export default function HomePage() {
   return (
@@ -237,11 +197,14 @@ export default function HomePage() {
                       WebkitMaskImage: "radial-gradient(circle, white 100%, transparent 100%)",
                       maskImage: "radial-gradient(circle, white 100%, transparent 100%)"
                     }}>
-                    <img
-                      src="/logo.png"
+                    <Image
+                      src="/logo.webp"
                       alt="Deal Clozr"
+                      width={160}
+                      height={160}
                       className="h-full w-full"
                       style={{ transform: "scale(1.05)" }}
+                      priority
                     />
                   </div>
                 </div>
@@ -278,7 +241,7 @@ export default function HomePage() {
                 }}
               />
               <div className="relative">
-                <DemoChat />
+                <LazyDemoChat />
               </div>
             </div>
             {/* Secondary CTA — for visitors who don't want to chat */}
@@ -294,7 +257,7 @@ export default function HomePage() {
       {/* 1 — HERO — LOUD rebuild with 3D money card */}
       <section className="relative overflow-hidden" style={{ background: "#050506" }}>
         <div className="absolute inset-0 bg-cover bg-center opacity-[0.15]" style={{ backgroundImage: "url(https://images.unsplash.com/photo-1639322537228-f710d846310a?w=1600&q=80&auto=format&fit=crop)" }} />
-        <FloatingParticles />
+        <LazyFloatingParticles />
 
         <div className="relative mx-auto max-w-7xl px-6 pb-24 pt-16 md:pb-32 md:pt-24">
           <div className="grid items-center gap-12 lg:grid-cols-[1.1fr,1fr]">
@@ -374,7 +337,7 @@ export default function HomePage() {
 
               {/* Waitlist counter */}
               <div className="mt-6">
-                <WaitlistCounter />
+                <WaitlistCounter />  
               </div>
             </div>
 
@@ -921,44 +884,7 @@ export default function HomePage() {
           </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-            {[
-              {
-                quote: "I forgot my wife's birthday. My agent reminded me at 9 AM with a gift idea based on something she mentioned 3 months ago.",
-                name: "Beta User",
-                role: "Auto Sales",
-                stat: "Personal life handled",
-              },
-              {
-                quote: "The RAV4 XLE demo on your homepage? That's actual deal math from my floor. Not a mockup. Not a simulation. That's what it does every day.",
-                name: "Thul Leng",
-                role: "Sun Toyota · Founder",
-                stat: "Real deal math, live",
-              },
-              {
-                quote: "30 days in — 247 leads, 43 appointments. It's like having a second closer who never sleeps. I walk in Monday morning and my pipeline is already worked.",
-                name: "Pilot User",
-                role: "Auto Sales, Sun Toyota",
-                stat: "247 leads in 30 days",
-              },
-              {
-                quote: "I was skeptical. 'Another AI tool?' But this thing knew my pay plan better than my manager. It told me I was 2 units from a $500 bonus I didn't even know existed.",
-                name: "Early Adopter",
-                role: "Auto Sales",
-                stat: "$500 bonus found",
-              },
-              {
-                quote: "The difference between ChatGPT and Deal Clozr? ChatGPT gives me a script. Deal Clozr gives me the script, runs the math, logs the deal, and follows up next week without me asking.",
-                name: "Beta Tester",
-                role: "Real Estate",
-                stat: "Full workflow, not just answers",
-              },
-              {
-                quote: "I texted it at 11 PM on a Sunday about a customer objection. It replied in 8 seconds with a play. That's faster than my manager has ever been.",
-                name: "Night Shift Rep",
-                role: "Auto Sales",
-                stat: "8-second response, 11 PM Sunday",
-              },
-            ].map((t, i) => (
+            {testimonials.map((t, i) => (
               <FadeIn key={i} delay={i * 60}>
                 <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 hover:shadow-[0_0_30px_rgba(251,191,36,0.06)] h-full flex flex-col">
                   {/* Quote */}
@@ -1310,7 +1236,7 @@ export default function HomePage() {
 
           <div className="grid gap-4 lg:grid-cols-[1.2fr,1fr] lg:items-start">
             <FadeIn>
-              <LiveScoreboard />
+              <LazyLiveScoreboard />
             </FadeIn>
 
             <FadeIn delay={150}>
@@ -1372,7 +1298,7 @@ export default function HomePage() {
           </div>
 
           {/* ── Real reviews from the floor (DB-driven, pending → approved flow) ── */}
-          <ReviewsSection />
+          <LazyReviewsSection />
 
         </div>
       </section>
@@ -1647,10 +1573,10 @@ export default function HomePage() {
 
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeIn>
-              <RoiCalculator />
+              <LazyRoiCalculator />
             </FadeIn>
             <FadeIn delay={200}>
-              <PhoneMockup />
+              <LazyPhoneMockup />
             </FadeIn>
           </div>
         </div>
@@ -1662,9 +1588,11 @@ export default function HomePage() {
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeIn>
               <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-                <img
-                  src="/images/thul-founder.jpg"
+                <Image
+                  src="/images/thul-founder.webp"
                   alt="Thul Leng at Sun Toyota, New Port Richey, Florida"
+                  width={600}
+                  height={600}
                   className="absolute inset-0 h-full w-full object-cover object-right"
                 />
                 <div className="absolute inset-0 bg-gradient-to-tr from-pit via-pit/30 to-transparent" />
@@ -1974,15 +1902,16 @@ export default function HomePage() {
                   className="loud-card group block overflow-hidden rounded-2xl"
                 >
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <img
+                    <Image
                       src={ind.image}
                       alt={ind.name}
+                      width={600}
+                      height={375}
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
-                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-pit via-pit/40 to-transparent" />
                     <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/15 bg-black/60 backdrop-blur shadow-[0_8px_20px_rgba(16,185,129,0.3)]">
-                      {iconMap[ind.icon]}
+                      {industryIconMap[ind.icon]}
                     </div>
                     {ind.live && (
                       <div className="absolute right-4 top-4 inline-flex items-center gap-1.5 rounded-full px-3 py-1 font-mono text-[10px] font-black uppercase tracking-widest text-white shadow-[0_4px_16px_rgba(16,185,129,0.5)]"
@@ -2034,17 +1963,16 @@ export default function HomePage() {
               <FadeIn key={layer.title} delay={i * 100}>
                 <div className="loud-card group relative overflow-hidden rounded-2xl">
                   <div className="relative aspect-[16/10] overflow-hidden">
-                    <img
+                    <Image
                       src={layer.image}
                       alt={layer.title}
+                      width={600}
+                      height={375}
                       className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/20 to-transparent" />
                     <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-lg border border-white/40 bg-white/95 backdrop-blur shadow-[0_8px_20px_rgba(0,0,0,0.15)]">
-                      <layer.icon
-                        className="h-5 w-5 text-[#EA580C]"
-                        strokeWidth={2.2}
-                      />
+                      {layerIconMap[layer.icon as string]}
                     </div>
                     <div className="absolute bottom-4 left-4 rounded-full bg-white/95 px-3 py-1 text-[10px] font-bold uppercase tracking-[1.5px] text-[#0D9488] backdrop-blur">
                       {layer.tag}
@@ -2132,21 +2060,7 @@ export default function HomePage() {
                     Launch skills
                   </span>
                 </div>
-                {[
-                  { name: "Cold Call Coach", price: "$4.99/mo", tag: "LIVE" },
-                  { name: "Deal Math", price: "$2.99/mo", tag: "LIVE" },
-                  {
-                    name: "Follow-Up Writer",
-                    price: "$3.99/mo",
-                    tag: "LIVE",
-                  },
-                  {
-                    name: "Objection Killer",
-                    price: "$4.99/mo",
-                    tag: "LIVE",
-                  },
-                  { name: "Pipeline Pulse", price: "Free", tag: "LIVE" },
-                ].map((s) => (
+                {marketplaceSkills.map((s) => (
                   <div
                     key={s.name}
                     className="flex items-center justify-between border-b border-white/8 py-4 last:border-b-0"
@@ -2375,10 +2289,10 @@ export default function HomePage() {
       </section>
 
       {/* 7.28 — FAQ */}
-      <FAQ />
+      <LazyFAQ />
 
       {/* 7.29 — Trust Strip */}
-      <TrustStrip />
+      <LazyTrustStrip />
 
       {/* 7.3 — ENTERPRISE CTA */}
       <section className="relative overflow-hidden">
@@ -2488,10 +2402,10 @@ export default function HomePage() {
       </section>
 
       {/* 7.4 — NEWSLETTER: From the Floor */}
-      <NewsletterSection />
+      <LazyNewsletterSection />
 
       {/* 7.5 — FOUNDERS CIRCLE */}
-      <FoundersCircle formspreeId="mwvargdv" />
+      <LazyFoundersCircle formspreeId="mwvargdv" />
 
       {/* 8 — FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">
@@ -2521,7 +2435,7 @@ export default function HomePage() {
           </FadeIn>
         </div>
       </section>
-      <MobileCTABar />
+      <LazyMobileCTABar />
     </>
   );
 }

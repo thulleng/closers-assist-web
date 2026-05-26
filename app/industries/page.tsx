@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import NextImage from "next/image";
 import Link from "next/link";
 import {
   Car,
@@ -242,11 +243,12 @@ export default function IndustriesPage() {
                 className="loud-card group flex h-full flex-col overflow-hidden rounded-2xl"
               >
               <div className="relative aspect-[16/10] overflow-hidden">
-                <img
+                <NextImage
                   src={ind.image}
                   alt={ind.name}
+                  width={600}
+                  height={375}
                   className="absolute inset-0 h-full w-full object-cover transition-transform duration-700 group-hover:scale-105"
-                  loading="lazy"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-slate via-slate/30 to-transparent" />
                 <div className="absolute left-4 top-4 flex h-10 w-10 items-center justify-center rounded-md border border-iron bg-pit/80 backdrop-blur">
