@@ -2,10 +2,8 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useLang } from "@/lib/LangContext";
 
 export default function Footer() {
-  const { tl } = useLang();
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black">
       <div
@@ -37,13 +35,13 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed text-ash">
-              {tl("footer.tagline")}
+              The AI agent every closer owns. Built on the floor. Deployed worldwide.
             </p>
           </div>
 
           <div>
             <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-              {tl("footer.product")}
+              PRODUCT
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -71,7 +69,7 @@ export default function Footer() {
 
           <div>
             <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-              {tl("footer.industries")}
+              INDUSTRIES
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -100,7 +98,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link href="/industries" className="font-semibold text-deal-light transition-colors hover:text-white">
-                  {tl("footer.allIndustries")}
+                  All 18 industries →
                 </Link>
               </li>
             </ul>
@@ -108,7 +106,7 @@ export default function Footer() {
 
           <div>
             <h3 className="mb-3 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-              {tl("footer.company")}
+              COMPANY
             </h3>
             <ul className="space-y-2 text-sm">
               <li>
@@ -142,10 +140,10 @@ export default function Footer() {
           </div>
           <div className="flex gap-6 text-xs">
             <Link href="/privacy" className="text-muted transition-colors hover:text-ash">
-              {tl("footer.privacy")}
+              Privacy
             </Link>
             <Link href="/terms" className="text-muted transition-colors hover:text-ash">
-              {tl("footer.terms")}
+              Terms
             </Link>
           </div>
         </div>

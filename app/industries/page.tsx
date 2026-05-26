@@ -1,5 +1,3 @@
-"use client";
-
 import NextImage from "next/image";
 import Link from "next/link";
 import {
@@ -23,7 +21,6 @@ import {
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import GlobeVisual from "@/components/GlobeVisual";
-import { useLang } from "@/lib/LangContext";
 
 const industries = [
   {
@@ -188,8 +185,6 @@ const industries = [
 ];
 
 export default function IndustriesPage() {
-  const { tl } = useLang();
-
   return (
     <section className="relative overflow-hidden loud-bg">
       <div className="grid-pattern opacity-50" />
@@ -210,7 +205,7 @@ export default function IndustriesPage() {
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                {tl("nav.industries")}
+                Industries
               </span>
             </div>
 
@@ -222,7 +217,7 @@ export default function IndustriesPage() {
                   <span className="text-shine font-black">Zero compromises.</span>
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
-                  {tl("industries.subtitle")}
+                  One AI agent. Every industry. Zero restrictions.
                 </p>
               </div>
               <div className="flex-shrink-0 flex justify-center mt-6 lg:mt-0">

@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import { Play, MessageSquare, DollarSign, BarChart3, Target } from "lucide-react";
-import { useLang } from "@/lib/LangContext";
 
 const DEMO_STEPS = [
   {
@@ -34,7 +33,6 @@ const DEMO_STEPS = [
 
 export default function DemoPage() {
   const [copyIndex, setCopyIndex] = useState<number | null>(null);
-  const { tl } = useLang();
 
   const copyPrompt = async (text: string, i: number) => {
     try { await navigator.clipboard.writeText(text); } catch { /* ok */ }

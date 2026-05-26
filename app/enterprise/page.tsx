@@ -1,10 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
 import { Check, Calendar, Users, Zap, Shield, Bot, ArrowRight } from "lucide-react";
 import { EnterpriseBookingForm } from "@/components/EnterpriseBookingForm";
-import { useLang } from "@/lib/LangContext";
 
 const INCLUDES = [
   "Dedicated AI agent built for your dealership, brokerage, or team",
@@ -68,9 +66,6 @@ const FAQ = [
 ];
 
 export default function EnterprisePage() {
-  const [calOpen, setCalOpen] = useState(false);
-  const { tl } = useLang();
-
   return (
     <main className="min-h-screen bg-[#050506] text-white">
       {/* ── Hero ──────────────────────────────────────────── */}
@@ -83,9 +78,9 @@ export default function EnterprisePage() {
           </div>
 
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold leading-[1.1] mb-6">
-            {tl("enterprise.title1")}
+            Your AI Closer.
             <br />
-            <span className="text-[#10B981]">{tl("enterprise.title2")}</span>
+            <span className="text-[#10B981]">Built. Hosted. Managed.</span>
           </h1>
 
           <p className="text-lg sm:text-xl text-gray-400 max-w-2xl mx-auto mb-10">
@@ -100,13 +95,13 @@ export default function EnterprisePage() {
               className="inline-flex items-center gap-2 bg-[#10B981] hover:bg-[#059669] text-black font-semibold px-8 py-4 rounded-xl text-lg transition-colors"
             >
               <Calendar className="w-5 h-5" />
-              {tl("enterprise.book")}
+              Book a Call
             </a>
             <Link
               href="/pricing"
               className="text-gray-400 hover:text-white transition-colors text-sm"
             >
-              {tl("enterprise.selfServe")}
+              Prefer self-serve? Starter from $29.99/mo →
             </Link>
           </div>
         </div>

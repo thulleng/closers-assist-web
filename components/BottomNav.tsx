@@ -16,9 +16,7 @@ import {
   Store,
   Gift,
   Building2,
-  Globe,
 } from "lucide-react";
-import { useLang } from "@/lib/LangContext";
 
 const BOTTOM_NAV = [
   { href: "/", label: "Home", icon: Home },
@@ -70,24 +68,6 @@ const DRAWER_LINKS = [
 export default function BottomNav() {
   const pathname = usePathname();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const { lang, setLang, tl } = useLang();
-
-  const cycleLang = () => {
-    const next: Record<string, "es" | "fr" | "en"> = { en: "es", es: "fr", fr: "en" };
-    setLang(next[lang]);
-  };
-
-  const langLabel: Record<string, string> = { en: "EN", es: "ES", fr: "FR" };
-
-  // i18n labels lookup
-  const navLabels: Record<string, string> = {
-    Home: tl("bottom.home"),
-    Industries: tl("bottom.industries"),
-    Dashboard: tl("bottom.dashboard"),
-    Pricing: tl("bottom.pricing"),
-    Enterprise: tl("bottom.enterprise"),
-    More: tl("bottom.more"),
-  };
 
   useEffect(() => {
     setDrawerOpen(false);
@@ -182,7 +162,7 @@ export default function BottomNav() {
                     active ? "text-deal" : "text-muted"
                   }`}
                 >
-                  {navLabels[label] || label}
+                  {label}
                 </span>
               </Link>
             );

@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
@@ -49,7 +47,6 @@ import {
   LazyFloatingParticles,
 } from "@/lib/lazy-imports";
 import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
-import { useLang } from "@/lib/LangContext";
 
 const industryIconMap: Record<string, React.ReactNode> = {
   Car: <Car className="h-5 w-5" />,
@@ -76,7 +73,6 @@ const layerIconMap: Record<string, React.ReactNode> = {
 };
 
 export default function HomePage() {
-  const { tl } = useLang();
   return (
     <>
       {/* DEMO CHAT — Meet Your Real Personal Assistant Today */}
@@ -216,22 +212,22 @@ export default function HomePage() {
             </div>
             <h2 className="font-display text-3xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>{tl("hero.dora.meet")}</span>
+              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>{"Meet Dora"}</span>
               <br />
-              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>{tl("hero.dora.subtitle")}</span>
+              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>{"Your AI Closer"}</span>
               <br />
-              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>{tl("hero.dora.tagline")}</span>
+              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>{"She closes. You collect."}</span>
             </h2>
             <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
-              {tl("hero.dora.body")} <span className="text-pink-200 font-black">{tl("hero.dora.gotAnswers")}</span> 😏
+              {"Ask her anything — pricing, how it works, whether she can really handle your deals AND your life."} <span className="text-pink-200 font-black">{"She's got the answers."}</span> 😏
             </p>
           </FadeIn>
           {/* Directional cue */}
           <FadeIn delay={100}>
             <div className="mb-6 flex flex-col items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light">
-                {tl("hero.dora.cta")}
+                {"👇 Talk to Dora — she's live"}
               </span>
             </div>
           </FadeIn>
@@ -251,7 +247,7 @@ export default function HomePage() {
             {/* Secondary CTA — for visitors who don't want to chat */}
             <div className="mt-8 text-center">
               <a href="/pricing" className="inline-flex items-center gap-2 text-sm text-gray-400 hover:text-deal-light transition-colors">
-                {tl("hero.dora.skip")}
+                {"Or skip the chat — see plans & pricing →"}
               </a>
             </div>
           </FadeIn>
@@ -274,32 +270,32 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    {tl("hero2.badge")}
+                    {"The best AI agent in the business · Built by a working rep"}
                   </span>
                 </div>
               </div>
 
               <div>
                 <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
-                  {tl("hero2.title1")}
+                  {"You can't clone yourself."}
                   <br />
                   <span className="text-shine font-black">
-                    {tl("hero2.title2")}
+                    {"We did."}
                   </span>
                 </h1>
               </div>
 
               <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
-                  {tl("hero2.subtitle")}
+                  {"An AI employee that handles your deals AND your life. Never drops a ball. Never forgets a detail. Never clocks out."}
                 </p>
               </div>
 
               <div>
                 <div className="mt-8 max-w-md">
                   <EmailCapture
-                    placeholder={tl("hero2.email")}
-                    buttonText={tl("hero2.cta")}
+                    placeholder={"your@email.com"}
+                    buttonText={"Deploy My Agent"}
                   />
                 </div>
                 <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-1.5 text-[12px] text-muted">
@@ -308,27 +304,27 @@ export default function HomePage() {
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    {tl("hero2.trust1")}
+                    {"No credit card"}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    {tl("hero2.trust2")}
+                    {"No contracts. Cancel anytime."}
                   </span>
                   <span className="flex items-center gap-1.5">
                     <CheckCircle2
                       className="h-3.5 w-3.5 text-deal"
                       strokeWidth={2.5}
                     />
-                    {tl("hero2.trust3")}
+                    {"Cancel in 1 click"}
                   </span>
                   <Link
                     href="#tutorial"
                     className="text-gold-light hover:underline"
                   >
-                    {tl("hero2.watch")}
+                    {"▶ Watch it close a deal in under 4 minutes"}
                   </Link>
                 </div>
               </div>
@@ -641,13 +637,13 @@ export default function HomePage() {
           <div>
             <div className="mt-16 sm:mt-20 rounded-2xl border border-white/8 bg-black/40 p-5 sm:p-8 backdrop-blur">
               <div className="mb-5 text-center text-[10px] font-bold uppercase tracking-[2px] text-ash">
-                {tl("hero2.statsTitle")}
+                {"The math closers can't argue with"}
               </div>
               <div className="grid grid-cols-3 gap-3 sm:gap-6">
                 <div className="text-center">
                   <Counter to={18} duration={2000} className="font-display text-[28px] font-black leading-none tracking-[-0.03em] text-mega sm:text-[40px] md:text-[56px] lg:text-[72px]" />
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    {tl("hero2.industries")}
+                    {"INDUSTRIES"}
                   </div>
                 </div>
                 <div className="border-x border-white/10 text-center">
@@ -655,7 +651,7 @@ export default function HomePage() {
                     24/7
                   </div>
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    {tl("hero2.alwaysOn")}
+                    {"ALWAYS ON"}
                   </div>
                 </div>
                 <div className="text-center">
@@ -663,7 +659,7 @@ export default function HomePage() {
                     {"<3s"}
                   </div>
                   <div className="mt-1 sm:mt-2 text-[9px] sm:text-[11px] font-semibold uppercase tracking-wider text-ash">
-                    {tl("hero2.questionToPlay")}
+                    {"QUESTION TO PLAY"}
                   </div>
                 </div>
               </div>
@@ -699,13 +695,13 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                  {tl("benefits.badge")}
+                  {"Why closers choose us"}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                {tl("benefits.title1")}
+                {"More than a bot."}
                 <br />
-                <span className="text-shine font-black">{tl("benefits.title2")}</span>
+                <span className="text-shine font-black">{"This is your employee."}</span>
               </h2>
             </div>
           </FadeIn>
@@ -718,13 +714,13 @@ export default function HomePage() {
                   🧠
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {tl("benefits.never.title")}
+                  {"Never forgets a deal"}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  {tl("benefits.never.body")}
+                  {"Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Deal Clozr knows exactly what you said, what they pushed back on, and what closed them last time."}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {tl("benefits.never.tag")}
+                  {"Persistent memory across sessions"}
                 </div>
               </div>
             </FadeIn>
@@ -736,13 +732,13 @@ export default function HomePage() {
                   ⚡
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {tl("benefits.zero.title")}
+                  {"Zero setup. Zero training."}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  {tl("benefits.zero.body")}
+                  {"Pick your industry. Start closing. No prompt engineering. No training period. No IT ticket. You already know how to text — that's the entire interface."}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {tl("benefits.zero.tag")}
+                  {"Close your first deal in under 2 minutes"}
                 </div>
               </div>
             </FadeIn>
@@ -754,13 +750,13 @@ export default function HomePage() {
                   🎯
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {tl("benefits.voice.title")}
+                  {"Sounds like you. Not a bot."}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  {tl("benefits.voice.body")}
+                  {"Your scripts. Your style. Your floor. Deal Clozr learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers."}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {tl("benefits.voice.tag")}
+                  {"Built on Thul's floor at Sun Toyota"}
                 </div>
               </div>
             </FadeIn>
@@ -776,13 +772,13 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("agent.badge")}
+                  {"What your agent does"}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                {tl("agent.title1")}
+                {"One agent."}
                 <br />
-                <span className="text-shine font-black">{tl("agent.title2")}</span>
+                <span className="text-shine font-black">{"Your entire life. Handled."}</span>
               </h2>
             </div>
           </FadeIn>
@@ -795,29 +791,29 @@ export default function HomePage() {
                   💼
                 </div>
                 <h3 className="mb-2 font-display text-2xl font-black text-white">
-                  {tl("agent.deals.title")}
+                  {"Closes Deals"}
                 </h3>
-                <p className="mb-5 text-sm text-ash">{tl("agent.deals.subtitle")}</p>
+                <p className="mb-5 text-sm text-ash">{"Your agent handles the revenue side — so you focus on closing, not admin."}</p>
                 <ul className="space-y-3 text-sm text-ash">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{tl("agent.deals.followup")}</span>
+                    <span>{"Follows up with leads automatically"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{tl("agent.deals.pipeline")}</span>
+                    <span>{"Manages pipeline stage-by-stage"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{tl("agent.deals.contracts")}</span>
+                    <span>{"Drafts contracts & invoices"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{tl("agent.deals.crm")}</span>
+                    <span>{"Syncs with email & CRM"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{tl("agent.deals.cold")}</span>
+                    <span>{"Never lets a cold lead go cold"}</span>
                   </li>
                 </ul>
               </div>
@@ -830,29 +826,29 @@ export default function HomePage() {
                   🏠
                 </div>
                 <h3 className="mb-2 font-display text-2xl font-black text-white">
-                  {tl("agent.life.title")}
+                  {"Handles Life"}
                 </h3>
-                <p className="mb-5 text-sm text-ash">{tl("agent.life.subtitle")}</p>
+                <p className="mb-5 text-sm text-ash">{"Your agent remembers the personal stuff — so you never drop a ball at home."}</p>
                 <ul className="space-y-3 text-sm text-ash">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>{tl("agent.life.appointments")}</span>
+                    <span>{"Books appointments & reservations"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>{tl("agent.life.birthdays")}</span>
+                    <span>{"Reminds you of birthdays & events"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>{tl("agent.life.travel")}</span>
+                    <span>{"Researches flights & hotels"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>{tl("agent.life.newsletters")}</span>
+                    <span>{"Summarizes school newsletters"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-gold" strokeWidth={2.5} />
-                    <span>{tl("agent.life.todos")}</span>
+                    <span>{"Manages your to-do list"}</span>
                   </li>
                 </ul>
               </div>
@@ -870,13 +866,13 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
                 <span className="relative flex h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                  {tl("results.badge")}
+                  {"Real results from real floors"}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                {tl("results.title1")}
+                {"Closers who use it."}
                 <br />
-                <span className="text-shine font-black">{tl("results.title2")}</span>
+                <span className="text-shine font-black">{"Numbers that prove it."}</span>
               </h2>
             </div>
           </FadeIn>
@@ -915,10 +911,10 @@ export default function HomePage() {
                 href="/pricing"
                 className="btn-loud inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base font-bold"
               >
-                {tl("results.joinCta")}
+                {"Join Them — Start Your Free Trial"}
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </a>
-              <p className="mt-3 text-xs text-muted">{tl("results.trialNote")}</p>
+              <p className="mt-3 text-xs text-muted">{"No credit card. Cancel anytime. Your agent ships in 5 minutes."}</p>
             </div>
           </FadeIn>
         </div>
@@ -1063,12 +1059,12 @@ export default function HomePage() {
             <FadeIn delay={400}>
               <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/40 p-6 backdrop-blur transition-all hover:border-gold/30 h-full flex flex-col">
                 <div className="mb-3 text-3xl">⚡</div>
-                <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. {tl("roi.title1")} {tl("roi.title2")}</h3>
+                <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. {"One deal pays for"} {"10 years."}</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
                   Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul's a working rep who knows what closers can actually afford. Not a SaaS company maximizing ARPU.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
-                  <span className="font-bold text-gold-light">Real result:</span> 14-day free trial. No credit card. Cancel in one click. {tl("roi.title1")} {tl("roi.title2")}
+                  <span className="font-bold text-gold-light">Real result:</span> 14-day free trial. No credit card. Cancel in one click. {"One deal pays for"} {"10 years."}
                 </div>
               </div>
             </FadeIn>
@@ -1094,13 +1090,13 @@ export default function HomePage() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 </span>
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("hiw.badge")}
+                  {"How it works"}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                {tl("hiw.title1")}
+                {"Your agent is live"}
                 <br />
-                <span className="text-shine font-black">{tl("hiw.title2")}</span>
+                <span className="text-shine font-black">{"in 5 minutes."}</span>
               </h2>
             </div>
           </FadeIn>
@@ -1116,13 +1112,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {tl("hiw.step1.title")}
+                  {"Tell us about you"}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
                   Your industry. Your pay plan. Your scripts. Your goals. <span className="font-semibold text-bone">Pick a name</span> — Jake, Maya, Tank, whatever fits. <span className="font-semibold text-bone">Choose male or female.</span> Your agent becomes whoever you need on the floor. Learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {tl("hiw.step1.tag")}
+                  {"< 2 minutes"}
                 </div>
               </div>
             </FadeIn>
@@ -1137,13 +1133,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {tl("hiw.step2.title")}
+                  {"Deploy on Telegram"}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
                   One click. Your agent goes live on Telegram — the app you already use. No new dashboard to learn. No software to install. Just open Telegram and start talking to your closer.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {tl("hiw.step2.tag")}
+                  {"Instant"}
                 </div>
               </div>
             </FadeIn>
@@ -1158,13 +1154,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {tl("hiw.step3.title")}
+                  {"Start closing. Start living."}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash">
                   Your agent handles follow-ups, remembers every customer, drafts your responses, tracks your commissions — <span className="font-semibold text-bone">and</span> books your dentist appointment. You focus on the floor.
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {tl("hiw.step3.tag")}
+                  {"Day 1 value"}
                 </div>
               </div>
             </FadeIn>
@@ -1183,12 +1179,12 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("tutorial.badge")}
+                  {"Watch the walkthrough"}
                 </span>
               </div>
               <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-5xl">
-                {tl("tutorial.title1")}
-                <span className="text-shine font-black">{tl("tutorial.title2")}</span>
+                {"See exactly how it works"}
+                <span className="text-shine font-black">{" in under 4 minutes."}</span>
               </h2>
             </div>
             <div className="relative mx-auto max-w-4xl overflow-hidden rounded-2xl border border-white/10 shadow-[0_0_60px_rgba(16,185,129,0.12)]">
@@ -1203,7 +1199,7 @@ export default function HomePage() {
               </video>
             </div>
             <p className="mt-4 text-center text-sm text-ash">
-              {tl("tutorial.caption")}
+              {"From sign-up to your first closed deal — everything you need in under 4 minutes."}
             </p>
           </FadeIn>
         </div>
@@ -1555,15 +1551,15 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                  {tl("roi.badge")}
+                  {"Live ROI calculator"}
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
-                {tl("roi.title1")}{" "}
-                <span className="text-mega-amber font-black">{tl("roi.title2")}</span>
+                {"One deal pays for"}{" "}
+                <span className="text-mega-amber font-black">{"10 years."}</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-ash md:text-xl">
-                {tl("roi.subtitle")}
+                {"Drag the sliders. Watch the green number. This is the math, not a pitch."}
               </p>
             </div>
           </FadeIn>
@@ -1621,7 +1617,7 @@ export default function HomePage() {
                 <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    {tl("founderSection.badge")}
+                    {"Built on the floor"}
                   </span>
                 </div>
                 <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-6xl">
@@ -1641,7 +1637,7 @@ export default function HomePage() {
                   href="/founder"
                   className="mt-8 inline-flex items-center gap-1 text-[15px] font-bold text-gold-light transition-all hover:gap-2"
                 >
-                  {tl("founderSection.readStory")}
+                  {"Read the full story"}
                   <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
                 </Link>
               </div>
@@ -1950,7 +1946,7 @@ export default function HomePage() {
                 <span className="text-shine font-black"> Your voice.</span>
               </h2>
               <p className="mt-5 max-w-2xl text-lg leading-relaxed text-ash">
-                Three layers that make your agent sharper than any chatbot. {tl("founderSection.badge")}, not in a boardroom.
+                Three layers that make your agent sharper than any chatbot. {"Built on the floor"}, not in a boardroom.
               </p>
             </div>
           </FadeIn>
@@ -2093,7 +2089,7 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("hpPricing.badge")}
+                  {"Pricing"}
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.02] tracking-[-0.02em] text-white md:text-6xl">
@@ -2134,7 +2130,7 @@ export default function HomePage() {
                     </li>
                   </ul>
                   <Link href="/pricing" className="inline-block rounded-xl border-2 border-white/[0.08] px-6 py-3 text-sm font-bold text-bone transition-all hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white">
-                    {tl("pricing.getStarted")}
+                    {"Get Started"}
                   </Link>
                 </div>
               </TiltCard>
@@ -2166,7 +2162,7 @@ export default function HomePage() {
                     </li>
                   </ul>
                   <Link href="/enterprise" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
-                    {tl("hero2.cta")}
+                    {"Deploy My Agent"}
                   </Link>
                 </div>
               </TiltCard>
@@ -2176,12 +2172,12 @@ export default function HomePage() {
           {/* Shared features */}
           <FadeIn delay={200}>
             <div className="mt-10 text-center">
-              <p className="text-sm text-ash mb-4">{tl("hpPricing.included")}</p>
+              <p className="text-sm text-ash mb-4">{"Both tiers include —"}</p>
               <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-bone/80">
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Unique personality</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Cross-session memory</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Morning briefs & deal tracking</span>
-                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> {tl("founderSection.badge")}</span>
+                <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> {"Built on the floor"}</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Your data stays yours</span>
               </div>
             </div>
@@ -2210,11 +2206,11 @@ export default function HomePage() {
               <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("comparison.badge")}
+                  {"Head to head"}
                 </span>
               </div>
               <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
-                {tl("comparison.crm")} tracks deals.
+                {"Your CRM"} tracks deals.
                 <span className="text-deal"> We close them.</span>
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ash">
@@ -2230,14 +2226,14 @@ export default function HomePage() {
               <div className="grid grid-cols-4 border-b border-iron bg-white/[0.03]">
                 <div className="p-5 text-xs font-medium uppercase tracking-widest text-muted" />
                 <div className="border-l border-iron p-5 text-center">
-                  <span className="text-sm font-semibold text-ash">{tl("comparison.crm")}</span>
+                  <span className="text-sm font-semibold text-ash">{"Your CRM"}</span>
                 </div>
                 <div className="border-l border-iron p-5 text-center">
-                  <span className="text-sm font-semibold text-ash">{tl("comparison.genericAI")}</span>
+                  <span className="text-sm font-semibold text-ash">{"Generic AI"}</span>
                 </div>
                 <div className="border-l border-iron bg-deal/[0.06] p-5 text-center">
                   <span className="font-display text-sm font-bold text-deal">
-                    {tl("comparison.dealClozr")}
+                    {"DEAL CLOZR"}
                   </span>
                 </div>
               </div>
@@ -2275,7 +2271,7 @@ export default function HomePage() {
           <FadeIn delay={200}>
             <div className="mt-10 text-center">
               <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">
-                {tl("pricing.getStarted")}
+                {"Get Started"}
               </Link>
               <p className="mt-4 text-sm text-muted">
                 14-day free trial. No credit card required.
@@ -2324,7 +2320,7 @@ export default function HomePage() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
                   <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                    {tl("enterpriseCta.badge")}
+                    {"Enterprise"}
                   </span>
                 </div>
 
@@ -2359,7 +2355,7 @@ export default function HomePage() {
                     href="/enterprise"
                     className="rounded-xl border border-deal/40 px-6 py-3 text-sm font-bold text-deal-light transition-all hover:border-deal hover:bg-deal/10"
                   >
-                    {tl("enterprise.book")} →
+                    {"Book a Call"} →
                   </Link>
                 </div>
               </div>
@@ -2411,9 +2407,9 @@ export default function HomePage() {
         <div className="relative mx-auto max-w-4xl px-6 py-28 text-center md:py-36">
           <FadeIn>
             <h2 className="font-display text-5xl font-black leading-[0.95] tracking-[-0.03em] text-white md:text-7xl">
-              {tl("finalCta.title1")}
+              {"Your agent is waiting."}
               <br />
-              <span className="text-shine font-black">{tl("finalCta.title2")}</span>
+              <span className="text-shine font-black">{"Deploy yours in 5 minutes."}</span>
             </h2>
           </FadeIn>
           <FadeIn delay={150}>
@@ -2424,8 +2420,8 @@ export default function HomePage() {
           <FadeIn delay={300}>
             <div className="mt-10 max-w-md mx-auto">
               <EmailCapture
-                placeholder={tl("hero2.email")}
-                buttonText={tl("hero2.cta")}
+                placeholder={"your@email.com"}
+                buttonText={"Deploy My Agent"}
               />
               <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
             </div>

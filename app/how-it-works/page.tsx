@@ -1,5 +1,3 @@
-"use client";
-
 import Link from "next/link";
 import {
   ArrowRight,
@@ -14,7 +12,6 @@ import {
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import AIAvatar from "@/components/AIAvatar";
-import { useLang } from "@/lib/LangContext";
 
 const steps = [
   {
@@ -48,8 +45,6 @@ const steps = [
 ];
 
 export default function HowItWorksPage() {
-  const { tl } = useLang();
-
   return (
     <>
       {/* HERO — with AI avatar visual */}
@@ -78,13 +73,13 @@ export default function HowItWorksPage() {
               </div>
 
               <h1 className="font-display text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-white md:text-[72px]">
-                {tl("how.title1")}
+                Four steps.
                 <br />
-                <span className="text-shine font-black">{tl("how.title2")}</span>
+                <span className="text-shine font-black">Ready to close.</span>
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
-                {tl("how.subtitle")}
+                No onboarding call. No setup wizard. No data entry. Pick your industry, load your profile, and put it to work the same day.
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -102,7 +97,7 @@ export default function HowItWorksPage() {
                   href="/industries"
                   className="btn-ghost rounded-xl px-6 py-4 text-[15px] font-semibold"
                 >
-                  {tl("how.browse")}
+                  Browse industries
                 </Link>
               </div>
             </div>
@@ -240,10 +235,10 @@ export default function HowItWorksPage() {
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
-                {tl("how.chatAnywhere")}
+                Your agent goes where you go.
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-base text-ash">
-                {tl("how.chatSub")}
+                No new tab. No login every time. Your agent is always one tap away — on the lot, at the desk, or on your phone between customers.
               </p>
             </div>
 

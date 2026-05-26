@@ -1,9 +1,6 @@
-"use client";
-
 import Link from "next/link";
 import { ArrowRight, Clock, User } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
-import { useLang } from "@/lib/LangContext";
 
 const POSTS = [
   {
@@ -65,8 +62,6 @@ const POSTS = [
 ];
 
 export default function BlogIndex() {
-  const { tl } = useLang();
-
   return (
     <main>
       <section className="relative overflow-hidden loud-bg">
@@ -79,7 +74,7 @@ export default function BlogIndex() {
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/30 bg-gold/10 px-3.5 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-gold shadow-[0_0_8px_#FBBF24]" />
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                {tl("blog.title")}
+                From the Floor
               </span>
             </div>
 
@@ -90,7 +85,7 @@ export default function BlogIndex() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash">
-              {tl("blog.subtitle")}
+              Strategy, plays, and real talk from a working rep. No theory. Just what works.
             </p>
           </FadeIn>
 

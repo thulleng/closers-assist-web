@@ -6,7 +6,6 @@ import { Shield, Check, User, Users, Building2, ArrowRight, X } from "lucide-rea
 import FadeIn from "@/components/FadeIn";
 import TiltCard from "@/components/TiltCard";
 import DealFlowVisual from "@/components/DealFlowVisual";
-import { useLang } from "@/lib/LangContext";
 
 type Billing = "monthly" | "annual";
 type Buyer = "solo" | "team" | "dealership";
@@ -131,7 +130,6 @@ async function startCheckout(priceId: string): Promise<string | null> {
 }
 
 export default function PricingPage() {
-  const { tl } = useLang();
   const [billing, setBilling] = useState<Billing>("monthly");
   const [selectedBuyer, setSelectedBuyer] = useState<Buyer | null>(null);
   const [loadingTier, setLoadingTier] = useState<string | null>(null);
@@ -162,16 +160,16 @@ export default function PricingPage() {
               <div className="mb-3 inline-flex items-center justify-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3 py-1.5 md:justify-start">
                 <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                 <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                  {tl("nav.pricing")}
+                  Pricing
                 </span>
               </div>
               <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-                {tl("pricing.title1")}
+                Pick the plan that
                 <br />
-                <span className="text-shine font-black">{tl("pricing.title2")}</span>
+                <span className="text-shine font-black">fits your floor.</span>
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl md:mx-0">
-                {tl("pricing.subtitle")}
+                One extra deal covers your subscription for years. No feature gating. Every tier ships the same full agent — tiers differ by team size and support, never by capability.
               </p>
             </div>
 
@@ -203,7 +201,7 @@ export default function PricingPage() {
               </span>
             </div>
             <h2 className="font-display text-xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
-              {tl("pricing.whyTitle")}
+              Why $29.99 when ChatGPT is free?
             </h2>
             <p className="mx-auto mt-4 max-w-sm text-sm text-ash sm:max-w-xl sm:text-base md:max-w-2xl">
               Free AI gives you generic answers. Deal Clozr gives you the exact script, your actual numbers, and a partner who remembers every deal.
@@ -289,19 +287,19 @@ export default function PricingPage() {
             {
               id: "solo" as Buyer,
               icon: User,
-              label: tl("pricing.solo"),
+              label: "I'm a solo rep",
               sub: "Just me",
             },
             {
               id: "team" as Buyer,
               icon: Users,
-              label: tl("pricing.team"),
+              label: "I run a team",
               sub: "2–25 reps",
             },
             {
               id: "dealership" as Buyer,
               icon: Building2,
-              label: tl("pricing.dealership"),
+              label: "I run a dealership",
               sub: "26+ reps",
             },
           ].map((b) => {
@@ -339,7 +337,7 @@ export default function PricingPage() {
               billing === "monthly" ? "bg-deal text-pit" : "text-bone"
             }`}
           >
-            {tl("pricing.monthly")}
+            Monthly
           </button>
           <button
             onClick={() => setBilling("annual")}
@@ -347,7 +345,7 @@ export default function PricingPage() {
               billing === "annual" ? "bg-deal text-pit" : "text-bone"
             }`}
           >
-            {tl("pricing.annual")}
+            Annual — save 20%
           </button>
         </div>
       </section>
@@ -493,7 +491,7 @@ export default function PricingPage() {
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                         Redirecting…
                       </span>
-                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : tier.id === "elite" ? tl("pricing.talkSales") : tl("pricing.getStarted")}
+                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : tier.id === "elite" ? "Talk to sales" : "Get Started"}
                   </button>
                 )}
                 {!("monthlyPriceId" in tier) && (
@@ -505,7 +503,7 @@ export default function PricingPage() {
                         : "border-2 border-white/[0.08] text-bone hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white"
                     }`}
                   >
-                    {tier.id === "elite" ? tl("pricing.talkSales") : tl("pricing.getStarted")}
+                    {tier.id === "elite" ? "Talk to sales" : "Get Started"}
                   </Link>
                 )}
               </div>
@@ -563,7 +561,7 @@ export default function PricingPage() {
           </div>
           <div>
             <h3 className="mb-1 text-xl font-medium text-bone">
-              {tl("pricing.trial")}
+              14-day free trial. Cancel anytime.
             </h3>
             <p className="text-sm leading-relaxed text-ash">
               Use Deal Clozr for 30 days. If your commission check
@@ -640,7 +638,7 @@ export default function PricingPage() {
                 onClick={() => document.getElementById("plans")?.scrollIntoView({ behavior: "smooth" })}
                 className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-5 text-lg"
               >
-                {tl("pricing.getStarted")} — ${billing === "annual" ? "23.99" : "29.99"}/mo
+                Get Started — ${billing === "annual" ? "23.99" : "29.99"}/mo
                 <ArrowRight className="h-5 w-5 transition-transform group-hover:translate-x-1" strokeWidth={2.5} />
               </button>
               <p className="mt-4 text-sm text-muted">No credit card. Cancel anytime. 14-day free trial.</p>
