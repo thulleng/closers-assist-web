@@ -1,4 +1,5 @@
-import type { Metadata } from "next";
+"use client";
+
 import Link from "next/link";
 import {
   ArrowRight,
@@ -13,12 +14,7 @@ import {
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import AIAvatar from "@/components/AIAvatar";
-
-export const metadata: Metadata = {
-  title: "How It Works",
-  description:
-    "Four steps. Pick your industry, set up your profile, use it live during deals, and watch it learn your style. Deal Clozr is built for the floor.",
-};
+import { useLang } from "@/lib/LangContext";
 
 const steps = [
   {
@@ -52,6 +48,8 @@ const steps = [
 ];
 
 export default function HowItWorksPage() {
+  const { tl } = useLang();
+
   return (
     <>
       {/* HERO — with AI avatar visual */}
@@ -80,14 +78,13 @@ export default function HowItWorksPage() {
               </div>
 
               <h1 className="font-display text-[48px] font-black leading-[0.98] tracking-[-0.02em] text-white md:text-[72px]">
-                Four steps.
+                {tl("how.title1")}
                 <br />
-                <span className="text-shine font-black">Ready to close.</span>
+                <span className="text-shine font-black">{tl("how.title2")}</span>
               </h1>
 
               <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl">
-                No onboarding call. No setup wizard. No data entry. Pick your
-                industry, load your profile, and put it to work the same day.
+                {tl("how.subtitle")}
               </p>
 
               <div className="mt-9 flex flex-wrap items-center gap-3">
@@ -105,7 +102,7 @@ export default function HowItWorksPage() {
                   href="/industries"
                   className="btn-ghost rounded-xl px-6 py-4 text-[15px] font-semibold"
                 >
-                  Browse industries
+                  {tl("how.browse")}
                 </Link>
               </div>
             </div>
@@ -243,11 +240,10 @@ export default function HowItWorksPage() {
                 </span>
               </div>
               <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-5xl">
-                Your agent goes{" "}
-                <span className="text-shine font-black">where you go.</span>
+                {tl("how.chatAnywhere")}
               </h2>
               <p className="mx-auto mt-4 max-w-xl text-base text-ash">
-                No new tab. No login every time. Your agent is always one tap away — on the lot, at the desk, or on your phone between customers.
+                {tl("how.chatSub")}
               </p>
             </div>
 

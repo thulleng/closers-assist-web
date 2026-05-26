@@ -286,6 +286,12 @@ export const t: Record<string, Record<Lang, string>> = {
 
   // HOMEPAGE — FINAL CTA
   "finalCta.title1": { en: "Your agent is waiting.", es: "Tu agente te espera.", fr: "Votre agent vous attend." },
-  "finalCta.title2": { en: "Deploy yours in 5 minutes.", es: "Despliega el tuyo en 5 minutos.", fr: "D\u00E9ployez le v\u00F4tre en 5 minutes." },
+  "finalCta.title2": { en: "Deploy yours in 5 minutes.", es: "Despliega el tuyo en 5 minutos.", fr: "D\u00e9ployez le v\u00f4tre en 5 minutes." },
+
+  "blog.title": { en: "From the Floor", es: "Desde el Piso", fr: "Du Terrain" },
+  "blog.subtitle": { en: "Strategy, plays, and real talk from a working rep. No theory. Just what works.", es: "Estrategia, jugadas y conversaci\u00f3n real de un vendedor en activo. Sin teor\u00eda. Solo lo que funciona.", fr: "Strat\u00e9gie, techniques et vrais conseils d'un vendeur actif. Pas de th\u00e9orie. Que du concret." },
+
+  "industries.subtitle": { en: "One AI agent. Every industry. Zero restrictions.", es: "Un agente IA. Cada industria. Cero restricciones.", fr: "Un agent IA. Tous les secteurs. Z\u00e9ro restrictions." },
+  "industries.all": { en: "All 18 industries", es: "Las 18 industrias", fr: "Les 18 secteurs" },
 
 };

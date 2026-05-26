@@ -1,12 +1,9 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Check, X, Brain, Database, UserPlus, MessageCircle, Clock, DollarSign, Zap, Bot, Smartphone, MessageSquare } from "lucide-react";
-import type { Metadata } from "next";
 import FadeIn from "@/components/FadeIn";
-
-export const metadata: Metadata = {
-  title: "Compare — Deal Clozr vs ChatGPT, CRM, and Hiring an Assistant",
-  description: "See how Deal Clozr stacks up against ChatGPT, traditional CRMs, and hiring a human assistant. Built for closers. Not engineers.",
-};
+import { useLang } from "@/lib/LangContext";
 
 const comparisonRows = [
   {
@@ -137,6 +134,8 @@ const verdicts = [
 ];
 
 export default function ComparePage() {
+  const { tl } = useLang();
+
   return (
     <main>
       {/* Hero */}
@@ -155,9 +154,9 @@ export default function ComparePage() {
               </span>
             </div>
             <h1 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-6xl">
-              An AI employee vs
+              {tl("compare.title1")}
               <br />
-              <span className="text-shine font-black">everything else.</span>
+              <span className="text-shine font-black">{tl("compare.title2")}</span>
             </h1>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash">
               See exactly how Deal Clozr stacks up against ChatGPT, traditional CRMs,
@@ -345,8 +344,8 @@ export default function ComparePage() {
         <div className="relative mx-auto max-w-5xl px-6 py-16 md:py-24">
           <FadeIn>
             <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white text-center mb-4">
-              Real scenarios.
-              <span className="text-shine font-black"> Real differences.</span>
+              {tl("compare.scenarios")}
+              <span className="text-shine font-black"> {tl("compare.differences")}</span>
             </h2>
             <p className="text-center text-ash mb-12">Three moments every closer knows. Here's how each option performs.</p>
           </FadeIn>
@@ -392,7 +391,7 @@ export default function ComparePage() {
         <div className="relative mx-auto max-w-5xl px-6 py-16 md:py-24">
           <FadeIn>
             <h2 className="font-display text-3xl font-black leading-[1.05] tracking-[-0.02em] text-white text-center mb-12">
-              The verdict
+              {tl("compare.verdict")}
             </h2>
           </FadeIn>
 
@@ -427,13 +426,11 @@ export default function ComparePage() {
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                The bottom line
+                {tl("compare.bottomLine")}
               </span>
             </div>
             <h2 className="font-display text-4xl font-black leading-[1.05] tracking-[-0.02em] text-white md:text-6xl">
-              One extra deal pays for
-              <br />
-              <span className="text-mega-amber font-black">10 years of Deal Clozr.</span>
+              {tl("compare.bottomTitle")}
             </h2>
             <p className="mt-6 text-lg leading-relaxed text-ash">
               ChatGPT can't close deals. Your CRM can't close deals. A human assistant costs 100x more.
@@ -445,14 +442,14 @@ export default function ComparePage() {
                 href="/pricing"
                 className="btn-loud inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm"
               >
-                See Pricing
+                {tl("compare.seePricing")}
                 <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
               </Link>
               <Link
                 href="/how-it-works"
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
               >
-                How it works →
+                {tl("compare.howItWorks")}
               </Link>
             </div>
             <p className="mt-4 text-sm text-muted">
