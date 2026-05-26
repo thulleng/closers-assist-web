@@ -21,7 +21,7 @@ export default function Footer() {
                   aria-hidden
                 />
                 <Image
-                  src="/logo.png"
+                  src="/logo.webp"
                   alt="Deal Clozr"
                   width={32}
                   height={32}

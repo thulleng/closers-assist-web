@@ -54,7 +54,7 @@ export default function Nav() {
               aria-hidden
             />
             <Image
-              src="/logo.png"
+              src="/logo.webp"
               alt="Deal Clozr"
               width={36}
               height={36}
