@@ -115,6 +115,25 @@ export async function POST(req: NextRequest) {
       try {
         const supabase = createAdminClient();
 
+        // Get the price ID from the subscription
+        let priceId: string | null = null;
+        if (subscriptionId) {
+          try {
+            const stripe = getStripe();
+            const sub = await stripe.subscriptions.retrieve(subscriptionId);
+            priceId = sub.items?.data?.[0]?.price?.id || null;
+          } catch {
+            // Subscription not available yet — try the checkout session
+            try {
+              const stripe = getStripe();
+              const checkoutSession = await stripe.checkout.sessions.retrieve(session.id, {
+                expand: ["line_items"],
+              });
+              priceId = checkoutSession.line_items?.data?.[0]?.price?.id || null;
+            } catch {}
+          }
+        }
+
         const { error: upsertError } = await supabase
           .from("subscriptions")
           .upsert(
@@ -123,7 +142,7 @@ export async function POST(req: NextRequest) {
               stripe_customer_id: customerId,
               stripe_session_id: session.id,
               user_id: userId,
-              price_id: null,
+              price_id: priceId,
               customer_email: email || null,
               status: "active",
               current_period_start: null,

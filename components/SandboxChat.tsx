@@ -177,7 +177,7 @@ export default function SandboxChat() {
                 Sign up free — pick up right where you left off. No credit card.
               </p>
               <Link
-                href="/signup"
+                href="/sign-up"
                 className="btn-loud inline-flex items-center gap-1.5 rounded-lg px-5 py-2.5 text-xs font-bold"
                 onClick={() => setOpen(false)}
               >
