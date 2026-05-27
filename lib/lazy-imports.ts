@@ -51,11 +51,6 @@ export const LazyNewsletterSection = dynamic(
   { ssr: false }
 );
 
-export const LazyFoundersCircle = dynamic(
-  () => import("@/components/FoundersCircle"),
-  { ssr: false }
-);
-
 export const LazyFloatingParticles = dynamic(
   () => import("@/components/FloatingParticles"),
   { ssr: false }

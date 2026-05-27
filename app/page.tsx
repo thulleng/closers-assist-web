@@ -44,7 +44,6 @@ import {
   LazyTrustStrip,
   LazyMobileCTABar,
   LazyNewsletterSection,
-  LazyFoundersCircle,
   LazyFloatingParticles,
 } from "@/lib/lazy-imports";
 import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
@@ -2420,9 +2419,6 @@ export default function HomePage() {
 
       {/* 7.4 — NEWSLETTER: From the Floor */}
       <LazyNewsletterSection />
-
-      {/* 7.5 — FOUNDERS CIRCLE */}
-      <LazyFoundersCircle formspreeId="mwvargdv" />
 
       {/* 8 — FINAL CTA */}
       <section className="relative overflow-hidden loud-bg">
