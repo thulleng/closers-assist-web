@@ -16,6 +16,7 @@ import {
   Store,
   Gift,
   Building2,
+  MessageCircle,
 } from "lucide-react";
 
 const BOTTOM_NAV = [
@@ -50,6 +51,12 @@ const DRAWER_LINKS = [
     label: "From the Floor",
     subtitle: "Real strategy. From a real closer.",
     icon: BookOpen,
+  },
+  {
+    href: "/reviews",
+    label: "Reviews",
+    subtitle: "See what closers are saying.",
+    icon: MessageCircle,
   },
   {
     href: "/marketplace",
