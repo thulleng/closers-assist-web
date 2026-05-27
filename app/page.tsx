@@ -1299,7 +1299,24 @@ export default function HomePage() {
           </div>
 
           {/* ── Real reviews from the floor (DB-driven, pending → approved flow) ── */}
-          <LazyReviewsSection />
+          <div className="mt-12">
+            <div className="mb-8 text-center">
+              <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5 backdrop-blur">
+                <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+                <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                  From the Floor
+                </span>
+              </div>
+              <h2 className="font-display text-2xl font-black leading-[1.05] tracking-[-0.02em] text-white sm:text-4xl md:text-5xl">
+                Real closers.
+                <span className="text-shine font-black"> Real results.</span>
+              </h2>
+              <p className="mt-3 text-sm text-ash max-w-xl mx-auto">
+                Hear from the reps using Deal Clozr every day on the floor — from seasoned vets to first-year closers.
+              </p>
+            </div>
+            <LazyReviewsSection />
+          </div>
 
         </div>
       </section>
