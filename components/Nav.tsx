@@ -75,8 +75,8 @@ export default function Nav() {
             <UserMenu />
           ) : (
             <>
-              <Link href="/login" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Sign In</Link>
               <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">Get Started</Link>
+              <Link href="/login" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Sign In</Link>
             </>
           )}
         </div>
