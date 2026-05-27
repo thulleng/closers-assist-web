@@ -150,7 +150,10 @@ export default function ComparePage() {
         <div className="relative mx-auto max-w-5xl px-6 py-20 md:py-28">
           <FadeIn>
             <div className="mb-3 inline-flex items-center gap-2 rounded-full border border-deal/30 bg-deal/10 px-3.5 py-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+              <span className="relative flex h-2 w-2">
+                <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
+              </span>
               <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
                 Head to head
               </span>
@@ -172,10 +175,10 @@ export default function ComparePage() {
       <section className="relative overflow-hidden border-t border-white/5 bg-zinc-950/80">
         <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
           <FadeIn>
-            <div className="grid grid-cols-2 divide-x divide-white/10 rounded-2xl border border-white/5 overflow-hidden bg-black/30">
+            <div className="group grid grid-cols-2 divide-x divide-white/10 rounded-2xl border border-white/5 overflow-hidden bg-black/30">
               {/* Deal Clozr Side */}
-              <div className="p-6 md:p-10 text-center relative">
-                <div className="absolute inset-0 bg-gradient-to-br from-deal/5 via-transparent to-transparent pointer-events-none" />
+              <div className="p-6 md:p-10 text-center relative overflow-hidden border border-deal/15 bg-gradient-to-br from-deal/5 via-transparent to-transparent transition-all duration-300 group-hover:border-deal/30 group-hover:shadow-[0_0_34px_rgba(16,185,129,0.12)]">
+                <div className="absolute inset-0 bg-gradient-to-br from-deal/10 via-transparent to-transparent opacity-80 pointer-events-none transition-opacity duration-300 group-hover:opacity-100" />
                 <div className="relative">
                   <div className="inline-flex items-center gap-2 mb-3">
                     <Check className="h-5 w-5 text-deal" strokeWidth={3} />
@@ -263,7 +266,7 @@ export default function ComparePage() {
                 {/* Header */}
                 <div className="grid grid-cols-[1.4fr,1fr,1fr,1fr,1fr] border-b border-iron bg-white/[0.03]">
                   <div className="p-4 text-xs font-medium uppercase tracking-widest text-muted">Feature</div>
-                  <div className="border-l border-iron p-4 text-center">
+                  <div className="border-l border-iron bg-deal/10 p-4 text-center">
                     <span className="font-display text-xs font-bold text-deal">DEAL CLOZR</span>
                   </div>
                   <div className="border-l border-iron p-4 text-center">
@@ -452,6 +455,12 @@ export default function ComparePage() {
                 className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
               >
                 How it works →
+              </Link>
+              <Link
+                href="/reviews"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
+              >
+                Read reviews →
               </Link>
             </div>
             <p className="mt-4 text-sm text-muted">

@@ -139,12 +139,12 @@ export default function HowItWorksPage() {
       {/* 4 STEPS */}
       <section className="relative overflow-hidden loud-bg-alt">
         <div className="relative mx-auto max-w-5xl px-6 py-12 md:py-16">
-          <div className="space-y-3">
+          <div className="space-y-4">
             {steps.map((step, i) => {
               const Icon = step.icon;
               return (
                 <FadeIn key={step.number} delay={i * 60}>
-                  <div className="loud-card group relative overflow-hidden rounded-2xl p-6">
+                  <div className="loud-card group relative overflow-hidden rounded-2xl p-6 md:p-7">
                     {/* Ambient glow */}
                     <div
                       className="pointer-events-none absolute -right-16 -top-16 h-48 w-48 rounded-full blur-3xl transition-opacity group-hover:opacity-80"
@@ -341,16 +341,24 @@ export default function HowItWorksPage() {
             </p>
           </FadeIn>
           <FadeIn delay={300}>
-            <Link
-              href="/pricing"
-              className="btn-loud group mt-10 inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base"
-            >
-              Get Started
-              <ArrowRight
-                className="h-4 w-4 transition-transform group-hover:translate-x-1"
-                strokeWidth={2.5}
-              />
-            </Link>
+            <div className="mt-10 flex flex-wrap items-center justify-center gap-3">
+              <Link
+                href="/pricing"
+                className="btn-loud group inline-flex items-center gap-2 rounded-xl px-8 py-4 text-base"
+              >
+                Get Started
+                <ArrowRight
+                  className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                  strokeWidth={2.5}
+                />
+              </Link>
+              <Link
+                href="/reviews"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-4 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
+              >
+                Read reviews →
+              </Link>
+            </div>
           </FadeIn>
         </div>
       </section>

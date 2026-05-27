@@ -2,10 +2,38 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Star, Quote, ArrowRight } from "lucide-react";
 
 export default function Footer() {
   return (
     <footer className="relative overflow-hidden border-t border-white/10 bg-black">
+      {/* Social proof strip above the main footer */}
+      <div className="border-b border-white/5 bg-white/[0.02]">
+        <div className="mx-auto max-w-7xl px-6 py-4">
+          <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
+            <div className="flex items-center gap-1.5">
+              <Star className="h-3.5 w-3.5 fill-gold-light text-gold-light" strokeWidth={1.5} />
+              <span className="font-semibold text-white">4.9</span>
+              <span className="text-ash">average from verified reviews</span>
+            </div>
+            <div className="hidden h-4 w-px bg-white/10 md:block" />
+            <div className="flex items-center gap-1.5">
+              <Quote className="h-3.5 w-3.5 text-deal-light" strokeWidth={2} />
+              <span className="text-ash">See what closers are saying</span>
+              <ArrowRight className="h-3 w-3 text-deal-light" strokeWidth={2} />
+              <Link href="/reviews" className="font-semibold text-deal-light underline underline-offset-2 hover:text-white transition-colors">
+                Reviews
+              </Link>
+            </div>
+            <div className="hidden h-4 w-px bg-white/10 md:block" />
+            <div className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
+              <span className="text-ash">Built on the floor by a working Toyota rep</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div
         className="pointer-events-none absolute -top-24 left-1/2 h-48 w-[800px] -translate-x-1/2 rounded-full opacity-40 blur-3xl"
         style={{
@@ -52,6 +80,11 @@ export default function Footer() {
               <li>
                 <Link href="/pricing" className="text-ash transition-colors hover:text-deal-light">
                   Pricing
+                </Link>
+              </li>
+              <li>
+                <Link href="/reviews" className="text-ash transition-colors hover:text-deal-light">
+                  Reviews
                 </Link>
               </li>
               <li>
@@ -123,7 +156,7 @@ export default function Footer() {
           </div>
         </div>
 
-          <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center">
+        <div className="mt-12 flex flex-col items-start justify-between gap-4 border-t border-white/10 pt-8 md:flex-row md:items-center">
           <div>
             <p className="text-xs text-muted">
               © {new Date().getFullYear()} Deal Clozr. Built on the sales
@@ -135,6 +168,9 @@ export default function Footer() {
               </a>
               <a href="https://instagram.com/dealclozr" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
                 Instagram
+              </a>
+              <a href="https://tiktok.com/@dealclozr" target="_blank" rel="noopener noreferrer" className="text-xs text-ash transition-colors hover:text-deal-light">
+                TikTok
               </a>
             </div>
           </div>
