@@ -1143,10 +1143,10 @@ export default function HomePage() {
                   {"Deploy on Telegram"}
                 </h3>
                 <p className="flex-1 text-sm leading-relaxed text-ash">
-                  One click. Your agent goes live on Telegram — the app you already use. No new dashboard to learn. No software to install. Just open Telegram and start talking to your closer.
+                  One click. Your agent goes live on Telegram — the app you already use. <span className="font-semibold text-bone">WhatsApp, Discord, and Slack</span> coming soon. No new dashboard to learn. No software to install. Just open the chat and start talking to your closer — wherever you already work.
                 </p>
                 <div className="mt-auto pt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {"Instant"}
+                  {"Deploy anywhere"}
                 </div>
               </div>
             </FadeIn>
@@ -1164,10 +1164,10 @@ export default function HomePage() {
                   {"Start closing. Start living."}
                 </h3>
                 <p className="flex-1 text-sm leading-relaxed text-ash">
-                  Your agent handles follow-ups, remembers every customer, drafts your responses, tracks your commissions — <span className="font-semibold text-bone">and</span> books your dentist appointment. You focus on the floor.
+                  Your agent handles follow-ups, remembers every customer, drafts your responses, and tracks your commissions — <span className="font-semibold text-bone">so you can leave work at work.</span> Family dinners. School drop-offs. Weekends that feel like weekends. The agent works. You live.
                 </p>
                 <div className="mt-auto pt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {"Day 1 value"}
+                  {"Work less. Close more."}
                 </div>
               </div>
             </FadeIn>
