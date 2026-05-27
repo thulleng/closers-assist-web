@@ -58,16 +58,16 @@ export default function Nav() {
         </Link>
 
         <nav className="hidden items-center gap-8 md:flex">
-          <Link href="/how-it-works" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">How it works</Link>
-          <Link href="/industries" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Industries</Link>
-          <Link href="/dashboard/auto" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Dashboard</Link>
-          <Link href="/compare" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Compare</Link>
-          <Link href="/pricing" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Pricing</Link>
-          <Link href="/founder" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Founder</Link>
-          <Link href="/blog" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Blog</Link>
-          <Link href="/reviews" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Reviews</Link>
+          <Link href="/how-it-works" className="text-sm font-medium text-white/90 transition-colors hover:text-white">How it works</Link>
+          <Link href="/industries" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Industries</Link>
+          <Link href="/dashboard/auto" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Dashboard</Link>
+          <Link href="/compare" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Compare</Link>
+          <Link href="/pricing" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Pricing</Link>
+          <Link href="/founder" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Founder</Link>
+          <Link href="/blog" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Blog</Link>
+          <Link href="/reviews" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Reviews</Link>
           <Link href="/referral" className="text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80">Refer & Earn</Link>
-          <Link href="/enterprise" className="text-sm font-medium text-ash transition-colors hover:text-deal-light">Enterprise</Link>
+          <Link href="/enterprise" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Enterprise</Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -75,7 +75,7 @@ export default function Nav() {
             <UserMenu />
           ) : (
             <>
-              <Link href="/login" className="text-sm font-medium text-ash transition-colors hover:text-bone">Sign In</Link>
+              <Link href="/login" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Sign In</Link>
               <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">Get Started</Link>
             </>
           )}
