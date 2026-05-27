@@ -1,6 +1,13 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, Clock, User } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+
+export const metadata: Metadata = {
+  title: "Blog — From the Floor",
+  description:
+    "Real strategy, plays, and real talk from a working Toyota rep. No theory. Just what works on the floor. Written by Thul Leng at Sun Toyota.",
+};
 
 const POSTS = [
   {

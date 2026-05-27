@@ -1,6 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import dynamic from "next/dynamic";
+import type { Metadata } from "next";
 import {
   Car,
   Home as HomeIcon,
@@ -47,6 +48,12 @@ import {
   LazyFloatingParticles,
 } from "@/lib/lazy-imports";
 import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
+
+export const metadata: Metadata = {
+  title: "Deal Clozr — The AI agent every closer owns",
+  description:
+    "Car. Home. Policy. Panel. Plan. One AI agent, every industry, zero restrictions. Built by a working Toyota rep — not a SaaS company. $29.99/rep/mo.",
+};
 
 const industryIconMap: Record<string, React.ReactNode> = {
   Car: <Car className="h-5 w-5" />,

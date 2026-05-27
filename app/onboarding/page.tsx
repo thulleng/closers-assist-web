@@ -181,13 +181,13 @@ function OnboardingContent() {
                 </div>
                 <div>
                   <div className="text-sm font-bold text-white">Open Telegram</div>
-                  <div className="text-xs text-ash">Search @CloseBot or tap the link</div>
+                  <div className="text-xs text-ash">Search @DealClozrBot or tap the link</div>
                 </div>
               </div>
 
               <div className="space-y-3 mb-6">
                 <a
-                  href="https://t.me/CloseBot"
+                  href="https://t.me/DealClozrBot"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold"
@@ -198,11 +198,11 @@ function OnboardingContent() {
 
                 <div className="flex items-center gap-2">
                   <div className="flex-1 border border-white/10 rounded-xl bg-black/30 px-4 py-3 text-sm font-mono text-white/70 truncate">
-                    @CloseBot
+                    @DealClozrBot
                   </div>
                   <button
                     onClick={() => {
-                      navigator.clipboard.writeText("@CloseBot");
+                      navigator.clipboard.writeText("@DealClozrBot");
                       setTelegramCopied(true);
                       setTimeout(() => setTelegramCopied(false), 2000);
                     }}

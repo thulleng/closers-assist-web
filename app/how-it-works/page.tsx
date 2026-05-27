@@ -1,4 +1,5 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   ArrowRight,
   Building2,
@@ -12,6 +13,12 @@ import {
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import AIAvatar from "@/components/AIAvatar";
+
+export const metadata: Metadata = {
+  title: "How It Works",
+  description:
+    "No onboarding call. No setup wizard. Pick your industry, load your profile, and put your AI closer to work the same day. 4 steps to closing more deals.",
+};
 
 const steps = [
   {

@@ -1,5 +1,6 @@
 import NextImage from "next/image";
 import Link from "next/link";
+import type { Metadata } from "next";
 import {
   Car,
   Home as HomeIcon,
@@ -21,6 +22,12 @@ import {
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import GlobeVisual from "@/components/GlobeVisual";
+
+export const metadata: Metadata = {
+  title: "Industries",
+  description:
+    "One AI agent for every industry. Auto, Real Estate, Insurance, Solar, SaaS, and 13 more. Your industry's vocabulary, your math, your plays.",
+};
 
 const industries = [
   {

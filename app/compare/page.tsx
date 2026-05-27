@@ -1,6 +1,13 @@
 import Link from "next/link";
+import type { Metadata } from "next";
 import { ArrowRight, Check, X, Brain, Database, UserPlus, MessageCircle, Clock, DollarSign, Zap, Bot, Smartphone, MessageSquare } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
+
+export const metadata: Metadata = {
+  title: "Compare",
+  description:
+    "Deal Clozr vs ChatGPT vs CRM vs a human assistant. See why an AI employee that handles deals AND your personal life wins every time.",
+};
 
 const comparisonRows = [
   {
