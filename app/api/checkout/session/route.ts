@@ -23,6 +23,8 @@ export async function GET(req: NextRequest) {
     // Check if we've provisioned an account for this customer
     let accountReady = false;
     let accountEmail: string | null = null;
+    let magicLink: string | null = null;
+    let provisioningStatus: string | null = null;
 
     if (email) {
       try {
@@ -36,6 +38,27 @@ export async function GET(req: NextRequest) {
           if (match) {
             accountReady = true;
             accountEmail = match.email || null;
+
+            // Check provisioning status
+            const { data: profile } = await supabase
+              .from("agent_profiles")
+              .select("provisioning_status")
+              .eq("user_id", match.id)
+              .single();
+            provisioningStatus = profile?.provisioning_status || null;
+
+            // Generate a magic link they can click right here
+            const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+              type: "magiclink",
+              email,
+              options: {
+                redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://dealclozr.com"}/auth/callback?next=/onboarding`,
+              },
+            });
+
+            if (!linkError && linkData?.properties?.action_link) {
+              magicLink = linkData.properties.action_link;
+            }
           }
         }
       } catch {
@@ -47,6 +70,8 @@ export async function GET(req: NextRequest) {
       email,
       accountReady,
       accountEmail,
+      magicLink,
+      provisioningStatus,
       status: session.payment_status,
     });
   } catch (err) {

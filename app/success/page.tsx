@@ -9,6 +9,8 @@ import {
   Loader2,
   RefreshCw,
   Send,
+  ExternalLink,
+  Copy,
 } from "lucide-react";
 
 export default function SuccessPage() {
@@ -19,6 +21,9 @@ export default function SuccessPage() {
   const [error, setError] = useState<string | null>(null);
   const [resending, setResending] = useState(false);
   const [resent, setResent] = useState(false);
+  const [magicLink, setMagicLink] = useState<string | null>(null);
+  const [copied, setCopied] = useState(false);
+  const [provisioningStatus, setProvisioningStatus] = useState<string | null>(null);
 
   const sessionId =
     typeof window !== "undefined"
@@ -45,6 +50,14 @@ export default function SuccessPage() {
       }
 
       setEmail(data.email || null);
+
+      if (data.magicLink) {
+        setMagicLink(data.magicLink);
+      }
+
+      if (data.provisioningStatus) {
+        setProvisioningStatus(data.provisioningStatus);
+      }
 
       if (data.accountReady) {
         setAccountReady(true);
@@ -75,11 +88,23 @@ export default function SuccessPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email }),
       });
+      const data = await r.json();
       if (r.ok) {
         setResent(true);
+        if (data.magicLink) {
+          setMagicLink(data.magicLink);
+        }
       }
     } catch {}
     setResending(false);
+  }
+
+  function handleCopyLink() {
+    if (magicLink) {
+      navigator.clipboard.writeText(magicLink);
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    }
   }
 
   useEffect(() => {
@@ -181,6 +206,8 @@ export default function SuccessPage() {
   }
 
   // ── Account ready — show magic link flow ──────────────────────────────
+  const isProvisioned = provisioningStatus === "provisioned";
+
   return (
     <main className="min-h-screen bg-[#050506] flex items-center justify-center px-4">
       <div className="max-w-md w-full text-center">
@@ -191,22 +218,27 @@ export default function SuccessPage() {
 
         <h1 className="text-3xl font-bold text-white mb-3">You&apos;re in!</h1>
         <p className="text-gray-400 text-lg mb-6">
-          Your Deal Clozr subscription is active. Your agent is being provisioned
-          and will be ready in under a minute.
+          Your Deal Clozr subscription is active{isProvisioned ? " and your agent is ready" : ". Your agent is being provisioned"}.
         </p>
 
         {/* Magic link card */}
         <div className="bg-white/[0.03] border border-[#10B981]/20 rounded-xl p-6 mb-6 text-left">
           <div className="flex items-center gap-3 mb-3">
             <div className="w-10 h-10 bg-[#10B981]/10 rounded-lg flex items-center justify-center">
-              <Mail className="w-5 h-5 text-[#10B981]" />
+              {magicLink ? (
+                <ExternalLink className="w-5 h-5 text-[#10B981]" />
+              ) : (
+                <Mail className="w-5 h-5 text-[#10B981]" />
+              )}
             </div>
             <div>
               <h2 className="text-white font-semibold text-sm">
-                Check your email
+                {magicLink ? "Click to get started" : "Check your email"}
               </h2>
               <p className="text-gray-500 text-xs">
-                We sent a login link to:
+                {magicLink
+                  ? "Click the button below to set up your agent"
+                  : `We sent a login link to:`}
               </p>
             </div>
           </div>
@@ -219,56 +251,86 @@ export default function SuccessPage() {
             </div>
           )}
 
-          <ol className="space-y-2 text-sm text-gray-400 mb-4">
-            <li className="flex gap-2">
-              <span className="text-[#10B981] font-bold shrink-0">1.</span>
-              Open the email from Deal Clozr
-            </li>
-            <li className="flex gap-2">
-              <span className="text-[#10B981] font-bold shrink-0">2.</span>
-              Click <span className="text-white font-medium">&ldquo;Sign in to Deal Clozr&rdquo;</span>
-            </li>
-            <li className="flex gap-2">
-              <span className="text-[#10B981] font-bold shrink-0">3.</span>
-              You&apos;ll land directly in your agent setup — no password needed
-            </li>
-          </ol>
-
-          <div className="border-t border-white/[0.06] pt-4 space-y-3">
-            {/* Resend magic link */}
-            <button
-              onClick={handleResendMagicLink}
-              disabled={resending || resent}
-              className="w-full flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:border-white/[0.15] transition-all disabled:opacity-50"
-            >
-              {resent ? (
-                <>
-                  <CheckCircle className="w-4 h-4 text-[#10B981]" />
-                  Magic link resent — check your inbox
-                </>
-              ) : resending ? (
-                <>
-                  <Loader2 className="w-4 h-4 animate-spin" />
-                  Sending...
-                </>
-              ) : (
-                <>
-                  <Send className="w-4 h-4" />
-                  Didn&apos;t get it? Resend magic link
-                </>
-              )}
-            </button>
-
-            <p className="text-xs text-gray-600">
-              Check your spam folder if you don&apos;t see it. Still stuck?{" "}
+          {/* Magic link — show directly when available */}
+          {magicLink ? (
+            <div className="space-y-3">
               <a
-                href={`mailto:thul@dealclozr.com?subject=Magic%20link%20for%20${encodeURIComponent(email || "")}`}
-                className="text-[#10B981] hover:underline"
+                href={magicLink}
+                className="flex items-center justify-center gap-2 w-full rounded-xl bg-[#10B981] px-5 py-3.5 text-sm font-bold text-black hover:bg-[#0ea271] transition-all"
               >
-                Email Thul directly
+                <ExternalLink className="h-4 w-4" />
+                Sign in to Deal Clozr — no password needed
               </a>
-            </p>
-          </div>
+              <button
+                onClick={handleCopyLink}
+                className="w-full flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:border-white/[0.15] transition-all"
+              >
+                {copied ? (
+                  <>
+                    <CheckCircle className="w-4 h-4 text-[#10B981]" />
+                    Copied link to clipboard
+                  </>
+                ) : (
+                  <>
+                    <Copy className="w-4 h-4" />
+                    Copy link instead
+                  </>
+                )}
+              </button>
+            </div>
+          ) : (
+            <>
+              <ol className="space-y-2 text-sm text-gray-400 mb-4">
+                <li className="flex gap-2">
+                  <span className="text-[#10B981] font-bold shrink-0">1.</span>
+                  Open the email from Deal Clozr
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-[#10B981] font-bold shrink-0">2.</span>
+                  Click <span className="text-white font-medium">&ldquo;Sign in to Deal Clozr&rdquo;</span>
+                </li>
+                <li className="flex gap-2">
+                  <span className="text-[#10B981] font-bold shrink-0">3.</span>
+                  You&apos;ll land directly in your agent setup — no password needed
+                </li>
+              </ol>
+
+              <div className="border-t border-white/[0.06] pt-4 space-y-3">
+                <button
+                  onClick={handleResendMagicLink}
+                  disabled={resending || resent}
+                  className="w-full flex items-center justify-center gap-2 rounded-lg border border-white/[0.08] bg-white/[0.03] px-4 py-2.5 text-sm font-medium text-gray-300 hover:text-white hover:border-white/[0.15] transition-all disabled:opacity-50"
+                >
+                  {resent ? (
+                    <>
+                      <CheckCircle className="w-4 h-4 text-[#10B981]" />
+                      Magic link resent — check your inbox
+                    </>
+                  ) : resending ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin" />
+                      Sending...
+                    </>
+                  ) : (
+                    <>
+                      <Send className="w-4 h-4" />
+                      Didn&apos;t get it? Resend magic link
+                    </>
+                  )}
+                </button>
+
+                <p className="text-xs text-gray-600">
+                  Check your spam folder if you don&apos;t see it. Still stuck?{" "}
+                  <a
+                    href={`mailto:thul@dealclozr.com?subject=Magic%20link%20for%20${encodeURIComponent(email || "")}`}
+                    className="text-[#10B981] hover:underline"
+                  >
+                    Email Thul directly
+                  </a>
+                </p>
+              </div>
+            </>
+          )}
         </div>
 
         {/* Already have password? */}

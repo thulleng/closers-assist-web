@@ -33,12 +33,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "No account found for this email" }, { status: 404 });
     }
 
-    // Send a new magic link
-    const { error: linkError } = await supabase.auth.admin.generateLink({
+    // Generate a new magic link
+    const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
       type: "magiclink",
       email,
       options: {
-        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://dealclozr.com"}/onboarding`,
+        redirectTo: `${process.env.NEXT_PUBLIC_SITE_URL || "https://dealclozr.com"}/auth/callback?next=/onboarding`,
       },
     });
 
@@ -51,7 +51,14 @@ export async function POST(req: NextRequest) {
     }
 
     console.log(`📧 Magic link resent to ${email}`);
-    return NextResponse.json({ success: true });
+
+    // Return the magic link so the success page can display it directly
+    const magicLink = linkData?.properties?.action_link || null;
+
+    return NextResponse.json({ 
+      success: true,
+      magicLink,
+    });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
     console.error("Resend magic link error:", message);
