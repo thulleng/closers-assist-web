@@ -1,12 +1,7 @@
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import type { Metadata } from "next";
 import { Star, ArrowRight, Quote } from "lucide-react";
-
-const LazyReviewsSection = dynamic(
-  () => import("@/components/ReviewsSection"),
-  { ssr: false }
-);
+import { LazyReviewsSection } from "@/lib/lazy-imports";
 
 export const metadata: Metadata = {
   title: "Reviews | Deal Clozr",
@@ -24,14 +19,12 @@ export default function ReviewsPage() {
     <main className="min-h-screen bg-pit">
       {/* Hero */}
       <section className="relative overflow-hidden border-b border-white/5 px-6 pt-28 pb-16 md:pt-36 md:pb-24">
-        {/* Glow blobs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-40 -right-40 h-96 w-96 rounded-full bg-deal/10 blur-[120px]" />
           <div className="absolute -bottom-40 -left-40 h-96 w-96 rounded-full bg-purple-600/10 blur-[120px]" />
         </div>
 
         <div className="relative mx-auto max-w-4xl text-center">
-          {/* Badge */}
           <div className="mx-auto mb-6 flex w-fit items-center gap-2 rounded-full border border-white/10 bg-white/5 px-4 py-1.5 text-sm text-ash">
             <Star className="h-4 w-4 text-gold-light" strokeWidth={2} />
             <span>From the closers on the front lines</span>
@@ -49,7 +42,6 @@ export default function ReviewsPage() {
             sales reps who use Deal Clozr every day to close more, stress less.
           </p>
 
-          {/* Trust stats */}
           <div className="mx-auto mt-10 flex flex-wrap items-center justify-center gap-8 text-sm">
             <div className="flex items-center gap-2 text-ash">
               <Star className="h-4 w-4 fill-gold-light text-gold-light" />

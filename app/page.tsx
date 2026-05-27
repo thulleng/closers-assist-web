@@ -1111,7 +1111,7 @@ export default function HomePage() {
           <div className="grid gap-8 md:grid-cols-3 md:items-stretch">
             {/* Step 1 */}
             <FadeIn delay={100}>
-              <div className="group flex h-full flex-col rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30">
+              <div className="group flex h-full flex-col rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 min-h-[300px]">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 font-display text-xl font-black text-deal-light">
                     1
@@ -1124,7 +1124,7 @@ export default function HomePage() {
                 <p className="flex-1 text-sm leading-relaxed text-ash">
                   Your industry. Your pay plan. Your scripts. Your goals. <span className="font-semibold text-bone">Pick a name</span> — Jake, Maya, Tank, whatever fits. <span className="font-semibold text-bone">Choose male or female.</span> Your agent becomes whoever you need on the floor. Learns your business <span className="font-semibold text-bone">and</span> your life — dentist appointments, school pickups, the stuff that falls through the cracks.
                 </p>
-                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                <div className="mt-auto pt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   {"< 2 minutes"}
                 </div>
               </div>
@@ -1132,7 +1132,7 @@ export default function HomePage() {
 
             {/* Step 2 */}
             <FadeIn delay={200}>
-              <div className="group flex h-full flex-col rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30">
+              <div className="group flex h-full flex-col rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 min-h-[300px]">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 font-display text-xl font-black text-deal-light">
                     2
@@ -1145,7 +1145,7 @@ export default function HomePage() {
                 <p className="flex-1 text-sm leading-relaxed text-ash">
                   One click. Your agent goes live on Telegram — the app you already use. No new dashboard to learn. No software to install. Just open Telegram and start talking to your closer.
                 </p>
-                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                <div className="mt-auto pt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   {"Instant"}
                 </div>
               </div>
@@ -1153,7 +1153,7 @@ export default function HomePage() {
 
             {/* Step 3 */}
             <FadeIn delay={300}>
-              <div className="group flex h-full flex-col rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30">
+              <div className="group flex h-full flex-col rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 min-h-[300px]">
                 <div className="mb-5 flex items-center gap-3">
                   <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 font-display text-xl font-black text-deal-light">
                     3
@@ -1166,7 +1166,7 @@ export default function HomePage() {
                 <p className="flex-1 text-sm leading-relaxed text-ash">
                   Your agent handles follow-ups, remembers every customer, drafts your responses, tracks your commissions — <span className="font-semibold text-bone">and</span> books your dentist appointment. You focus on the floor.
                 </p>
-                <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
+                <div className="mt-auto pt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
                   {"Day 1 value"}
                 </div>
               </div>
