@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { CheckCircle2, Gift, Mail, Sparkles, Users } from "lucide-react";
 import EmailCapture from "@/components/EmailCapture";
 
