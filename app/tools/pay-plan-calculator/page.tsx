@@ -131,7 +131,7 @@ export default function PayPlanCalculator() {
                 <div>
                   <Calculator className="mx-auto h-12 w-12 text-muted" strokeWidth={1.5} />
                   <p className="mt-4 text-sm text-muted">Enter your pay plan and units above</p>
-                  <p className="text-xs text-muted/60 mt-1">Defaults are Sun Toyota numbers — adjust to yours</p>
+                  <p className="text-xs text-muted/60 mt-1">Defaults are a real dealership's numbers — adjust to yours</p>
                 </div>
               </div>
             ) : (

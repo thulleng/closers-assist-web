@@ -4,7 +4,7 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "The Three Buyers on Every Lot",
-  description: "After years on the floor at Sun Toyota, I learned there aren't a hundred types of buyers. There are three. Here's how to spot each one in 90 seconds and close them the way they want to be closed.",
+  description: "After years on the lot, I learned there aren't a hundred types of buyers. There are three. Here's how to spot each one in 90 seconds and close them the way they want to be closed.",
   openGraph: {
     title: "The Three Buyers on Every Lot — Deal Clozr",
     description: "There aren't a hundred types of buyers. There are three. Spot each one in 90 seconds and close them how they want to be closed.",
@@ -41,7 +41,7 @@ export default function ThreeBuyersOnTheLot() {
 
           <div className="mt-10 space-y-6 text-base leading-relaxed text-bone">
             <p>
-              I&rsquo;ve sold hundreds of cars at Sun Toyota. And here&rsquo;s something that took me way too long to learn: there aren&rsquo;t a hundred types of buyers. There are three.
+              I&rsquo;ve sold hundreds of cars on the lot. And here&rsquo;s something that took me way too long to learn: there aren&rsquo;t a hundred types of buyers. There are three.
             </p>
             <p>
               The Researcher. The Emotional Buyer. The Payment Buyer.

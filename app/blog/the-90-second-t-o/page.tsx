@@ -39,7 +39,7 @@ export default function The90SecondTO() {
               A T.O. isn&rsquo;t a failure. It&rsquo;s a tool. And like any tool, it works best when you know exactly when to pull it — and exactly when to keep it holstered.
             </p>
             <p>
-              I&rsquo;ve watched hundreds of deals go down at Sun Toyota. Some T.O.s saved the deal. Some T.O.s killed a deal that was already closing itself. The difference is almost always timing — about 90 seconds of timing.
+              I&rsquo;ve watched hundreds of deals go down on the lot. Some T.O.s saved the deal. Some T.O.s killed a deal that was already closing itself. The difference is almost always timing — about 90 seconds of timing.
             </p>
             <p>
               Here&rsquo;s what I learned about T.O. timing, the three signals that tell you the window is open, and the handoff script I use every single time.

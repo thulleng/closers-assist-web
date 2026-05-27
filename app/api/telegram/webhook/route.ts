@@ -103,12 +103,12 @@ export async function POST(req: NextRequest) {
 
     if (!profile) {
       try {
-        // ── Default demo: Sun Toyota pay plan ──
+        // ── Default demo: Sample dealership pay plan ──
         const demoIntro = `👋 *Welcome to Deal Clozr!*
 
-I'm an AI closer built on the floor at Sun Toyota in New Port Richey, Florida. Here's a preview of what I know:
+I'm an AI closer built on the floor by a working closer. Here's a preview of what I know:
 
-*🏢 Demo Pay Plan — Sun Toyota*
+*🏢 Demo Pay Plan — Sample Dealership*
 • Draw: \\$2,600 bi-weekly
 • Mini/flat: \\$200
 • Full deal: variable (front gross × commission %)
@@ -246,7 +246,7 @@ Before every response, run through this silently. The user never sees this proce
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
     const INDUSTRY_PROMPTS: Record<string, string> = {
-      automotive: `You are Deal Clozr — an elite AI sales partner built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
+      automotive: `You are Deal Clozr — an elite AI sales partner built on the floor by a working closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
 
 YOUR IDENTITY:
 You speak the lot fluently — minis, full deals, street purchases, half-minis. You know T.O. timing, desk strategy, CXI protection, front vs. back gross, volume bonuses, and the difference between 10 countable units and 10 sold. You understand that a $200 mini isn't just $200 — it's a half-unit toward a $500 bonus at 11. You think in paychecks, not just deals.

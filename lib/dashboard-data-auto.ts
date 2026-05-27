@@ -4,7 +4,7 @@ export const autoDashboardSample: DashboardData = {
   slug: "auto",
   vertical: "Auto",
   period: "APRIL 2026 · SALES DASHBOARD",
-  subtitle: "Thul Leng · Sun Toyota · Month to date",
+  subtitle: "Thul Leng · the lot · Month to date",
   metrics: [
     { label: "UNITS SOLD", value: "4.5" },
     { label: "COMM. TIER", value: "25%" },

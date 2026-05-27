@@ -53,7 +53,7 @@ const blogPosts = [
   "how-i-built-this",
   "mini-that-pays",
   "service-lane-plays",
-  "sun-toyota-pilot",
+  "ai-closer-30-days",
   "three-buyers-on-the-lot",
 ];
 

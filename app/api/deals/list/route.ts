@@ -57,7 +57,7 @@ export async function GET(req: NextRequest) {
       frontGross += d.front_gross ?? 0;
     }
 
-    // Bonus ladder (Sun Toyota — hardcoded for Thul)
+    // Bonus ladder (a real dealership — hardcoded for Thul)
     const bonusLadder = [
       { units: 11, bonus: 500 },
       { units: 15, bonus: 1000 },

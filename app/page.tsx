@@ -633,7 +633,7 @@ export default function HomePage() {
 
                 {/* Real data badge */}
                 <div className="absolute -bottom-4 left-1/2 z-30 -translate-x-1/2 whitespace-nowrap rounded-lg border border-deal/30 bg-black/80 px-3 py-1.5 text-[10px] font-semibold text-deal-light backdrop-blur">
-                  REAL UI &middot; Thul&rsquo;s floor &middot; Sun Toyota
+                  REAL UI &middot; Thul&rsquo;s floor &middot; the lot
                 </div>
               </div>
             </div>
@@ -762,7 +762,7 @@ export default function HomePage() {
                   {"Your scripts. Your style. Your floor. Deal Clozr learns how YOU talk — not some generic AI that sounds like a press release. Every play reads like you typed it between customers."}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {"Built on Thul's floor at Sun Toyota"}
+                  {"Built on Thul's floor on the lot"}
                 </div>
               </div>
             </FadeIn>
@@ -969,7 +969,7 @@ export default function HomePage() {
                 <div className="mb-3 text-3xl">🏗️</div>
                 <h3 className="mb-2 font-display text-lg font-black text-white">Built on a Toyota lot. Not a boardroom.</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
-                  Thul Leng closes cars 6 days a week at Sun Toyota. He built Deal Clozr between customers — not with VC money. Every play in our agent comes from a real floor.
+                  Thul Leng closes cars 6 days a week on the lot. He built Deal Clozr between customers — not with VC money. Every play in our agent comes from a real floor.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
                   <span className="font-bold text-gold-light">Real result:</span> The RAV4 XLE demo on our homepage? Actual deal math from Thul's floor. Not a mockup. Not a simulation.
@@ -1280,7 +1280,7 @@ export default function HomePage() {
                         Thul Leng
                       </div>
                       <div className="text-[11px] text-ash">
-                        Sun Toyota · Florida · the guy who built it
+                        On the lot · Florida · the guy who built it
                       </div>
                     </div>
                     <div className="text-right">
@@ -1606,7 +1606,7 @@ export default function HomePage() {
               <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
                 <Image
                   src="/images/thul-founder.webp"
-                  alt="Thul Leng at Sun Toyota, New Port Richey, Florida"
+                  alt="Thul Leng on the lot, New Port Richey, Florida"
                   width={600}
                   height={600}
                   className="absolute inset-0 h-full w-full object-cover object-right"
@@ -1628,7 +1628,7 @@ export default function HomePage() {
                       <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
                     </span>
                     <span className="text-[11px] font-semibold text-white">
-                      Thul — Sun Toyota, New Port Richey, FL
+                      Thul — on the lot, New Port Richey, FL
                     </span>
                   </div>
                 </div>
@@ -1648,7 +1648,7 @@ export default function HomePage() {
                   <span className="text-shine"> Not in a boardroom.</span>
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
-                  My name is Thul. I sell Toyotas at Sun Toyota in Florida. I
+                  My name is Thul. I sell Toyotas on the lot in Florida. I
                   built Deal Clozr because I needed an employee — not
                   another tool. Something that knows my pay
                   plan, my scripts, my objections, my customers.{" "}

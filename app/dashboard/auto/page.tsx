@@ -88,7 +88,7 @@ export default async function AutoDashboardPage() {
               DEMO DASHBOARD
             </div>
             <div className="mb-4 text-[15px] text-bone">
-              This is a live preview using sample Sun Toyota data. On your real
+              This is a live preview using sample dealership data. On your real
               account, this dashboard auto-generates from your pay plan upload
               and daily deal logs.
             </div>

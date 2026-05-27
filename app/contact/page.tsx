@@ -5,7 +5,7 @@ import FadeIn from "@/components/FadeIn";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Thul Leng, founder of Deal Clozr. Built on the floor at Sun Toyota.",
+  description: "Get in touch with Thul Leng, founder of Deal Clozr. Built on the floor by a working closer.",
 };
 
 export default function ContactPage() {
@@ -40,7 +40,7 @@ export default function ContactPage() {
 
             <p className="mx-auto mt-6 max-w-xl text-lg leading-relaxed text-ash">
               No sales team. No demo request form that goes to a CRM. Just Thul —
-              the rep who built this between customers on the Sun Toyota floor.
+              the rep who built this between customers on the floor.
             </p>
           </FadeIn>
 

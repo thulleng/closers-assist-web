@@ -29,13 +29,13 @@ export const testimonials = [
   {
     quote: "The RAV4 XLE demo on your homepage? That's actual deal math from my floor. Not a mockup. Not a simulation. That's what it does every day.",
     name: "Thul Leng",
-    role: "Sun Toyota · Founder",
+    role: "Founder · Deal Clozr",
     stat: "Real deal math, live",
   },
   {
     quote: "30 days in — 247 leads, 43 appointments. It's like having a second closer who never sleeps. I walk in Monday morning and my pipeline is already worked.",
     name: "Pilot User",
-    role: "Auto Sales, Sun Toyota",
+    role: "Auto Sales, the lot",
     stat: "247 leads in 30 days",
   },
   {

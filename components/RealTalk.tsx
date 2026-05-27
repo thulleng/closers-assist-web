@@ -39,7 +39,7 @@ const conversations: Conversation[] = [
     name: "Fernando F.",
     avatar: "FF",
     avatarGradient: "from-[#FBBF24] to-[#D97706]",
-    context: "Sun Toyota",
+    context: "The lot",
     bubbles: [
       { side: "in", text: "my CXI went from 4.7 to 5.0 in 3 weeks" },
       {

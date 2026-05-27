@@ -4,10 +4,10 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "How I Built an AI Sales Agent Between Customers",
-  description: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the Sun Toyota floor.",
+  description: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the floor.",
   openGraph: {
     title: "How I Built an AI Sales Agent Between Customers — Deal Clozr",
-    description: "I sell Toyotas. I'm not an engineer. Here's how Deal Clozr was built between customers on the Sun Toyota floor in New Port Richey, FL.",
+    description: "I sell Toyotas. I'm not an engineer. Here's how Deal Clozr was built between customers on the floor in New Port Richey, FL.",
     images: ["/api/og"],
   },
 };
@@ -41,7 +41,7 @@ export default function HowIBuiltThis() {
 
           <div className="mt-10 space-y-6 text-base leading-relaxed text-bone">
             <p>
-              I sell Toyotas at Sun Toyota in New Port Richey, Florida. I am not an engineer. I do not have a CS degree. I have never worked in tech.
+              I sell Toyotas on the lot in New Port Richey, Florida. I am not an engineer. I do not have a CS degree. I have never worked in tech.
             </p>
             <p>
               I built Deal Clozr on the showroom floor — between test drives, T.O.s, and service lane laps. Here&rsquo;s how it happened.
@@ -85,7 +85,7 @@ export default function HowIBuiltThis() {
               Deal Clozr is live. $29.99/rep/month. Auto, real estate, insurance, solar, SaaS — 18 industries. Same agent. Same memory. Web + Telegram, live now.
             </p>
             <p>
-              I&rsquo;m still on the floor at Sun Toyota. Still selling. Still building between customers. Because the best sales tools aren&rsquo;t built in boardrooms. They&rsquo;re built by people who actually need them.
+              I&rsquo;m still on the floor. Still selling. Still building between customers. Because the best sales tools aren&rsquo;t built in boardrooms. They&rsquo;re built by people who actually need them.
             </p>
           </div>
 

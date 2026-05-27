@@ -4,15 +4,15 @@ import type { Metadata } from "next";
 
 export const metadata: Metadata = {
   title: "I Run an AI Closer on My Dealership Floor — Here's What Happened in 30 Days",
-  description: "30 days. 247 leads. 43 appointments. The real numbers from running an AI closer at Sun Toyota — and why your floor is next.",
+  description: "30 days. 247 leads. 43 appointments. The real numbers from running an AI closer on the lot — and why your floor is next.",
   openGraph: {
     title: "I Ran an AI Closer on My Floor for 30 Days — Deal Clozr",
-    description: "247 leads. 43 appointments. Real numbers from running Deal Clozr at Sun Toyota for 30 days.",
+    description: "247 leads. 43 appointments. Real numbers from running Deal Clozr on the lot for 30 days.",
     images: ["/api/og"],
   },
 };
 
-export default function SunToyotaPilot() {
+export default function AICloser30Days() {
   return (
     <main>
       <article className="relative overflow-hidden loud-bg">
@@ -41,7 +41,7 @@ export default function SunToyotaPilot() {
 
           <div className="mt-10 space-y-6 text-base leading-relaxed text-bone">
             <p>
-              I sell Toyotas at Sun Toyota in New Port Richey, Florida. I&rsquo;ve been on this floor for years. I know what a T.O. sounds like, what a draw check feels like, and what it means when a lead goes cold at 48 hours.
+              I sell Toyotas on the lot in New Port Richey, Florida. I&rsquo;ve been on this floor for years. I know what a T.O. sounds like, what a draw check feels like, and what it means when a lead goes cold at 48 hours.
             </p>
             <p>
               30 days ago, I flipped a switch. I put an AI agent on my floor — not as a demo, not as a gimmick. As a closer. It handles internet leads, writes follow-ups, answers objections, and books appointments. It works while I&rsquo;m on test drives. It works while I sleep.
@@ -52,7 +52,7 @@ export default function SunToyotaPilot() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The problem: 200 leads. One closer. A 48-hour clock.</h2>
             <p>
-              Every dealership floor runs on the same math: you get more leads than you can handle. At Sun Toyota, we pull 200 to 250 internet leads a month. Some are real buyers. Most are “just looking.” A handful are ready today. The problem is you don&rsquo;t know which is which until you follow up.
+              Every dealership floor runs on the same math: you get more leads than you can handle. On the lot, we pull 200 to 250 internet leads a month. Some are real buyers. Most are “just looking.” A handful are ready today. The problem is you don&rsquo;t know which is which until you follow up.
             </p>
             <p>
               And follow-up is the bottleneck. You call. They don&rsquo;t answer. You text. They reply three days later. You leave a voicemail. They call back while you&rsquo;re on a demo drive. By the time you reconnect, they&rsquo;ve already filled out a form at another store. The 48-hour window on an internet lead is real — and most of us lose half our leads inside it.

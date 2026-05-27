@@ -44,6 +44,15 @@ const nextConfig = {
       },
     ];
   },
+  async redirects() {
+    return [
+      {
+        source: "/blog/sun-toyota-pilot",
+        destination: "/blog/ai-closer-30-days",
+        permanent: true,
+      },
+    ];
+  },
 };
 
 module.exports = nextConfig;

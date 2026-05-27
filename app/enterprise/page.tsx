@@ -178,7 +178,7 @@ export default function EnterprisePage() {
             <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">Live Pilot</span>
           </div>
           <h2 className="font-display text-3xl font-black text-white">Proven on the floor</h2>
-          <p className="mt-2 text-sm text-ash">Deploying at Sun Toyota, Holiday FL — a working dealership with real closers.</p>
+          <p className="mt-2 text-sm text-ash">Deploying on the lot, Holiday FL — a working dealership with real closers.</p>
         </div>
 
         <div className="grid gap-4 sm:grid-cols-3 mb-8">

@@ -25,7 +25,7 @@ Two ways to get one:
 • SaaS — $29.99/mo. Self-serve. Deploy from dashboard in 5 minutes. Full Skills Marketplace, all integrations, email support.
 • Dedicated Agent — $3K–$5K/mo. White-glove. We build it, host it, train it on YOUR scripts and pay plan. 48-hour setup. Unlimited reps.
 
-Built on the floor by Thul — a working car salesman at Sun Toyota in Holiday, Florida. Not in a boardroom. Not by engineers who've never worked a Saturday on the lot. He got tired of losing deals and built his own closer.
+Built on the floor by Thul — a working car salesman at a dealership in Holiday, Florida. Not in a boardroom. Not by engineers who've never worked a Saturday on the lot. He got tired of losing deals and built his own closer.
 
 The agent speaks 18 industries fluently: Auto, Real Estate, Insurance, Solar, SaaS, Medical Devices, Retail, Pest Control, HVAC, Roofing, Home Security, Mortgage, Financial Advisors, Recruiting, Telecom, Rental, Project Management, and General Sales.
 

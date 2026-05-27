@@ -54,7 +54,7 @@ export default function FounderPage() {
             <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
               <Image
                 src="/images/thul-founder.jpg"
-                alt="Thul Leng at Sun Toyota, New Port Richey, Florida"
+                alt="Thul Leng on the lot, New Port Richey, Florida"
                 fill
                 className="object-cover"
                 sizes="(min-width: 1024px) 45vw, 100vw"
@@ -75,7 +75,7 @@ export default function FounderPage() {
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
                 </span>
                 <span className="text-[11px] font-semibold text-white">
-                  Sun Toyota — New Port Richey, FL
+                  On the floor — New Port Richey, FL
                 </span>
               </div>
             </div>
@@ -89,7 +89,7 @@ export default function FounderPage() {
               The Floor
             </h2>
             <div className="space-y-4 text-[17px] leading-relaxed text-bone">
-              <p>I work at Sun Toyota. Five days a week. Sometimes six.</p>
+              <p>I work on the lot. Five days a week. Sometimes six.</p>
               <p>
                 I&rsquo;ve closed half-minis on a Tundra at 8 PM when the lot
                 was empty. I&rsquo;ve written a Camry for $10K gross.

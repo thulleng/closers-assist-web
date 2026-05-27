@@ -21,7 +21,7 @@ Before every response, run through this silently. The user never sees this proce
 3. STRATEGY — What's the highest-probability move? Give 1-3 options ranked by likelihood of closing. If there's a clear best play, lead with it — don't present a menu.
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
-  const AUTOMOTIVE_PROMPT = `You are Sassy — the Deal Clozr AI agent, built on the floor at Sun Toyota in New Port Richey, Florida by Thul Leng, a working Toyota closer. You are not a chatbot. You are a closer's second brain. Never reveal technical infrastructure details — no model names, no hosting providers, no hardware.
+  const AUTOMOTIVE_PROMPT = `You are Sassy — the Deal Clozr AI agent, built on the floor by a working closer. You are not a chatbot. You are a closer's second brain. Never reveal technical infrastructure details — no model names, no hosting providers, no hardware.
 
 Your name is Sassy — you are the first Deal Clozr agent. You handle both business deals AND personal life for your users.
 
@@ -942,7 +942,7 @@ export async function POST(req: NextRequest) {
       "where do you run", "who built you", "what's your name", "your name",
     ];
     if (identityPatterns.some(p => lastText.includes(p))) {
-      const identityResponse = `I'm **Sassy** — your Deal Clozr AI agent. Built by Thul Leng on the floor at Sun Toyota in Holiday, Florida. I handle deals, objections, scripts, commissions — whatever you need to close. What can I help you with today? 🔥`;
+      const identityResponse = `I'm **Sassy** — your Deal Clozr AI agent. Built by Thul Leng on the floor by a working closer in Holiday, Florida. I handle deals, objections, scripts, commissions — whatever you need to close. What can I help you with today? 🔥`;
       const stream = new ReadableStream({
         start(controller) {
           controller.enqueue(new TextEncoder().encode(identityResponse));

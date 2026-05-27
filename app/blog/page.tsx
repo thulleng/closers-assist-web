@@ -6,7 +6,7 @@ import FadeIn from "@/components/FadeIn";
 export const metadata: Metadata = {
   title: "Blog — From the Floor",
   description:
-    "Real strategy, plays, and real talk from a working Toyota rep. No theory. Just what works on the floor. Written by Thul Leng at Sun Toyota.",
+    "Real strategy, plays, and real talk from a working Toyota rep. No theory. Just what works on the floor. Written by Thul Leng — a working closer.",
 };
 
 const POSTS = [
@@ -31,15 +31,15 @@ const POSTS = [
     title: "The Three Buyers on Every Lot",
     date: "May 20, 2026",
     readTime: "4 min",
-    preview: "After years on the floor at Sun Toyota, I learned there aren't a hundred types of buyers. There are three — and the rep who can read the room in 90 seconds closes all three.",
+    preview: "After years on the floor, I learned there aren't a hundred types of buyers. There are three — and the rep who can read the room in 90 seconds closes all three.",
     tag: "Customer Psychology",
   },
   {
-    slug: "sun-toyota-pilot",
+    slug: "ai-closer-30-days",
     title: "I Run an AI Closer on My Dealership Floor — Here's What Happened in 30 Days",
     date: "May 12, 2026",
     readTime: "5 min",
-    preview: "30 days. 247 leads. 43 appointments. The real numbers from running an AI closer at Sun Toyota — and why your floor is next.",
+    preview: "30 days. 247 leads. 43 appointments. The real numbers from running an AI closer on the lot — and why your floor is next.",
     tag: "Case Study",
   },
   {
@@ -47,7 +47,7 @@ const POSTS = [
     title: "How I Built an AI Sales Agent Between Customers",
     date: "May 8, 2026",
     readTime: "4 min",
-    preview: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the Sun Toyota floor — between test drives, T.O.s, and service lane laps.",
+    preview: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the floor — between test drives, T.O.s, and service lane laps.",
     tag: "Founder Story",
   },
   {

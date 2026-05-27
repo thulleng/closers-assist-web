@@ -107,7 +107,7 @@ const comparisonRows = [
     chatgpt: false,
     crm: false,
     human: "Maybe",
-    closersDetail: "Thul Leng closes cars 6 days a week at Sun Toyota. Built between customers",
+    closersDetail: "Thul Leng closes cars 6 days a week on the lot. Built between customers",
   },
   {
     feature: "No contracts",

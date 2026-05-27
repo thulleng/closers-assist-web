@@ -3,7 +3,7 @@ import LiveMetricsStrip from "@/components/LiveMetricsStrip";
 
 export const metadata: Metadata = {
   title: "Deal Clozr — Investor Brief",
-  description: "AI closer for commission sales. Built on the floor at Sun Toyota.",
+  description: "AI closer for commission sales. Built on the floor by a working closer.",
 };
 
 export default function InvestPage() {
@@ -22,7 +22,7 @@ export default function InvestPage() {
           </div>
           <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-6xl">Deal Clozr</h1>
           <p className="mt-4 text-xl text-ash sm:text-2xl">Every closer's second brain.</p>
-          <p className="mt-2 text-sm text-muted">Built on the floor at Sun Toyota · Holiday, Florida</p>
+          <p className="mt-2 text-sm text-muted">Built on the floor by a working closer · Holiday, Florida</p>
         </div>
 
         {/* Live Metrics */}
@@ -54,7 +54,7 @@ export default function InvestPage() {
         <Section title="Traction">
           <ul className="space-y-3">
             <TractionItem label="Product" value="Live on dealclozr.com — 18 industry verticals, Stripe payments, live AI chat" />
-            <TractionItem label="Enterprise" value="$5K/mo done-for-you tier with dedicated agent — Sun Toyota pilot launching May 2026" />
+            <TractionItem label="Enterprise" value="$5K/mo done-for-you tier with dedicated agent — on the lot, pilot launching May 2026" />
             <TractionItem label="Team" value="Solo founder — Thul Leng. Working Toyota closer. Built this between customers on the floor." />
             <TractionItem label="Deals Logged" value="Real closers logging real deals. System tracking units, commissions, and bonus progress." />
           </ul>
@@ -78,7 +78,7 @@ export default function InvestPage() {
         {/* Footer */}
         <div className="mt-16 border-t border-iron pt-8 text-center">
           <p className="text-sm text-ash">dealclozr.com</p>
-          <p className="mt-1 text-xs text-muted">Thul Leng · thul@dealclozr.com · Sun Toyota, Holiday FL</p>
+          <p className="mt-1 text-xs text-muted">Thul Leng · thul@dealclozr.com · on the lot, Holiday FL</p>
         </div>
       </div>
     </section>

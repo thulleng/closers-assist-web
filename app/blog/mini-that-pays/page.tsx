@@ -49,7 +49,7 @@ export default function MiniThatPays() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The bonus ladder is the real game</h2>
             <p>
-              At Sun Toyota, the bonus ladder works like this:
+              On the lot, the bonus ladder works like this:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-ash">
               <li>11 units → $500 bonus (25% retro)</li>
