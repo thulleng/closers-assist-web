@@ -289,5 +289,33 @@ export default function IndustriesPage() {
       </div>
       </div>
     </section>
+
+    {/* Bottom CTA */}
+    <section className="relative overflow-hidden border-t border-white/5 px-6 py-16 text-center loud-bg">
+      <div className="mx-auto max-w-2xl">
+        <h2 className="font-display text-3xl font-black text-white md:text-4xl">
+          Your industry. Your agent.{" "}
+          <span className="text-shine">Your results.</span>
+        </h2>
+        <p className="mx-auto mt-3 max-w-lg text-ash">
+          Join closers from every industry who already use Deal Clozr.
+        </p>
+        <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            href="/pricing"
+            className="btn-loud inline-flex items-center gap-2 rounded-xl px-7 py-3 text-sm font-bold"
+          >
+            Get Started
+            <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
+          </Link>
+          <Link
+            href="/reviews"
+            className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
+          >
+            Read reviews →
+          </Link>
+        </div>
+      </div>
+    </section>
   );
 }

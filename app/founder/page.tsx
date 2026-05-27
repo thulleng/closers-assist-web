@@ -170,16 +170,24 @@ export default function FounderPage() {
 
       <FadeIn>
         <div className="mt-20 border-t border-iron pt-14 text-center">
-          <Link
-            href="/pricing"
-            className="group inline-flex items-center gap-2 rounded-md bg-deal px-7 py-3.5 text-base font-medium text-pit transition-all hover:bg-deal-hover hover:scale-[1.02]"
-          >
-            Get Started
-            <ArrowRight
-              className="h-4 w-4 transition-transform group-hover:translate-x-1"
-              strokeWidth={2.5}
-            />
-          </Link>
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            <Link
+              href="/pricing"
+              className="btn-loud group inline-flex items-center gap-2 rounded-xl px-7 py-3.5 text-sm font-bold"
+            >
+              Get Started
+              <ArrowRight
+                className="h-4 w-4 transition-transform group-hover:translate-x-1"
+                strokeWidth={2.5}
+              />
+            </Link>
+            <Link
+              href="/reviews"
+              className="inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3.5 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
+            >
+              Read reviews →
+            </Link>
+          </div>
           <p className="mt-4 text-sm text-muted">
             14-day free trial. No credit card.
           </p>

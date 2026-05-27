@@ -140,6 +140,22 @@ export default function ReferralPage() {
           })}
         </div>
       </section>
+
+      {/* Bottom CTA */}
+      <section className="relative border-t border-white/5 px-6 py-16 text-center">
+        <h2 className="font-display text-3xl font-black text-white md:text-4xl">
+          Already seeing results?
+        </h2>
+        <p className="mx-auto mt-3 max-w-lg text-ash">
+          See what other closers are saying about Deal Clozr.
+        </p>
+        <Link
+          href="/reviews"
+          className="mt-6 inline-flex items-center gap-2 rounded-xl border border-white/10 px-6 py-3 text-sm font-medium text-ash hover:text-white hover:border-white/20 transition-all"
+        >
+          Read reviews →
+        </Link>
+      </section>
     </main>
   );
 }
