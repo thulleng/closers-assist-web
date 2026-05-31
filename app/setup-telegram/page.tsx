@@ -121,6 +121,56 @@ export default function SetupTelegramPage() {
               </div>
             </FadeIn>
 
+            {/* ── BOTFATHER CHEAT SHEET ── */}
+            <FadeIn>
+              <div className="ml-14 mb-8 rounded-xl border border-deal/20 bg-deal/5 p-5">
+                <p className="text-xs font-bold uppercase tracking-wider text-deal mb-3">
+                  📋 Read This Before You Talk to BotFather
+                </p>
+                <div className="space-y-3 text-sm text-ash">
+                  <div className="flex gap-3">
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white">①</span>
+                    <div>
+                      <p className="font-semibold text-white">Tap Start</p>
+                      <p>When BotFather opens, tap the blue <strong>START</strong> button at the bottom of your screen.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white">②</span>
+                    <div>
+                      <p className="font-semibold text-white">Type this exactly: <code className="rounded bg-white/10 px-1.5 py-0.5 text-deal-light font-mono text-xs">/newbot</code></p>
+                      <p>Then tap send. Don't worry about the list of commands — just type <code className="rounded bg-white/10 px-1.5 py-0.5 text-deal-light font-mono text-xs">/newbot</code>.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white">③</span>
+                    <div>
+                      <p className="font-semibold text-white">Give it a name</p>
+                      <p>BotFather will ask: <em>"Alright, a new bot. How are we going to call it? Please choose a name for your bot."</em></p>
+                      <p className="mt-1">Type whatever name you want — like <strong>Maya</strong>, <strong>Ace</strong>, <strong>Coach</strong>, or <strong>Jake</strong>. This is what people see when they chat with it.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white">④</span>
+                    <div>
+                      <p className="font-semibold text-white">Give it a username (ends in <code className="rounded bg-white/10 px-1.5 py-0.5 text-deal-light font-mono text-xs">_bot</code>)</p>
+                      <p>BotFather will ask: <em>"Good. Now let's choose a username for your bot. It must end in 'bot'. Like 'TetrisBot' or 'tetris_bot'."</em></p>
+                      <p className="mt-1">Type something unique like <strong>YourNameAgentBot</strong> or <strong>YourNameCloserBot</strong>. If it says "Sorry, this username is already taken," just add a number like <strong>YourNameBot123</strong>.</p>
+                    </div>
+                  </div>
+                  <div className="flex gap-3">
+                    <span className="inline-flex h-5 w-5 shrink-0 items-center justify-center rounded-full bg-white/10 text-[10px] font-bold text-white">⑤</span>
+                    <div>
+                      <p className="font-semibold text-white">Copy the token</p>
+                      <p>BotFather will reply with a long message. Look for <strong>"Use this token to access the HTTP API:"</strong> — the line right under it is your token. It looks like:</p>
+                      <p className="mt-1 font-mono text-xs text-deal-light bg-white/5 rounded-lg px-3 py-2 inline-block">1234567890:ABCdefGHIjklMNOpqrsTUVwxyz-ABC123</p>
+                      <p className="mt-1">Tap the token to copy it, then paste it in the box below.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </FadeIn>
+
             {/* Step 2 */}
             <FadeIn>
               <div className="flex gap-5">
@@ -133,15 +183,11 @@ export default function SetupTelegramPage() {
                 <div className="min-w-0 pb-10">
                   <div className="flex items-center gap-2 mb-1">
                     <span className="inline-flex h-5 w-5 items-center justify-center rounded-full bg-deal/20 text-[10px] font-bold text-deal">2</span>
-                    <h2 className="text-lg font-bold text-white">Create Your Bot</h2>
+                    <h2 className="text-lg font-bold text-white">Name Your Bot</h2>
                   </div>
                   <p className="text-sm leading-relaxed text-ash">
-                    In the BotFather chat, type <code className="rounded bg-white/10 px-1.5 py-0.5 text-deal-light font-mono text-xs">/newbot</code> and follow the prompts. Pick a name that feels like YOUR agent &mdash; something you&rsquo;d actually message throughout the day.
+                    Pick a name that feels like YOUR agent — something you&rsquo;d actually message throughout the day. <strong>Maya</strong>, <strong>Ace</strong>, <strong>Coach</strong>, <strong>Jake</strong> — whatever fits.
                   </p>
-                  <div className="mt-3 rounded-xl border border-gold/20 bg-gold/5 px-4 py-3">
-                    <p className="text-xs text-gold-light font-semibold mb-1">Pro tip:</p>
-                    <p className="text-xs text-muted">Name it something natural like &ldquo;Ace&rdquo; or &ldquo;Coach&rdquo; &mdash; not a brand name. You&rsquo;re going to talk to this thing every day.</p>
-                  </div>
                 </div>
               </div>
             </FadeIn>
