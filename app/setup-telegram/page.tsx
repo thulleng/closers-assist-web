@@ -88,6 +88,50 @@ export default function SetupTelegramPage() {
       <section className="relative overflow-hidden loud-bg-alt border-t border-white/5">
         <div className="grid-pattern opacity-40" />
         <div className="relative mx-auto max-w-2xl px-6 py-20">
+          {/* Video walkthrough — responsive embed */}
+          <FadeIn>
+            <div className="mb-12">
+              <div className="text-center mb-6">
+                <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/20 px-3.5 py-1.5 backdrop-blur">
+                  <span className="relative flex h-2 w-2">
+                    <span className="absolute inline-flex h-full w-full rounded-full bg-deal opacity-75 pulse-ring" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-deal" />
+                  </span>
+                  <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
+                    Watch First
+                  </span>
+                </span>
+              </div>
+              <div className="relative mx-auto max-w-3xl overflow-hidden rounded-2xl border border-white/10 bg-black shadow-2xl">
+                {/* Mobile video (portrait) — shown on mobile */}
+                <video
+                  className="block sm:hidden w-full h-auto"
+                  src="https://dealclozr.com/videos/botfather-setup-mobile.mp4"
+                  poster=""
+                  controls
+                  preload="metadata"
+                  playsInline
+                >
+                  Your browser doesn't support video.
+                </video>
+                {/* Desktop video (landscape) — shown on tablet+ */}
+                <video
+                  className="hidden sm:block w-full h-auto"
+                  src="https://dealclozr.com/videos/botfather-setup-desktop.mp4"
+                  poster=""
+                  controls
+                  preload="metadata"
+                  playsInline
+                >
+                  Your browser doesn't support video.
+                </video>
+              </div>
+              <p className="mt-3 text-center text-xs text-muted">
+                🎧 Sound on. 90 seconds — no coding needed.
+              </p>
+            </div>
+          </FadeIn>
+
           <div className="space-y-0">
             {/* Step 1 */}
             <FadeIn>
