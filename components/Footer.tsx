@@ -53,9 +53,9 @@ export default function Footer() {
                 <Image
                   src="/logo.webp"
                   alt="Deal Clozr"
-                  width={32}
-                  height={32}
-                  className="h-8 w-8"
+                  width={40}
+                  height={40}
+                  className="h-10 w-10"
                 />
               </div>
               <span className="font-display text-[13px] font-black tracking-wider text-white">
