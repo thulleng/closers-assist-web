@@ -8,7 +8,7 @@ import Link from "next/link";
 import {
   ArrowRight, CheckCircle2, Loader2, Car, MessageCircle, Settings2,
   Smartphone, DollarSign, Target, Star, Zap, Trophy, Copy, Check,
-  ExternalLink, AlertCircle,
+  ExternalLink, AlertCircle, Bot,
 } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 
@@ -177,51 +177,36 @@ function OnboardingContent() {
             <div className="loud-card rounded-2xl p-6 md:p-8">
               <div className="flex items-center gap-3 mb-5">
                 <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-gradient-to-br from-deal to-emerald-400">
-                  <MessageCircle className="h-6 w-6 text-white" />
+                  <Bot className="h-6 w-6 text-white" />
                 </div>
                 <div>
-                  <div className="text-sm font-bold text-white">Open Telegram</div>
-                  <div className="text-xs text-ash">Search @DealClozrBot or tap the link</div>
+                  <div className="text-sm font-bold text-white">Your Own Bot</div>
+                  <div className="text-xs text-ash">Create a bot named after yourself — it becomes your agent</div>
                 </div>
               </div>
 
               <div className="space-y-3 mb-6">
-                <a
-                  href="https://t.me/DealClozrBot"
-                  target="_blank"
-                  rel="noopener noreferrer"
+                <Link
+                  href="/setup-telegram"
                   className="btn-loud w-full flex items-center justify-center gap-2 rounded-xl py-3.5 text-sm font-bold"
                 >
                   <ExternalLink className="h-4 w-4" />
-                  Open @DealClozrBot in Telegram
-                </a>
-
-                <div className="flex items-center gap-2">
-                  <div className="flex-1 border border-white/10 rounded-xl bg-black/30 px-4 py-3 text-sm font-mono text-white/70 truncate">
-                    @DealClozrBot
-                  </div>
-                  <button
-                    onClick={() => {
-                      navigator.clipboard.writeText("@DealClozrBot");
-                      setTelegramCopied(true);
-                      setTimeout(() => setTelegramCopied(false), 2000);
-                    }}
-                    className="flex items-center gap-2 rounded-xl border border-white/10 bg-white/5 px-4 py-3 text-sm font-semibold text-ash hover:text-white transition-all"
-                  >
-                    {telegramCopied ? <Check className="h-4 w-4 text-deal" /> : <Copy className="h-4 w-4" />}
-                    {telegramCopied ? "Copied" : "Copy"}
-                  </button>
-                </div>
+                  Create My Telegram Bot
+                </Link>
               </div>
 
               <div className="space-y-2 text-sm text-ash">
                 <div className="flex items-center gap-2">
-                  <Smartphone className="h-4 w-4 text-deal" />
-                  Works on any device — phone, tablet, desktop
+                  <Bot className="h-4 w-4 text-deal" />
+                  Name it whatever you want
                 </div>
                 <div className="flex items-center gap-2">
                   <Zap className="h-4 w-4 text-deal" />
-                  Under 3 seconds per response
+                  Your name. Your agent. Your bot.
+                </div>
+                <div className="flex items-center gap-2">
+                  <Smartphone className="h-4 w-4 text-deal" />
+                  Works on phone, tablet, desktop
                 </div>
               </div>
 

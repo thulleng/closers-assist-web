@@ -17,6 +17,7 @@ const staticRoutes = [
   "/contact",
   "/invest",
   "/telegram",
+  "/setup-telegram",
   "/login",
   "/sign-up",
   "/onboarding",

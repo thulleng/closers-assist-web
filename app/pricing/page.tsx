@@ -2,15 +2,36 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Shield, Check, User, Users, Building2, ArrowRight, X } from "lucide-react";
+import { Shield, Check, User, Users, Building2, ArrowRight, X, Zap } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import TiltCard from "@/components/TiltCard";
 import DealFlowVisual from "@/components/DealFlowVisual";
 
 type Billing = "monthly" | "annual";
-type Buyer = "solo" | "team" | "dealership";
+type Buyer = "solo_demo" | "solo" | "team" | "dealership";
 
 const TIERS = [
+  {
+    id: "free",
+    name: "Free",
+    buyer: "solo" as Buyer,
+    monthly: 0,
+    annual: 0,
+    annualYearly: 0,
+    unit: "rep",
+    seats: 1,
+    tagline: "See what Deal Clozr can do. No credit card. No commitment.",
+    href: "#",
+    monthlyPriceId: "free",
+    annualPriceId: "free",
+    features: [
+      "Try any 1 industry — switch anytime",
+      "50 messages per month",
+      "Basic memory (30-day retention)",
+      "Chat on web, phone, or Telegram",
+      "Email support",
+    ],
+  },
   {
     id: "starter",
     name: "Starter",
@@ -75,6 +96,7 @@ const TIERS = [
 ];
 
 const BUYER_TO_TIER: Record<Buyer, string> = {
+  solo_demo: "free",
   solo: "starter",
   team: "pro",
   dealership: "elite",
@@ -297,8 +319,14 @@ export default function PricingPage() {
         <p className="mb-4 text-center text-sm text-ash">
           Tell us who you are — we&rsquo;ll highlight your plan.
         </p>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-4">
           {[
+            {
+              id: "solo_demo" as Buyer,
+              icon: Zap,
+              label: "Try it first",
+              sub: "Free — no credit card",
+            },
             {
               id: "solo" as Buyer,
               icon: User,
@@ -367,7 +395,7 @@ export default function PricingPage() {
 
       {/* TIERS */}
       <section id="plans" className="mx-auto max-w-7xl px-6 pb-10">
-        <div className="grid gap-5 md:grid-cols-3">
+        <div className="grid gap-5 md:grid-cols-4">
           {TIERS.map((tier) => {
             const price = billing === "annual" ? tier.annual : tier.monthly;
             const isRecommended = selectedTier === tier.id;
@@ -402,6 +430,7 @@ export default function PricingPage() {
                   <div className={`flex h-10 w-10 items-center justify-center rounded-xl transition-all duration-300 ${
                     highlight ? "bg-deal/20 shadow-[0_0_16px_rgba(16,185,129,0.2)]" : "bg-white/[0.04]"
                   }`}>
+                    {tier.id === "free" && <Zap className="h-5 w-5 text-gold-light" strokeWidth={2} />}
                     {tier.id === "starter" && <User className="h-5 w-5 text-deal" strokeWidth={2} />}
                     {tier.id === "pro" && <Users className="h-5 w-5 text-deal" strokeWidth={2} />}
                     {tier.id === "elite" && <Building2 className="h-5 w-5 text-gold-light" strokeWidth={2} />}
@@ -413,6 +442,7 @@ export default function PricingPage() {
                       {tier.name}
                     </div>
                     <div className="text-[13px] font-semibold text-bone">
+                      {tier.id === "free" && "1 rep — no card needed"}
                       {tier.id === "starter" && "1 rep"}
                       {tier.id === "pro" && "Up to 25 reps"}
                       {tier.id === "elite" && "Up to 100 reps"}
@@ -422,7 +452,11 @@ export default function PricingPage() {
 
                 {/* Price — bold and dramatic */}
                 <div className="mb-2">
-                  {tier.id === "elite" ? (
+                  {tier.id === "free" ? (
+                    <div className="font-display text-5xl font-black leading-none text-white">
+                      $0
+                    </div>
+                  ) : tier.id === "elite" ? (
                     <div className="font-display text-5xl font-black leading-none text-white">
                       Custom
                     </div>
@@ -482,7 +516,14 @@ export default function PricingPage() {
                 </ul>
 
                 {/* CTA */}
-                {!("monthlyPriceId" in tier && "annualPriceId" in tier) ? null : (
+                {!("monthlyPriceId" in tier && "annualPriceId" in tier) ? null : tier.id === "free" ? (
+                  <Link
+                    href="/sign-up?plan=free"
+                    className="block w-full rounded-xl py-3.5 text-center text-sm font-bold tracking-wide transition-all duration-300 border-2 border-white/[0.08] text-bone hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white"
+                  >
+                    Try Free
+                  </Link>
+                ) : (
                   <button
                     onClick={async () => {
                       setLoadingTier(tier.id);

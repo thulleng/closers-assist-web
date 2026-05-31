@@ -1,5 +1,47 @@
 import { NextRequest, NextResponse } from "next/server";
 
+// ── Token Resolution ───────────────────────────────────────────────────────
+// Supports two modes:
+// 1. Single bot (legacy): uses TELEGRAM_BOT_TOKEN from env
+// 2. Multi-bot: uses ?token_id=<uuid> to look up the user's custom bot token
+//
+// In multi-bot mode, the bot owner sends their own token via /setup-telegram.
+// The webhook URL includes their token_id so we know which token to reply with.
+
+async function resolveToken(tokenId: string | null): Promise<{
+  token: string;
+  userId: string | null;
+} | { error: string }> {
+  if (!tokenId) {
+    // Legacy mode — single shared bot
+    const token = process.env.TELEGRAM_BOT_TOKEN;
+    if (!token) return { error: "No bot token configured" };
+    return { token, userId: null };
+  }
+
+  // Multi-bot mode — look up the token
+  try {
+    const { createAdminClient } = await import("@/lib/supabase-admin");
+    const supabase = createAdminClient();
+    const { data, error } = await supabase
+      .from("bot_tokens")
+      .select("bot_token, user_id")
+      .eq("id", tokenId)
+      .eq("is_active", true)
+      .maybeSingle();
+
+    if (error || !data) {
+      console.error("Token lookup failed:", error);
+      return { error: "Invalid or deactivated bot token" };
+    }
+
+    return { token: data.bot_token, userId: data.user_id };
+  } catch (e) {
+    console.error("Token resolution error:", e);
+    return { error: "Failed to resolve bot token" };
+  }
+}
+
 // ── Webhook ─────────────────────────────────────────────────────────────────
 
 export async function POST(req: NextRequest) {
@@ -10,6 +52,19 @@ export async function POST(req: NextRequest) {
 
     const chatId = msg?.chat?.id as number | undefined;
     if (!chatId) return NextResponse.json({ ok: true });
+
+    // ── Resolve bot token ───────────────────────────────────────────────────
+    const url = new URL(req.url);
+    const tokenId = url.searchParams.get("token_id");
+    const resolved = await resolveToken(tokenId);
+
+    if ("error" in resolved) {
+      // If we can't resolve the token, silently drop — nothing we can do
+      return NextResponse.json({ ok: true });
+    }
+
+    const token = resolved.token;
+    const botOwnerUserId = resolved.userId; // null for legacy shared bot
 
     // ── Detect media types ──────────────────────────────────────────────────
     let text: string | undefined = msg?.text as string | undefined;
@@ -43,9 +98,6 @@ export async function POST(req: NextRequest) {
 
     // Skip messages with no content
     if (!text && !fileId) return NextResponse.json({ ok: true });
-
-    const token = process.env.TELEGRAM_BOT_TOKEN;
-    if (!token) return NextResponse.json({ ok: true });
 
     const reply = async (msg: string) => {
       // Split long messages
@@ -101,35 +153,64 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ ok: true });
     }
 
+    // ── First message from a new user → onboarding → link ──
     if (!profile) {
       try {
-        // ── Default demo: Sample dealership pay plan ──
-        const demoIntro = `👋 *Welcome to Deal Clozr!*
+        if (botOwnerUserId) {
+          // This is a user's personal bot — auto-link them
+          // The chat_id maps to this user. Save it on their profile.
+          const { data: ownerProfile } = await supabase
+            .from("agent_profiles")
+            .select("agent_name, first_name, industry")
+            .eq("user_id", botOwnerUserId)
+            .maybeSingle();
 
-I'm an AI closer built on the floor by a working closer. Here's a preview of what I know:
+          if (ownerProfile) {
+            // Link this chat_id to their profile
+            await supabase
+              .from("agent_profiles")
+              .update({ telegram_chat_id: chatId })
+              .eq("user_id", botOwnerUserId);
 
-*🏢 Demo Pay Plan — Sample Dealership*
-• Draw: \\$2,600 bi-weekly
-• Mini/flat: \\$200
-• Full deal: variable (front gross × commission %)
-• Volume bonus: \\$500 at 11 units + 25% retro
-• CXI bonus: \\$250 at 4.8+
+            const agentName = ownerProfile.agent_name || "Closer";
+            const industry = ownerProfile.industry || "auto";
 
-*What I do:*
-→ Log deals & track unit count
-→ Handle customer objections word-for-word
-→ Calculate commission & bonus math
-→ Write follow-up texts & emails
-→ Push you toward the next bonus tier
+            const welcomeMsg = `✅ *You're connected, ${ownerProfile.first_name || "Closer"}!*\n\nI'm ${agentName}, your Deal Clozr agent. I know your pay plan, your deals, and your goals.\n\nTry me:\n\`\`\`\nLog a deal — Jane Foster, 2024 Camry SE, full deal, $3,200 front.\n\`\`\`\n\nOr just ask:\n\`\`\`\nWhere am I at this month?\n\`\`\`\n\nLet's close. 🔥`;
 
-*Ready to try?* Type a question — for example:
-\`\`\`
-I have a customer on a 2019 RAV4 with 60k miles. Trade-in is underwater by \\$3k. How do I handle it?
-\`\`\`
+            // Chunk if needed
+            const maxLen = 4000;
+            if (welcomeMsg.length <= maxLen) {
+              await reply(welcomeMsg);
+            } else {
+              const parts: string[] = [];
+              let remaining = welcomeMsg;
+              while (remaining.length > 0) {
+                if (remaining.length <= maxLen) { parts.push(remaining); break; }
+                let splitAt = remaining.lastIndexOf("\n", maxLen);
+                if (splitAt === -1 || splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(" ", maxLen);
+                if (splitAt === -1 || splitAt < maxLen / 2) splitAt = maxLen;
+                parts.push(remaining.slice(0, splitAt));
+                remaining = remaining.slice(splitAt).trim();
+              }
+              for (const part of parts) {
+                await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({ chat_id: chatId, text: part, parse_mode: "Markdown" }),
+                });
+              }
+            }
+          } else {
+            // Owner hasn't set up their profile yet — direct them to onboarding
+            await reply(`👋 *Welcome!*\n\nIt looks like your Deal Clozr profile isn't set up yet. Head to dealclozr.com/onboarding to finish your setup, then message me here again.\n\nI'll be right here waiting.`);
+          }
+          return NextResponse.json({ ok: true });
+        }
 
-*Want your own agent?* Tap below to connect your account:\n\nhttps://dealclozr.com/telegram?code=***&chat_id=${chatId}\n\nOnce linked, I'll learn YOUR pay plan, YOUR scripts, and YOUR goals. Same agent. Your data.`;
+        // Legacy flow: Demo intro for non-linked users on shared bot
+        const demoIntro = `👋 *Welcome to Deal Clozr!*\n\nI'm an AI closer built on the floor by a working closer. Here's a preview of what I know:\n\n*🏢 Demo Pay Plan — Sample Dealership*\n• Draw: \\$2,600 bi-weekly\n• Mini/flat: \\$200\n• Full deal: variable (front gross × commission %)\n• Volume bonus: \\$500 at 11 units + 25% retro\n• CXI bonus: \\$250 at 4.8+\n\n*What I do:*\n→ Log deals & track unit count\n→ Handle customer objections word-for-word\n→ Calculate commission & bonus math\n→ Write follow-up texts & emails\n→ Push you toward the next bonus tier\n\n*Ready to try?* Type a question — for example:\n\`\`\`\nI have a customer on a 2019 RAV4 with 60k miles. Trade-in is underwater by \\$3k. How do I handle it?\n\`\`\`\n\n*Want your own agent?* Create your own bot at:\ndealclozr.com/setup-telegram\n\nOnce linked, I'll learn YOUR pay plan, YOUR scripts, and YOUR goals. Same agent. Your data.`;
 
-        // Send intro — chunk if needed
+        // Chunk if needed
         const maxLen = 4000;
         if (demoIntro.length <= maxLen) {
           await reply(demoIntro);
@@ -138,7 +219,7 @@ I have a customer on a 2019 RAV4 with 60k miles. Trade-in is underwater by \\$3k
           let remaining = demoIntro;
           while (remaining.length > 0) {
             if (remaining.length <= maxLen) { parts.push(remaining); break; }
-            let splitAt = remaining.lastIndexOf("\\n", maxLen);
+            let splitAt = remaining.lastIndexOf("\n", maxLen);
             if (splitAt === -1 || splitAt < maxLen / 2) splitAt = remaining.lastIndexOf(" ", maxLen);
             if (splitAt === -1 || splitAt < maxLen / 2) splitAt = maxLen;
             parts.push(remaining.slice(0, splitAt));

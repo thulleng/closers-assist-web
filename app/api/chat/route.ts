@@ -976,8 +976,24 @@ export async function POST(req: NextRequest) {
 
     let profileData: Record<string, unknown> | null = null;
     let memoryMessages: ChatMessage[] = [];
+    let sub: { plan_tier?: string; message_limit?: number; messages_used?: number } | null = null;
 
     if (user) {
+      // ── Free tier rate limit check ──────────────────────────────────────
+      const { data: subData } = await supabase
+        .from("subscriptions")
+        .select("plan_tier, message_limit, messages_used")
+        .eq("user_id", user.id)
+        .single();
+      sub = subData;
+
+      if (sub?.plan_tier === "free" && (sub.messages_used ?? 0) >= (sub.message_limit ?? 50)) {
+        return Response.json({
+          role: "assistant",
+          content: "You've used all 50 free messages this month. Upgrade to Starter ($29.99/mo) for unlimited messages — or wait for your limit to reset on the 1st.\n\n👉 [See plans →](https://dealclozr.com/pricing)",
+        });
+      }
+
       // ── Session boundary detection — synthesize previous session if stale ────
       const { data: lastMsg } = await supabase
         .from("agent_memory")
@@ -1298,7 +1314,7 @@ export async function POST(req: NextRequest) {
           controller.enqueue(encoder.encode(`\n\n[error: ${msg}]`));
         }
 
-        // ── 4. Save turn to agent_memory ──────────────────────────────────────
+        // ── 4. Save turn to agent_memory + increment free tier counter ────
         if (user && lastUserMessage && assistantResponse) {
           await supabase.from("agent_memory").insert([
             {
@@ -1314,6 +1330,12 @@ export async function POST(req: NextRequest) {
               industry: normalizedIndustry,
             },
           ]);
+
+          // Increment free tier message counter (fire-and-forget)
+          if (sub && sub.plan_tier === "free") {
+            const current = sub.messages_used ?? 0;
+            void supabase.from("subscriptions").update({ messages_used: current + 1 }).eq("user_id", user.id);
+          }
         }
 
         controller.close();
