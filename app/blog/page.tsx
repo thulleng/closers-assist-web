@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "five-minute-rule",
+    title: "The 5-Minute Rule: Why Most Sales Reps Lose Deals Before They Even Know They Exist",
+    date: "June 1, 2026",
+    readTime: "5 min",
+    preview: "Harvard data: respond in 5 minutes and you're 100x more likely to contact a lead than at 30 minutes. Here's how the speed of your follow-up determines whether you close or watch your deals walk — and exactly how AI fixes it.",
+    tag: "Sales Automation",
+  },
+  {
     slug: "the-90-second-t-o",
     title: "The 90-Second T.O.",
     date: "May 27, 2026",
