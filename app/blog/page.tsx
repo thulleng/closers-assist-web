@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "four-numbers-that-matter",
+    title: "The Four Numbers That Matter in Every Deal",
+    date: "June 1, 2026",
+    readTime: "4 min",
+    preview: "Payment, term, money factor, residual. Most reps know the payment but don't understand the deal. Here's how learning the four numbers changed everything on the floor.",
+    tag: "Deal Math",
+  },
+  {
     slug: "the-90-second-t-o",
     title: "The 90-Second T.O.",
     date: "May 27, 2026",
