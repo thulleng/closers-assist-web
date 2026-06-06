@@ -685,8 +685,10 @@ export default function HomePage() {
               {' '}<span className="text-deal-light">your deals</span> AND{' '}
               <span className="text-gold-light">your life</span>.
             </p>
-            <p className="mt-3 text-sm font-semibold uppercase tracking-[2px] text-muted">
-              Category-defining · Floor-built · No competition
+            <p className="mt-3 text-sm font-semibold leading-relaxed text-muted">
+              My name is <span className="text-white">Thul</span>. I sell{' '}
+              <span className="text-deal-light">Toyotas</span>. I built Deal Clozr{' '}
+              <span className="text-white">between customers</span> on the sales floor.
             </p>
           </FadeIn>
         </div>
