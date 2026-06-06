@@ -327,6 +327,18 @@ export default function HomePage() {
                     {"Cancel in 1 click"}
                   </span>
                   <Link
+                    href="/referral"
+                    className="inline-flex items-center gap-1.5 text-gold-light hover:underline"
+                  >
+                    <svg className="h-3 w-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+                      <rect x="3" y="8" width="18" height="4" rx="1"/>
+                      <path d="M12 8v13"/>
+                      <path d="M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7"/>
+                      <path d="M7.5 8a2.5 2.5 0 0 1 0-5A4.8 8 0 0 1 12 8a4.8 8 0 0 1 4.5-5 2.5 2.5 0 0 1 0 5"/>
+                    </svg>
+                    {"Earn 20% recurring — refer a rep"}
+                  </Link>
+                  <Link
                     href="#tutorial"
                     className="text-gold-light hover:underline"
                   >
@@ -690,6 +702,34 @@ export default function HomePage() {
               <span className="text-deal-light">Toyotas</span>. I built Deal Clozr{' '}
               <span className="text-white">between customers</span> on the sales floor.
             </p>
+          </FadeIn>
+        </div>
+      </section>
+
+      {/* ── ABOVE-THE-FOLD TESTIMONIAL STRIP ── */}
+      <section className="relative overflow-hidden border-t border-white/5 bg-black/60 py-4">
+        <div className="mx-auto max-w-6xl px-6">
+          <FadeIn>
+            <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2">
+              <div className="flex items-center gap-2">
+                <div className="flex -space-x-2">
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-deal to-emerald-400 text-[9px] font-bold text-black">CV</div>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-purple-400 to-pink-400 text-[9px] font-bold text-white">LT</div>
+                  <div className="flex h-7 w-7 items-center justify-center rounded-full bg-gradient-to-br from-gold-light to-amber-500 text-[9px] font-bold text-black">MJ</div>
+                </div>
+              </div>
+              <p className="text-sm text-white/80">
+                <span className="font-bold text-deal-light">&ldquo;Rate objection used to kill my pipeline. Now the agent runs the calc in seconds.&rdquo;</span>
+                <span className="text-muted"> — Carlos V., Mortgage Broker</span>
+              </p>
+              <div className="flex items-center gap-1">
+                {[...Array(5)].map((_, i) => (
+                  <svg key={i} className="h-3.5 w-3.5 fill-gold-light text-gold-light" viewBox="0 0 24 24">
+                    <path d="M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z" />
+                  </svg>
+                ))}
+              </div>
+            </div>
           </FadeIn>
         </div>
       </section>
