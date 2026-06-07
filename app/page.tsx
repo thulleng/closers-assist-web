@@ -276,18 +276,16 @@ export default function HomePage() {
                     <span className="relative inline-flex h-2 w-2 rounded-full bg-deal shadow-[0_0_8px_#10B981]" />
                   </span>
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-deal-light">
-                    {"The best AI agent in the business · Built by a working rep"}
+                    {"Built on the floor · Trusted by closers"}
                   </span>
                 </div>
               </div>
 
               <div>
-                <h1 className="font-display text-[48px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[72px]">
-                  {"You can't clone yourself."}
+                <h1 className="font-display text-[44px] font-black leading-[0.95] tracking-[-0.02em] text-white md:text-[68px]">
+                  <span className="text-deal-light">Built on the sales floor.</span>
                   <br />
-                  <span className="text-shine font-black">
-                    {"We did."}
-                  </span>
+                  <span className="text-shine font-black">Not in a boardroom.</span>
                 </h1>
               </div>
 
