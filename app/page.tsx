@@ -50,9 +50,9 @@ import {
 import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
 
 export const metadata: Metadata = {
-  title: "Deal Clozr — The AI agent every closer owns",
+  title: "Deal Clozr — Never lose a commission again",
   description:
-    "Car. Home. Policy. Panel. Plan. One AI agent, every industry, zero restrictions. Built by a working Toyota rep — not a SaaS company. $29.99/rep/mo.",
+    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget — so nothing falls through the cracks. Built by a working Toyota rep. $29.99/mo.",
 };
 
 const industryIconMap: Record<string, React.ReactNode> = {
@@ -219,22 +219,22 @@ export default function HomePage() {
             </div>
             <h2 className="font-display text-3xl sm:text-7xl font-black leading-[1.05] tracking-[-0.02em] text-white mb-4 relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.8), 0 2px 8px rgba(0,0,0,0.6)" }}>
-              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>{"Meet Dora"}</span>
+              <span className="text-purple-400 font-black" style={{ textShadow: "0 0 40px rgba(168,85,247,0.7), 0 0 80px rgba(168,85,247,0.4)" }}>{"Never forget"}</span>
               <br />
-              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>{"Your AI Closer"}</span>
+              <span className="text-pink-200 font-black" style={{ textShadow: "0 0 40px rgba(236,72,153,0.7), 0 0 80px rgba(236,72,153,0.4)" }}>{"a commission again."}</span>
               <br />
-              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>{"She closes. You collect."}</span>
+              <span className="text-orange-400 font-black text-xl sm:text-6xl" style={{ textShadow: "0 0 50px rgba(249,115,22,0.8), 0 0 100px rgba(249,115,22,0.4), 0 2px 8px rgba(0,0,0,0.5)" }}>{"Your agent remembers. You collect."}</span>
             </h2>
             <p className="text-lg sm:text-2xl text-white mb-6 sm:mb-8 max-w-lg mx-auto leading-relaxed font-bold relative"
               style={{ textShadow: "0 0 40px rgba(0,0,0,0.9), 0 1px 4px rgba(0,0,0,0.8)" }}>
-              {"Ask her anything — pricing, how it works, whether she can really handle your deals AND your life."} <span className="text-pink-200 font-black">{"She's got the answers."}</span> 😏
+              {"Lose track of a follow-up? Forget a customer's name? Miss a commission because you couldn't prove the deal was yours?"} <span className="text-pink-200 font-black">{"Never again."}</span> 
             </p>
           </FadeIn>
           {/* Directional cue */}
           <FadeIn delay={100}>
             <div className="mb-6 flex flex-col items-center gap-2">
               <span className="inline-flex items-center gap-2 rounded-full border border-deal/40 bg-deal/10 px-4 sm:px-5 py-1.5 sm:py-2 text-sm sm:text-base font-bold text-deal-light">
-                {"👇 Talk to Dora — she's live"}
+                {"👇 Ask Dora what she tracks"}
               </span>
             </div>
           </FadeIn>
@@ -292,7 +292,7 @@ export default function HomePage() {
 
               <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
-                  {"An AI employee that handles your deals AND your life. Never drops a ball. Never forgets a detail. Never clocks out."}
+                  {"Your AI agent tracks every customer, every follow-up, and every commission automatically. So you never lose a lead — or the money that comes with it."}
                 </p>
               </div>
 
@@ -696,10 +696,10 @@ export default function HomePage() {
           <FadeIn>
             <p className="font-display text-xl font-black leading-snug tracking-[-0.01em] text-white md:text-2xl">
               We don&rsquo;t build AI <span className="text-ash">tools</span>.
-              {' '}We build <span className="text-shine">AI employees</span> —
-              the only ones in the world that handle
-              {' '}<span className="text-deal-light">your deals</span> AND{' '}
-              <span className="text-gold-light">your life</span>.
+              {' '}We build <span className="text-shine">AI employees</span> —{' '}
+              <span className="text-deal-light">commission insurance</span>{' '}
+              for every closer who&rsquo;s ever lost money because they
+              {' '}<span className="text-gold-light">forgot to follow up</span>.
             </p>
             <p className="mt-3 text-sm font-semibold leading-relaxed text-muted">
               My name is <span className="text-white">Thul</span>. I sell{' '}
@@ -759,20 +759,20 @@ export default function HomePage() {
           </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-3">
-            {/* Benefit 1 — Memory */}
+            {/* Benefit 1 — Never lose a commission */}
             <FadeIn delay={100}>
               <div className="group relative overflow-hidden rounded-2xl border border-white/8 bg-black/50 p-7 backdrop-blur transition-all hover:border-deal/30 hover:shadow-[0_0_40px_rgba(16,185,129,0.08)] h-full flex flex-col">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
-                  🧠
+                  💰
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {"Never forgets a deal"}
+                  {"Never lose a commission"}
                 </h3>
                 <p className="text-sm leading-relaxed text-ash flex-1">
-                  {"Remembers every customer. Every objection. Every close. Six months later, a customer walks back on the lot — Deal Clozr knows exactly what you said, what they pushed back on, and what closed them last time."}
+                  {"Forget a follow-up? Customer says \"you never called me back\"? Deal Clozr tracks every lead, every follow-up, and every customer interaction automatically. Six months later, a customer walks back on the lot — Deal Clozr knows exactly when you last talked, what they said, and how to pick it back up."}
                 </p>
                 <div className="mt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {"Persistent memory across sessions"}
+                  {"Never let a lead go cold again"}
                 </div>
               </div>
             </FadeIn>
@@ -836,36 +836,36 @@ export default function HomePage() {
           </FadeIn>
 
           <div className="grid gap-6 md:grid-cols-2">
-            {/* Closes Deals */}
+            {/* Tracks Everything */}
             <FadeIn delay={50}>
               <div className="group relative overflow-hidden rounded-2xl border border-deal/20 bg-black/50 p-8 backdrop-blur transition-all hover:border-deal/40 hover:shadow-[0_0_40px_rgba(16,185,129,0.1)]">
                 <div className="mb-5 flex h-12 w-12 items-center justify-center rounded-xl bg-deal/15 text-2xl">
-                  💼
+                  📊
                 </div>
                 <h3 className="mb-2 font-display text-2xl font-black text-white">
-                  {"Closes Deals"}
+                  {"Tracks Every Customer"}
                 </h3>
-                <p className="mb-5 text-sm text-ash">{"Your agent handles the revenue side — so you focus on closing, not admin."}</p>
+                <p className="mb-5 text-sm text-ash">{"Your agent logs every interaction, follow-up, and commission automatically — so you never lose a deal or the money from it."}</p>
                 <ul className="space-y-3 text-sm text-ash">
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{"Follows up with leads automatically"}</span>
+                    <span>{"Logs every customer interaction automatically"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{"Manages pipeline stage-by-stage"}</span>
+                    <span>{"Tracks follow-ups so nothing goes cold"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{"Drafts contracts & invoices"}</span>
+                    <span>{"Records every commission & bonus tier"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{"Syncs with email & CRM"}</span>
+                    <span>{"Proves the deal was yours — no more stolen commissions"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                    <span>{"Never lets a cold lead go cold"}</span>
+                    <span>{"Knows your pay plan & pushes you to the next bonus tier"}</span>
                   </li>
                 </ul>
               </div>
@@ -1206,13 +1206,13 @@ export default function HomePage() {
                   <div className="h-px flex-1 bg-gradient-to-r from-deal/30 to-transparent" />
                 </div>
                 <h3 className="mb-3 font-display text-xl font-black text-white">
-                  {"Start closing. Start living."}
+                  {"Track commissions. Never miss one."}
                 </h3>
                 <p className="flex-1 text-sm leading-relaxed text-ash">
-                  Your agent handles follow-ups, remembers every customer, drafts your responses, and tracks your commissions — <span className="font-semibold text-bone">so you can leave work at work.</span> Family dinners. School drop-offs. Weekends that feel like weekends. The agent works. You live.
+                  Your agent logs every customer, follows up automatically, and tracks every commission against your pay plan — <span className="font-semibold text-bone">so you never leave money on the table.</span> Family dinners. School drop-offs. Weekends that feel like weekends. The agent tracks. You collect.
                 </p>
                 <div className="mt-auto pt-4 inline-flex items-center gap-1.5 rounded-full border border-deal/20 bg-deal/5 px-3 py-1 text-[10px] font-semibold text-deal-light">
-                  {"Work less. Close more."}
+                  {"Never lose a dollar"}
                 </div>
               </div>
             </FadeIn>
@@ -1274,8 +1274,8 @@ export default function HomePage() {
                 <span className="text-shine font-black">Right now.</span>
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ash">
-                Every deal. Every commission. Every flipped objection. Demo
-                data for now &mdash; real feed when reps are on the platform.
+                Every deal. Every commission. Every follow-up tracked.
+                Demo data for now &mdash; real feed when reps are on the platform.
               </p>
             </div>
           </FadeIn>
@@ -1311,9 +1311,9 @@ export default function HomePage() {
                   <p className="text-xl font-semibold leading-snug text-white md:text-2xl">
                     I used to drop follow-ups all the time.{" "}
                     <span className="text-shine">
-                      Now my agent handles it
+                      Now my agent tracks every single one
                     </span>{" "}
-                    while I&rsquo;m working the floor. Haven&rsquo;t lost a lead since.
+                    while I&rsquo;m working the floor. Haven&rsquo;t lost a lead — or a commission — since.
                   </p>
                   <div className="mt-7 flex items-center gap-3 border-t border-white/10 pt-5">
                     <div className="flex h-10 w-10 flex-shrink-0 items-center justify-center rounded-full font-display text-xs font-black text-white shadow-[0_4px_16px_rgba(16,185,129,0.5)]"
@@ -1383,8 +1383,8 @@ export default function HomePage() {
                 <span className="text-shine font-black"> Every stage. Every dollar.</span>
               </h2>
               <p className="mt-5 text-lg leading-relaxed text-ash md:text-xl">
-                Watch deals flow from objection to close. Your pipeline,
-                rendered in green.
+                Every deal tracked from first handshake to signed paperwork.
+                Your pipeline, your commissions, your proof.
               </p>
             </div>
           </FadeIn>
