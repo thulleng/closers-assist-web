@@ -55,3 +55,8 @@ export const LazyFloatingParticles = dynamic(
   () => import("@/components/FloatingParticles"),
   { ssr: false }
 );
+
+export const LazyDoraDemoChat = dynamic(
+  () => import("@/components/DoraDemoChat"),
+  { ssr: false }
+);
