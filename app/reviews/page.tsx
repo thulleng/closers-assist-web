@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Star, ArrowRight, Quote } from "lucide-react";
+import WriteReviewBanner from "@/components/WriteReviewBanner";
 import { LazyReviewsSection } from "@/lib/lazy-imports";
 
 export const metadata: Metadata = {
@@ -60,6 +61,13 @@ export default function ReviewsPage() {
               <span>Updated weekly</span>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Write a review banner */}
+      <section className="px-6 pt-12 md:pt-16">
+        <div className="mx-auto max-w-3xl">
+          <WriteReviewBanner />
         </div>
       </section>
 

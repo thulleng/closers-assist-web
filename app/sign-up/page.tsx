@@ -29,7 +29,7 @@ function SignUpFallback() {
 
 function SignUpForm() {
   const searchParams = useSearchParams();
-  const plan = searchParams.get("plan") || "free";
+  const plan = searchParams ? searchParams.get("plan") ?? "free" : "free";
   const [email, setEmail] = useState("");
   const [industry, setIndustry] = useState("auto");
   const [loading, setLoading] = useState(false);
