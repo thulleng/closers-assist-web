@@ -21,10 +21,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Reads utility bills in seconds. Builds proposals on the kitchen table. Handles 'is this really worth it' 100 times a day. Knows every federal, state, and utility incentive by heart.",
-  heroImage:
-    "https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1545209463-e2825498edbf?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/solar.jpg",
+  scenarioImage: "/images/industries/solar-scenario.jpg",
   featuresDay1: [
     "Utility bill reader — upload the PDF, get kWh usage, rate tier, TOU breakdown, and true cost-per-kWh in 3 seconds.",
     "System sizer — factors in shading, roof orientation, panel efficiency, production ratio for your geography.",

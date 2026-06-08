@@ -21,10 +21,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Pipeline pulse, MEDDIC coaching, demo prep, procurement survival. Built for AEs and AMs who are tired of coaching tools that only watch the call and never help close it.",
-  heroImage:
-    "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/saas.jpg",
+  scenarioImage: "/images/industries/saas-scenario.jpg",
   featuresDay1: [
     "MEDDIC / MEDDPICC scoring on every opportunity — surfaces the weakest link live.",
     "Discovery question generator tuned to your ICP and stage.",

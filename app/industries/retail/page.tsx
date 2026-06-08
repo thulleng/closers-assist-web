@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Built for furniture, appliances, jewelry, marine, RV, and powersports closers who get paid on the gross. Knows your product catalog, your financing menu, and the exact math on every deal.",
-  heroImage:
-    "https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/retail.jpg",
+  scenarioImage: "/images/industries/retail-scenario.jpg",
   featuresDay1: [
     "Full product catalog — specs, features, warranty tiers, delivery lead times, return policy.",
     "Financing menu math — 0%, 12/24/36mo, Synchrony, Wells Fargo, Affirm, promo terms, fallback tiers.",

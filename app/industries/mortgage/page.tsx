@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for mortgage and lending reps — handle rate objections, explain complex products clearly, and guide borrowers from application to close.",
-  heroImage:
-    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1554224155-6726b3ff858f?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/mortgage.jpg",
+  scenarioImage: "/images/industries/mortgage.jpg",
   featuresDay1: [
     "Rate objection handler — when a borrower says 'I found a lower rate,' your agent has the total cost comparison ready with APR, fees, points, and long-term math.",
     "Product explainer — break down FHA, VA, conventional, jumbo, and ARM products in plain language that builds confidence and closes faster.",

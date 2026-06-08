@@ -63,7 +63,7 @@ export default function Footer() {
               </span>
             </div>
             <p className="text-sm leading-relaxed text-ash">
-              The AI agent every closer owns. Built on the floor. Deployed worldwide.
+              The AI agent that tracks every commission. Built on the floor. Deployed worldwide.
             </p>
           </div>
 

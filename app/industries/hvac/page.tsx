@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for HVAC reps — handle system upgrade objections, sell maintenance agreements, and close emergency replacements with confidence.",
-  heroImage:
-    "https://images.unsplash.com/photo-1732395805034-e0bf859665e5?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1732395805034-e0bf859665e5?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/hvac.jpg",
+  scenarioImage: "/images/industries/hvac.jpg",
   featuresDay1: [
     "System upgrade objection handler — turn 'just fix it' into a full replacement conversation with ROI math, energy savings, and financing options.",
     "Maintenance agreement closer — scripts and rebuttals purpose-built to convert one-time repair customers into recurring agreement holders.",

@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for financial advisors — handle fee objections, articulate your value clearly, and convert prospects into long-term managed accounts.",
-  heroImage:
-    "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/financial-advisors.jpg",
+  scenarioImage: "/images/industries/financial-advisors.jpg",
   featuresDay1: [
     "Fee objection handler — turn '1% is too much' into a value conversation with ROI math on advice, tax optimization, and behavioral coaching.",
     "Robo-advisor rebuttal — data-backed responses that highlight what algorithms miss: life planning, tax strategy, estate coordination, and real relationships.",

@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Built for PMs who sell — pitching clients, upselling scope, defending SOWs, and closing change orders without damaging the relationship. Real scripts. Real confidence.",
-  heroImage:
-    "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1611532736597-de2d4265fba3?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/project-manager.jpg",
+  scenarioImage: "/images/industries/project-manager.jpg",
   featuresDay1: [
     "SOW defense scripts — word-for-word responses when clients push back on scope or deliverables.",
     "Change order closer — how to present, justify, and get sign-off on out-of-scope work.",

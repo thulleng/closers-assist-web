@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Built for agents who actually close — not for the brokerage's VP of Marketing. Knows your commission splits, your MLS workflow, your open-house cadence, and the exact moment a buyer goes cold.",
-  heroImage:
-    "https://images.unsplash.com/photo-1560518883-ce09059eeffa?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/real-estate.jpg",
+  scenarioImage: "/images/industries/real-estate.jpg",
   featuresDay1: [
     "Your brokerage's commission split modeled exactly — cap, post-cap, team splits, referral fees.",
     "Listing prep generator — comparative market analysis, pricing strategy, listing presentation scripts.",

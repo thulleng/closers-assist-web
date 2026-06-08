@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for roofing reps — handle insurance claim walkthroughs, close full replacements over repairs, and dominate your territory after every storm.",
-  heroImage:
-    "https://images.unsplash.com/photo-1635424824849-1b09bdcc55b1?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1635424824849-1b09bdcc55b1?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/roofing.jpg",
+  scenarioImage: "/images/industries/roofing.jpg",
   featuresDay1: [
     "Insurance claim coach — walk homeowners through the claim process step by step, removing confusion and building trust.",
     "Repair vs. replace closer — data-backed responses that show the long-term cost of a repair vs. the value of a full replacement.",

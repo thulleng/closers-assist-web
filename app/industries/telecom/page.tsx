@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for telecom reps — handle lease objections, close infrastructure agreements, and upsell bandwidth and service upgrades with confidence.",
-  heroImage:
-    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/telecom.jpg",
+  scenarioImage: "/images/industries/telecom.jpg",
   featuresDay1: [
     "Lease objection handler — counter property owner hesitation on tower leases with market rate comparisons, revenue projections, and neighbor case studies.",
     "Enterprise deal coach — keep complex multi-site deals moving with stakeholder mapping, procurement navigation, and follow-up cadence.",

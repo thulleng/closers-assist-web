@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Every device spec, every clinical protocol, every coding nuance — at your fingertips between cases. Built for reps in ortho, cardio, spine, neuro, and capital equipment who live between the OR and the hotel bar.",
-  heroImage:
-    "https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1538108149393-fbbd81895907?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/medical.jpg",
+  scenarioImage: "/images/industries/medical.jpg",
   featuresDay1: [
     "Full device spec library — indications, contraindications, implant catalog numbers, sterilization cycles.",
     "Clinical protocol briefings by procedure — surgical technique, instrument sets, loaner kit contents.",

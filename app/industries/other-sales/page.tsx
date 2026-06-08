@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "The universal sales playbook. Industry-agnostic closing fundamentals for anyone who sells — price objections, timing stalls, decision-maker runaround, and ghosting recovery.",
-  heroImage:
-    "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/other-sales.jpg",
+  scenarioImage: "/images/industries/other-sales.jpg",
   featuresDay1: [
     "Price objection playbook — word-for-word scripts for 'too expensive' ranked by close rate.",
     "'I need to think about it' closer — 3 plays to get a decision today without burning the relationship.",

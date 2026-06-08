@@ -29,11 +29,11 @@ const jetbrains = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Deal Clozr — The AI agent every closer owns.",
+    default: "Deal Clozr — Never lose a commission again.",
     template: "%s · Deal Clozr",
   },
   description:
-    "Car. Home. Policy. Panel. Plan. One AI agent, every industry, zero restrictions. Built by a working rep — not a SaaS company. $29.99/rep/mo.",
+    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget. Built by a working rep. $29.99/mo.",
   metadataBase: new URL("https://dealclozr.com"),
   manifest: "/manifest.json",
   icons: {
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "Deal Clozr — The AI agent every closer owns.",
+    title: "Deal Clozr — Never lose a commission again.",
     description:
-      "One AI agent, every industry, zero restrictions. Built by a working rep.",
+      "Track every customer, every commission. Your AI agent remembers what you forget.",
     url: "https://dealclozr.com",
     siteName: "Deal Clozr",
     locale: "en_US",
@@ -57,14 +57,14 @@ export const metadata: Metadata = {
         url: "/api/og",
         width: 1200,
         height: 630,
-        alt: "Deal Clozr — The AI agent every closer owns.",
+        alt: "Deal Clozr — Never lose a commission again.",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Deal Clozr — The AI agent every closer owns.",
-    description: "One AI agent, every industry, zero restrictions.",
+    title: "Deal Clozr — Never lose a commission again.",
+    description: "Track every customer, every commission. Your AI agent remembers what you forget.",
     images: ["/api/og"],
   },
   robots: {

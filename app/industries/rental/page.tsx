@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Built for Turo hosts, Airbnb operators, RV and boat rental owners, and truck/moving rental reps. Knows your objections cold — pricing, deposits, cancellations, damage disputes.",
-  heroImage:
-    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/rental.jpg",
+  scenarioImage: "/images/industries/rental.jpg",
   featuresDay1: [
     "Pricing objection scripts — 'I found it cheaper on Turo' handled word-for-word with confidence %.",
     "Damage deposit defense — exactly what to say when guests push back on holds.",

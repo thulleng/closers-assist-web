@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for home security reps — handle competitor objections, close monitoring contracts, and upsell smart home integrations with confidence.",
-  heroImage:
-    "https://images.unsplash.com/photo-1558002038-1055907df827?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1558002038-1055907df827?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/home-security.jpg",
+  scenarioImage: "/images/industries/home-security.jpg",
   featuresDay1: [
     "Competitor comparison coach — instantly counter ADT, Ring, and SimpliSafe objections with feature-by-feature breakdowns.",
     "No-contract objection handler — scripts that reframe monitoring contracts as value guarantees, not traps.",

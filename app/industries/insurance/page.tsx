@@ -21,10 +21,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Renewal tracking, cross-sell triggers, policy Q&A, quote comparisons. Built for P&C, Life, and Commercial agents who live or die on retention and cross-sell.",
-  heroImage:
-    "https://images.unsplash.com/photo-1450101499163-c8848c66ca85?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/insurance.jpg",
+  scenarioImage: "/images/industries/insurance-scenario.jpg",
   featuresDay1: [
     "Your book of business, mapped — retention rate, premium by line, cross-sell gaps surfaced live.",
     "Renewal alerts 60 / 30 / 14 days out with retention scripts ranked by your save rate.",

@@ -44,7 +44,7 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
   return (
     <>
       {/* HERO */}
-      <section className="relative overflow-hidden">
+      <section className="relative overflow-hidden bg-gradient-to-br from-deal/5 via-pit to-pit">
         <div className="absolute inset-0 -z-20">
           <Image
             src={data.heroImage}
@@ -126,7 +126,7 @@ export default function IndustryPage({ data }: { data: IndustryData }) {
         <div className="mx-auto max-w-7xl px-6 py-20 md:py-28">
           <div className="grid gap-12 lg:grid-cols-2 lg:items-center">
             <FadeIn>
-              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-iron">
+              <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-iron bg-gradient-to-br from-deal/5 via-transparent to-pit">
                 <Image
                   src={data.scenarioImage}
                   alt={data.scenarioLabel}

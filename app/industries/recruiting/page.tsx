@@ -23,10 +23,8 @@ const data: IndustryData = {
     </>
   ),
   sub: "Your AI agent built for recruiters and staffing reps — handle client objections, prep candidates for interviews, and close both sides of the placement faster.",
-  heroImage:
-    "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=1920&q=80&auto=format&fit=crop",
-  scenarioImage:
-    "https://images.unsplash.com/photo-1521791136064-7986c2920216?w=800&q=80&auto=format&fit=crop",
+  heroImage: "/images/industries/recruiting.jpg",
+  scenarioImage: "/images/industries/recruiting.jpg",
   featuresDay1: [
     "Client fee objection handler — counter 'your fee is too high' with placement ROI, time-to-hire data, and quality-of-hire comparisons.",
     "Candidate prep coach — comprehensive interview prep scripts, salary negotiation coaching, and objection handling for candidates.",
