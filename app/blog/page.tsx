@@ -11,12 +11,12 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
-    slug: "five-minute-rule",
-    title: "The 5-Minute Rule: Why Most Sales Reps Lose Deals Before They Even Know They Exist",
+    slug: "four-numbers-that-matter",
+    title: "The Four Numbers That Matter in Every Deal",
     date: "June 1, 2026",
-    readTime: "5 min",
-    preview: "Harvard data: respond in 5 minutes and you're 100x more likely to contact a lead than at 30 minutes. Here's how the speed of your follow-up determines whether you close or watch your deals walk — and exactly how AI fixes it.",
-    tag: "Sales Automation",
+    readTime: "4 min",
+    preview: "Payment, term, money factor, residual. Most reps know the payment but don't understand the deal. Here's how learning the four numbers changed everything on the floor.",
+    tag: "Deal Math",
   },
   {
     slug: "the-90-second-t-o",

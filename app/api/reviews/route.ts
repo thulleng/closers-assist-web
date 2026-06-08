@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
         role: role?.trim() || null,
         company: company?.trim() || null,
         location: location?.trim() || null,
-        status: "pending",
+        status: "approved",
       })
       .select()
       .single();
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: "Failed to submit review" }, { status: 500 });
     }
 
-    return NextResponse.json({ review: data, message: "Review submitted for approval" }, { status: 201 });
+    return NextResponse.json({ review: data, message: "Review posted" }, { status: 201 });
   } catch (err) {
     console.error("POST review unexpected error:", err);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });
