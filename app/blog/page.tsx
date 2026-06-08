@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "why-my-ai-knows-you-better",
+    title: "Why My AI Knows You Better Than My CRM Ever Did",
+    date: "June 8, 2026",
+    readTime: "4 min",
+    preview: "A CRM remembers what you said. My agent remembers how you buy, how you think, and exactly when to bring you back. Here's why memory changes everything on the floor.",
+    tag: "AI & Sales",
+  },
+  {
     slug: "ai-screens-your-buyers",
     title: "AI Screens Your Buyers — So You Skip the Tire-Kickers and Close the Real Ones",
     date: "June 8, 2026",
