@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "ai-screens-your-buyers",
+    title: "AI Screens Your Buyers — So You Skip the Tire-Kickers and Close the Real Ones",
+    date: "June 8, 2026",
+    readTime: "5 min",
+    preview: "Tire-kickers cost closers $1,200 a week in wasted time. Here's how AI screens leads before they hit your phone — and why the best reps are letting bots handle the qualifiers.",
+    tag: "Sales Automation",
+  },
+  {
     slug: "four-numbers-that-matter",
     title: "The Four Numbers That Matter in Every Deal",
     date: "June 1, 2026",
