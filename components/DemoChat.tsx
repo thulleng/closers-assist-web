@@ -399,15 +399,24 @@ export default function DemoChat() {
           <Zap className="h-3 w-3 text-deal/50" />
           {remaining > 0
             ? `${remaining} free question${remaining !== 1 ? "s" : ""} left`
-            : "Ready to deploy? →"}
+            : "Questions used up!"}
         </p>
         {messages.length > 0 && (
+          remaining > 0 ? (
           <a
             href="/pricing"
             className="text-xs font-semibold text-deal hover:text-deal-light transition-colors"
           >
             See plans & pricing →
           </a>
+          ) : (
+          <a
+            href="/sign-up"
+            className="inline-flex items-center gap-1.5 rounded-lg bg-deal px-4 py-2 text-xs font-bold text-black hover:bg-deal-light transition-all"
+          >
+            Deploy Your Agent →
+          </a>
+          )
         )}
       </div>
     </div>
