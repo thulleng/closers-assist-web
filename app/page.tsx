@@ -45,6 +45,7 @@ import {
   LazyMobileCTABar,
   LazyNewsletterSection,
   LazyFloatingParticles,
+  LazyDoraDemoChat,
 } from "@/lib/lazy-imports";
 import { industries, testimonials, layers, marketplaceSkills, comparisonRows } from "@/lib/homepage-data";
 
@@ -338,11 +339,16 @@ export default function HomePage() {
                   </Link>
                   <Link
                     href="#tutorial"
-                    className="text-gold-light hover:underline"
+                    className="text-xs text-ash hover:text-white transition-colors"
                   >
-                    {"▶ Watch it close a deal in under 4 minutes"}
+                    ▶ Full walkthrough (4 min)
                   </Link>
                 </div>
+              </div>
+
+              {/* Dora demo chat */}
+              <div className="mt-4">
+                <LazyDoraDemoChat />
               </div>
 
               {/* Waitlist counter */}
