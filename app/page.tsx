@@ -32,6 +32,7 @@ import FadeIn from "@/components/FadeIn";
 import Counter from "@/components/Counter";
 import EmailCapture from "@/components/EmailCapture";
 import WaitlistCounter from "@/components/WaitlistCounter";
+import ReviewScoreBadge from "@/components/ReviewScoreBadge";
 import HeroVisual from "@/components/HeroVisual";
 import TiltCard from "@/components/TiltCard";
 import {
@@ -354,6 +355,11 @@ export default function HomePage() {
               {/* Waitlist counter */}
               <div className="mt-6">
                 <WaitlistCounter />  
+              </div>
+
+              {/* Review score badge */}
+              <div className="flex justify-center">
+                <ReviewScoreBadge />
               </div>
             </div>
 

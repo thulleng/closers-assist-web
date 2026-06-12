@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 
@@ -51,16 +50,15 @@ export default function FounderPage() {
               </p>
             </div>
 
-            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)]">
-              <Image
-                src="/images/thul-founder.jpg"
-                alt="Thul Leng on the lot, New Port Richey, Florida"
-                fill
-                className="object-cover"
-                sizes="(min-width: 1024px) 45vw, 100vw"
-                priority
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-pit via-pit/20 to-transparent" />
+            <div className="relative aspect-[4/5] overflow-hidden rounded-2xl border border-white/10 shadow-[0_30px_80px_rgba(0,0,0,0.5)] bg-gradient-to-br from-deal/20 via-black/60 to-pit flex items-center justify-center">
+              <div className="text-center p-6">
+                <div className="mx-auto mb-3 flex h-20 w-20 items-center justify-center rounded-full border border-deal/30 bg-deal/10">
+                  <span className="text-3xl font-black text-deal">T</span>
+                </div>
+                <p className="text-sm font-bold text-white">Thul Leng</p>
+                <p className="text-xs text-ash mt-1">Photo coming soon</p>
+              </div>
+              <div className="absolute inset-0 bg-gradient-to-t from-pit via-pit/20 to-transparent pointer-events-none" />
               <div
                 className="pointer-events-none absolute -bottom-10 -right-10 h-40 w-40 rounded-full blur-3xl"
                 style={{

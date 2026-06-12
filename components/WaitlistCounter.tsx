@@ -63,7 +63,7 @@ export default function WaitlistCounter() {
       <div>
         <div className="flex items-baseline gap-1.5">
           <span className="font-mono text-3xl font-black text-deal tabular-nums leading-none">
-            {visible ? count : 0}
+            {visible ? count : target}
           </span>
           {visible && count >= target && (
             <TrendingUp className="h-4 w-4 text-emerald-400 animate-bounce" />
