@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "when-buyers-actually-reply",
+    title: "When Buyers Actually Reply — The Follow-Up Timing Most Reps Get Wrong",
+    date: "June 15, 2026",
+    readTime: "5 min",
+    preview: "Most reps blast follow-ups at 10am. Real buyers reply at 9:47pm. Here's why your timing is costing you deals — and how AI fixes it without you changing your schedule.",
+    tag: "Customer Psychology",
+  },
+  {
     slug: "why-my-ai-knows-you-better",
     title: "Why My AI Knows You Better Than My CRM Ever Did",
     date: "June 8, 2026",
