@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "the-three-layer-follow-up",
+    title: "The Three-Layer Follow-Up — Structure That Catches Every Deal",
+    date: "June 16, 2026",
+    readTime: "5 min",
+    preview: "Most reps blast follow-ups at random. A three-layer system catches every lead, every referral, and every second-chance — without turning your phone into a notification nightmare.",
+    tag: "Floor Strategy",
+  },
+  {
     slug: "when-buyers-actually-reply",
     title: "When Buyers Actually Reply — The Follow-Up Timing Most Reps Get Wrong",
     date: "June 15, 2026",
