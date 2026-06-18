@@ -1,8 +1,80 @@
 import { NextRequest } from "next/server";
 import { createClient } from "@/lib/supabase/server";
 
-const BRIDGE = "http://178.105.161.224:8910";
 const DEEPSEEK = "https://api.deepseek.com/v1/chat/completions";
+
+// ─── 4-tier model chain ─────────────────────────────────────────────────────
+async function tryTier(messages: Array<{ role: string; content: string }>, tierIdx: number):
+  Promise<string | null> {
+
+  const tiers = [
+    { url: "https://api.deepseek.com/v1/chat/completions",  model: "deepseek-chat",   key: "DEEPSEEK_API_KEY",   timeout: 20000 },
+    { url: "https://api.deepseek.com/v1/chat/completions",  model: "deepseek-v4-pro",  key: "DEEPSEEK_API_KEY",   timeout: 40000 },
+    { url: "https://api.anthropic.com/v1/messages",         model: "claude-opus-4-8",  key: "ANTHROPIC_API_KEY",  timeout: 50000 },
+    { url: "https://api.openai.com/v1/chat/completions",    model: "gpt-5.5",          key: "OPENAI_API_KEY",     timeout: 60000 },
+  ];
+
+  const tier = tiers[tierIdx];
+  if (!tier) return null;
+
+  const apiKey = process.env[tier.key];
+  if (!apiKey) return null;
+
+  const { url, model, timeout } = tier;
+
+  // Anthropic has different API format
+  if (url.includes("anthropic")) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": apiKey,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 600,
+          system: messages[0]?.content || "",
+          messages: messages.slice(1),
+        }),
+        signal: AbortSignal.timeout(timeout),
+      });
+      if (!res.ok) return null;
+      const data = await res.json();
+      return data.content?.[0]?.text || null;
+    } catch { return null; }
+  }
+
+  // DeepSeek / OpenAI standard API
+  try {
+    const res = await fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${apiKey}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages,
+        max_tokens: 400,
+        temperature: 0.7,
+      }),
+      signal: AbortSignal.timeout(timeout),
+    });
+    if (!res.ok) return null;
+    const data = await res.json();
+    return data.choices?.[0]?.message?.content || null;
+  } catch { return null; }
+}
+
+async function tryChain(messages: Array<{ role: string; content: string }>): Promise<string> {
+  for (let i = 0; i < 4; i++) {
+    const reply = await tryTier(messages, i);
+    if (reply) return reply;
+  }
+  return "I'm catching my breath — try me again! ⚡";
+}
 
 // ─── Context builder ─────────────────────────────────────────────────────────
 function monthWindow() {
@@ -31,43 +103,6 @@ async function buildContext(supabase: any, userId: string): Promise<string> {
   return `\n[REFERENCE ONLY — do not mention unless asked]\nUser: ${name}${p?.company ? ` @ ${p.company}` : ""}. ${p?.industry || "auto"} industry. $${draw} draw.\nMonth: ${label}. ${deals.length} deals, ${totalUnits}u, $${totalComm.toLocaleString()} commission. Use Supabase for details.\n[/REFERENCE]`;
 }
 
-// ─── Bridge proxy (bridge handles auto-provisioning internally) ──────────────
-async function askBridge(message: string, userId?: string, profile?: any): Promise<string | null> {
-  try {
-    const body: any = { message };
-    if (userId) {
-      body.session = userId;
-      if (profile) body.profile = profile;
-    }
-    const res = await fetch(`${BRIDGE}/chat`, {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(body),
-      signal: AbortSignal.timeout(65000),
-    });
-    if (!res.ok) return null;
-    const data = await res.json();
-    const reply = data.reply || "";
-    if (!reply || reply.includes("Got tangled")) return null;
-    return reply;
-  } catch { return null; }
-}
-
-// ─── DeepSeek fallback ──────────────────────────────────────────────────────
-async function askDeepSeek(system: string, message: string): Promise<string> {
-  const key = process.env.DEEPSEEK_API_KEY;
-  if (!key) return "I'm catching my breath — try me again! ⚡";
-  const res = await fetch(DEEPSEEK, {
-    method: "POST",
-    headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
-    body: JSON.stringify({ model: "deepseek-chat", messages: [{ role: "system", content: system }, { role: "user", content: message }], max_tokens: 600, temperature: 0.7 }),
-    signal: AbortSignal.timeout(15000),
-  });
-  if (!res.ok) throw new Error(`DeepSeek ${res.status}`);
-  const data = await res.json();
-  return data.choices?.[0]?.message?.content || "Hey! 👋";
-}
-
 const SYSTEM = `You are Sassy — a sharp, fast AI closer built into Deal Clozr. Short punchy sentences. Lead with numbers. Never mention infrastructure, models, or internal details.`;
 
 // ─── POST handler ───────────────────────────────────────────────────────────
@@ -77,28 +112,23 @@ export async function POST(req: NextRequest) {
     if (!message?.trim()) return new Response("Say something!", { status: 200 });
 
     let enriched = message.trim();
-    let userId: string | null = null;
-    let profile: any = null;
 
     try {
       const supabase = await createClient();
       const { data: { user } } = await supabase.auth.getUser();
       if (user) {
-        userId = user.id;
-        const { data: p } = await supabase
-          .from("agent_profiles")
-          .select("first_name, last_name, company, draw, industry, agent_name, commission_pct")
-          .eq("user_id", user.id)
-          .maybeSingle();
-        profile = p;
         const ctx = await buildContext(supabase, user.id);
         enriched = `${ctx}\n\nUser says: ${message.trim()}`;
       }
     } catch { /* unauthenticated */ }
 
-    // Bridge handles auto-provisioning internally — no separate API call needed
-    const reply = await askBridge(enriched, userId || undefined, profile || undefined)
-      || await askDeepSeek(SYSTEM, enriched);
+    // Build messages array for the model chain
+    const messages = [
+      { role: "system", content: SYSTEM },
+      { role: "user", content: enriched },
+    ];
+
+    const reply = await tryChain(messages);
 
     return new Response(JSON.stringify({ reply }), {
       status: 200,
