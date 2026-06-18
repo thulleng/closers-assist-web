@@ -26,7 +26,7 @@ export default function SassyPage() {
   };
 
   return (
-    <main className="min-h-screen bg-black text-white">
+    <main className="fixed inset-0 bg-black text-white z-50 overflow-y-auto">
       {/* Hero */}
       <section className="relative overflow-hidden px-6 py-24 text-center">
         <div className="mx-auto max-w-3xl">
