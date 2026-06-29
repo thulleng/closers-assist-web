@@ -64,6 +64,7 @@ export default function Nav() {
           <Link href="/compare" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Compare</Link>
           <Link href="/pricing" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Pricing</Link>
           <Link href="/founder" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Founder</Link>
+          <Link href="/sassy" className="text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300">Sassy</Link>
           <Link href="/blog" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Blog</Link>
           <Link href="/reviews" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Reviews</Link>
           <Link href="/referral" className="text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80">Refer & Earn</Link>

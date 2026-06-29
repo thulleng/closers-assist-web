@@ -5,13 +5,7 @@ const rateLimit = new Map<string, { count: number; reset: number }>();
 const MAX_QUESTIONS = 20;
 const WINDOW_MS = 4 * 60 * 60 * 1000;
 
-const DORA_SYSTEM = `You are Dora — the marketing host on Deal Clozr.com. You are a closer's personality, not a closer. You sell the product. You NEVER handle deals, commissions, or customer data.
-
-YOUR JOB — convert visitors to signups:
-- Answer questions about pricing, industries, features, how it works
-- Sell the dream: "One AI employee that handles deals AND life"
-- Highlight that the agent handles images, videos, and voice notes (after signup)
-- Redirect anyone who asks about their actual deals: "That's what your personal agent handles — sign up and they'll meet you on Telegram. Same brain, everywhere you close."
+const DORA_SYSTEM = `You are Dora — the live AI host on ClosersAssist.com. You are NOT a FAQ bot. You are NOT a support widget. You are a closer. Your job is to make visitors feel "this is different" in the first 3 messages.
 
 VOICE RULES — every response:
 - Warm, direct, like a text from someone exciting. 1-3 sentences.
@@ -20,10 +14,10 @@ VOICE RULES — every response:
 - Use 😏, 👋, 🏎️, 💰 naturally — but don't overdo it.
 
 WHAT YOU SELL:
-Deal Clozr is an AI employee that handles deals AND personal life. Built by Thul Leng, a working car salesman at a dealership in Holiday, Florida. Not a chatbot — an employee that remembers everything, follows up, tracks commissions, and handles life stuff too.
+ClosersAssist is an AI employee that handles deals AND personal life. Built by Thul Leng, a working car salesman at Sun Toyota in Holiday, Florida. Not a chatbot — an employee that remembers everything, follows up, tracks commissions, and handles life stuff too.
 - Starter: $29.99/mo ($287.88/yr). 14-day free trial. All 18 industries.
 - Pro: $5,997/yr. White-glove. Thul trains it on YOUR scripts.
-- Enterprise: Custom. Contact thul@dealclozr.com.
+- Enterprise: Custom. Contact thul@closersassist.com.
 
 OBJECTION QUICK HITS:
 - "Too expensive" → "One extra deal covers this for years."
@@ -45,72 +39,157 @@ BOUNDARIES:
 - If you don't know: "Thul's still building that — want me to flag him?"
 - Never be rude or dismissive. You're the best first impression this company will ever make.`;
 
-// ─── Dora uses deepseek-chat only (marketing bot, doesn't need 4-tier chain) ─
-async function streamDoraReply(chatMessages: Array<{ role: string; content: string }>, controller: ReadableStreamDefaultController, remaining: number): Promise<void> {
-  const key = process.env.DEEPSEEK_API_KEY;
-  if (!key) {
-    controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ error: "Dora's thinking — hit me again in a sec! ⚡", done: true })}\n\n`));
-    controller.close();
-    return;
+// ─── 4-tier model chain ─────────────────────────────────────────────────────
+async function tryTierStream(chatMessages: Array<{ role: string; content: string }>, tierIdx: number):
+  Promise<{ stream: ReadableStream | null; reply: string | null }> {
+
+  const tiers = [
+    { url: "https://api.deepseek.com/v1/chat/completions",    model: "deepseek-chat",   key: process.env.DEEPSEEK_API_KEY,  timeout: 20000 },
+    { url: "https://api.deepseek.com/v1/chat/completions",    model: "deepseek-v4-pro",  key: process.env.DEEPSEEK_API_KEY,  timeout: 40000 },
+    { url: "https://api.anthropic.com/v1/messages",           model: "claude-opus-4-8",  key: process.env.ANTHROPIC_API_KEY, timeout: 50000 },
+    { url: "https://api.openai.com/v1/chat/completions",      model: "gpt-5.5",          key: process.env.OPENAI_API_KEY,    timeout: 60000 },
+  ];
+
+  const tier = tiers[tierIdx];
+  if (!tier || !tier.key) return { stream: null, reply: null };
+
+  const { url, model, key, timeout } = tier;
+
+  // Anthropic — non-streaming fallback only (different SSE format)
+  if (url.includes("anthropic")) {
+    try {
+      const res = await fetch(url, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "x-api-key": key,
+          "anthropic-version": "2023-06-01",
+        },
+        body: JSON.stringify({
+          model,
+          max_tokens: 400,
+          system: chatMessages[0]?.content || DORA_SYSTEM,
+          messages: chatMessages.slice(1),
+        }),
+        signal: AbortSignal.timeout(timeout),
+      });
+      if (!res.ok) return { stream: null, reply: null };
+      const data = await res.json();
+      return { stream: null, reply: data.content?.[0]?.text || null };
+    } catch { return { stream: null, reply: null }; }
   }
 
+  // DeepSeek / OpenAI streaming
   try {
-    const res = await fetch("https://api.deepseek.com/v1/chat/completions", {
+    const res = await fetch(url, {
       method: "POST",
-      headers: { "Content-Type": "application/json", "Authorization": `Bearer ${key}` },
-      body: JSON.stringify({ model: "deepseek-chat", messages: chatMessages, max_tokens: 300, temperature: 0.85, stream: true }),
-      signal: AbortSignal.timeout(15000),
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${key}`,
+      },
+      body: JSON.stringify({
+        model,
+        messages: chatMessages,
+        max_tokens: 300,
+        temperature: 0.85,
+        stream: true,
+      }),
+      signal: AbortSignal.timeout(timeout),
+    });
+    if (!res.ok) return { stream: null, reply: null };
+
+    const reader = res.body?.getReader();
+    if (!reader) return { stream: null, reply: null };
+
+    // Build a new ReadableStream that pipes the SSE events
+    const newStream = new ReadableStream({
+      async start(controller) {
+        const decoder = new TextDecoder();
+        let buffer = "";
+        let anyText = false;
+
+        while (true) {
+          const { done, value } = await reader!.read();
+          if (done) break;
+
+          buffer += decoder.decode(value, { stream: true });
+          const lines = buffer.split("\n");
+          buffer = lines.pop() || "";
+
+          for (const line of lines) {
+            const trimmed = line.trim();
+            if (!trimmed || !trimmed.startsWith("data: ")) continue;
+            const data = trimmed.slice(6);
+            if (data === "[DONE]") continue;
+
+            try {
+              const parsed = JSON.parse(data);
+              const delta = parsed.choices?.[0]?.delta?.content;
+              if (delta) {
+                anyText = true;
+                controller.enqueue(
+                  new TextEncoder().encode(`data: ${JSON.stringify({ text: delta })}\n\n`)
+                );
+              }
+            } catch { /* skip unparseable chunks */ }
+          }
+        }
+
+        if (!anyText) {
+          controller.enqueue(
+            new TextEncoder().encode(`data: ${JSON.stringify({ text: "Hmm — that one tripped my filter. Try rewording, or ask me something else! 😏" })}\n\n`)
+          );
+        }
+        controller.close();
+      },
     });
 
-    if (!res.ok) {
-      controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ error: "Dora's thinking — hit me again in a sec! ⚡", done: true })}\n\n`));
+    return { stream: newStream, reply: null };
+  } catch { return { stream: null, reply: null }; }
+}
+
+async function streamOrFallback(chatMessages: Array<{ role: string; content: string }>, controller: ReadableStreamDefaultController, remaining: number): Promise<void> {
+  for (let i = 0; i < 4; i++) {
+    const result = await tryTierStream(chatMessages, i);
+
+    if (result.stream) {
+      // Stream succeeded — pipe the rest
+      const reader = result.stream.getReader();
+      const decoder = new TextDecoder();
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        controller.enqueue(value);
+      }
+      controller.enqueue(
+        new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
+      );
       controller.close();
       return;
     }
 
-    const reader = res.body?.getReader();
-    if (!reader) throw new Error("No reader");
-
-    const decoder = new TextDecoder();
-    let buffer = "";
-    let anyText = false;
-
-    while (true) {
-      const { done, value } = await reader.read();
-      if (done) break;
-      buffer += decoder.decode(value, { stream: true });
-      const lines = buffer.split("\n");
-      buffer = lines.pop() || "";
-
-      for (const line of lines) {
-        const trimmed = line.trim();
-        if (!trimmed || !trimmed.startsWith("data: ")) continue;
-        const data = trimmed.slice(6);
-        if (data === "[DONE]") continue;
-        try {
-          const parsed = JSON.parse(data);
-          const delta = parsed.choices?.[0]?.delta?.content;
-          if (delta) {
-            anyText = true;
-            controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ text: delta })}\n\n`));
-          }
-        } catch { /* skip */ }
-      }
+    if (result.reply) {
+      // Non-streaming reply from Anthropic — send as one chunk
+      controller.enqueue(
+        new TextEncoder().encode(`data: ${JSON.stringify({ text: result.reply })}\n\n`)
+      );
+      controller.enqueue(
+        new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`)
+      );
+      controller.close();
+      return;
     }
-
-    if (!anyText) {
-      controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ text: "Hmm — that one tripped my filter. Try rewording, or ask me something else! 😏" })}\n\n`));
-    }
-    controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ done: true, remaining })}\n\n`));
-    controller.close();
-  } catch {
-    controller.enqueue(new TextEncoder().encode(`data: ${JSON.stringify({ error: "I hit a speed bump — try again! 🏎️", done: true })}\n\n`));
-    controller.close();
   }
+
+  // All 4 tiers failed
+  controller.enqueue(
+    new TextEncoder().encode(`data: ${JSON.stringify({ error: "I hit a speed bump — try again! 🏎️", done: true })}\n\n`)
+  );
+  controller.close();
 }
 
 /**
- * Dora — the marketing agent on dealclozr.com
+ * Dora — the marketing agent on closersassist.com
  * Streams via 4-tier model chain for typewriter effect.
  */
 export async function POST(req: NextRequest) {
@@ -168,7 +247,7 @@ export async function POST(req: NextRequest) {
 
   const stream = new ReadableStream({
     async start(controller) {
-      await streamDoraReply(chatMessages, controller, remaining);
+      await streamOrFallback(chatMessages, controller, remaining);
     },
   });
 
