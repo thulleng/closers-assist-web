@@ -19,6 +19,14 @@ const POSTS = [
     tag: "Sales Automation",
   },
   {
+    slug: "why-buyers-ghost-you",
+    title: "Why Buyers Ghost You — And the One Question That Brings Them Back",
+    date: "June 30, 2026",
+    readTime: "5 min",
+    preview: "The real reason prospects go silent isn't the price or the competition. It's psychology. Here's the one question that re-engages 4 out of 5 ghosted leads.",
+    tag: "Customer Psychology",
+  },
+  {
     slug: "the-three-layer-follow-up",
     title: "The Three-Layer Follow-Up — Structure That Catches Every Deal",
     date: "June 16, 2026",
