@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "after-hours-leads",
+    title: "Every Lead After 9pm Is a Deal Waiting to Happen",
+    date: "June 29, 2026",
+    readTime: "4 min",
+    preview: "The best leads hit your phone when you're off the clock. After-hours leads convert 6x better with instant AI response — here's the 60-day data that changed how I handle my pipeline.",
+    tag: "Sales Automation",
+  },
+  {
     slug: "the-three-layer-follow-up",
     title: "The Three-Layer Follow-Up — Structure That Catches Every Deal",
     date: "June 16, 2026",

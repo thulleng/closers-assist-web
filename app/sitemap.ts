@@ -51,11 +51,19 @@ const industries = [
 ];
 
 const blogPosts = [
+  "after-hours-leads",
+  "the-three-layer-follow-up",
+  "when-buyers-actually-reply",
+  "why-my-ai-knows-you-better",
+  "ai-screens-your-buyers",
+  "four-numbers-that-matter",
+  "the-90-second-t-o",
+  "to-that-saved-the-deal",
+  "three-buyers-on-the-lot",
+  "ai-closer-30-days",
   "how-i-built-this",
   "mini-that-pays",
   "service-lane-plays",
-  "ai-closer-30-days",
-  "three-buyers-on-the-lot",
 ];
 
 export default function sitemap(): MetadataRoute.Sitemap {
