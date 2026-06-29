@@ -27,6 +27,14 @@ const POSTS = [
     tag: "Customer Psychology",
   },
   {
+    slug: "193-pings",
+    title: "I Pinged My AI 193 Times. It Reviewed Its Own Code.",
+    date: "June 17, 2026",
+    readTime: "5 min",
+    preview: "193 consecutive pings. Zero drops. Dora found duplicate documentation, stale data, and missing procedures — then fixed them without being told how. The ping test that became a meta-test.",
+    tag: "Case Study",
+  },
+  {
     slug: "the-three-layer-follow-up",
     title: "The Three-Layer Follow-Up — Structure That Catches Every Deal",
     date: "June 16, 2026",

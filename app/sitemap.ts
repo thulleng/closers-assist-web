@@ -52,6 +52,7 @@ const industries = [
 
 const blogPosts = [
   "after-hours-leads",
+  "193-pings",
   "the-three-layer-follow-up",
   "when-buyers-actually-reply",
   "why-my-ai-knows-you-better",
