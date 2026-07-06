@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "service-lane-ups",
+    title: "The Service Lane Is the Best Place to Sell a Car — Here's the Script",
+    date: "July 6, 2026",
+    readTime: "4 min",
+    preview: "Every customer in the service lane has already bought from you. Here's the 90-second script a Toyota rep uses to turn oil changes into new-car deals — and the system that doubled his strike rate.",
+    tag: "Floor Strategy",
+  },
+  {
     slug: "after-hours-leads",
     title: "Every Lead After 9pm Is a Deal Waiting to Happen",
     date: "June 29, 2026",
