@@ -57,18 +57,18 @@ export default function Nav() {
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 md:flex">
-          <Link href="/how-it-works" className="text-sm font-medium text-white/90 transition-colors hover:text-white">How it works</Link>
-          <Link href="/industries" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Industries</Link>
-          <Link href="/dashboard/auto" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Dashboard</Link>
-          <Link href="/compare" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Compare</Link>
-          <Link href="/pricing" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Pricing</Link>
-          <Link href="/founder" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Founder</Link>
-          <Link href="/sassy" className="text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300">Sassy</Link>
-          <Link href="/blog" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Blog</Link>
-          <Link href="/reviews" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Reviews</Link>
-          <Link href="/referral" className="text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80">Refer & Earn</Link>
-          <Link href="/enterprise" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Enterprise</Link>
+        <nav className="hidden items-center gap-6 md:flex">
+          <Link href="/how-it-works" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">How it works</Link>
+          <Link href="/industries" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Industries</Link>
+          <Link href="/dashboard/auto" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Dashboard</Link>
+          <Link href="/compare" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Compare</Link>
+          <Link href="/pricing" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Pricing</Link>
+          <Link href="/founder" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Founder</Link>
+          <Link href="/sassy" className="whitespace-nowrap text-sm font-medium text-cyan-400 transition-colors hover:text-cyan-300">Sassy</Link>
+          <Link href="/blog" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Blog</Link>
+          <Link href="/reviews" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Reviews</Link>
+          <Link href="/referral" className="whitespace-nowrap text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80">Refer & Earn</Link>
+          <Link href="/enterprise" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Enterprise</Link>
         </nav>
 
         <div className="flex items-center gap-3">
@@ -77,7 +77,7 @@ export default function Nav() {
           ) : (
             <>
               <Link href="/pricing" className="btn-loud rounded-xl px-5 py-2.5 text-sm">Get Started</Link>
-              <Link href="/login" className="text-sm font-medium text-white/90 transition-colors hover:text-white">Sign In</Link>
+              <Link href="/login" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Sign In</Link>
             </>
           )}
         </div>

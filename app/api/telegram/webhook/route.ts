@@ -129,6 +129,36 @@ export async function POST(req: NextRequest) {
       }
     };
 
+    // ── VIN Decode (runs before profile lookup, works for anyone) ──
+    if (text && text.trim()) {
+      const { extractVin, decodeVin, formatVinResponse, formatVinError } = await import("@/lib/vin-decode");
+
+      // `/vin` with no VIN → show help
+      if (/^\/vin\s*$/i.test(text.trim())) {
+        await reply(
+          `🔍 *VIN Lookup*\n\n` +
+          `Send me a VIN number and I'll decode it!\n\n` +
+          `Examples:\n` +
+          `• \`/vin 1HGCM82633A004352\`\n` +
+          `• \`VIN: 1HGCM82633A004352\`\n` +
+          `• Just paste a VIN directly\n\n` +
+          `I'll return the year, make, model, trim, engine, and MSRP (when available).`
+        );
+        return NextResponse.json({ ok: true });
+      }
+
+      const vin = extractVin(text.trim());
+      if (vin) {
+        const result = await decodeVin(vin);
+        if (result.success) {
+          await reply(formatVinResponse(result));
+        } else {
+          await reply(formatVinError(result.error));
+        }
+        return NextResponse.json({ ok: true });
+      }
+    }
+
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
     if (!supabaseUrl || !supabaseKey) {
