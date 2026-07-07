@@ -497,18 +497,36 @@ Be direct, practical, zero fluff. The person texting you is between customers. G
             });
             const visionRes = await ai.messages.create({
               model: "deepseek-chat",
-              max_tokens: 500,
+              max_tokens: 600,
               messages: [{
                 role: "user",
                 content: [
                   { type: "image", source: { type: "base64", media_type: "image/jpeg", data: b64 } },
-                  { type: "text", text: caption || "What's in this image? Describe concisely." }
+                  { type: "text", text: caption
+                    ? `Describe this image. Also: if there is a Vehicle Identification Number (VIN), tire size, GVWR, or any text labels, list them.`
+                    : `Describe this image concisely. If there is a Vehicle Identification Number (VIN) — a 17-character code — include it exactly. Also note any text labels, door jamb stickers, or vehicle info panels.` }
                 ],
               }],
             });
-            processedText = visionRes.content[0]?.type === "text"
-              ? `[Image]: ${visionRes.content[0].text}${caption ? `\nCaption: ${caption}` : ""}`
-              : `[Image attached]${caption ? ` - ${caption}` : ""}`;
+            const visionText = visionRes.content[0]?.type === "text"
+              ? visionRes.content[0].text
+              : "[Image attached]";
+
+            // Auto-detect and decode VIN from photo
+            const { extractVin, decodeVin, formatVinResponse, formatVinError } = await import("@/lib/vin-decode");
+            const detectedVin = extractVin(visionText);
+            if (detectedVin) {
+              const vinResult = await decodeVin(detectedVin);
+              if (vinResult.success) {
+                await reply(formatVinResponse(vinResult));
+                const title = [vinResult.year, vinResult.make, vinResult.model].filter(Boolean).join(" ");
+                processedText = `[User sent a photo of a vehicle VIN label]\n\nDecoded: ${title} ${vinResult.trim}\nVIN: ${vinResult.vin}\n\nVision description: ${visionText}`;
+              } else {
+                processedText = `[Image - VIN detected but could not decode: ${vinResult.error}]\n${visionText}${caption ? `\nCaption: ${caption}` : ""}`;
+              }
+            } else {
+              processedText = `[Image]: ${visionText}${caption ? `\nCaption: ${caption}` : ""}`;
+            }
           }
         }
       } catch (mediaErr: any) {
