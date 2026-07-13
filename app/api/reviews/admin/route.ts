@@ -2,34 +2,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 
 // PATCH — approve or reject a review (admin only, service_role)
-// DELETE — remove a review by ID (admin only, service_role)
-export async function DELETE(req: NextRequest) {
-  try {
-    const supabase = createAdminClient();
-    const { searchParams } = new URL(req.url);
-    const id = searchParams.get("id");
-
-    if (!id || typeof id !== "string") {
-      return NextResponse.json({ error: "Review ID required" }, { status: 400 });
-    }
-
-    const { error } = await supabase
-      .from("reviews")
-      .delete()
-      .eq("id", id);
-
-    if (error) {
-      console.error("DELETE review error:", error);
-      return NextResponse.json({ error: "Failed to delete review" }, { status: 500 });
-    }
-
-    return NextResponse.json({ message: "Review deleted" });
-  } catch (err) {
-    console.error("DELETE review unexpected error:", err);
-    return NextResponse.json({ error: "Internal server error" }, { status: 500 });
-  }
-}
-
 export async function PATCH(req: NextRequest) {
   try {
     const supabase = createAdminClient();
