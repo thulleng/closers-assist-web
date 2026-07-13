@@ -11,6 +11,14 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "price-objection-reframe",
+    title: "The Price Objection That Isn't About Price — And the 30-Second Reframe That Saves the Deal",
+    date: "July 13, 2026",
+    readTime: "5 min",
+    preview: "Most reps hear 'too expensive' and jump straight to the four-square. Here's why price objections are almost never about price — and the exact 30-second reframe that saved my biggest deal this quarter.",
+    tag: "Objection Handling",
+  },
+  {
     slug: "service-lane-ups",
     title: "The Service Lane Is the Best Place to Sell a Car — Here's the Script",
     date: "July 6, 2026",
