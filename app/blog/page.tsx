@@ -11,6 +11,15 @@ export const metadata: Metadata = {
 
 const POSTS = [
   {
+    slug: "bonus-ladder-math",
+    title: "The Bonus Ladder That Made Me an Extra $3,200 Last Month — Here's the Math",
+    date: "July 20, 2026",
+    readTime: "5 min",
+    preview:
+      "Most reps don't track their bonus tiers mid-month and leave thousands on the table. Here's how ladder math changed the way I sell — and the exact $3,200 difference it made last month.",
+    tag: "Pay Plan Math",
+  },
+  {
     slug: "price-objection-reframe",
     title: "The Price Objection That Isn't About Price — And the 30-Second Reframe That Saves the Deal",
     date: "July 13, 2026",
