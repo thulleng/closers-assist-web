@@ -184,8 +184,61 @@ export async function getMonthState(
   const payDeals = rows.map(toPayDeal);
   if (opts.extraDeal) payDeals.push(opts.extraDeal);
 
-  const result = calculatePay(plan, payDeals);
+  // A month's take-home is only true if last month's draw shortfall is carried in.
+  const carryIn = await getCarryIntoMonth(admin, userId, plan, opts.monthOf);
+  const result = calculatePay(plan, payDeals, { carryIn });
   return toMonthState(result, month, payDeals.length);
+}
+
+/**
+ * Write the engine's per-deal numbers back to the ledger.
+ *
+ * POLICY: `deals.commission` must equal the engine's line for that deal at the
+ * MONTH's effective rate — including retro. Storing a single-deal calculation
+ * would book a 15-unit month's deals at the base rate, and the dashboard would
+ * then disagree with the confirm screen. Settle after every write.
+ */
+export async function settleMonth(
+  admin: SupabaseClient,
+  userId: string,
+  plan: PayPlanConfig,
+  monthOf: string | null
+): Promise<MonthState> {
+  const { start, end, month } = monthBounds(monthOf);
+
+  const { data, error } = await admin
+    .from("deals")
+    .select("id, customer_name, vehicle, deal_type, front_gross, sold_date")
+    .eq("user_id", userId)
+    .gte("sold_date", start)
+    .lt("sold_date", end)
+    .order("sold_date", { ascending: true });
+
+  if (error) throw new Error(`deals read failed: ${error.message}`);
+
+  const rows = (data ?? []) as DealRow[];
+  const carryIn = await getCarryIntoMonth(admin, userId, plan, monthOf);
+  const result = calculatePay(plan, rows.map(toPayDeal), { carryIn });
+
+  // lines[] is index-aligned with rows[] — same input order, one line per deal.
+  const updates = rows
+    .map((row, i) => {
+      const line = result.lines[i];
+      if (!row.id || !line) return null;
+      return { id: row.id, commission: line.commission, units: line.units };
+    })
+    .filter((u): u is { id: string; commission: number; units: number } => u !== null);
+
+  for (const u of updates) {
+    const { error: updErr } = await admin
+      .from("deals")
+      .update({ commission: u.commission, units: u.units })
+      .eq("id", u.id)
+      .eq("user_id", userId);
+    if (updErr) console.error(`[ingest] settle failed for ${u.id}: ${updErr.message}`);
+  }
+
+  return toMonthState(result, month, rows.length);
 }
 
 /** Carries are only meaningful when the plan has a draw and prior months exist. */

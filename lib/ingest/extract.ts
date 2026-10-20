@@ -9,7 +9,7 @@ import sharp from "sharp";
 import { coerceExtraction, type Extraction } from "./types";
 
 export class IngestError extends Error {
-  code: "no_key" | "bad_image" | "unreadable" | "rate_limited" | "no_deal";
+  code: "no_key" | "bad_image" | "unreadable" | "rate_limited" | "no_deal" | "duplicate";
   constructor(code: IngestError["code"], message: string) {
     super(message);
     this.code = code;

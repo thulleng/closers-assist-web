@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createAdminClient } from "@/lib/supabase-admin";
 import { createClient } from "@/lib/supabase/server";
-import { confirmDraft, IngestError } from "@/lib/ingest/store";
+import { confirmDraft, DuplicateError, IngestError } from "@/lib/ingest/store";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -39,6 +39,12 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ ok: true, deal: result.deal, month_state: result.month, duplicate: result.duplicate });
   } catch (err) {
+    if (err instanceof DuplicateError) {
+      return NextResponse.json(
+        { error: err.message, code: "duplicate", duplicate: true, existing_id: err.existingId },
+        { status: 409 }
+      );
+    }
     if (err instanceof IngestError) {
       return NextResponse.json({ error: err.message, code: err.code }, { status: 422 });
     }

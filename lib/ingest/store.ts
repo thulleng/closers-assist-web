@@ -5,11 +5,21 @@
 import type { SupabaseClient } from "@supabase/supabase-js";
 import { classifyExtraction, DOC_KIND_LABEL, isDealDoc } from "./classify";
 import { extractDocument, IngestError } from "./extract";
-import { getMonthState, getPlanForUser, type MonthState } from "./plan";
+import { getMonthState, getPlanForUser, settleMonth, type MonthState } from "./plan";
 import type { ClassifiedDeal, DocKind, DraftFields } from "./types";
 import type { PayDeal } from "@/lib/pay-engine";
 
 export { IngestError } from "./extract";
+
+/** Same customer + same date already in the ledger. The rep decides, not us. */
+export class DuplicateError extends IngestError {
+  existingId: string | null;
+  constructor(message: string, existingId: string | null) {
+    super("duplicate", message);
+    this.name = "DuplicateError";
+    this.existingId = existingId;
+  }
+}
 
 export const RATE_LIMIT_PER_HOUR = 20;
 export const EVIDENCE_BUCKET = "deal-evidence";
@@ -297,7 +307,11 @@ export async function confirmDraft(
       .limit(1);
     duplicate = (existing?.length ?? 0) > 0;
     if (duplicate && !input.force) {
-      throw new IngestError("unreadable", `Already logged ${fields.sold_date} — add anyway?`);
+      // 409, not a validation error: the client shows [Add anyway] and re-sends force.
+      throw new DuplicateError(
+        `${fields.customer_name} is already logged on ${fields.sold_date} — add anyway?`,
+        (existing?.[0]?.id as string) ?? null
+      );
     }
   }
 
@@ -309,13 +323,16 @@ export async function confirmDraft(
     front_gross: fields.front_gross,
     sold_date: fields.sold_date,
   };
-  const month = await getMonthState(admin, input.userId, plan, {
+  // Pre-insert dry run: surfaces a bad plan/config BEFORE we write a deal.
+  await getMonthState(admin, input.userId, plan, {
     monthOf: fields.sold_date,
     extraDeal: thisDeal,
   });
 
-  // Per-deal money from the same engine, so the logged commission matches the
-  // month view exactly. Recompute a one-deal result to grab the line value.
+  // Provisional per-deal numbers so the row is never written with nulls. The
+  // AUTHORITATIVE numbers come from settleMonth() below — a one-deal calculation
+  // cannot know the month's retro rate, and booking it would be wrong by the retro
+  // step in any month that clears a tier.
   const { calculatePay } = await import("@/lib/pay-engine");
   const single = calculatePay(plan, [thisDeal]);
   const line = single.lines[0];
@@ -363,5 +380,8 @@ export async function confirmDraft(
 
   await admin.from("deal_drafts").update({ status: "confirmed" }).eq("id", input.draftId);
 
+  // Rewrite every deal in the month at the month's effective rate (retro included),
+  // so `deals.commission` and the month view can never disagree.
+  const month = await settleMonth(admin, input.userId, plan, fields.sold_date);
   return { deal, month, duplicate };
 }

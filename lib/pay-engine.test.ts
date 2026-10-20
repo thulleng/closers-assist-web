@@ -136,6 +136,15 @@ describe("pay engine — invariants", () => {
     expect(r.commission).toBe(1000);
   });
 
+  test("legacy $0 mini stays $0 — nullish defaults never overwrite a real zero", () => {
+    const cfg = planFromRow({ commission_rate: 0.25, monthly_draw: 0, full_mini_amount: 0, half_mini_amount: 0 })!;
+    expect(cfg.minis.full).toBe(0);
+    expect(cfg.minis.half).toBe(0);
+    const r = calculatePay(cfg, [{ deal_type: "full_mini", front_gross: 0 }]);
+    expect(r.commission).toBe(0);
+    expect(r.units).toBe(1);
+  });
+
   test("legacy pay_plans row maps to a usable config", () => {
     const cfg = planFromRow({
       commission_rate: 0.25,

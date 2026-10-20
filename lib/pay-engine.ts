@@ -337,7 +337,7 @@ export function planFromRow(row: LegacyPlanRow | null | undefined): PayPlanConfi
   if (row.config && typeof row.config === "object") {
     return normalizePlan(row.config as PayPlanConfig);
   }
-  const rate = num(row.commission_rate) || 0.25;
+  const rate = num(row.commission_rate ?? 0.25);
   const bonuses = (row.volume_bonuses ?? []).map((b) => ({
     units: num(b.units),
     bonus: num(b.bonus),
@@ -346,7 +346,8 @@ export function planFromRow(row: LegacyPlanRow | null | undefined): PayPlanConfi
   }));
   return normalizePlan({
     industry: "auto",
-    minis: { full: num(row.full_mini_amount) || 400, half: num(row.half_mini_amount) || 200 },
+    // POLICY: `??`, never `||` — a legitimate $0 mini must stay $0, not become $400.
+    minis: { full: num(row.full_mini_amount ?? 400), half: num(row.half_mini_amount ?? 200) },
     draw: num(row.monthly_draw),
     commission: { type: "percent_front_gross", rate, cap: null },
     pack_on_full_deals: 0,
