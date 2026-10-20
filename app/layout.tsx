@@ -6,6 +6,8 @@ import BottomNav from "@/components/BottomNav";
 import CursorGlow from "@/components/CursorGlow";
 import ScrollRevealObserver from "@/components/ScrollRevealObserver";
 import SandboxChat from "@/components/SandboxChat";
+import InstallPrompt from "@/components/InstallPrompt";
+import ServiceWorkerRegister from "@/components/ServiceWorkerRegister";
 import "./globals.css";
 
 const inter = Inter({
@@ -36,12 +38,18 @@ export const metadata: Metadata = {
     "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget. Built by a working rep. $29.99/mo.",
   metadataBase: new URL("https://dealclozr.com"),
   manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    title: "Deal Clozr",
+    statusBarStyle: "black-translucent",
+  },
   icons: {
     icon: [
       { url: "/favicon.svg", sizes: "any", type: "image/svg+xml" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
     ],
     apple: [
-      { url: "/logo.png", sizes: "180x180", type: "image/png" },
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
     ],
   },
   openGraph: {
@@ -74,7 +82,10 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#10B981",
+  themeColor: "#050506",
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
 };
 
 export default function RootLayout({
@@ -95,6 +106,8 @@ export default function RootLayout({
         <Footer />
         <BottomNav />
         <SandboxChat />
+        <InstallPrompt />
+        <ServiceWorkerRegister />
       </body>
     </html>
   );
