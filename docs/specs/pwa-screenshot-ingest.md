@@ -440,3 +440,28 @@ Build the native app only when **all three** are true:
 - Reps ask for a lock-screen widget (that request, not our guess, defines v1)
 
 Otherwise the app is a tombstone with a nice icon.
+
+---
+
+## 13. Verification log — 2026-10-20
+
+Run by Vera against branch `feat/pwa-shell`.
+
+**Green**
+- `npm run build` — compiled, 117/117 static pages.
+- `scripts/acceptance/run.mjs` — 7 passed, 0 failed (manifest, iOS meta, sw `/api/` exclusion, pay-engine fixtures, no LLM in the money path, fixtures, routes wired).
+- `lib/pay-engine.test.ts` — 13/13 (units, retro, minis, spiffs, draw carry).
+- `lib/ingest/classify.test.ts` — 7/7 (money-safety contract).
+- **Live vision, real API call** (`extract.live.test.ts`, 3/3):
+  - clean desk sheet → SMITH, JOHN · 2026 CAMRY SE · T44821 · full_deal 0.95 · **$2,140** · 08/14/2026 · all fields, 1 attempt, 11s
+  - zero-gross mini → ORTIZ, MARIA · full_mini · $0
+  - degraded photo → refused a clean read, but produced **2148 for a printed 2140**
+
+**Safety change made because of that last one**
+A misread digit is a wrong paycheck. `classifyDeal` now always raises a `money_check` need for full deals — the rep taps the number once before any write. `autoConfirmable` can never be true when a dollar figure is present. Models do not get to write money unattended.
+
+**Blockers for end-to-end on a preview URL**
+1. **Preview environment has no env vars.** All 17 are Production-scoped, so every preview deployment 500s on Supabase client creation (`/api/me` and `/api/ingest/image` both return that error). Fix: Vercel → Project → Settings → Environment Variables → add **Preview** to the scope of `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`, `ANTHROPIC_API_KEY`, `CRON_SECRET`.
+2. **Migrations not applied.** `20261020_screenshot_ingest.sql` + `20261020_ingest_hardening.sql` must run before any ingest write. The `deal-evidence` bucket does not exist until the second one runs.
+3. `~/closers-assist-web/.vercel/project.json` points at **autofiguy-landing**, not `closers-assist-web`. Any `vercel deploy` from this directory targets the wrong project. Deploy hazard — fix the link before the next manual deploy.
+

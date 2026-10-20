@@ -70,7 +70,7 @@ export type ConfidenceMap = Partial<Record<keyof DraftFields, number>>;
 
 export interface Need {
   field: keyof DraftFields | "doc_kind";
-  reason: "missing" | "low_confidence" | "ambiguous";
+  reason: "missing" | "low_confidence" | "ambiguous" | "money_check";
   message: string;
 }
 

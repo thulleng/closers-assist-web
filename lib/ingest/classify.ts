@@ -101,12 +101,33 @@ export function classifyDeal(deal: ExtractedDeal, docKind: DocKind, plan: PayPla
     needs.push({ field: "deal_type", reason: "missing", message: "Mini or full?" });
   }
 
-  // One question, highest-priority field with a real human prompt.
+  // ── Money is never auto-confirmed from a photo ────────────────────────────
+  // A vision model can misread one digit of a degraded sheet (2140 → 2148) and
+  // report high confidence while doing it. A wrong dollar amount is a wrong
+  // paycheck, so the rep always taps once on the number before it is written.
+  if (
+    gross != null &&
+    fields.deal_type !== "full_mini" &&
+    fields.deal_type !== "half_mini" &&
+    !needs.some((n) => n.field === "front_gross")
+  ) {
+    needs.push({
+      field: "front_gross",
+      reason: "money_check",
+      message: `Front gross — I read $${gross.toLocaleString("en-US")}. Is that right?`,
+    });
+  }
+
+  // One question: ambiguity first (it changes the math), then a missing
+  // blocking field, then whatever else is left.
   const ambiguous = needs.find((n) => n.reason === "ambiguous");
+  const missingFirst = QUESTION_PRIORITY.map((f) =>
+    needs.find((n) => n.field === f && n.reason === "missing")
+  ).find(Boolean);
   const ordered = QUESTION_PRIORITY.map((f) =>
     needs.find((n) => n.field === f && n.reason !== "ambiguous")
   ).find(Boolean);
-  const question = ambiguous?.message ?? ordered?.message ?? null;
+  const question = ambiguous?.message ?? missingFirst?.message ?? ordered?.message ?? null;
 
   const isDeal = isDealDoc(docKind);
   return {
