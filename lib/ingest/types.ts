@@ -223,7 +223,12 @@ export function coerceExtraction(input: unknown): Extraction {
   const kindRaw = typeof obj.doc_kind === "string" ? obj.doc_kind.trim().toLowerCase() : "other";
   const doc_kind = (DOC_KINDS as readonly string[]).includes(kindRaw) ? (kindRaw as DocKind) : "other";
 
-  return extractionSchema.parse({ doc_kind, deals, raw_text: rawText });
+  // The prompt says "doc_kind other ⇒ deals []" but models violate it (emitting
+  // "other" AND a deal). Enforce it here in code — if it's not paperwork, drop
+  // whatever deals it hallucinated. The model's promise is not the contract.
+  const finalDeals = doc_kind === "other" ? [] : deals;
+
+  return extractionSchema.parse({ doc_kind, deals: finalDeals, raw_text: rawText });
 }
 
 /** Models love fences and prose. Strip them before parsing. */
