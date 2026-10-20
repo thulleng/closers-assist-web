@@ -489,6 +489,41 @@ Be direct, practical, zero fluff. The person texting you is between customers. G
               source: { type: "base64", media_type: "video/mp4", data: b64 }
             });
           } else if (mediaType === "photo") {
+            // ── Try deal ingest first ─────────────────────────────────────
+            // A photo of a desk sheet should confirm a deal, not fall into
+            // generic vision → chat. If ingest says "not paperwork", fall
+            // through to the existing VIN / description path unchanged.
+            let ingested = false;
+            const { createAdminClient } = await import("@/lib/supabase-admin");
+            const { ingestImage, IngestError } = await import("@/lib/ingest/store");
+            try {
+              const admin = createAdminClient();
+              const outcome = await ingestImage(admin, {
+                userId,
+                bytes: fileBuffer,
+                mediaType: "image/jpeg",
+                source: "telegram",
+                caption: caption || null,
+              });
+              const lines = [outcome.message];
+              if (outcome.drafts.some((d) => d.question)) {
+                const q = outcome.drafts.find((d) => d.question)?.question;
+                if (q) lines.push(q);
+              }
+              await reply(lines.join("\n"));
+              ingested = true;
+            } catch (err) {
+              // Not deal paperwork (no_deal / other) → keep going. A real
+              // failure (no key, rate limit) is worth a quiet log, then the
+              // legacy path still answers the user.
+              if (!(err instanceof IngestError)) {
+                console.error("TG ingest error:", err instanceof Error ? err.message : err);
+              }
+            }
+            if (ingested) {
+              return NextResponse.json({ ok: true });
+            }
+
             const b64 = fileBuffer.toString("base64");
             const DeepSeek = (await import("@anthropic-ai/sdk")).default;
             const ai = new DeepSeek({
