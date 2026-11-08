@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Insurance Agents",
   description:
-    "The AI agent for insurance closers. Book of business tracking, renewal triggers, cross-sell math, policy Q&A. Built for P&C, Life, and Commercial agents.",
+    "The AI employee for insurance closers. Book of business tracking, renewal triggers, cross-sell math, policy Q&A. Built for P&C, Life, and Commercial agents.",
 };
 
 const data: IndustryData = {

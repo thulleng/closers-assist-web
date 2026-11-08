@@ -163,7 +163,7 @@ export default function ServiceLaneUps() {
               later&rdquo; — and later never comes.
             </p>
             <p>
-              That&rsquo;s where having an AI agent that tracks every customer interaction
+              That&rsquo;s where having an AI employee that tracks every customer interaction
               changes things. My agent knows when a customer is in service, knows what they
               drive, knows how long until their lease ends. It sends a quiet text that
               morning: &ldquo;Hey, saw you&rsquo;re coming in for service today — while

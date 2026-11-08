@@ -211,7 +211,7 @@ export default function BonusLadderMath() {
           <div className="mt-14 border-t border-white/10 pt-10">
             <p className="mb-6 text-base leading-relaxed text-ash">
               Want to see what your pay plan actually looks like when someone
-              tracks it for you? Dora is the AI agent on dealclozr.com who knows
+              tracks it for you? Dora is the AI employee on dealclozr.com who knows
               the math. She's live right now — go ask her what your next tier is
               worth.
             </p>

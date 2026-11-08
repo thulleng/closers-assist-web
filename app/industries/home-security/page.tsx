@@ -3,9 +3,9 @@ import { Shield } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Home Security Sales AI Agent | Deal Clozr",
+  title: "Home Security Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for home security reps. Knows your competitive comparisons, monitoring contract rebuttals, and smart home upsell cadence. Close more systems and activate more monitoring accounts.",
+    "The AI employee built for home security reps. Knows your competitive comparisons, monitoring contract rebuttals, and smart home upsell cadence. Close more systems and activate more monitoring accounts.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Win every door.</span>
     </>
   ),
-  sub: "Your AI agent built for home security reps — handle competitor objections, close monitoring contracts, and upsell smart home integrations with confidence.",
+  sub: "Your AI employee built for home security reps — handle competitor objections, close monitoring contracts, and upsell smart home integrations with confidence.",
   heroImage: "/images/industries/home-security.jpg",
   scenarioImage: "/images/industries/home-security.jpg",
   featuresDay1: [

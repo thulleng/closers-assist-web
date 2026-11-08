@@ -3,9 +3,9 @@ import { Home } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Roofing Sales AI Agent | Deal Clozr",
+  title: "Roofing Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for roofing reps. Insurance claim walkthroughs, repair-to-replace conversations, and storm territory plays that close more roofs.",
+    "The AI employee built for roofing reps. Insurance claim walkthroughs, repair-to-replace conversations, and storm territory plays that close more roofs.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Every claim. Every close.</span>
     </>
   ),
-  sub: "Your AI agent built for roofing reps — handle insurance claim walkthroughs, close full replacements over repairs, and dominate your territory after every storm.",
+  sub: "Your AI employee built for roofing reps — handle insurance claim walkthroughs, close full replacements over repairs, and dominate your territory after every storm.",
   heroImage: "/images/industries/roofing.jpg",
   scenarioImage: "/images/industries/roofing.jpg",
   featuresDay1: [

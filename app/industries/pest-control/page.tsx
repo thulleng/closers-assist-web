@@ -3,9 +3,9 @@ import { Bug } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Pest Control Sales AI Agent | Deal Clozr",
+  title: "Pest Control Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for pest control reps. Handle service plan objections, upsell quarterly treatments, and never lose a renewal again.",
+    "The AI employee built for pest control reps. Handle service plan objections, upsell quarterly treatments, and never lose a renewal again.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Never lose a renewal.</span>
     </>
   ),
-  sub: "Your AI agent built for pest control reps — handle objections on bundled plans, upsell quarterly treatments, and never lose a renewal again.",
+  sub: "Your AI employee built for pest control reps — handle objections on bundled plans, upsell quarterly treatments, and never lose a renewal again.",
   heroImage: "/images/pest_control.jpg",
   scenarioImage:
     "/images/pest_control.jpg",

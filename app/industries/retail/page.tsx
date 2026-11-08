@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Big Ticket Retail Closers",
   description:
-    "The AI agent for furniture, appliances, jewelry, marine, RV, and powersports closers who get paid on the gross. Every spec, every finance scenario, every close.",
+    "The AI employee for furniture, appliances, jewelry, marine, RV, and powersports closers who get paid on the gross. Every spec, every finance scenario, every close.",
 };
 
 const data: IndustryData = {

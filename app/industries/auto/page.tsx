@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Auto Closers",
   description:
-    "The AI agent built for auto closers. Knows your pay plan, your unit math, your volume bonuses, and Toyota Star Safety System + TSS 4.0 out of the box.",
+    "The AI employee built for auto closers. Knows your pay plan, your unit math, your volume bonuses, and Toyota Star Safety System + TSS 4.0 out of the box.",
 };
 
 const data: IndustryData = {

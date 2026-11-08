@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s · Deal Clozr",
   },
   description:
-    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget. Built by a Toyota rep. $29.99/mo.",
+    "Track every customer, every deal, and every commission automatically. Your AI employee remembers what you forget. Built by a Toyota rep. $29.99/mo.",
   metadataBase: new URL("https://dealclozr.com"),
   manifest: "/manifest.json",
   icons: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Deal Clozr — Never lose a commission again.",
     description:
-      "Track every customer, every commission. Your AI agent remembers what you forget.",
+      "Track every customer, every commission. Your AI employee remembers what you forget.",
     url: "https://dealclozr.com",
     siteName: "Deal Clozr",
     locale: "en_US",
@@ -64,7 +64,7 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "Deal Clozr — Never lose a commission again.",
-    description: "Track every customer, every commission. Your AI agent remembers what you forget.",
+    description: "Track every customer, every commission. Your AI employee remembers what you forget.",
     images: ["/api/og"],
   },
   robots: {

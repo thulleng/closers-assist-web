@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Real Estate Agents",
   description:
-    "The AI agent built for real estate closers. Knows your commission splits, listing prep, open house cadence, and buyer nurture. Works with Follow Up Boss, kvCORE, Chime, BoomTown.",
+    "The AI employee built for real estate closers. Knows your commission splits, listing prep, open house cadence, and buyer nurture. Works with Follow Up Boss, kvCORE, Chime, BoomTown.",
 };
 
 const data: IndustryData = {

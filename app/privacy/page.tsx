@@ -45,7 +45,7 @@ export default function PrivacyPage() {
               2. How we use it
             </h2>
             <p>
-              We use your data to power your AI agent, improve our product, and
+              We use your data to power your AI employee, improve our product, and
               communicate with you about your account. We do not sell your data
               to third parties. We do not share your personal agent data
               (scripts, customers, pay plans) with other users.

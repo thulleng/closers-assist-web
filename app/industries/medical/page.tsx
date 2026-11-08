@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Medical Device Reps",
   description:
-    "The AI agent for medical device sales. Every device spec, every clinical protocol, every coding nuance — at your fingertips between cases.",
+    "The AI employee for medical device sales. Every device spec, every clinical protocol, every coding nuance — at your fingertips between cases.",
 };
 
 const data: IndustryData = {

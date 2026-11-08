@@ -3,9 +3,9 @@ import { Landmark } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Mortgage & Lending Sales AI Agent | Deal Clozr",
+  title: "Mortgage & Lending Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for mortgage and lending reps. Handle rate objections, explain complex products clearly, and guide borrowers from application to close.",
+    "The AI employee built for mortgage and lending reps. Handle rate objections, explain complex products clearly, and guide borrowers from application to close.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Win the rate conversation.</span>
     </>
   ),
-  sub: "Your AI agent built for mortgage and lending reps — handle rate objections, explain complex products clearly, and guide borrowers from application to close.",
+  sub: "Your AI employee built for mortgage and lending reps — handle rate objections, explain complex products clearly, and guide borrowers from application to close.",
   heroImage: "/images/industries/mortgage.jpg",
   scenarioImage: "/images/industries/mortgage.jpg",
   featuresDay1: [

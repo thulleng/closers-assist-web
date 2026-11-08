@@ -73,7 +73,7 @@ export default function WhyMyAIKnowsYouBetter() {
               already know.
             </p>
             <p>
-              My AI agent does. And that changes everything.
+              My AI employee does. And that changes everything.
             </p>
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">

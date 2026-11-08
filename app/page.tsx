@@ -53,7 +53,7 @@ import { industries, testimonials, layers, marketplaceSkills, comparisonRows } f
 export const metadata: Metadata = {
   title: "Deal Clozr — Never lose a commission again",
   description:
-    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget — so nothing falls through the cracks. Built by a Toyota rep. $29.99/mo.",
+    "Track every customer, every deal, and every commission automatically. Your AI employee remembers what you forget — so nothing falls through the cracks. Built by a Toyota rep. $29.99/mo.",
 };
 
 const industryIconMap: Record<string, React.ReactNode> = {
@@ -293,7 +293,7 @@ export default function HomePage() {
 
               <div>
                 <p className="mt-6 max-w-xl text-lg leading-relaxed text-ash md:text-xl">
-                  {"Your AI agent tracks every customer, every follow-up, and every commission automatically. So you never lose a lead — or the money that comes with it."}
+                  {"Your AI employee tracks every customer, every follow-up, and every commission automatically. So you never lose a lead — or the money that comes with it."}
                 </p>
               </div>
 
@@ -1007,7 +1007,7 @@ export default function HomePage() {
                 <div className="mb-3 text-3xl">🧠</div>
                 <h3 className="mb-2 font-display text-lg font-black text-white">Deals + Life. One brain.</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
-                  No other AI agent handles your professional AND personal life. Your closer doesn't clock out when the deal closes — neither does your agent.
+                  No other AI employee handles your professional AND personal life. Your closer doesn't clock out when the deal closes — neither does your agent.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
                   <span className="font-bold text-gold-light">Real result:</span> "I forgot my wife's birthday. My agent reminded me at 9 AM with a gift idea based on something she mentioned 3 months ago." — Beta user

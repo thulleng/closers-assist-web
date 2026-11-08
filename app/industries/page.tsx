@@ -26,7 +26,7 @@ import GlobeVisual from "@/components/GlobeVisual";
 export const metadata: Metadata = {
   title: "Industries",
   description:
-    "One AI agent for every industry. Auto, Real Estate, Insurance, Solar, SaaS, and 13 more. Your industry's vocabulary, your math, your plays.",
+    "One AI employee for every industry. Auto, Real Estate, Insurance, Solar, SaaS, and 13 more. Your industry's vocabulary, your math, your plays.",
 };
 
 const industries = [
@@ -225,7 +225,7 @@ export default function IndustriesPage() {
                   <span className="text-shine font-black">Zero compromises.</span>
                 </h1>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
-                  One AI agent. Every industry. Zero restrictions.
+                  One AI employee. Every industry. Zero restrictions.
                 </p>
               </div>
               <div className="flex-shrink-0 flex justify-center mt-6 lg:mt-0">

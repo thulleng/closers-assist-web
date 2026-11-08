@@ -196,7 +196,7 @@ export default function SuccessPage() {
           <div className="flex flex-col items-center gap-3">
             <Loader2 className="w-6 h-6 text-[#10B981] animate-spin" />
             <p className="text-xs text-gray-600">
-              Your AI agent is being provisioned. You&apos;ll get a login link
+              Your AI employee is being provisioned. You&apos;ll get a login link
               as soon as it&apos;s ready — usually under 60 seconds.
             </p>
           </div>

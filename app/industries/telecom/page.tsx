@@ -3,9 +3,9 @@ import { Radio } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Telecom & Cell Towers Sales AI Agent | Deal Clozr",
+  title: "Telecom & Cell Towers Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for telecom reps. Handle tower lease objections, close infrastructure agreements, and upsell bandwidth and service upgrades with confidence.",
+    "The AI employee built for telecom reps. Handle tower lease objections, close infrastructure agreements, and upsell bandwidth and service upgrades with confidence.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Own the infrastructure conversation.</span>
     </>
   ),
-  sub: "Your AI agent built for telecom reps — handle lease objections, close infrastructure agreements, and upsell bandwidth and service upgrades with confidence.",
+  sub: "Your AI employee built for telecom reps — handle lease objections, close infrastructure agreements, and upsell bandwidth and service upgrades with confidence.",
   heroImage: "/images/industries/telecom.jpg",
   scenarioImage: "/images/industries/telecom.jpg",
   featuresDay1: [

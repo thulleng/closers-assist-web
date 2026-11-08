@@ -3,9 +3,9 @@ import { Wind } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "HVAC Sales AI Agent | Deal Clozr",
+  title: "HVAC Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for HVAC reps. Handle system upgrade objections, sell maintenance agreements, and close emergency replacements with confidence.",
+    "The AI employee built for HVAC reps. Handle system upgrade objections, sell maintenance agreements, and close emergency replacements with confidence.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Turn every call into revenue.</span>
     </>
   ),
-  sub: "Your AI agent built for HVAC reps — handle system upgrade objections, sell maintenance agreements, and close emergency replacements with confidence.",
+  sub: "Your AI employee built for HVAC reps — handle system upgrade objections, sell maintenance agreements, and close emergency replacements with confidence.",
   heroImage: "/images/industries/hvac.jpg",
   scenarioImage: "/images/industries/hvac.jpg",
   featuresDay1: [

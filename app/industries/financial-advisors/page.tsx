@@ -3,9 +3,9 @@ import { TrendingUp } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Financial Advisors Sales AI Agent | Deal Clozr",
+  title: "Financial Advisors Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for financial advisors. Handle fee objections, articulate your value against robo-advisors, and convert prospects into long-term managed accounts.",
+    "The AI employee built for financial advisors. Handle fee objections, articulate your value against robo-advisors, and convert prospects into long-term managed accounts.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Win on advice, not price.</span>
     </>
   ),
-  sub: "Your AI agent built for financial advisors — handle fee objections, articulate your value clearly, and convert prospects into long-term managed accounts.",
+  sub: "Your AI employee built for financial advisors — handle fee objections, articulate your value clearly, and convert prospects into long-term managed accounts.",
   heroImage: "/images/industries/financial-advisors.jpg",
   scenarioImage: "/images/industries/financial-advisors.jpg",
   featuresDay1: [

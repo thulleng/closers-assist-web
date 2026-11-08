@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Sales Closers — Universal Playbook",
   description:
-    "The AI agent for every closer, every industry. Universal objection handling: price, timing, need to think about it, decision-maker stalls, and ghosting recovery. Rooted in closing fundamentals.",
+    "The AI employee for every closer, every industry. Universal objection handling: price, timing, need to think about it, decision-maker stalls, and ghosting recovery. Rooted in closing fundamentals.",
 };
 
 const data: IndustryData = {

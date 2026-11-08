@@ -83,7 +83,7 @@ export default function WhenBuyersActuallyReply() {
 
             <p>
               I didn't set out to study reply timing. But after 60 days running an
-              AI agent that logs every interaction automatically, I had data I'd
+              AI employee that logs every interaction automatically, I had data I'd
               never had before. Not just who replied — but <em>when</em>.
             </p>
 

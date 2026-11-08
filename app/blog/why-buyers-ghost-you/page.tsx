@@ -239,11 +239,11 @@ export default function WhyBuyersGhostYou() {
             </p>
 
             <h2 className="font-display text-2xl font-bold text-white mt-10">
-              What This Looks Like With an AI Agent
+              What This Looks Like With an AI Employee
             </h2>
 
             <p>
-              I don't send follow-ups manually anymore. My AI agent handles the timing — sends the
+              I don't send follow-ups manually anymore. My AI employee handles the timing — sends the
               first "no pressure" message at the right interval, detects when the buyer replies with
               the real objection, and surfaces it to me so I can step in at the perfect moment.
             </p>

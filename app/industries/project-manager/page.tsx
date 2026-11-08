@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Project Managers Who Sell",
   description:
-    "The AI agent built for project managers who pitch clients, defend budgets, and close change orders. SOW defense, scope upsell scripts, and verbal-yes-to-signed-contract playbooks.",
+    "The AI employee built for project managers who pitch clients, defend budgets, and close change orders. SOW defense, scope upsell scripts, and verbal-yes-to-signed-contract playbooks.",
 };
 
 const data: IndustryData = {

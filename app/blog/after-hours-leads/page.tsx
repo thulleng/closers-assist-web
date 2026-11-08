@@ -100,7 +100,7 @@ export default function AfterHoursLeads() {
                 voicemail or got an auto-email. Answered 8-12 hours later.
               </li>
               <li>
-                <strong className="text-white">Bucket B:</strong> Leads that reached my AI agent
+                <strong className="text-white">Bucket B:</strong> Leads that reached my AI employee
                 — which texted back within 30 seconds, answered questions, and booked a next-day
                 appointment.
               </li>

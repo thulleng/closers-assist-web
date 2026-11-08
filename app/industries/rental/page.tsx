@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Rental Closers",
   description:
-    "The AI agent built for rental sales — Turo hosts, Airbnb/vacation rentals, RV, boat, and truck/moving rental. Handle pricing disputes, damage deposits, cancellation pushback, and close more bookings.",
+    "The AI employee built for rental sales — Turo hosts, Airbnb/vacation rentals, RV, boat, and truck/moving rental. Handle pricing disputes, damage deposits, cancellation pushback, and close more bookings.",
 };
 
 const data: IndustryData = {

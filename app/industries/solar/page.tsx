@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For Solar Closers",
   description:
-    "The AI agent for solar sales. Reads utility bills in seconds, builds proposals, handles objections, knows every federal and state incentive.",
+    "The AI employee for solar sales. Reads utility bills in seconds, builds proposals, handles objections, knows every federal and state incentive.",
 };
 
 const data: IndustryData = {

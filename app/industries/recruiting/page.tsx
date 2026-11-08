@@ -3,9 +3,9 @@ import { Users } from "lucide-react";
 import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 
 export const metadata: Metadata = {
-  title: "Recruiting & Staffing Sales AI Agent | Deal Clozr",
+  title: "Recruiting & Staffing Sales AI Employee | Deal Clozr",
   description:
-    "The AI agent built for recruiting and staffing reps. Handle client fee objections, prep candidates for interviews, and close both sides of the placement faster.",
+    "The AI employee built for recruiting and staffing reps. Handle client fee objections, prep candidates for interviews, and close both sides of the placement faster.",
 };
 
 const data: IndustryData = {
@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Close both sides faster.</span>
     </>
   ),
-  sub: "Your AI agent built for recruiters and staffing reps — handle client objections, prep candidates for interviews, and close both sides of the placement faster.",
+  sub: "Your AI employee built for recruiters and staffing reps — handle client objections, prep candidates for interviews, and close both sides of the placement faster.",
   heroImage: "/images/industries/recruiting.jpg",
   scenarioImage: "/images/industries/recruiting.jpg",
   featuresDay1: [

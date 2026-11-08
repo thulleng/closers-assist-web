@@ -238,7 +238,7 @@ export default function FourNumbersThatMatter() {
             </h2>
             <p>
               This is where Deal Clozr changed the game for me on the floor. My
-              AI agent knows the rate tiers. It knows the residuals. It knows
+              AI employee knows the rate tiers. It knows the residuals. It knows
               Toyota Financial Services lease programs. When a customer sits
               down, I pull up the agent on my phone and it tells me: "This
               model, this trim, this term — residual is 59%. Current rate tier

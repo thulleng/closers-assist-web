@@ -5,7 +5,7 @@ import IndustryPage, { type IndustryData } from "@/components/IndustryPage";
 export const metadata: Metadata = {
   title: "For SaaS Sales Reps",
   description:
-    "The AI agent for SaaS closers. Pipeline pulse, MEDDIC coaching, discovery questions, demo prep, procurement survival. Plays nice with Salesforce, HubSpot, Gong.",
+    "The AI employee for SaaS closers. Pipeline pulse, MEDDIC coaching, discovery questions, demo prep, procurement survival. Plays nice with Salesforce, HubSpot, Gong.",
 };
 
 const data: IndustryData = {

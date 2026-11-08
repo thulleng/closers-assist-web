@@ -44,7 +44,7 @@ export default function AICloser30Days() {
               I sold Toyotas on the lot in New Port Richey, Florida. I&rsquo;ve been on this floor for years. I know what a T.O. sounds like, what a draw check feels like, and what it means when a lead goes cold at 48 hours.
             </p>
             <p>
-              30 days ago, I flipped a switch. I put an AI agent on my floor — not as a demo, not as a gimmick. As a closer. It handles internet leads, writes follow-ups, answers objections, and books appointments. It works while I&rsquo;m on test drives. It works while I sleep.
+              30 days ago, I flipped a switch. I put an AI employee on my floor — not as a demo, not as a gimmick. As a closer. It handles internet leads, writes follow-ups, answers objections, and books appointments. It works while I&rsquo;m on test drives. It works while I sleep.
             </p>
             <p>
               Here&rsquo;s exactly what happened — the numbers, the objections, and the three deals I would have lost without it.
@@ -81,7 +81,7 @@ export default function AICloser30Days() {
 
             <h2 className="mt-10 font-display text-2xl font-bold text-white">The results: 30 days of real numbers</h2>
             <p>
-              April 12 to May 12. One closer. One AI agent. One Toyota store. Here&rsquo;s the data:
+              April 12 to May 12. One closer. One AI employee. One Toyota store. Here&rsquo;s the data:
             </p>
 
             <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
