@@ -33,7 +33,7 @@ const industries = [
   {
     icon: Car,
     name: "Auto",
-    copy: "Pay plan math, trade valuations, CXI tracking, follow-up scripts. Built by a working Toyota rep.",
+    copy: "Pay plan math, trade valuations, CXI tracking, follow-up scripts. Built by a Toyota rep.",
     href: "/industries/auto",
     live: true,
     image:

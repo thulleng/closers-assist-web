@@ -53,7 +53,7 @@ import { industries, testimonials, layers, marketplaceSkills, comparisonRows } f
 export const metadata: Metadata = {
   title: "Deal Clozr — Never lose a commission again",
   description:
-    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget — so nothing falls through the cracks. Built by a working Toyota rep. $29.99/mo.",
+    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget — so nothing falls through the cracks. Built by a Toyota rep. $29.99/mo.",
 };
 
 const industryIconMap: Record<string, React.ReactNode> = {
@@ -1021,7 +1021,7 @@ export default function HomePage() {
                 <div className="mb-3 text-3xl">🏗️</div>
                 <h3 className="mb-2 font-display text-lg font-black text-white">Built on a Toyota lot. Not a boardroom.</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
-                  Thul Leng closes cars 6 days a week on the lot. He built Deal Clozr between customers — not with VC money. Every play in our agent comes from a real floor.
+                  Thul Leng closed cars 6 days a week on the lot for years. He built Deal Clozr between customers — not with VC money. Every play in our agent comes from a real floor.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
                   <span className="font-bold text-gold-light">Real result:</span> The RAV4 XLE demo on our homepage? Actual deal math from Thul's floor. Not a mockup. Not a simulation.
@@ -1119,7 +1119,7 @@ export default function HomePage() {
                 <div className="mb-3 text-3xl">⚡</div>
                 <h3 className="mb-2 font-display text-lg font-black text-white">$29.99/mo. {"One deal pays for"} {"10 years."}</h3>
                 <p className="text-sm leading-relaxed text-ash mb-3 flex-1">
-                  Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul's a working rep who knows what closers can actually afford. Not a SaaS company maximizing ARPU.
+                  Competitors charge $500+/mo for single-industry SDRs. We charge $29.99 for all 18 industries + personal life. Why? Because Thul spent years on the floor and knows what closers can actually afford. Not a SaaS company maximizing ARPU.
                 </p>
                 <div className="rounded-xl border border-gold/10 bg-gold/5 p-3 text-xs text-gold-light/80 leading-relaxed">
                   <span className="font-bold text-gold-light">Real result:</span> 14-day free trial. No credit card. Cancel in one click. {"One deal pays for"} {"10 years."}
@@ -1281,7 +1281,6 @@ export default function HomePage() {
               </h2>
               <p className="mt-4 text-lg leading-relaxed text-ash">
                 Every deal. Every commission. Every follow-up tracked.
-                Demo data for now &mdash; real feed when reps are on the platform.
               </p>
             </div>
           </FadeIn>
@@ -1700,7 +1699,7 @@ export default function HomePage() {
                   <span className="text-shine"> Not in a boardroom.</span>
                 </h2>
                 <p className="mt-6 text-lg leading-relaxed text-ash md:text-xl">
-                  My name is Thul. I sell Toyotas on the lot in Florida. I
+                  My name is Thul. I sold Toyotas on the lot in Florida. I
                   built Deal Clozr because I needed an employee — not
                   another tool. Something that knows my pay
                   plan, my scripts, my objections, my customers.{" "}
@@ -2211,34 +2210,33 @@ export default function HomePage() {
               </TiltCard>
             </FadeIn>
 
-            {/* Card 2: Dedicated Agent */}
+            {/* Card 2: teams & dealerships are sold by KlaroDev */}
             <FadeIn delay={100}>
               <TiltCard maxTilt={4} scale={1.01}>
-                <div className="loud-card rounded-2xl p-8 ring-2 ring-deal shadow-[0_0_40px_rgba(16,185,129,0.3)]">
+                <div className="loud-card rounded-2xl p-8">
                   <div className="mb-2 text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                    Dedicated Agent · White-Glove
+                    Teams · Dealerships
                   </div>
                   <div className="mb-4 flex items-baseline gap-1">
-                    <span className="font-display text-5xl font-black text-mega">$3K–$5K</span>
-                    <span className="text-sm text-ash">/ mo</span>
+                    <span className="font-display text-4xl font-black text-white">On KlaroDev</span>
                   </div>
                   <ul className="mb-6 space-y-3 text-sm text-ash">
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span><strong className="text-white">Everything in SaaS</strong> — plus done-for-you onboarding</span>
+                      <span>Done-for-you onboarding for the whole floor</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>Custom scripts, CRM integration, team rollout</span>
+                      <span>Custom scripts, CRM wiring, team rollout</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <CheckCircle2 className="mt-0.5 h-4 w-4 flex-shrink-0 text-deal" strokeWidth={2.5} />
-                      <span>Priority support · 48-hour setup · Private Slack</span>
+                      <span>Setup, support and billing handled there</span>
                     </li>
                   </ul>
-                  <Link href="/enterprise" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
-                    {"Deploy My Agent"}
-                  </Link>
+                  <a href="https://klarodev.com" className="btn-loud inline-block rounded-xl px-6 py-3 text-sm">
+                    {"See team pricing on KlaroDev"}
+                  </a>
                 </div>
               </TiltCard>
             </FadeIn>
@@ -2247,7 +2245,7 @@ export default function HomePage() {
           {/* Shared features */}
           <FadeIn delay={200}>
             <div className="mt-10 text-center">
-              <p className="text-sm text-ash mb-4">{"Both tiers include —"}</p>
+              <p className="text-sm text-ash mb-4">{"Every Deal Clozr agent includes —"}</p>
               <div className="inline-flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-bone/80">
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Unique personality</span>
                 <span className="flex items-center gap-1.5"><CheckCircle2 className="h-3.5 w-3.5 text-deal" strokeWidth={2.5} /> Cross-session memory</span>
@@ -2395,7 +2393,7 @@ export default function HomePage() {
                 <div className="inline-flex items-center gap-2 rounded-full border border-gold/40 bg-gold/10 px-3.5 py-1.5 backdrop-blur">
                   <span className="h-1.5 w-1.5 rounded-full bg-gold-light shadow-[0_0_8px_#FBBF24]" />
                   <span className="text-[10px] font-bold uppercase tracking-[1.5px] text-gold-light">
-                    {"Enterprise"}
+                    {"Whole floor"}
                   </span>
                 </div>
 
@@ -2407,31 +2405,32 @@ export default function HomePage() {
                 </h2>
 
                 <p className="text-lg leading-relaxed text-ash">
-                  Done-for-you onboarding. Custom scripts. CRM integration.
+                  Onboarding a whole floor is a different job: every rep set up, custom
+                  scripts, CRM wiring, someone to call when it breaks.
                   <br />
                   <span className="font-semibold text-bone">
-                    $5K/mo · 48-hour setup · White-glove rollout
+                    Built and run by KlaroDev — team pricing lives there.
                   </span>
                 </p>
 
                 <div className="flex flex-wrap items-center gap-3 pt-2">
-                  <Link
-                    href="/enterprise"
+                  <a
+                    href="https://klarodev.com"
                     className="inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-bold text-[#050506] shadow-[0_4px_20px_rgba(251,191,36,0.4)] transition-all hover:shadow-[0_6px_28px_rgba(251,191,36,0.6)]"
                     style={{
                       background:
                         "linear-gradient(135deg, #FBBF24 0%, #F59E0B 100%)",
                     }}
                   >
-                    Learn More
+                    See KlaroDev
                     <ArrowRight className="h-4 w-4" strokeWidth={2.5} />
-                  </Link>
-                  <Link
-                    href="/enterprise"
+                  </a>
+                  <a
+                    href="https://klarodev.com"
                     className="rounded-xl border border-deal/40 px-6 py-3 text-sm font-bold text-deal-light transition-all hover:border-deal hover:bg-deal/10"
                   >
-                    {"Book a Call"} →
-                  </Link>
+                    {"Team pricing"} →
+                  </a>
                 </div>
               </div>
 
@@ -2440,27 +2439,27 @@ export default function HomePage() {
                 <div className="flex gap-4">
                   <div className="rounded-2xl border border-white/8 bg-black/60 p-5 text-center backdrop-blur">
                     <div className="font-display text-3xl font-black text-deal">
-                      $5K
+                      Team
                     </div>
                     <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-ash">
-                      / mo
+                      plans
                     </div>
                   </div>
                   <div className="rounded-2xl border border-white/8 bg-black/60 p-5 text-center backdrop-blur">
                     <div className="font-display text-3xl font-black text-gold-light">
-                      48h
+                      Setup
                     </div>
                     <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-ash">
-                      Setup
+                      rollout
                     </div>
                   </div>
                 </div>
                 <div className="rounded-2xl border border-deal/20 bg-black/60 p-5 text-center backdrop-blur">
                   <div className="font-display text-2xl font-black text-white">
-                    Done-for-you
+                    KlaroDev
                   </div>
                   <div className="mt-1 text-[11px] font-semibold uppercase tracking-wider text-deal-light">
-                    Custom scripts · CRM · Rollout
+                    klarodev.com
                   </div>
                 </div>
               </div>

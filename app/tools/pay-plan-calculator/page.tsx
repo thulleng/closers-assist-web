@@ -225,7 +225,7 @@ export default function PayPlanCalculator() {
         {/* Footer */}
         <div className="mt-20 text-center">
           <p className="text-xs text-muted">
-            Results are estimates based on the numbers you enter. Actual pay depends on your specific pay plan, backend gross, dealer fees, and adjustments. Built by a working closer — not an accountant.
+            Results are estimates based on the numbers you enter. Actual pay depends on your specific pay plan, backend gross, dealer fees, and adjustments. Built by a closer who worked the floor — not an accountant.
           </p>
         </div>
       </div>

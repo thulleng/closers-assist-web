@@ -33,7 +33,7 @@ export const metadata: Metadata = {
     template: "%s · Deal Clozr",
   },
   description:
-    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget. Built by a working rep. $29.99/mo.",
+    "Track every customer, every deal, and every commission automatically. Your AI agent remembers what you forget. Built by a Toyota rep. $29.99/mo.",
   metadataBase: new URL("https://dealclozr.com"),
   manifest: "/manifest.json",
   icons: {

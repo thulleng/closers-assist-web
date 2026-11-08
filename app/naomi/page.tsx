@@ -17,7 +17,7 @@ export default function NaomiPage() {
           <p className="text-xl text-ash max-w-2xl mx-auto">
             The first agent. Before Sassy. Before Dora. Naomi was tracking deals on the floor — 
             every customer, every commission, every bonus tier. She was the proof that AI could run 
-            operations for a working rep.
+            operations for a rep who works the floor.
           </p>
         </div>
 

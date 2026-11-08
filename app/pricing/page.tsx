@@ -2,13 +2,13 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Shield, Check, User, Users, Building2, ArrowRight, X, Zap } from "lucide-react";
+import { Shield, Check, User, ArrowRight, X, Zap } from "lucide-react";
 import FadeIn from "@/components/FadeIn";
 import TiltCard from "@/components/TiltCard";
 import DealFlowVisual from "@/components/DealFlowVisual";
 
 type Billing = "monthly" | "annual";
-type Buyer = "solo_demo" | "solo" | "team" | "dealership";
+type Buyer = "solo_demo" | "solo";
 
 const TIERS = [
   {
@@ -53,67 +53,25 @@ const TIERS = [
       "Email support — 24-hour response",
     ],
   },
-  {
-    id: "pro",
-    name: "Pro",
-    buyer: "team" as Buyer,
-    monthly: 624.75,
-    annual: 499.75,
-    annualYearly: 5997,
-    unit: "team",
-    seats: 25,
-    tagline: "For the sales manager rolling it out to the whole team.",
-    href: "/pricing",
-    monthlyPriceId: "price_1TP9oGJzG6xU26F9N8yjczSE",
-    annualPriceId: "price_1TXA96JzG6xU26F97H06sQkr",
-    features: [
-      "Everything in Starter — for up to 25 reps",
-      "Team dashboard — units, leaderboards, CXI tracking",
-      "Priority support — 4-hour response",
-      "Manager override & audit controls",
-      "Monthly coaching call with a Deal Clozr coach",
-    ],
-  },
-  {
-    id: "elite",
-    name: "Elite",
-    buyer: "dealership" as Buyer,
-    monthly: 0,
-    annual: 0,
-    annualYearly: 0,
-    unit: "team",
-    seats: 100,
-    tagline: "For the dealership, brokerage, or agency rolling out at scale.",
-    href: "/enterprise",
-    features: [
-      "Everything in Pro — for up to 100 reps",
-      "Dedicated success manager",
-      "Custom skills dev — 2 per quarter included",
-      "White-label + SSO + SOC2 compliance tooling",
-      "Private Slack channel with founder (Thul)",
-    ],
-  },
 ];
 
 const BUYER_TO_TIER: Record<Buyer, string> = {
   solo_demo: "free",
   solo: "starter",
-  team: "pro",
-  dealership: "elite",
 };
 
 const FAQ = [
   {
     q: "How does billing actually work?",
-    a: "Starter is $29.99/mo per rep or $287.88/yr (20% off — $23.99/mo equivalent). Pro is $624.75/mo flat team rate or $5,997/yr (20% off — $499.75/mo equivalent) covering up to 25 reps. Elite is custom pricing — contact us for your rate.",
+    a: "Starter is $29.99/mo per rep, or $287.88/yr (20% off — $23.99/mo equivalent). That is the only plan on this site. Team and dealership pricing lives on KlaroDev, because onboarding a floor is a different job.",
   },
   {
-    q: "What if my team is bigger than 25 but smaller than 100?",
-    a: "You go to Elite — custom pricing, one conversation. Email thul@dealclozr.com and we'll build your rate.",
+    q: "What if I am running a team?",
+    a: "That is KlaroDev — klarodev.com. They handle setup, rollout and support for teams and dealerships.",
   },
   {
-    q: "What if I have more than 100 reps?",
-    a: "Email thul@dealclozr.com and we'll build a custom enterprise plan with volume pricing. 100+ reps deserve a conversation, not a form.",
+    q: "What if I have a whole store?",
+    a: "Also KlaroDev. One conversation, one plan for the floor — no forms.",
   },
   {
     q: "Is there a per-deal fee or commission cut?",
@@ -191,7 +149,7 @@ export default function PricingPage() {
                 <span className="text-shine font-black">fits your floor.</span>
               </h1>
               <p className="mx-auto mt-6 max-w-2xl text-lg leading-relaxed text-ash md:text-xl md:mx-0">
-                One extra deal covers your subscription for years. No feature gating. Every tier ships the same full agent — tiers differ by team size and support, never by capability.
+                One extra deal covers your subscription for years. No feature gating, no upsell ladder. One price for the full agent — and if you're running a team or a store, that's KlaroDev.
               </p>
             </div>
 
@@ -255,7 +213,7 @@ export default function PricingPage() {
               { feat: "Logs deals with one sentence", us: "\"Just sold a Camry to the Smiths\" → deal logged, commission calculated, tracker updated.", them: "Can write you a nice summary. Can't save a deal to a database." },
               { feat: "Calls you out when you're slacking", us: "\"Three minis this week. Last month you turned it around — what's the play today?\"", them: "Agrees with everything you say. Never pushes back." },
               { feat: "Your data stays yours", us: "Never trains on your pay plan, deal history, or customer names. Export anytime.", them: "Your conversations train their models. Read the fine print." },
-              { feat: "Built by a working closer", us: "Built on the floor by a working closer who lives off commission.", them: "Built by engineers in San Francisco who've never worked a Saturday on the lot." },
+              { feat: "Built by a closer who worked the floor", us: "Built on the floor by a closer who lived off commission for years.", them: "Built by engineers in San Francisco who've never worked a Saturday on the lot." },
               { feat: "Chat anywhere, instantly", us: "Web, phone, Telegram. Always logged in. Always knows who you are.", them: "Browser tab. Login walls. Context lost when you switch devices." },
             ].map((row, i) => (
               <div
@@ -319,7 +277,7 @@ export default function PricingPage() {
         <p className="mb-4 text-center text-sm text-ash">
           Tell us who you are — we&rsquo;ll highlight your plan.
         </p>
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-4">
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {[
             {
               id: "solo_demo" as Buyer,
@@ -332,18 +290,6 @@ export default function PricingPage() {
               icon: User,
               label: "I'm a solo rep",
               sub: "Just me",
-            },
-            {
-              id: "team" as Buyer,
-              icon: Users,
-              label: "I run a team",
-              sub: "2–25 reps",
-            },
-            {
-              id: "dealership" as Buyer,
-              icon: Building2,
-              label: "I run a dealership",
-              sub: "26+ reps",
             },
           ].map((b) => {
             const active = selectedBuyer === b.id;
@@ -395,11 +341,11 @@ export default function PricingPage() {
 
       {/* TIERS */}
       <section id="plans" className="mx-auto max-w-7xl px-6 pb-10">
-        <div className="grid gap-5 md:grid-cols-4">
+        <div className="grid gap-5 md:grid-cols-2">
           {TIERS.map((tier) => {
             const price = billing === "annual" ? tier.annual : tier.monthly;
             const isRecommended = selectedTier === tier.id;
-            const isDefaultFeatured = tier.id === "pro" && !selectedTier;
+            const isDefaultFeatured = tier.id === "starter" && !selectedTier;
             const highlight = isRecommended || isDefaultFeatured;
 
             return (
@@ -432,8 +378,6 @@ export default function PricingPage() {
                   }`}>
                     {tier.id === "free" && <Zap className="h-5 w-5 text-gold-light" strokeWidth={2} />}
                     {tier.id === "starter" && <User className="h-5 w-5 text-deal" strokeWidth={2} />}
-                    {tier.id === "pro" && <Users className="h-5 w-5 text-deal" strokeWidth={2} />}
-                    {tier.id === "elite" && <Building2 className="h-5 w-5 text-gold-light" strokeWidth={2} />}
                   </div>
                   <div>
                     <div className={`text-xs font-bold uppercase tracking-[2px] ${
@@ -444,8 +388,6 @@ export default function PricingPage() {
                     <div className="text-[13px] font-semibold text-bone">
                       {tier.id === "free" && "1 rep — no card needed"}
                       {tier.id === "starter" && "1 rep"}
-                      {tier.id === "pro" && "Up to 25 reps"}
-                      {tier.id === "elite" && "Up to 100 reps"}
                     </div>
                   </div>
                 </div>
@@ -455,10 +397,6 @@ export default function PricingPage() {
                   {tier.id === "free" ? (
                     <div className="font-display text-5xl font-black leading-none text-white">
                       $0
-                    </div>
-                  ) : tier.id === "elite" ? (
-                    <div className="font-display text-5xl font-black leading-none text-white">
-                      Custom
                     </div>
                   ) : (
                     <div>
@@ -471,7 +409,7 @@ export default function PricingPage() {
                         </span>
                         <span className="font-mono text-sm text-ash/60">/mo</span>
                       </div>
-                      {billing === "annual" && tier.id !== "elite" && (
+                      {billing === "annual" && (
                         <div className="mt-0.5 text-xs text-deal-light font-mono">
                           or ${tier.annualYearly.toFixed(2).replace(/\.00$/, "")} billed once/yr
                         </div>
@@ -487,10 +425,6 @@ export default function PricingPage() {
                   {tier.id === "starter" && (
                     <>{billing === "annual" ? "Billed annually. 14-day free trial." : "Per rep. Billed monthly."}</>
                   )}
-                  {tier.id === "pro" && (
-                    <><span className="text-bone">${(price / 25).toFixed(2)}</span> / rep at 25 reps — {billing === "annual" ? "billed annually" : "flat team rate"}</>
-                  )}
-                  {tier.id === "elite" && "Starting at $19.99/rep/mo — contact us"}
                 </div>
 
                 {/* Tagline */}
@@ -547,20 +481,8 @@ export default function PricingPage() {
                         <span className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
                         Redirecting…
                       </span>
-                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : tier.id === "elite" ? "Talk to sales" : "Get Started"}
+                    ) : billing === "annual" && (tier as { annualPriceId: string }).annualPriceId.includes("PLACEHOLDER") ? "Coming Soon" : "Get Started"}
                   </button>
-                )}
-                {!("monthlyPriceId" in tier) && (
-                  <Link
-                    href={tier.href}
-                    className={`block rounded-xl py-3.5 text-center text-sm font-bold tracking-wide transition-all duration-300 ${
-                      highlight
-                        ? "bg-gradient-to-r from-deal to-emerald-500 text-pit shadow-[0_8px_24px_rgba(16,185,129,0.3)] hover:shadow-[0_12px_32px_rgba(16,185,129,0.45)] hover:-translate-y-0.5"
-                        : "border-2 border-white/[0.08] text-bone hover:border-deal/30 hover:bg-deal/[0.04] hover:text-white"
-                    }`}
-                  >
-                    {tier.id === "elite" ? "Talk to sales" : "Get Started"}
-                  </Link>
                 )}
               </div>
               </TiltCard>
@@ -576,35 +498,22 @@ export default function PricingPage() {
         <div className="loud-card rounded-2xl p-7">
           <div className="mb-5 text-center">
             <div className="mb-1 text-xs font-medium uppercase tracking-widest text-deal">
-              The bigger your team, the less each rep costs
+              One price. One rep. No ladder
             </div>
             <p className="text-sm text-ash">
-              Every tier ships the full agent — you&rsquo;re just paying for
-              scale.
+              The same agent for one rep or twenty-five. Team and dealership plans —
+              setup, rollout, support — are built and run by KlaroDev.
             </p>
           </div>
-          <div className="grid grid-cols-1 gap-3 text-center sm:grid-cols-3 sm:gap-4">
-            <div className="loud-card rounded-lg p-5">
-              <div className="mb-1 text-xs text-ash">Starter (1 rep)</div>
-              <div className="font-mono text-2xl font-medium text-bone">
-                ${billing === "annual" ? "23.99" : "29.99"}
-              </div>
-              <div className="mt-1 font-mono text-xs text-muted">per rep / mo</div>
-            </div>
-            <div className="rounded-lg border border-deal/40 bg-pit p-5">
-              <div className="mb-1 text-xs text-ash">Pro (25 reps)</div>
-              <div className="font-mono text-2xl font-medium text-deal">
-                ${billing === "annual" ? "19.99" : "24.99"}
-              </div>
-              <div className="mt-1 font-mono text-xs text-muted">per rep / mo</div>
-            </div>
-            <div className="rounded-lg border border-deal/40 bg-pit p-5">
-              <div className="mb-1 text-xs text-ash">Elite (100+ reps)</div>
-              <div className="font-mono text-2xl font-medium text-deal">
-                $19.99
-              </div>
-              <div className="mt-1 font-mono text-xs text-muted">per rep</div>
-            </div>
+          <div className="rounded-lg border border-deal/40 bg-pit p-6 text-center">
+            <div className="mb-1 text-xs uppercase tracking-widest text-deal">Running a team?</div>
+            <p className="text-sm text-ash">
+              That is a different job: onboarding the floor, custom scripts, CRM wiring.
+              It lives on KlaroDev.
+            </p>
+            <a href="https://klarodev.com" className="mt-3 inline-block rounded-xl border-2 border-deal/40 px-5 py-2.5 text-sm font-bold text-deal-light hover:bg-deal/10">
+              See team pricing on KlaroDev →
+            </a>
           </div>
         </div>
       </section>

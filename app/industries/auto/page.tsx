@@ -22,7 +22,7 @@ const data: IndustryData = {
       <span className="text-deal">Ranked every month.</span>
     </>
   ),
-  sub: "Built on the showroom floor by a working Toyota rep. Knows your mini structure, unit math, volume bonuses, and CXI math. Loaded with Star Safety System and TSS 4.0 out of the box.",
+  sub: "Built on the showroom floor by a Toyota rep. Knows your mini structure, unit math, volume bonuses, and CXI math. Loaded with Star Safety System and TSS 4.0 out of the box.",
   heroImage:
     "/images/toyota-building.jpg",
   scenarioImage:

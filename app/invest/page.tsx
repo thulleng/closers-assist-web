@@ -3,7 +3,7 @@ import LiveMetricsStrip from "@/components/LiveMetricsStrip";
 
 export const metadata: Metadata = {
   title: "Deal Clozr — Investor Brief",
-  description: "AI closer for commission sales. Built on the floor by a working closer.",
+  description: "AI closer for commission sales. Built on the floor by a closer who worked the floor.",
 };
 
 export default function InvestPage() {
@@ -22,7 +22,7 @@ export default function InvestPage() {
           </div>
           <h1 className="text-shine font-display text-4xl font-black tracking-tight sm:text-6xl">Deal Clozr</h1>
           <p className="mt-4 text-xl text-ash sm:text-2xl">Every closer's second brain.</p>
-          <p className="mt-2 text-sm text-muted">Built on the floor by a working closer · Holiday, Florida</p>
+          <p className="mt-2 text-sm text-muted">Built on the floor by a closer who worked it · Holiday, Florida</p>
         </div>
 
         {/* Live Metrics */}
@@ -40,7 +40,7 @@ export default function InvestPage() {
             <WinItem title="Persistent memory" body="ChatGPT forgets. Deal Clozr remembers every customer, every deal, every objection — across weeks and sessions." />
             <WinItem title="Zero setup" body="No prompt engineering. No templates. Reps open the app and start talking. Built for people who sell, not people who configure software." />
             <WinItem title="Sounds like you" body="Learns your voice, your pay plan, your floor. Not a generic chatbot — a closer's closer." />
-            <WinItem title="Enterprise moat" body="Dedicated AI closer for entire sales floors. $5K/month, done-for-you. CRM-integrated, live in 48 hours." />
+            <WinItem title="Team & dealership lane" body="Whole floors are served through KlaroDev — done-for-you onboarding, CRM-integrated, setup and support included." />
           </ul>
         </Section>
 
@@ -54,7 +54,7 @@ export default function InvestPage() {
         <Section title="Traction">
           <ul className="space-y-3">
             <TractionItem label="Product" value="Live on dealclozr.com — 18 industry verticals, Stripe payments, live AI chat" />
-            <TractionItem label="Enterprise" value="$5K/mo done-for-you tier with dedicated agent — on the lot, pilot launching May 2026" />
+            <TractionItem label="Teams" value="Team and dealership plans delivered by KlaroDev — done-for-you, CRM-integrated" />
             <TractionItem label="Team" value="Solo founder — Thul Leng. Working Toyota closer. Built this between customers on the floor." />
             <TractionItem label="Deals Logged" value="Real closers logging real deals. System tracking units, commissions, and bonus progress." />
           </ul>
@@ -64,14 +64,14 @@ export default function InvestPage() {
         <Section title="Revenue Model">
           <div className="grid gap-4 sm:grid-cols-2">
             <ModelCard tier="SaaS" price="$29.99" unit="per rep / month" desc="Self-serve. Stripe checkout. Scales with the floor." />
-            <ModelCard tier="Enterprise" price="$5,000" unit="per month flat" desc="Done-for-you. Dedicated AI closer for the whole team. CRM integration, 48hr setup, weekly optimization." />
+            <ModelCard tier="Enterprise" price="KlaroDev" unit="team & dealership plans" desc="Whole-floor rollouts are quoted and delivered by KlaroDev — onboarding, CRM integration, setup and ongoing support." />
           </div>
         </Section>
 
         {/* The Ask */}
         <Section title="The Opportunity">
           <p>Sales teams are drowning in admin while ChatGPT gives them generic answers. Deal Clozr is the first AI that actually knows the closer — their deals, their pay plan, their voice, their floor.</p>
-          <p className="mt-3">The SaaS model funds the machine. Enterprise delivers margin. Every rep who tries it sticks because no other tool remembers their customer's wife's name from three weeks ago.</p>
+          <p className="mt-3">The SaaS model funds the machine. KlaroDev delivers the margin on whole-floor rollouts. Every rep who tries it sticks because no other tool remembers their customer's wife's name from three weeks ago.</p>
           <p className="mt-3">This isn't a chatbot. It's a closer's second brain. Built by a closer, for closers.</p>
         </Section>
 

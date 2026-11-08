@@ -24,7 +24,7 @@ const BOTTOM_NAV = [
   { href: "/industries", label: "Industries", icon: Layers },
   { href: "/dashboard/auto", label: "Dashboard", icon: LayoutDashboard },
   { href: "/pricing", label: "Pricing", icon: DollarSign },
-  { href: "/enterprise", label: "Enterprise", icon: Building2 },
+  { href: "https://klarodev.com", label: "For Teams", icon: Building2 },
 ];
 
 const DRAWER_LINKS = [
@@ -43,7 +43,7 @@ const DRAWER_LINKS = [
   {
     href: "/founder",
     label: "Founder",
-    subtitle: "Built by a working rep.",
+    subtitle: "Built by a Toyota rep.",
     icon: User,
   },
   {

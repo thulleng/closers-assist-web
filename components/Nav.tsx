@@ -68,7 +68,7 @@ export default function Nav() {
           <Link href="/blog" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Blog</Link>
           <Link href="/reviews" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Reviews</Link>
           <Link href="/referral" className="whitespace-nowrap text-sm font-medium text-gold-light transition-colors hover:text-gold-light/80">Refer & Earn</Link>
-          <Link href="/enterprise" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">Enterprise</Link>
+          <a href="https://klarodev.com" className="whitespace-nowrap text-sm font-medium text-white/90 transition-colors hover:text-white">For Teams</a>
         </nav>
 
         <div className="flex items-center gap-3">

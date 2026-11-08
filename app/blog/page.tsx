@@ -6,7 +6,7 @@ import FadeIn from "@/components/FadeIn";
 export const metadata: Metadata = {
   title: "Blog — From the Floor",
   description:
-    "Real strategy, plays, and real talk from a working Toyota rep. No theory. Just what works on the floor. Written by Thul Leng — a working closer.",
+    "Real strategy, plays, and real talk from a Toyota rep. No theory. Just what works on the floor. Written by Thul Leng — a closer who worked the floor.",
 };
 
 const POSTS = [
@@ -136,7 +136,7 @@ const POSTS = [
     title: "How I Built an AI Sales Agent Between Customers",
     date: "May 8, 2026",
     readTime: "4 min",
-    preview: "I sell Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the floor — between test drives, T.O.s, and service lane laps.",
+    preview: "I sold Toyotas. I'm not an engineer. Here's how I built Deal Clozr on the floor — between test drives, T.O.s, and service lane laps.",
     tag: "Founder Story",
   },
   {
@@ -181,7 +181,7 @@ export default function BlogIndex() {
             </h1>
 
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-ash">
-              Strategy, plays, and real talk from a working rep. No theory. Just what works.
+              Strategy, plays, and real talk from the floor. No theory. Just what works.
             </p>
           </FadeIn>
 

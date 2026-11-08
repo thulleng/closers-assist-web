@@ -11,12 +11,9 @@ export default function Footer() {
       <div className="border-b border-white/5 bg-white/[0.02]">
         <div className="mx-auto max-w-7xl px-6 py-4">
           <div className="flex flex-wrap items-center justify-center gap-6 text-sm">
-            <div className="flex items-center gap-1.5">
-              <Star className="h-3.5 w-3.5 fill-gold-light text-gold-light" strokeWidth={1.5} />
-              <span className="font-semibold text-white">4.9</span>
-              <span className="text-ash">average from verified reviews</span>
-            </div>
-            <div className="hidden h-4 w-px bg-white/10 md:block" />
+            {/* Hardcoded "4.9 average from verified reviews" removed: the reviews
+                API had zero loadable reviews, so the number could not be cited.
+                Reinstate only from real data (ReviewScoreBadge) once reviews load. */}
             <div className="flex items-center gap-1.5">
               <Quote className="h-3.5 w-3.5 text-deal-light" strokeWidth={2} />
               <span className="text-ash">See what closers are saying</span>
@@ -28,7 +25,7 @@ export default function Footer() {
             <div className="hidden h-4 w-px bg-white/10 md:block" />
             <div className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-deal shadow-[0_0_6px_#10B981]" />
-              <span className="text-ash">Built on the floor by a working Toyota rep</span>
+              <span className="text-ash">Built on the Toyota floor, between customers</span>
             </div>
           </div>
         </div>

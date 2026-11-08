@@ -101,13 +101,13 @@ const comparisonRows = [
     closersDetail: "Calendar, appointments, reminders, travel — your second brain",
   },
   {
-    feature: "Built by a working rep",
+    feature: "Built by a Toyota rep",
     closers: true,
     freeai: false,
     chatgpt: false,
     crm: false,
     human: "Maybe",
-    closersDetail: "Thul Leng closes cars 6 days a week on the lot. Built between customers",
+    closersDetail: "Thul Leng closed cars 6 days a week on the lot for years. Built between customers",
   },
   {
     feature: "No contracts",
@@ -152,7 +152,7 @@ const verdicts = [
     vs: "Free AI (Gemini/ChatGPT)",
     icon: Monitor,
     summary: "Free AI chats. Deal Clozr closes. That's the difference.",
-    detail: "Gemini and ChatGPT Free are impressive chatbots — they write, summarize, and chat with memory. But they were built for general conversation, not for closers. They don't know your pay plan. They can't calculate commission math against your specific bonus ladder. They don't have industry playbooks. They can't book appointments, log deals, or follow up while you sleep. Deal Clozr was built on a Toyota lot by a working rep — every feature exists because a closer needed it. Free AI gives you answers. Deal Clozr gives you closings.",
+    detail: "Gemini and ChatGPT Free are impressive chatbots — they write, summarize, and chat with memory. But they were built for general conversation, not for closers. They don't know your pay plan. They can't calculate commission math against your specific bonus ladder. They don't have industry playbooks. They can't book appointments, log deals, or follow up while you sleep. Deal Clozr was built on a Toyota lot by a Toyota rep — every feature exists because a closer needed it. Free AI gives you answers. Deal Clozr gives you closings.",
   },
   {
     vs: "ChatGPT Plus ($20)",

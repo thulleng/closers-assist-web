@@ -5,7 +5,7 @@ import FadeIn from "@/components/FadeIn";
 
 export const metadata: Metadata = {
   title: "Contact",
-  description: "Get in touch with Thul Leng, founder of Deal Clozr. Built on the floor by a working closer.",
+  description: "Get in touch with Thul Leng, founder of Deal Clozr. Built on the floor by a closer who worked the floor.",
 };
 
 export default function ContactPage() {

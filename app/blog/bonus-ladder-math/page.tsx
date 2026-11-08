@@ -9,7 +9,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "The Bonus Ladder That Made Me an Extra $3,200 — Deal Clozr",
     description:
-      "Bonus ladder math from a working closer. How tracking tiers mid-month changed my selling strategy and added $3,200 in one month.",
+      "Bonus ladder math from a closer who worked the floor. How tracking tiers mid-month changed my selling strategy and added $3,200 in one month.",
     images: ["/api/og"],
   },
 };

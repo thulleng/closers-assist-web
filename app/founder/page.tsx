@@ -6,7 +6,7 @@ import FadeIn from "@/components/FadeIn";
 export const metadata: Metadata = {
   title: "Founder Story",
   description:
-    "My name is Thul. I sell Toyotas. I built Deal Clozr between customers. Here's why.",
+    "My name is Thul. I sold Toyotas. I built Deal Clozr between customers. Here's why.",
 };
 
 export default function FounderPage() {
@@ -35,7 +35,7 @@ export default function FounderPage() {
                 </span>
               </div>
               <h1 className="font-display text-5xl font-black leading-[0.98] tracking-[-0.02em] text-white md:text-7xl">
-                I sell Toyotas.
+                I sold Toyotas.
                 <br />
                 I built this{" "}
                 <span className="text-shine font-black">

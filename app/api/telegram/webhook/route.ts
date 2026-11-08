@@ -238,7 +238,7 @@ export async function POST(req: NextRequest) {
         }
 
         // Legacy flow: Demo intro for non-linked users on shared bot
-        const demoIntro = `👋 *Welcome to Deal Clozr!*\n\nI'm an AI closer built on the floor by a working closer. Here's a preview of what I know:\n\n*🏢 Demo Pay Plan — Sample Dealership*\n• Draw: \\$2,600 bi-weekly\n• Mini/flat: \\$200\n• Full deal: variable (front gross × commission %)\n• Volume bonus: \\$500 at 11 units + 25% retro\n• CXI bonus: \\$250 at 4.8+\n\n*What I do:*\n→ Log deals & track unit count\n→ Handle customer objections word-for-word\n→ Calculate commission & bonus math\n→ Write follow-up texts & emails\n→ Push you toward the next bonus tier\n\n*Ready to try?* Type a question — for example:\n\`\`\`\nI have a customer on a 2019 RAV4 with 60k miles. Trade-in is underwater by \\$3k. How do I handle it?\n\`\`\`\n\n*Want your own agent?* Create your own bot at:\ndealclozr.com/setup-telegram\n\nOnce linked, I'll learn YOUR pay plan, YOUR scripts, and YOUR goals. Same agent. Your data.`;
+        const demoIntro = `👋 *Welcome to Deal Clozr!*\n\nI'm an AI closer built on the floor by a closer who worked the floor. Here's a preview of what I know:\n\n*🏢 Demo Pay Plan — Sample Dealership*\n• Draw: \\$2,600 bi-weekly\n• Mini/flat: \\$200\n• Full deal: variable (front gross × commission %)\n• Volume bonus: \\$500 at 11 units + 25% retro\n• CXI bonus: \\$250 at 4.8+\n\n*What I do:*\n→ Log deals & track unit count\n→ Handle customer objections word-for-word\n→ Calculate commission & bonus math\n→ Write follow-up texts & emails\n→ Push you toward the next bonus tier\n\n*Ready to try?* Type a question — for example:\n\`\`\`\nI have a customer on a 2019 RAV4 with 60k miles. Trade-in is underwater by \\$3k. How do I handle it?\n\`\`\`\n\n*Want your own agent?* Create your own bot at:\ndealclozr.com/setup-telegram\n\nOnce linked, I'll learn YOUR pay plan, YOUR scripts, and YOUR goals. Same agent. Your data.`;
 
         // Chunk if needed
         const maxLen = 4000;
@@ -357,7 +357,7 @@ Before every response, run through this silently. The user never sees this proce
 4. DELIVER — Word-for-word script first (if objection/script). Then the math (if numbers). Then the why in one sentence. The person reading this has 90 seconds between customers.`;
 
     const INDUSTRY_PROMPTS: Record<string, string> = {
-      automotive: `You are Deal Clozr — an elite AI sales partner built on the floor by a working closer. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
+      automotive: `You are Deal Clozr — an elite AI sales partner built on the floor by a closer who worked the floor. You were forged between real customers, real T.O.s, and real paychecks. You are not a chatbot. You are a closer's second brain.
 
 YOUR IDENTITY:
 You speak the lot fluently — minis, full deals, street purchases, half-minis. You know T.O. timing, desk strategy, CXI protection, front vs. back gross, volume bonuses, and the difference between 10 countable units and 10 sold. You understand that a $200 mini isn't just $200 — it's a half-unit toward a $500 bonus at 11. You think in paychecks, not just deals.

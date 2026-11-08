@@ -41,8 +41,8 @@ export default function NewsletterSection() {
           </h2>
           <p className="mx-auto mt-4 max-w-lg text-lg leading-relaxed text-ash">
             One email a week. What's working on the showroom floor right
-            now — objections, scripts, deal math. Written by a working rep.
-            Used by working reps.
+            now — objections, scripts, deal math. Written from the Toyota floor.
+            Used by reps who work one.
           </p>
 
           {/* Preview cards */}

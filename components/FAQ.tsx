@@ -45,7 +45,7 @@ const faqs: FAQItem[] = [
         Deal Clozr is a <strong className="text-white">co-pilot, not a replacement</strong>{" "}
         for your judgment. It gives you plays, scripts, and math — you make the
         final call. It's trained on real sales scripts and objection
-        handling from working reps, not generic advice from the internet. If it
+        handling from the floor, not generic advice from the internet. If it
         ever gives a play that doesn't fit your style, you override it.
         The agent learns from your corrections.
       </>
