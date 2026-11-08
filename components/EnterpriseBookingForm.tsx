@@ -94,7 +94,7 @@ export function EnterpriseBookingForm() {
           name="company"
           type="text"
           required
-          placeholder="Sun Toyota"
+          placeholder="Your dealership"
           className="w-full bg-white/[0.04] border border-white/[0.08] rounded-lg px-4 py-2.5 text-white text-sm placeholder:text-gray-600 focus:outline-none focus:border-[#10B981]/40 transition-colors"
         />
       </div>

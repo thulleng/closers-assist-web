@@ -71,7 +71,7 @@ export default function PriceObjectionReframe() {
               What &ldquo;Too Expensive&rdquo; Actually Means
             </h2>
             <p>
-              After years on the floor at Sun Toyota, I&rsquo;ve categorized every &ldquo;too
+              After years on the floor at a Toyota store, I&rsquo;ve categorized every &ldquo;too
               expensive&rdquo; I&rsquo;ve heard. It almost always maps to one of four things:
             </p>
             <ul className="list-disc space-y-2 pl-6 text-bone">

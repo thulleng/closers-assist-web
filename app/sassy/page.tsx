@@ -124,7 +124,7 @@ export default function SassyPage() {
 
         <p className="mt-8 text-center text-sm text-zinc-600">
           <Link href="/" className="text-cyan-500 hover:underline">← Back to Dora</Link>
-          {' · '}Built on the floor by Thul Leng · Sun Toyota, Holiday FL
+          {' · '}Built on the floor by Thul Leng · Florida
         </p>
       </section>
     </main>

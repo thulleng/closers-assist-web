@@ -69,7 +69,7 @@ export type DashboardData = {
   vertical: string;
   /** Top label, e.g. "APRIL 2026 · SALES DASHBOARD" */
   period: string;
-  /** Second line, e.g. "Thul Leng · Sun Toyota · Month to date" */
+  /** Second line, e.g. "Thul Leng · Toyota dealership · Month to date" */
   subtitle: string;
   /** 4 summary metrics at the top */
   metrics: SummaryMetric[];

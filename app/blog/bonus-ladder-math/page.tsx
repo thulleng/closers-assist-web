@@ -52,7 +52,7 @@ export default function BonusLadderMath() {
 
           <div className="mt-10 space-y-6 text-base leading-relaxed text-bone">
             <p>
-              Every closer at Sun Toyota has the same pay plan. Same bonus
+              Every closer on my floor had the same pay plan. Same bonus
               ladder. Same tiers. Same spiffs. And every month, half the floor
               leaves money on that ladder because they don't know where they
               stand until the 1st of next month.
@@ -77,7 +77,7 @@ export default function BonusLadderMath() {
             <p>
               Every store runs it differently, but the structure is almost
               always the same. You hit a unit threshold and your per-car
-              commission flips to a higher number. At Sun Toyota, the tiers
+              commission flips to a higher number. On that floor, the tiers
               look like this:
             </p>
             <ul className="list-disc pl-5 space-y-2 text-ash">

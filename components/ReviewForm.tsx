@@ -134,7 +134,7 @@ export default function ReviewForm({ onSubmitted }: ReviewFormProps) {
             type="text"
             value={company}
             onChange={(e) => setCompany(e.target.value)}
-            placeholder="Sun Toyota"
+            placeholder="Toyota dealership"
             className="w-full rounded-xl border border-white/10 bg-black/50 px-4 py-3 text-sm text-white placeholder:text-white/20 focus:border-deal/50 focus:outline-none focus:ring-1 focus:ring-deal/30"
             maxLength={60}
           />
